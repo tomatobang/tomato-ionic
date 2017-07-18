@@ -1,5 +1,5 @@
 {
-  "name": "ionic-app-base",
+  "name": "chat",
   "app_id": "",
-  "type": "ionic1"
+  "type": "ionic-angular"
 }
