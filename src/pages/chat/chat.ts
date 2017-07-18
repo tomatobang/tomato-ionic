@@ -1,6 +1,6 @@
 import {Component, ViewChild, ChangeDetectorRef} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Events, Content, TextInput, ViewController } from 'ionic-angular';
+import { Events, Content, TextInput} from 'ionic-angular';
 
 import { ChatService, ChatMessage} from "../../providers/chat-service";
 
