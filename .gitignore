@@ -88,3 +88,9 @@ www/
 /plugins/cordova-plugin-splashscreen/
 /plugins/ionic-plugin-keyboard/
 /plugins/cordova-plugin-statusbar/
+/plugins/nxtpush-cordova-plugin/
+/plugins/cordova-plugin-jcore/
+
+com/
+org/
+

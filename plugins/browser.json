@@ -8,22 +8,22 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.chat957043"
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.chat957043"
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.chat957043"
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.chat957043"
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.chat957043"
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.chat957043"
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         }
     },
     "dependent_plugins": {}

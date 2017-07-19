@@ -42,9 +42,29 @@
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-device@1.1.4"
+            "id": "cordova-plugin-device"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "nxtpush-cordova-plugin": {
+        "source": {
+            "type": "registry",
+            "id": "nxtpush-cordova-plugin"
         },
         "is_top_level": true,
+        "variables": {
+            "JIPUSH_APPKEY": "ffb774df5d729759954bf8ee",
+            "MI_PUSH_APPID": "2882303761517596915",
+            "MI_PUSH_APPKEY": "5601759690915"
+        }
+    },
+    "cordova-plugin-jcore": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-jcore"
+        },
+        "is_top_level": false,
         "variables": {}
     }
 }
