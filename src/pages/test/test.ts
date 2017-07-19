@@ -7,13 +7,13 @@ import { NavController, IonicPage } from "ionic-angular";
 import { Platform } from "ionic-angular";
 import { Gesture } from "ionic-angular/gestures/gesture";
 
-declare var cordova;
+declare var window;
 
 @IonicPage()
 @Component({
   selector: "page-test",
   templateUrl: "test.html",
-  providers:[Media]
+  providers: [Media]
 })
 export class TestPage implements OnInit, OnDestroy {
   el: HTMLElement;
@@ -32,14 +32,16 @@ export class TestPage implements OnInit, OnDestroy {
     private elRef: ElementRef
   ) {
     if (this.platform.is("IOS")) {
-      this.path = cordova ? cordova.file.documentsDirectory : "";
+      this.path = window.cordova ? window.cordova.file.documentsDirectory : "";
       this.src = "cordovaIMVoice.wav";
     } else {
-      this.path = cordova
-        ? cordova.file.externalApplicationStorageDirectory
+      this.path = window.cordova
+        ? window.cordova.file.externalApplicationStorageDirectory
         : "";
       this.src = "cordovaIMVoice.amr";
     }
+    alert("path:" + this.path);
+    alert("src:" + this.src);
     this.el = elRef.nativeElement;
   }
 
@@ -48,10 +50,12 @@ export class TestPage implements OnInit, OnDestroy {
     this.pressGesture.listen();
     // 长按录音
     this.pressGesture.on("press", e => {
+      console.log("press开始了");
       this.onVoiceHold();
     });
     // 释放则播放
     this.pressGesture.on("pressup", e => {
+      console.log("press结束了");
       this.onVoiceRelease();
     });
   }
@@ -96,7 +100,7 @@ export class TestPage implements OnInit, OnDestroy {
     var voicechange = setInterval(function() {
       if (!this.recordWait) {
         var i = Math.round(Math.random() * 9);
-        this.voiceImg.url = "asset/img/chat/voice/recog00" + i + ".png";
+        //this.voiceImg.url = "asset/img/chat/voice/recog00" + i + ".png";
       } else {
         voicechange = undefined;
       }
@@ -210,6 +214,11 @@ export class TestPage implements OnInit, OnDestroy {
     //     // );
     //   }
     // }, 100);
+    setTimeout(() => {
+      if (this.mediaRec) {
+        this.mediaRec.release();
+      }
+    }, 10000);
     return false;
   }
 

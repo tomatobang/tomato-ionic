@@ -10,6 +10,12 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
@@ -30,6 +36,9 @@
         }
     },
     "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
