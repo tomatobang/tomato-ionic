@@ -90,5 +90,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "io.rong.imlib": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-rongcloud-im"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

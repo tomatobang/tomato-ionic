@@ -81,7 +81,7 @@ export class JPushService {
   init() {
     document.addEventListener(
       "deviceready",
-      function() {
+      () => {
         this.getUserNotificationSettings(function(result) {
           if (result === 0) {
             //推送被关闭,提示用户开启权限

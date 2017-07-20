@@ -25,6 +25,9 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
+        "io.rong.imlib": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
