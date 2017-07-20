@@ -8,6 +8,8 @@ import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { EmojiProvider } from '../providers/emoji';
+import { GlobalService } from '../providers/global-service';
+import { JPushService } from '../_util/JPushService';
 
 
 @NgModule({
@@ -31,7 +33,7 @@ import { EmojiProvider } from '../providers/emoji';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EmojiProvider
+    EmojiProvider,GlobalService,JPushService
   ]
 })
 export class AppModule {}

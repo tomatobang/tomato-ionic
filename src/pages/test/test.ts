@@ -40,23 +40,21 @@ export class TestPage implements OnInit, OnDestroy {
         : "";
       this.src = "cordovaIMVoice.amr";
     }
-    alert("path:" + this.path);
-    alert("src:" + this.src);
     this.el = elRef.nativeElement;
   }
 
   ngOnInit() {
-    this.pressGesture = new Gesture(this.el);
+    this.pressGesture = new Gesture(this.el,{time:300});
     this.pressGesture.listen();
     // 长按录音
     this.pressGesture.on("press", e => {
       console.log("press开始了");
-      this.onVoiceHold();
+      this.onHold();
     });
     // 释放则播放
     this.pressGesture.on("pressup", e => {
       console.log("press结束了");
-      this.onVoiceRelease();
+      this.onRelease();
     });
   }
 
@@ -64,7 +62,7 @@ export class TestPage implements OnInit, OnDestroy {
     this.pressGesture.destroy();
   }
 
-  onVoiceHold() {
+  onHold() {
     this.isStartRecord = true;
     this.recordWait = false;
     try {
@@ -148,7 +146,7 @@ export class TestPage implements OnInit, OnDestroy {
     // return false;
   }
 
-  onVoiceRelease() {
+  onRelease() {
     //如果没有开始直接返回
     if (!this.isStartedVoice) {
       return;
@@ -156,7 +154,7 @@ export class TestPage implements OnInit, OnDestroy {
     //还原标识
     this.isStartedVoice = false;
     this.recordWait = true;
-    setTimeout(function() {
+    setTimeout(()=> {
       this.isStartRecord = false;
     }, 1000);
     if (this.mediaRec) {
@@ -214,6 +212,7 @@ export class TestPage implements OnInit, OnDestroy {
     //     // );
     //   }
     // }, 100);
+    
     setTimeout(() => {
       if (this.mediaRec) {
         this.mediaRec.release();
