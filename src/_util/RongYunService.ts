@@ -16,10 +16,10 @@ export class RongYunService {
 	loadUnreadMessageNumberInterval = null;
 
 	constructor(public plf: Platform, public _global: GlobalService) {
-        // 为函数做一个拦截器
+		// Function 拦截器
 		Object.defineProperty(Function.prototype, "before", {
 			value: function() {
-                var __self = this;
+				var __self = this;
 				return function() {
 					if ($rootScope.connectStatus === "") {
 						return __self.apply(this, arguments);
@@ -57,7 +57,7 @@ export class RongYunService {
 				var status = ret.result.connectionStatus;
 				switch (status) {
 					case "KICKED":
-						//只允许单用户登录,KICKED表示用户账户在其他设备登录，本机会被踢掉线
+						// 只允许单用户登录,KICKED表示用户账户在其他设备登录，本机会被踢掉线
 						break;
 					case "CONNECTED":
 						// 连接成功
@@ -146,13 +146,15 @@ export class RongYunService {
 		console.log("type:" + type, "error" + JSON.stringify(error));
 	}
 
-	//初始化步骤一次进行，解决可能出现的33002错误，未init完成就connect了
-	_init(token, callback) {
+	/**
+     * 初始化步骤一次进行，解决可能出现的 33002 错误，未 init 完成就 connect 
+     */ 
+	_init(RongyunToken,callback) {
 		//如果没有融云，如果在pc端运行，则不进行融云相关服务
 		if (window.cordova) {
 			window.RongCloudLibPlugin.init(
 				{
-					appKey: "_appKey"
+					appKey: this._global.RongyunAppKey
 				},
 				(ret, err) => {
 					if (ret) {
@@ -160,7 +162,7 @@ export class RongYunService {
 							//初始化成功时设置状态监听
 							this.setStatusListener();
 							//设置监听完成时开始连接
-							this.connect(token, callback);
+							this.connect(RongyunToken, callback);
 						}
 					}
 					if (err) {
@@ -169,11 +171,14 @@ export class RongYunService {
 					}
 				}
 			);
-			console.log("init rongyun start");
+			console.log("init rongyun start...");
 		}
 	}
 
-	//清除所有会话
+	/**
+     * 清除所有会话
+     * @param callback 
+     */
 	_clearAllConversation(callback) {
 		window.RongCloudLibPlugin.clearConversations(
 			{
@@ -193,7 +198,11 @@ export class RongYunService {
 		);
 	}
 
-	//会话设为已读
+	/**
+     * 会话设为已读
+     * @param targetId 
+     * @param type 
+     */
 	_clearMessagesUnreadStatus(targetId, type) {
 		if (window.cordova) {
 			window.RongCloudLibPlugin.clearMessagesUnreadStatus(
@@ -216,7 +225,11 @@ export class RongYunService {
 		}
 	}
 
-	//删除指定回话
+	/**
+     * 删除指定回话
+     * @param targetId 
+     * @param type 
+     */
 	_removeConversationByTargetIdAndType(targetId, type) {
 		window.RongCloudLibPlugin.removeConversation(
 			{
@@ -237,7 +250,13 @@ export class RongYunService {
 		);
 	}
 
-	//得到最近消息
+	/**
+     * 得到最近消息
+     * @param targetId 
+     * @param ctype 
+     * @param members 
+     * @param callback 
+     */
 	_getLatestMessages(targetId, ctype, members, callback) {
 		if (window.cordova) {
 			var isIOS = this.plf.is("ios");
