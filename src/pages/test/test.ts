@@ -91,7 +91,7 @@ export class TestPage implements OnInit, OnDestroy {
 		this.mediaRec.onStatusUpdate.subscribe(status => console.log(status)); // fires when file status changes
 		// 录音执行函数
 		this.mediaRec.onSuccess.subscribe(() =>
-			console.log("Action is successful")
+			console.log("audio is successful")
 		);
 		// 录音失败执行函数
 		this.mediaRec.onError.subscribe(error => console.log("Error!", error));

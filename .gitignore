@@ -96,6 +96,29 @@ www/
 /plugins/io.rong.imlib/
 
 
+# 后续添加用于测试
+/plugins/com.applurk.cordova-screen-locker/
+/plugins/com.darktalker.cordova.screenshot
+/plugins/com.jjdltc.cordova.plugin.zip
+/plugins/cordova-plugin-app-event
+/plugins/cordova-plugin-app-version
+/plugins/cordova-plugin-background-mode
+/plugins/cordova-plugin-baidumaplocation
+/plugins/cordova-plugin-camera
+/plugins/cordova-plugin-datepicker
+/plugins/cordova-plugin-file-opener2
+/plugins/cordova-plugin-file-transfer
+/plugins/cordova-plugin-logtofile
+/plugins/cordova-plugin-network-information
+/plugins/cordova-plugin-pause-resume-download
+/plugins/cordova-plugin-screen-orientation
+/plugins/cordova-plugin-vibration
+/plugins/cordova-plugin-wechat
+/plugins/de.appplant.cordova.plugin.local-notification
+/plugins/es6-promise-plugin
+/plugins/phonegap-plugin-barcodescanner
+/plugins/TalkingData
+
 com/
 org/
 

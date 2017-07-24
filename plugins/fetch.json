@@ -1,44 +1,4 @@
 {
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@1.3.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-console": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-console@1.0.5"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-statusbar": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-statusbar@2.2.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "ionic-plugin-keyboard": {
-        "source": {
-            "type": "registry",
-            "id": "ionic-plugin-keyboard@~2.2.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-splashscreen": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-splashscreen@~4.0.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
@@ -47,24 +7,52 @@
         "is_top_level": false,
         "variables": {}
     },
-    "nxtpush-cordova-plugin": {
+    "cordova-plugin-console": {
         "source": {
             "type": "registry",
-            "id": "nxtpush-cordova-plugin"
+            "id": "cordova-plugin-console"
         },
         "is_top_level": true,
-        "variables": {
-            "JIPUSH_APPKEY": "ffb774df5d729759954bf8ee",
-            "MI_PUSH_APPID": "2882303761517596915",
-            "MI_PUSH_APPKEY": "5601759690915"
-        }
+        "variables": {}
     },
-    "cordova-plugin-jcore": {
+    "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-jcore"
+            "id": "cordova-plugin-whitelist@1.3.1"
         },
-        "is_top_level": false,
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen@4.0.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "ionic-plugin-keyboard": {
+        "source": {
+            "type": "registry",
+            "id": "ionic-plugin-keyboard"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        },
+        "is_top_level": true,
         "variables": {}
     },
     "cordova-plugin-file": {
@@ -75,12 +63,132 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-compat": {
+    "cordova-plugin-file-transfer": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-compat@^1.0.0"
+            "id": "cordova-plugin-file-transfer"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-barcodescanner": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-barcodescanner"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.jjdltc.cordova.plugin.zip": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-zip-plugin"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-logtofile": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-logtofile"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.darktalker.cordova.screenshot": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/gitawego/cordova-screenshot.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar@2.2.2"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-wechat": {
+        "source": {
+            "type": "git",
+            "path": "https://github.com/xu-li/cordova-plugin-wechat.git"
+        },
+        "is_top_level": true,
+        "variables": {
+            "WECHATAPPID": "wx38fc9b5cea9cf3f9"
+        }
+    },
+    "cordova-plugin-file-opener2": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-file-opener2"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-screen-orientation": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-screen-orientation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "es6-promise-plugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vstirbu/PromisesPlugin.git",
+            "subdir": "."
         },
         "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-jcore": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-jcore"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "TalkingData": {
+        "source": {
+            "type": "local",
+            "path": "C:\\Users\\huxz\\Desktop\\TalkingData-Analytics-SDK-Cordova-Plugin-master"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-pause-resume-download": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-pause-resume-download"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "nxtpush-cordova-plugin": {
+        "source": {
+            "type": "registry",
+            "id": "nxtpush-cordova-plugin"
+        },
+        "is_top_level": true,
+        "variables": {
+            "JIPUSH_APPKEY": "f5e2b59c15255310ed1e9e97",
+            "MI_PUSH_APPID": "2882303761517580870",
+            "MI_PUSH_APPKEY": "5681758071870"
+        }
+    },
+    "io.rong.imlib": {
+        "source": {
+            "type": "local",
+            "path": "..\\cordova-plugin-rongcloud-im-master"
+        },
+        "is_top_level": true,
         "variables": {}
     },
     "cordova-plugin-media": {
@@ -91,12 +199,15 @@
         "is_top_level": true,
         "variables": {}
     },
-    "io.rong.imlib": {
+    "cordova-plugin-baidumaplocation": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-rongcloud-im"
+            "id": "cordova-plugin-baidumaplocation@3.0.1"
         },
         "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "ANDROID_KEY": "tQsNGo0cwMpnN6AQV620WjZNwqGIleiK",
+            "IOS_KEY": "<API_KEY_IOS>"
+        }
     }
 }

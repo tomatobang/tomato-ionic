@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { Events } from "ionic-angular";
 import { GlobalService } from "../providers/global-service";
+import { RongyunUtil } from "./RongyunUtil";
 
 declare var window;
 declare var $rootScope;
-declare var myUtil;
 
 @Injectable()
 export class RongYunService {
@@ -15,7 +15,7 @@ export class RongYunService {
 	loadConversationInterval = null;
 	loadUnreadMessageNumberInterval = null;
 
-	constructor(public plf: Platform, public _global: GlobalService) {
+	constructor(public plf: Platform, public _global: GlobalService,public myUtil: RongyunUtil) {
 		// Function 拦截器
 		Object.defineProperty(Function.prototype, "before", {
 			value: function() {
@@ -280,7 +280,7 @@ export class RongYunService {
 									}
 								}
 							}
-							tmp = myUtil.resolveMsg(tmp);
+							tmp = this.myUtil.resolveMsg(tmp);
 							// 处理IOS倒序顺序bug
 							if (isIOS) {
 								result.push(tmp);

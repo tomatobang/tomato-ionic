@@ -7,46 +7,113 @@
         "files": {}
     },
     "installed_plugins": {
+        "com.darktalker.cordova.screenshot": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "com.jjdltc.cordova.plugin.zip": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-baidumaplocation": {
+            "ANDROID_KEY": "tQsNGo0cwMpnN6AQV620WjZNwqGIleiK",
+            "IOS_KEY": "<API_KEY_IOS>",
+            "IOS_LOCATION_DESC": "请点击'好'以允许访问。",
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-file-opener2": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-logtofile": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "cordova-plugin-media": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-pause-resume-download": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-screen-orientation": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-wechat": {
+            "WECHATAPPID": "wx38fc9b5cea9cf3f9",
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "io.rong.imlib": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "nxtpush-cordova-plugin": {
-            "JIPUSH_APPKEY": "ffb774df5d729759954bf8ee",
-            "MI_PUSH_APPID": "2882303761517596915",
-            "MI_PUSH_APPKEY": "5601759690915",
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "JIPUSH_APPKEY": "f5e2b59c15255310ed1e9e97",
+            "MI_PUSH_APPID": "2882303761517580870",
+            "MI_PUSH_APPKEY": "5681758071870",
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "TalkingData": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+        "com.applurk.cordova-screen-locker": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-background-mode": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         },
         "cordova-plugin-jcore": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.mode356491"
         }
     }
 }
