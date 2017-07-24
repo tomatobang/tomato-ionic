@@ -433,7 +433,6 @@ export class RongYunService {
 				}
 			}, 3000);
 		} else if (type == "chat" && window.cordova) {
-			//初始化时没有进入协同tab页
 			$rootScope.isEnterChatTab = false;
 			this.initConversation(callback, type);
 			this.cancelInterval(this.loadUnreadMessageNumberInterval);
