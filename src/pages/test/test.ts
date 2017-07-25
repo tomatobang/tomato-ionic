@@ -86,25 +86,22 @@ export class TestPage implements OnInit, OnDestroy {
 
 		//实例化录音类
 		this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
-		// to listen to plugin events:
-
-		this.mediaRec.onStatusUpdate.subscribe(status => console.log(status)); // fires when file status changes
-		// 录音执行函数
+		// fires when file status changes
+		this.mediaRec.onStatusUpdate.subscribe(status => console.log(status)); 
 		this.mediaRec.onSuccess.subscribe(() =>
 			console.log("audio is successful")
 		);
-		// 录音失败执行函数
 		this.mediaRec.onError.subscribe(error => console.log("Error!", error));
 
 		// 模拟声音大小变化
-		var voicechange = setInterval(function() {
-			if (!this.recordWait) {
-				var i = Math.round(Math.random() * 9);
-				//this.voiceImg.url = "asset/img/chat/voice/recog00" + i + ".png";
-			} else {
-				voicechange = undefined;
-			}
-		}, 400);
+		// var voicechange = setInterval(function() {
+		// 	if (!this.recordWait) {
+		// 		var i = Math.round(Math.random() * 9);
+		// 		//this.voiceImg.url = "asset/img/chat/voice/recog00" + i + ".png";
+		// 	} else {
+		// 		voicechange = undefined;
+		// 	}
+		// }, 400);
 	}
 	play(voiFile, type) {
 		if (this.mediaRec) {
@@ -175,46 +172,46 @@ export class TestPage implements OnInit, OnDestroy {
 		);
 		this.mediaRec.play();
 		// this.mediaRec.stop();
+		
 		//在html中显示当前状态
 		var counter = 0;
-		// var timerDur = setInterval(function() {
-		//   counter = counter + 100;
-		//   if (counter > 2000) {
-		//     clearInterval(timerDur);
-		//   }
-		//   var dur = this.mediaRec.getDuration();
-		//   if (dur > 0) {
-		//     clearInterval(timerDur);
-		//     // alert('mediaRec.getDuration():' + dur);
-		//     // alert('mediaRec.src:' + mediaRec.src);
-		//     var tmpPath = this.mediaRec.src;
-		//     if (this.platform.is("ios")) {
-		//       tmpPath = this.path + this.src;
-		//     }
-		//     tmpPath = tmpPath.replace("file://", "");
-		//     // 发送语音消息
-		//     // RongyunUtil.sendVoiceMessage(
-		//     //   $stateParams.conversationType,
-		//     //   $stateParams.targetId,
-		//     //   tmpPath,
-		//     //   dur,
-		//     //   this.mediaRec,
-		//     //   function(ret) {
-		//     //     this.lstResult = "sendVoiceMessage:" + JSON.stringify(ret);
-		//     //     // TODO:消息此时未发送成功，可以加入样式标明；成功后更新样式
-		//     //     if (ret.status == "prepare") {
-		//     //       // ret.result.message在prepare阶段才能读取到
-		//     //       appendNewMsg(ret.result.message, true);
-		//     //     }
-		//     //     // TODO:后续加入发送成功后修改显示样式
-		//     //     if (ret.status == "success") {
-		//     //       viewScroll.scrollBottom(true);
-		//     //     }
-		//     //   }
-		//     // );
-		//   }
-		// }, 100);
+		var timerDur = setInterval(function() {
+		  counter = counter + 100;
+		  if (counter > 2000) {
+		    clearInterval(timerDur);
+		  }
+		  var dur = this.mediaRec.getDuration();
+		  if (dur > 0) {
+		    clearInterval(timerDur);
+		    var tmpPath = this.mediaRec.src;
+		    if (this.platform.is("ios")) {
+		      tmpPath = this.path + this.src;
+		    }
+		    tmpPath = tmpPath.replace("file://", "");
+		    // 发送语音消息
+		    // RongyunUtil.sendVoiceMessage(
+		    //   $stateParams.conversationType,
+		    //   $stateParams.targetId,
+		    //   tmpPath,
+		    //   dur,
+		    //   this.mediaRec,
+		    //   function(ret) {
+		    //     this.lstResult = "sendVoiceMessage:" + JSON.stringify(ret);
+		    //     // TODO:消息此时未发送成功，可以加入样式标明；成功后更新样式
+		    //     if (ret.status == "prepare") {
+		    //       // ret.result.message在prepare阶段才能读取到
+		    //       appendNewMsg(ret.result.message, true);
+		    //     }
+		    //     // TODO:后续加入发送成功后修改显示样式
+		    //     if (ret.status == "success") {
+		    //       viewScroll.scrollBottom(true);
+		    //     }
+		    //   }
+		    // );
+		  }
+		}, 100);
 
+		// 10s 后自动释放
 		setTimeout(() => {
 			if (this.mediaRec) {
 				this.mediaRec.release();
