@@ -3,17 +3,17 @@
  */
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AboutPage } from './about';
+import { MinePage } from './mine';
 
 @NgModule({
     declarations: [
-        AboutPage,
+        MinePage,
     ],
     imports: [
-        IonicPageModule.forChild(AboutPage),
+        IonicPageModule.forChild(MinePage),
     ],
     exports: [
-        AboutPage
+        MinePage
     ]
 })
-export class AboutPageModule {}
+export class MinePageModule {}

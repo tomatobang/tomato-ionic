@@ -4,10 +4,10 @@ import {NavController, IonicPage} from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-friend',
+  templateUrl: 'friend.html'
 })
-export class HomePage {
+export class FriendPage {
 
   toUser:Object;
 

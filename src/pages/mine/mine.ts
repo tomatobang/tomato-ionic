@@ -4,10 +4,10 @@ import * as echarts from "echarts";
 import { NavController, IonicPage } from "ionic-angular";
 @IonicPage()
 @Component({
-	selector: "page-about",
-	templateUrl: "about.html"
+	selector: "page-mine",
+	templateUrl: "mine.html"
 })
-export class AboutPage {
+export class MinePage {
 	@ViewChild("divContainer") divContainer;
 
 	constructor(public navCtrl: NavController) {}

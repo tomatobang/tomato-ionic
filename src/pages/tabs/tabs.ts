@@ -9,8 +9,9 @@ import {IonicPage} from "ionic-angular";
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
-  tab1Root: any = 'HomePage';
-  tab2Root: any = 'AboutPage';
+  tab0Root: any = 'IndexPage';
+  tab1Root: any = 'FriendPage';
+  tab2Root: any = 'MinePage';
   TESTRoot: any = 'TestPage';
   
   // tab3Root: any = 'ContactPage';

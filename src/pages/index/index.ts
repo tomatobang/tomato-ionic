@@ -11,11 +11,11 @@ declare var window;
 
 @IonicPage()
 @Component({
-	selector: "page-test",
-	templateUrl: "test.html",
+	selector: "page-index",
+	templateUrl: "index.html",
 	providers: [Media]
 })
-export class TestPage implements OnInit, OnDestroy {
+export class IndexPage implements OnInit, OnDestroy {
 	el: HTMLElement;
 	pressGesture: Gesture;
 	isStartRecord = false;
