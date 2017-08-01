@@ -79,6 +79,9 @@
         },
         "TalkingData": {
             "PACKAGE_NAME": "com.ionicframework.mode356491"
+        },
+        "com.unarin.cordova.beacon": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         }
     },
     "dependent_plugins": {

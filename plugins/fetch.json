@@ -209,5 +209,13 @@
             "ANDROID_KEY": "tQsNGo0cwMpnN6AQV620WjZNwqGIleiK",
             "IOS_KEY": "<API_KEY_IOS>"
         }
+    },
+    "com.unarin.cordova.beacon": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-ibeacon"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

@@ -66,4 +66,5 @@
         <variable name="MI_PUSH_APPID" value="2882303761517596915" />
         <variable name="MI_PUSH_APPKEY" value="5601759690915" />
     </plugin>
+    <plugin name="com.unarin.cordova.beacon" spec="~3.4.0" />
 </widget>

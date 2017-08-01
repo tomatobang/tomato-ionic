@@ -94,6 +94,7 @@ www/
 /plugins/cordova-plugin-file/
 /plugins/cordova-plugin-media/
 /plugins/io.rong.imlib/
+/plugins/com.unarin.cordova.beacon/
 
 
 # 后续添加用于测试
