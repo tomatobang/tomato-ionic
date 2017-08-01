@@ -46,7 +46,7 @@ export class TestPage implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.pressGesture = new Gesture(this.el, { time: 300 });
+		this.pressGesture = new Gesture(this.el, { time: 200 });
 		this.pressGesture.listen();
 		// 长按录音
 		this.pressGesture.on("press", e => {
@@ -174,16 +174,16 @@ export class TestPage implements OnInit, OnDestroy {
 		// this.mediaRec.stop();
 
 		//在html中显示当前状态
-		var counter = 0;
-		var timerDur = setInterval(function() {
+		let counter = 0;
+		let timerDur = setInterval(function() {
 			counter = counter + 100;
 			if (counter > 2000) {
 				clearInterval(timerDur);
 			}
-			var dur = this.mediaRec.getDuration();
+			let dur = this.mediaRec.getDuration();
 			if (dur > 0) {
 				clearInterval(timerDur);
-				var tmpPath = this.mediaRec.src;
+				let tmpPath = this.mediaRec.src;
 				if (this.platform.is("ios")) {
 					tmpPath = this.path + this.src;
 				}
