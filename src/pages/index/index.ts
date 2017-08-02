@@ -7,7 +7,7 @@ import { NavController, IonicPage } from "ionic-angular";
 import { Platform } from "ionic-angular";
 import { Gesture } from "ionic-angular/gestures/gesture";
 
-declare var window;
+declare let window;
 
 @IonicPage()
 @Component({
@@ -24,6 +24,12 @@ export class IndexPage implements OnInit, OnDestroy {
 	mediaRec: MediaObject;
 	src = "";
 	path = "";
+	voice = {
+		ImgUrl: "./assets/voice/recog000.png",
+		reset() {
+			this.ImgUrl = "./assets/voice/recog000.png";
+		}
+	};
 
 	constructor(
 		public navCtrl: NavController,
@@ -56,6 +62,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		// 释放则播放
 		this.pressGesture.on("pressup", e => {
 			console.log("press结束了");
+			this.recordWait = true;
+			this.voice.reset();
 			this.onRelease();
 		});
 	}
@@ -83,7 +91,15 @@ export class IndexPage implements OnInit, OnDestroy {
 		if (this.mediaRec) {
 			this.mediaRec.release();
 		}
-
+		// 模拟声音大小变化
+		let voicechange = setInterval(() => {
+			if (!this.recordWait) {
+				let i = Math.round(Math.random() * 9);
+				this.voice.ImgUrl = "assets/voice/recog00" + i + ".png";
+			} else {
+				voicechange = undefined;
+			}
+		}, 400);
 		//实例化录音类
 		this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
 		// fires when file status changes
@@ -92,57 +108,33 @@ export class IndexPage implements OnInit, OnDestroy {
 			console.log("audio is successful")
 		);
 		this.mediaRec.onError.subscribe(error => console.log("Error!", error));
-
-		// 模拟声音大小变化
-		// var voicechange = setInterval(function() {
-		// 	if (!this.recordWait) {
-		// 		var i = Math.round(Math.random() * 9);
-		// 		//this.voiceImg.url = "asset/img/chat/voice/recog00" + i + ".png";
-		// 	} else {
-		// 		voicechange = undefined;
-		// 	}
-		// }, 400);
 	}
-	play(voiFile, type) {
+
+	play(voiFile) {
 		if (this.mediaRec) {
 			this.mediaRec.stop();
 			this.mediaRec.release();
 		}
-		// this.elRef.nativeElement.querySelector('div');
-		// var target = angular.element(event.target).find("i");
-		// if (type == "you") {
-		//   target.addClass("web_wechat_voice_gray_playing");
-		// } else {
-		//   target.addClass("web_wechat_voice_playing");
-		// }
-		// if (this.platform.is("IOS")) {
-		//   voiFile = voiFile.replace("file://", "");
-		// }
-		// this.mediaRec = this.media.create(voiFile);
+		if (!voiFile) {
+			voiFile = this.getNewMediaURL(this.src);
+		}
+		if (this.platform.is("IOS")) {
+			voiFile = voiFile.replace("file://", "");
+		}
+		this.mediaRec = this.media.create(voiFile);
 
-		// // 录音执行函数
-		// this.mediaRec.onSuccess.subscribe(() => {
-		//   //消息属于自己还是好友，前台会传you or me
-		//   if (type == "you") {
-		//     target.removeClass("web_wechat_voice_gray_playing");
-		//   } else {
-		//     target.removeClass("web_wechat_voice_playing");
-		//   }
-		//   console.log("play():Audio Success");
-		// });
-		// // 录音失败执行函数
-		// this.mediaRec.onError.subscribe(error => {
-		//   if (type == "you") {
-		//     target.removeClass("web_wechat_voice_gray_playing");
-		//   } else {
-		//     target.removeClass("web_wechat_voice_playing");
-		//   }
-		//   console.log("play():Audio Error: ", error);
-		// });
+		this.mediaRec.onSuccess.subscribe(() => {
+			// 播放完成
+			console.log("play():Audio Success");
+		});
+		this.mediaRec.onError.subscribe(error => {
+			// 播放失败
+			console.log("play():Audio Error: ", error);
+		});
 
-		// //开始播放录音
-		// this.mediaRec.play();
-		// return false;
+		//开始播放录音
+		this.mediaRec.play();
+		return false;
 	}
 
 	onRelease() {
@@ -174,37 +166,26 @@ export class IndexPage implements OnInit, OnDestroy {
 		// this.mediaRec.stop();
 
 		//在html中显示当前状态
-		var counter = 0;
-		var timerDur = setInterval(function() {
+		let counter = 0;
+		let timerDur = setInterval(function() {
 			counter = counter + 100;
 			if (counter > 2000) {
 				clearInterval(timerDur);
 			}
-			var dur = this.mediaRec.getDuration();
+			let dur = this.mediaRec.getDuration();
 			if (dur > 0) {
 				clearInterval(timerDur);
-				var tmpPath = this.mediaRec.src;
+				let tmpPath = this.mediaRec.src;
 				if (this.platform.is("ios")) {
 					tmpPath = this.path + this.src;
 				}
 				tmpPath = tmpPath.replace("file://", "");
-				// 发送语音消息
+				// 融云发送语音消息示例
 				// RongyunUtil.sendVoiceMessage(
-				//   $stateParams.conversationType,
-				//   $stateParams.targetId,
-				//   tmpPath,
-				//   dur,
-				//   this.mediaRec,
+				//   conversationType,targetId, tmpPath,dur,this.mediaRec,
 				//   function(ret) {
-				//     this.lstResult = "sendVoiceMessage:" + JSON.stringify(ret);
-				//     // TODO:消息此时未发送成功，可以加入样式标明；成功后更新样式
 				//     if (ret.status == "prepare") {
-				//       // ret.result.message在prepare阶段才能读取到
 				//       appendNewMsg(ret.result.message, true);
-				//     }
-				//     // TODO:后续加入发送成功后修改显示样式
-				//     if (ret.status == "success") {
-				//       viewScroll.scrollBottom(true);
 				//     }
 				//   }
 				// );
