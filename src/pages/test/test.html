@@ -7,6 +7,9 @@
 <ion-content>
 
     <div>
+        <input type="text" #loginInput name="" value="">
+        <button (click)="login(loginInput.value)">loginInput</button>
+
         <input type="text" #msgInput name="" value="">
         <button (click)="sendMsg(msgInput.value)">Send</button>
         <br>

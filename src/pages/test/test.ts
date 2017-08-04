@@ -38,9 +38,29 @@ export class TestPage implements OnInit {
 		this.chatService.getMessage().subscribe(msg => {
 			this.msg = "1st " + msg;
 		});
+
+
+		this.chatService.receivePos().subscribe(msg => {
+			this.msg = "1st " + msg;
+		});
+
+		this.chatService.sendPos_error().subscribe(msg => {
+			this.msg = "1st " + msg;
+		});
+
+		this.chatService.submitPos().subscribe(data =>{
+			debugger;
+			let send_userid = data.send_userid;
+	 		this.chatService.postPos(send_userid,"我是位置11111");
+		})
+	}
+
+	login(userid){
+		this.chatService.login(userid);
 	}
 
 	sendMsg(msg) {
-		this.chatService.sendMessage(msg);
+		//this.chatService.sendMessage(msg);
+		this.chatService.requestPos(msg);
 	}
 }
