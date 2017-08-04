@@ -7,7 +7,8 @@ import { NavController, IonicPage } from "ionic-angular";
 import { Platform } from "ionic-angular";
 import { Gesture } from "ionic-angular/gestures/gesture";
 
-import { IBeaconService } from "../../_util/IBeaconService";
+import { IBeaconService } from "../../_util/ibeacon.service";
+import { SocketIOService } from "../../_util/socket.io.service";
 
 declare var window;
 
@@ -19,18 +20,27 @@ declare var window;
 })
 export class TestPage implements OnInit {
 	el: HTMLElement;
-
+	msg: string;
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
 		private elRef: ElementRef,
-		private beancon: IBeaconService
+		private beancon: IBeaconService,
+		private chatService: SocketIOService
 	) {
 		this.el = elRef.nativeElement;
 		platform.ready().then(() => {
-			beancon.init();
+			//beancon.init();
 		});
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.chatService.getMessage().subscribe(msg => {
+			this.msg = "1st " + msg;
+		});
+	}
+
+	sendMsg(msg) {
+		this.chatService.sendMessage(msg);
+	}
 }

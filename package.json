@@ -44,6 +44,7 @@
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
     "moment": "^2.18.1",
+    "ng-socket-io": "^0.1.10",
     "nxtpush-cordova-plugin": "^1.0.4",
     "rxjs": "5.4.0",
     "sw-toolbox": "3.6.0",

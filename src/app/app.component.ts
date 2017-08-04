@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { JPushService } from '../_util/JPushService';
+import { JPushService } from '../_util/jpush.service';
 
 
 @Component({
