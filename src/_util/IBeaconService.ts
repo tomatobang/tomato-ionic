@@ -41,7 +41,7 @@ export class IBeaconService {
 
 		let beaconRegion = this.ibeacon.BeaconRegion(
 			"deskBeacon",
-			"F7826DA6-ASDF-ASDF-8024-BC5B71E0893E"
+			"b9407f30-f5f8466e-aff92555-6b57fe6d"
 		);
 
 		this.ibeacon

@@ -7,6 +7,8 @@ import { NavController, IonicPage } from "ionic-angular";
 import { Platform } from "ionic-angular";
 import { Gesture } from "ionic-angular/gestures/gesture";
 
+import { IBeaconService } from "../../_util/IBeaconService";
+
 declare var window;
 
 @IonicPage()
@@ -21,13 +23,14 @@ export class TestPage implements OnInit {
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
-		private elRef: ElementRef
+		private elRef: ElementRef,
+		private beancon: IBeaconService
 	) {
-		
 		this.el = elRef.nativeElement;
+		platform.ready().then(() => {
+			beancon.init();
+		});
 	}
 
-	ngOnInit() {
-	
-	}
+	ngOnInit() {}
 }
