@@ -7,11 +7,12 @@
 <ion-content>
 
     <div>
+        <div>我是{{userid}}</div>
         <input type="text" #loginInput name="" value="">
-        <button (click)="login(loginInput.value)">loginInput</button>
-
+        <button (click)="login(loginInput.value)">登录</button>
+        <br/>
         <input type="text" #msgInput name="" value="">
-        <button (click)="sendMsg(msgInput.value)">Send</button>
+        <button (click)="sendMsg(msgInput.value)">发送</button>
         <br>
         <p>{{msg}} </p>
     </div>

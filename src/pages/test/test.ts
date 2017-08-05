@@ -21,6 +21,7 @@ declare var window;
 export class TestPage implements OnInit {
 	el: HTMLElement;
 	msg: string;
+	userid:string;
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
@@ -36,26 +37,25 @@ export class TestPage implements OnInit {
 
 	ngOnInit() {
 		this.chatService.getMessage().subscribe(msg => {
-			this.msg = "1st " + msg;
+			this.msg = "收到消息: " + msg;
 		});
 
-
 		this.chatService.receivePos().subscribe(msg => {
-			this.msg = "1st " + msg;
+			this.msg = "收到对方位置: " + msg;
 		});
 
 		this.chatService.sendPos_error().subscribe(msg => {
-			this.msg = "1st " + msg;
+			this.msg = "发送自身位置: " + msg;
 		});
 
 		this.chatService.submitPos().subscribe(data =>{
-			debugger;
 			let send_userid = data.send_userid;
-	 		this.chatService.postPos(send_userid,"我是位置11111");
-		})
+	 		this.chatService.postPos(send_userid,send_userid+"你好，这是我的位置");
+		});
 	}
 
 	login(userid){
+		this.userid = userid;
 		this.chatService.login(userid);
 	}
 
