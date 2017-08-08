@@ -10,50 +10,51 @@ declare var window;
 
 @Injectable()
 export class BaiduLocationService {
-	constructor(
-		public plf: Platform,
-	//	public _global: GlobalService
-	) {}
+	constructor(public plf: Platform) //	public _global: GlobalService
+	{
+	}
 
-	startLocation(callback) {
-		// 手机环境
-		if (window.cordova) {
-			if (this.plf.is("android")) {
-				window.baidumap_location.getCurrentPosition(
-					data => {
-						console.log("android location success");
-						callback({
-							code: 0,
-							message: "定位成功",
-							position: this.createDetailAddr(data)
-						});
-					},
-					function(err) {
-						console.log("android location error");
-						// 没有权限进入error
-						callback({
-							code: -1,
-							message: "手机定位功能未开启(Android)"
-						});
-					}
-				);
-			} else {
-				this.ios_location(
-					data => {
-						console.log("ios location success");
-						callback({
-							code: 0,
-							message: "定位成功",
-							position: this.createDetailAddr(data)
-						});
-					},
-					err => {
-						console.log("ios location error");
-						callback(err);
-					}
-				);
+	startLocation(callback): Promise<any> {
+		return new Promise(function(resolve, reject) {
+			// 手机环境
+			if (window.cordova) {
+				if (this.plf.is("android")) {
+					window.baidumap_location.getCurrentPosition(
+						data => {
+							console.log("android location success");
+							resolve({
+								code: 0,
+								message: "定位成功",
+								position: this.createDetailAddr(data)
+							});
+						},
+						function(err) {
+							console.log("android location error");
+							// 没有权限进入error
+							reject({
+								code: -1,
+								message: "手机定位功能未开启(Android)"
+							});
+						}
+					);
+				} else {
+					this.ios_location(
+						data => {
+							console.log("ios location success");
+							resolve({
+								code: 0,
+								message: "定位成功",
+								position: this.createDetailAddr(data)
+							});
+						},
+						err => {
+							console.log("ios location error");
+							reject(err);
+						}
+					);
+				}
 			}
-		}
+		});
 	}
 
 	ios_location(success, error) {

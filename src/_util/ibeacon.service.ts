@@ -61,27 +61,29 @@ export class IBeaconService {
 						data.beacons[i].major == 0 &&
 						data.beacons[i].minor == 1
 					) {
-						// alert("总部")
+						alert("总部")
 					} else if (
 						data.beacons[i].major == 1 &&
 						data.beacons[i].minor == 1
 					) {
-						// alert("园区")
+						alert("园区")
 					}
 				}
-				// 停止扫描
+				// 成功后即停止扫描
 				this.ibeacon
 					.stopRangingBeaconsInRegion(beaconRegion)
 					.then(d => {});
 			},
 			error => console.error()
 		);
+
 		delegate
 			.didStartMonitoringForRegion()
 			.subscribe(
 				data => console.log("didStartMonitoringForRegion: ", data),
 				error => console.error()
 			);
+			
 		delegate.didEnterRegion().subscribe(data => {
 			console.log("didEnterRegion: ", data);
 		});
