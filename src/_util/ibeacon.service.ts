@@ -1,5 +1,5 @@
 /**
- * 极光推送服务
+ * Ibeacon 服务
  */
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";

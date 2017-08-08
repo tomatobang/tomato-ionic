@@ -1,0 +1,157 @@
+/**
+ * 百度定位服务
+ */
+import { Injectable } from "@angular/core";
+import { Platform } from "ionic-angular";
+import { Events } from "ionic-angular";
+import { GlobalService } from "../providers/global-service";
+
+declare var window;
+
+@Injectable()
+export class BaiduLocationService {
+	constructor(
+		public plf: Platform,
+	//	public _global: GlobalService
+	) {}
+
+	startLocation(callback) {
+		// 手机环境
+		if (window.cordova) {
+			if (this.plf.is("android")) {
+				window.baidumap_location.getCurrentPosition(
+					data => {
+						console.log("android location success");
+						callback({
+							code: 0,
+							message: "定位成功",
+							position: this.createDetailAddr(data)
+						});
+					},
+					function(err) {
+						console.log("android location error");
+						// 没有权限进入error
+						callback({
+							code: -1,
+							message: "手机定位功能未开启(Android)"
+						});
+					}
+				);
+			} else {
+				this.ios_location(
+					data => {
+						console.log("ios location success");
+						callback({
+							code: 0,
+							message: "定位成功",
+							position: this.createDetailAddr(data)
+						});
+					},
+					err => {
+						console.log("ios location error");
+						callback(err);
+					}
+				);
+			}
+		}
+	}
+
+	ios_location(success, error) {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				position => {
+					console.log(
+						"(IOS)Latitude: " +
+							position.coords.latitude +
+							"Longitude: " +
+							position.coords.longitude
+					);
+					//注意：在得到准确位置前，需要对原生的坐标系转化成百度的坐标系
+					var point = new window.BMap.Point(
+						position.coords.longitude,
+						position.coords.latitude
+					);
+					window.BMap.Convertor.translate(point, 0, point => {
+						//调用百度的逆地址解析
+						var geoc = new window.BMap.Geocoder();
+						geoc.getLocation(
+							point,
+							rs => {
+								success(rs);
+							},
+							err => {
+								error({ code: -1, message: "定位出错(IOS)" });
+							}
+						);
+					});
+				},
+				err => {
+					if (err.code === 1) {
+						error({ code: -3, message: "手机定位功能未开启(IOS)" });
+					} else {
+						error({ code: -1, message: "定位出错(IOS)" });
+					}
+				},
+				{
+					enableHighAccuracy: true
+				}
+			);
+		} else {
+			error({ code: -2, message: "不支持定位(IOS)" });
+		}
+	}
+
+	createDetailAddr(data) {
+		var addr,
+			pois,
+			addrDatas = [],
+			isAndroid = this.plf.is("android");
+
+		if (isAndroid) {
+			addr = data.addr.substring(2);
+			pois = data.pois;
+			if (pois == null) {
+				addrDatas.push(addr);
+			} else {
+				if (Array.isArray(pois)) {
+					if (pois.length == 0) {
+						addrDatas.push(addr);
+					} else {
+						for (var i = 0; i < pois.length; i++) {
+							if (pois[i].name) {
+								addrDatas.push(addr + pois[i].name);
+							}
+						}
+					}
+				} else {
+					if (pois.name) {
+						addrDatas.push(addr + pois.name);
+					}
+				}
+			}
+		} else {
+			addr = data.address;
+			pois = data.surroundingPois;
+			if (pois == null) {
+				addrDatas.push(addr);
+			} else {
+				if (Array.isArray(pois)) {
+					if (pois.length == 0) {
+						addrDatas.push(addr);
+					} else {
+						for (var i = 0; i < pois.length; i++) {
+							if (pois[i].title) {
+								addrDatas.push(addr + pois[i].title);
+							}
+						}
+					}
+				} else {
+					if (pois.title) {
+						addrDatas.push(addr + pois.title);
+					}
+				}
+			}
+		}
+		return addrDatas;
+	}
+}
