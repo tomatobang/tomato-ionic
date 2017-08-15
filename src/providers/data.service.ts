@@ -12,6 +12,13 @@
      if (token && !opts.headers.get('Authorization')) {
         opts.headers.append('Authorization','Bearer ' + token.replace(/(^\")|(\"$)/g, ''))
      }
+
+ * POST 示例     
+    getTomatoes(userID): Observable<any> {
+        var creds = "userID=" + userID + "&data1=1";
+        return this.http.post(this.baseUrl + '.', 
+        creds, this.interceptor()).map(res => res.json());
+    }
  *
  */
 import { Injectable, Inject } from '@angular/core'
@@ -34,12 +41,12 @@ export class DataService {
         this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     }
 
-    public taskSubject: Subject<any> = new Subject<any>();
+    public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
     public get TasksMonitor(): Observable<any> {
         return this.taskSubject.asObservable();
     }
 
-    public tomatoesSubject: Subject<any> = new Subject<any>();
+    public tomatoesSubject: Subject<any> = new BehaviorSubject<any>(null);
     public get TomatoesMonitor(): Observable<any> {
         return this.tomatoesSubject.asObservable();
     }
@@ -59,30 +66,6 @@ export class DataService {
         const opts: RequestOptions = new RequestOptions()
         opts.headers = this.headers
         return opts
-    }
-
-    /**
-     * [getTomatoes ]
-     * @param  {[type]}   userID       [用户编号]
-     * @return {Observable<any>}      [description]
-     */
-    // getTomatoes(userID): Observable<any> {
-    //     var creds = "userID=" + userID + "&data1=1";
-    //     return this.http.post(this.baseUrl + '.', 
-    //     creds, this.interceptor()).map(res => res.json());
-    // }
-
-    getTasks(options):Observable<any>{
-        let params: RequestOptions = this.interceptor()
-        params.search = new URLSearchParams(querystring.stringify(options))
-        return this.http.get(baseUrl + 'api/task', params)
-    }
-
-
-    getTomatoes(options):Observable<any>{
-        let params: RequestOptions = this.interceptor()
-        params.search = new URLSearchParams(querystring.stringify(options))
-        return this.http.get(baseUrl + 'api/tomato', params)
     }
 
 }
