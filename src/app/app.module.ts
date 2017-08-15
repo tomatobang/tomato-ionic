@@ -10,7 +10,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000/chat', options: {} 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { GlobalService } from '../providers/global-service';
+import { GlobalService } from '../providers/global.service';
 import { JPushService } from '../_util/jpush.service';
 
 

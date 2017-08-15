@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { Events } from "ionic-angular";
-import { GlobalService } from "../providers/global-service";
+import { GlobalService } from "../providers/global.service";
 import { RongyunUtil } from "./RongyunUtil";
 
 declare var window;
