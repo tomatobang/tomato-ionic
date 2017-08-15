@@ -10,7 +10,6 @@ const config: SocketIoConfig = { url: 'http://localhost:3000/chat', options: {} 
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { EmojiProvider } from '../providers/emoji';
 import { GlobalService } from '../providers/global-service';
 import { JPushService } from '../_util/jpush.service';
 
@@ -36,7 +35,7 @@ import { JPushService } from '../_util/jpush.service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EmojiProvider,GlobalService,JPushService
+    GlobalService,JPushService
   ]
 })
 export class AppModule {}
