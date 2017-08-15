@@ -13,12 +13,16 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { GlobalService } from '../providers/global.service';
 import { JPushService } from '../_util/jpush.service';
 
+import { RebirthStorageModule } from 'rebirth-storage'; 
+import { RebirthHttpModule  } from 'rebirth-http';
 
 @NgModule({
   declarations: [
     MyApp,
   ],
   imports: [
+    RebirthStorageModule,
+    RebirthHttpModule,
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp,{

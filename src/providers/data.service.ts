@@ -21,6 +21,10 @@ import * as querystring from 'querystring'
 import { baseUrl } from '../config'
 import { CacheService } from './cache.service';
 
+export * from './model_api/task';
+export * from './model_api/tomato';
+export * from './model_api/user';
+
 @Injectable()
 export class DataService {
     baseUrl:string = baseUrl;
@@ -80,5 +84,8 @@ export class DataService {
         params.search = new URLSearchParams(querystring.stringify(options))
         return this.http.get(baseUrl + 'api/tomato', params)
     }
+
 }
+
+
 
