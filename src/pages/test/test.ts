@@ -40,7 +40,7 @@ export class TestPage implements OnInit {
 			this.msg = "收到消息: " + msg;
 		});
 
-		this.chatService.receivePos().subscribe(msg => {
+		this.chatService.receiveOtherPos().subscribe(msg => {
 			this.msg = "收到对方位置: " + msg;
 		});
 
@@ -48,9 +48,9 @@ export class TestPage implements OnInit {
 			this.msg = "发送自身位置: " + msg;
 		});
 
-		this.chatService.submitPos().subscribe(data =>{
+		this.chatService.PleasePostPos().subscribe(data =>{
 			let send_userid = data.send_userid;
-	 		this.chatService.postPos(send_userid,send_userid+"你好，这是我的位置");
+	 		this.chatService.postMyPos(send_userid,send_userid+"你好，这是我的位置");
 		});
 	}
 
@@ -61,6 +61,6 @@ export class TestPage implements OnInit {
 
 	sendMsg(msg) {
 		//this.chatService.sendMessage(msg);
-		this.chatService.requestPos(msg);
+		this.chatService.requestOtherPos(msg);
 	}
 }

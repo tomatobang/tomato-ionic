@@ -19,32 +19,32 @@ export class SocketIOService {
 		this.socket.emit("login_test", userid);
 	}
 
-	requestPos(to_userid: string) {
-		this.socket.emit("request_pos", to_userid);
+	requestOtherPos(to_userid: string) {
+		this.socket.emit("request_other_pos", to_userid);
 	}
 
-	postPos(to_userid, pos){
-		this.socket.emit("post_pos", to_userid,pos);
+	postMyPos(to_userid, pos){
+		this.socket.emit("post_my_pos", to_userid,pos);
 	}
 
 	/**
 	 * 被要求提交位置
 	 */
-	submitPos(){
-		return this.socket.fromEvent<any>("submit_pos").map(data => data);
+	PleasePostPos(){
+		return this.socket.fromEvent<any>("please_post_pos").map(data => data);
 	}
 
 	/**
 	 * 收到位置信息
 	 */
-    receivePos() {
-		return this.socket.fromEvent<any>("posReceived").map(data => data);
+    receiveOtherPos() {
+		return this.socket.fromEvent<any>("received_other_pos").map(data => data);
     }
 	
 	/**
 	 * 位置收发错误
 	 */
     sendPos_error(){
-        return this.socket.fromEvent<any>("sendPos_error").map(data => data);
+        return this.socket.fromEvent<any>("location_error").map(data => data);
     }
 }
