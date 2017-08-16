@@ -33,6 +33,9 @@ export class IndexPage implements OnInit, OnDestroy {
 		}
 	};
 
+	historyTomatoes: Array<any> =[];
+	tomatoCount = 0;
+
 	constructor(
 		public tomatoservice:OnlineTomatoService,
 		public navCtrl: NavController,
@@ -69,6 +72,12 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.voice.reset();
 			this.onRelease();
 		});
+
+		this.tomatoservice.getTodayTomatos().subscribe(data =>{
+			let list = JSON.parse(data._body);
+            this.historyTomatoes = list;
+            this.tomatoCount = list.length;
+		})
 	}
 
 	ngOnDestroy() {

@@ -1,0 +1,24 @@
+<div class="timeline-container">
+
+    <div class="tomatoCount">
+        <span>今日番茄钟</span>
+        <h1 class="subtitle is-1">{{tomatoCount}}</h1>
+    </div>
+
+    <div class="timeline-wrapper clearfix">
+        <div class="timeline-content-day">
+            <div class="timeline-line"></div>
+
+            <div class="timeline-content-item active" data-timeline="hour-8" *ngFor="let tomato of historyTomatoes">
+                <span>{{tomato.endTime | date:'shortTime'}}</span>
+                <div class="timeline-content-item-reveal">
+                    <a href="#">
+                    <span [ngClass]="{'text-breaked':tomato.succeed==0}">{{tomato.title | StringTruncate: 10}}</span>
+                </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
