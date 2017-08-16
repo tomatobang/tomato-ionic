@@ -5,11 +5,25 @@
 </ion-header>
 
 <ion-content>
-    <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src=""></div>
-    <div #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
-        按住我说话
-    </div>
-    <div id="play_block" #play_block>
-        <button ion-button color="secondary" round (click)="play()"> 播放 </button>
-    </div>
+
+    <ion-slides pager>
+        <ion-slide>
+            <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src=""></div>
+            <div #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
+                按住我说话
+            </div>
+            <div id="play_block" #play_block>
+                <button ion-button color="secondary" round (click)="play()"> 播放 </button>
+            </div>
+        </ion-slide>
+
+        <ion-slide>
+            <h2>Slide 2</h2>
+        </ion-slide>
+
+        <ion-slide>
+            <h2>Slide 3</h2>
+        </ion-slide>
+
+    </ion-slides>
 </ion-content>

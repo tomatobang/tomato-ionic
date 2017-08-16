@@ -7,6 +7,8 @@ import { NavController, IonicPage } from "ionic-angular";
 import { Platform } from "ionic-angular";
 import { Gesture } from "ionic-angular/gestures/gesture";
 
+import { OnlineTomatoService,OnlineTaskService } from "../../providers/data.service"
+
 declare let window;
 
 @IonicPage()
@@ -32,6 +34,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	};
 
 	constructor(
+		public tomatoservice:OnlineTomatoService,
 		public navCtrl: NavController,
 		private media: Media,
 		public platform: Platform,

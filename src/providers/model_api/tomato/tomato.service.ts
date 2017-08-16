@@ -3,8 +3,8 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SearchResult } from './search-result.model';
 import { Tomato } from './tomato.model';
-import { Cacheable } from 'rebirth-storage/dist/rebirth-storage';
-import { RebirthHttp, RebirthHttpProvider, GET, POST, DELETE, Query, Path, Body } from 'rebirth-http/rebirth-http';
+import { Cacheable } from 'rebirth-storage';
+import { RebirthHttp, RebirthHttpProvider, GET, POST, DELETE, Query, Path, Body } from 'rebirth-http';
 
 
 

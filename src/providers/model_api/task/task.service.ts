@@ -3,8 +3,8 @@ import { Http } from '@angular/http';
 import { Task } from './task.model';
 import { SearchResult } from './search-result.model';
 import { Observable } from 'rxjs/Observable';
-import { Cacheable } from 'rebirth-storage/dist/rebirth-storage';
-import { RebirthHttp, RebirthHttpProvider, GET, POST, DELETE, Query, Path, Body } from 'rebirth-http/rebirth-http';
+import { Cacheable } from 'rebirth-storage';
+import { RebirthHttp, RebirthHttpProvider, GET, POST, DELETE, Query, Path, Body } from 'rebirth-http';
 
 
 export abstract class TaskService extends RebirthHttp {
