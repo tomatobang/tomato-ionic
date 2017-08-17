@@ -9,14 +9,10 @@
     <ion-slides pager>
         <ion-slide>
             <div>
-            <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress></div>
-            <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src=""></div>
-            <div #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
-                按住我说话
+                <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>
             </div>
-            <div id="play_block" #play_block>
-                <button ion-button color="secondary" round (click)="play()"> 播放 </button>
-            </div>
+            
+            <button ion-fab mini (click)="addTask()"><ion-icon name="add"></ion-icon></button>
         </ion-slide>
 
         <ion-slide>
@@ -57,4 +53,5 @@
         </ion-slide>
 
     </ion-slides>
+   
 </ion-content>
