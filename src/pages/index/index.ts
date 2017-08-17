@@ -33,6 +33,20 @@ export class IndexPage implements OnInit, OnDestroy {
 		}
 	};
 
+	// 番茄钟长度
+    countdown: number = 25;
+	timerStatus = {
+        label: this.countdown + ':00',
+        countdown: this.countdown,
+        percentage: 0,
+        count: 0,
+        reset: function () {
+            this.count = 0;
+            this.percentage = 0;
+            this.label = this.countdown + ":00";
+        }
+    };
+
 	historyTomatoes: Array<any> =[];
 	tomatoCount = 0;
 

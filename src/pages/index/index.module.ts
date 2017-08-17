@@ -10,10 +10,10 @@ import { OnlineTomatoService,OnlineTaskService } from "../../providers/data.serv
 import { TaskPipe } from '../../pipes/taskPipe';
 import { StringTruncate } from '../../pipes/stringTruncate';
 import { DateTransform } from '../../pipes/dateTransform';
-
+import { AngularRoundProgressComponent } from '../../_directives/angular-round-progress-directive';
 
 @NgModule({
-    declarations: [IndexPage, TaskPipe,StringTruncate,DateTransform],
+    declarations: [IndexPage, TaskPipe,StringTruncate,DateTransform,AngularRoundProgressComponent],
     imports: [IonicPageModule.forChild(IndexPage)],
     providers: [OnlineTaskService, OnlineTomatoService],
 })
