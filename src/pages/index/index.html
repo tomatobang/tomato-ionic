@@ -18,7 +18,17 @@
         </ion-slide>
 
         <ion-slide>
-            <tomatobang-timeline [historyTomatoes]="historyTomatoes" [tomatoCount]="tomatoCount"></tomatobang-timeline>
+            <h1 class="subtitle is-1">今日番茄钟{{tomatoCount}}</h1>
+            <ion-list>
+                <ion-item *ngFor="let tomato of historyTomatoes">
+                    <ion-avatar item-start>
+                        <img src="assets/tomato.png">
+                    </ion-avatar>
+                    <h2><span [ngClass]="{'text-breaked':tomato.succeed==0}">{{tomato.title | StringTruncate: 20}}</span></h2>
+                    <h3><span>{{tomato.endTime | date:'shortTime'}}</span>
+                    </h3>
+                </ion-item>
+            </ion-list>
         </ion-slide>
 
         <ion-slide>
