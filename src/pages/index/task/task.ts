@@ -12,6 +12,7 @@ declare let window;
 	providers: [Media]
 })
 export class TaskPage implements OnInit, OnDestroy {
+	openNewTaskForm = false;
 	allTasks = {
         finished: new Array,
         unfinished: new Array
@@ -95,6 +96,29 @@ export class TaskPage implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.pressGesture.destroy();
+	}
+	
+	addTask = function (isActive: any) {
+        let task = this.newTask;
+        // task.num = 1;
+        task.isActive = isActive;
+        // 创建任务
+        this.taskservice.createTask(task).subscribe((response: any) => {
+            let data: any = JSON.parse(response._body);
+            if (data && data.status == "fail") {
+            } else {
+                let tt = this.allTasks.unfinished;
+                // replace push to trigger the event
+                this.allTasks.unfinished = [task].concat(tt);
+                this.newTask = {
+                    title: '',
+                    description: '',
+                    num: 1
+                };
+                this.openNewTaskForm = false;
+            }
+        });
+
     }
     
     dismiss() {
