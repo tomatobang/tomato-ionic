@@ -12,6 +12,18 @@ declare let window;
 	providers: [Media]
 })
 export class TaskPage implements OnInit, OnDestroy {
+	allTasks = {
+        finished: new Array,
+        unfinished: new Array
+    };
+
+    newTask = {
+        title: '',
+        description: '',
+        num: 1
+    };
+
+
 	el: HTMLElement;
 	pressGesture: Gesture;
 	isStartRecord = false;
@@ -64,6 +76,21 @@ export class TaskPage implements OnInit, OnDestroy {
 			this.voice.reset();
 			this.onRelease();
 		});
+
+		this.taskservice.getTasks().subscribe(data => {
+            const retStr = data && data._body;
+            const dataArr = JSON.parse(retStr);
+            this.allTasks.unfinished = dataArr;
+            if(dataArr.length > 0 && this.allTasks.unfinished){
+                this.allTasks.unfinished = this.allTasks.unfinished.slice();
+            }else{
+                this.allTasks.unfinished = [];
+                this.allTasks.unfinished = this.allTasks.unfinished.slice();
+            } 
+        }, err => {
+            alert(JSON.stringify(err));
+            console.log('getTasks err', err);
+        })
 	}
 
 	ngOnDestroy() {

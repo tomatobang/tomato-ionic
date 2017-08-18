@@ -7,7 +7,6 @@ import {
 	OnlineTaskService
 } from "../../providers/data.service";
 
-import { TaskPipe } from "../../pipes/taskPipe";
 import { StringTruncate } from "../../pipes/stringTruncate";
 import { DateTransform } from "../../pipes/dateTransform";
 import { AngularRoundProgressComponent } from "../../_directives/angular-round-progress-directive";
@@ -15,7 +14,6 @@ import { AngularRoundProgressComponent } from "../../_directives/angular-round-p
 @NgModule({
 	declarations: [
 		IndexPage,
-		TaskPipe,
 		StringTruncate,
 		DateTransform,
         AngularRoundProgressComponent

@@ -55,7 +55,6 @@ export class IndexPage implements OnInit, OnDestroy {
 	addTask() {
 		let profileModal = this.modalCtrl.create("TaskPage");
 		profileModal.onDidDismiss(data => {
-			debugger
 			console.log(data);
 		});
 		profileModal.present();

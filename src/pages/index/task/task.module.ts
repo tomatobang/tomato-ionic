@@ -7,10 +7,12 @@ import {
 } from "../../../providers/data.service";
 
 import { TaskPage } from "./task";
+import { TaskPipe } from "../../../pipes/taskPipe";
 
 @NgModule({
 	declarations: [
-        TaskPage
+        TaskPage,
+        TaskPipe
 	],
 	imports: [IonicPageModule.forChild(TaskPage)],
     providers: [OnlineTaskService, OnlineTomatoService],
