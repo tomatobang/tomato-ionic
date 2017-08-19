@@ -11,12 +11,11 @@
             <div>
                 <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>
             </div>
-            
             <button ion-fab mini (click)="addTask()"><ion-icon name="add"></ion-icon></button>
         </ion-slide>
 
-        <ion-slide>
-            <h1 class="subtitle is-1">今日番茄钟{{tomatoCount}}</h1>
+        <ion-slide class="tomato-today-slide">
+            <h1>今日番茄钟({{tomatoCount}})</h1>
             <ion-list>
                 <ion-item *ngFor="let tomato of historyTomatoes">
                     <ion-avatar item-start>
