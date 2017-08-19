@@ -13,6 +13,7 @@ declare let window;
 })
 export class TaskPage implements OnInit, OnDestroy {
 	openNewTaskForm = false;
+	taskType = "today";
 	allTasks = {
         finished: new Array,
         unfinished: new Array

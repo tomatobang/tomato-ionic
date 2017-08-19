@@ -14,8 +14,61 @@
 
 
 <ion-content>
-    <div class="task-modal">
-        <ion-list *ngIf="!openNewTaskForm">
+    <div *ngIf="openNewTaskForm">
+        <h1 class="add-newtask-title">添加新任务</h1>
+        <ion-list>
+            <ion-item>
+                <ion-label stacked>任务名称</ion-label>
+                <ion-input type="text" [(ngModel)]="newTask.title"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>目标</ion-label>
+                <ion-input type="text" [(ngModel)]="newTask.target"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>番茄钟个数</ion-label>
+                <ion-input type="text" [(ngModel)]="newTask.num"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>描述/备注</ion-label>
+                <ion-input type="text" [(ngModel)]="newTask.description"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src="" *ngIf="false"></div>
+                <div #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
+                    按住我说话
+                </div>
+                <div id="play_block" #play_block>
+                    <button ion-button color="secondary" round (click)="play()"> 播放 </button>
+                </div>
+            </ion-item>
+        </ion-list>
+        <button ion-button color="secondary" outline (click)="addTask(true)">添加</button>
+        <button ion-button color="light" outline (click)="openNewTaskForm=false;newTask.title=''">取消</button>
+    </div>
+
+    <div padding *ngIf="!openNewTaskForm" style="text-align:center">
+        <button outline ion-button (click)="openNewTaskForm=true">添加新任务...</button>
+    </div>
+
+
+    <div padding *ngIf="!openNewTaskForm">
+        <ion-segment [(ngModel)]="taskType">
+            <ion-segment-button value="today">
+                今日任务
+            </ion-segment-button>
+            <ion-segment-button value="often">
+                候选任务
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+
+    <div *ngIf="!openNewTaskForm" [ngSwitch]="taskType">
+        <ion-list  *ngSwitchCase="'today'">
             <ion-item-sliding>
                 <ion-item *ngFor="let task of allTasks.unfinished | TaskPipe:true">
                     <ion-avatar item-start>
@@ -26,54 +79,28 @@
                 </ion-item>
                 <ion-item-options side="right">
                     <button ion-button color="primary">
-                        <ion-icon name="text"></ion-icon>
-                        删除
-                    </button>
+                            <ion-icon name="text"></ion-icon>删除
+                     </button>
                 </ion-item-options>
             </ion-item-sliding>
         </ion-list>
 
-        <div *ngIf="openNewTaskForm">
-            <h1 class="add-newtask-title">添加新任务</h1>
-            <ion-list>
-                <ion-item>
-                    <ion-label stacked>任务名称</ion-label>
-                    <ion-input type="text" [(ngModel)]="newTask.title"></ion-input>
+        <ion-list *ngSwitchCase="'often'">
+            <ion-item-sliding>
+                <ion-item *ngFor="let task of allTasks.unfinished | TaskPipe:false">
+                    <ion-avatar item-start>
+                        <img src="assets/tomato.png">
+                    </ion-avatar>
+                    <h2 class="title">{{ task.title }}</h2>
+                    <h3 class="subtitle">{{ task.target }}({{ task.description }})</h3>
                 </ion-item>
-
-                <ion-item>
-                    <ion-label stacked>目标</ion-label>
-                    <ion-input type="text" [(ngModel)]="newTask.target"></ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label stacked>番茄钟个数</ion-label>
-                    <ion-input type="text" [(ngModel)]="newTask.num"></ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label stacked>描述/备注</ion-label>
-                    <ion-input type="text" [(ngModel)]="newTask.description"></ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src="" *ngIf="false"></div>
-                    <div #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
-                        按住我说话
-                    </div>
-                    <div id="play_block" #play_block>
-                        <button ion-button color="secondary" round (click)="play()"> 播放 </button>
-                    </div>
-                </ion-item>
-            </ion-list>
-            <button ion-button color="secondary" outline (click)="addTask(true)">添加</button>
-            <button ion-button color="light" outline (click)="openNewTaskForm=false;newTask.title=''">取消</button>
-        </div>
-
-
-        <div padding *ngIf="!openNewTaskForm">
-            <button outline ion-button (click)="openNewTaskForm=true">添加新任务...</button>
-        </div>
-
+                <ion-item-options side="right">
+                    <button ion-button color="primary">
+                      <ion-icon name="text"></ion-icon> 删除
+                  </button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
     </div>
+
 </ion-content>

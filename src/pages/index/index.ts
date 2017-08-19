@@ -20,6 +20,7 @@ declare let window;
 })
 export class IndexPage implements OnInit, OnDestroy {
 	// 番茄钟长度
+	items = [];
 	countdown: number = 25;
 	timerStatus = {
 		label: this.countdown + ":00",
