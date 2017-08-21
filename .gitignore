@@ -119,6 +119,7 @@ www/
 /plugins/es6-promise-plugin
 /plugins/phonegap-plugin-barcodescanner
 /plugins/TalkingData
+/plugins/phonegap-nfc
 
 com/
 org/

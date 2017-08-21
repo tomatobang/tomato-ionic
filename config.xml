@@ -67,4 +67,5 @@
         <variable name="MI_PUSH_APPKEY" value="5601759690915" />
     </plugin>
     <plugin name="com.unarin.cordova.beacon" spec="~3.4.0" />
+    <plugin name="phonegap-nfc" spec="^0.6.6" />
 </widget>

@@ -82,6 +82,9 @@
         },
         "com.unarin.cordova.beacon": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "phonegap-nfc": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         }
     },
     "dependent_plugins": {
