@@ -12,19 +12,19 @@ declare var Notification: any;
 export class AngularRoundProgressComponent {
     canvas: HTMLCanvasElement;
 
-    width: any = "320";
-    height: any = "320";
+    width: any = "270";
+    height: any = "270";
     outerCircleWidth: string = "25";
     innerCircleWidth: string = "5";
-    outerCircleRadius: string = "145";
-    innerCircleRadius: string = "100";
+    outerCircleRadius: string = "115";
+    innerCircleRadius: string = "80";
 
-    labelFont: string = "50pt Arial";
+    labelFont: string = "40pt Arial";
     outerCircleBackgroundColor: string = "#505769";
     outerCircleForegroundColor: string = "#12eeb9";
-    innerCircleColor: string = "#12eeb9";
+    innerCircleColor: string = "#387ef5";
 
-    labelColor: string = "#12eeb9";
+    labelColor: string = "#387ef5";
 
     timerStatusValue:any;
 

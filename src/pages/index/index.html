@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>首页</ion-title>
+        <ion-title>{{page_title}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
             <div>
                 <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>
             </div>
-            <button ion-fab mini (click)="addTask()"><ion-icon name="add"></ion-icon></button>
+            <button ion-fab mini (click)="addTask()" class="task-manager-plus"><ion-icon name="add"></ion-icon></button>
         </ion-slide>
 
         <ion-slide class="tomato-today-slide">

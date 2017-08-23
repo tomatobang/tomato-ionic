@@ -1,9 +1,9 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            任务管理
+            {{page_title}}
         </ion-title>
-        <ion-buttons start>
+        <ion-buttons start *ngIf="showDismissButton">
             <button ion-button (click)="dismiss()">
               <span ion-text color="primary" showWhen="ios">关闭</span>
               <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
@@ -15,7 +15,7 @@
 
 <ion-content>
     <div *ngIf="openNewTaskForm">
-        <h1 class="add-newtask-title">添加新任务</h1>
+        <!-- <h1 class="add-newtask-title">添加新任务</h1> -->
         <ion-list>
             <ion-item>
                 <ion-label stacked>任务名称</ion-label>
@@ -42,18 +42,17 @@
             </ion-item>
         </ion-list>
         <button ion-button color="secondary" outline (click)="addTask(true)">添加</button>
-        <button ion-button color="light" outline (click)="openNewTaskForm=false;newTask.title=''">取消</button>
+        <button ion-button color="light"  (click)="openNewTaskForm=false;newTask.title='';showDismissButton=true">取消</button>
     </div>
-
     <div padding *ngIf="!openNewTaskForm" style="text-align:center">
-        <button outline ion-button (click)="openNewTaskForm=true">添加新任务...</button>
+        <button outline ion-button (click)="openNewTaskForm=true;page_title='添加新任务';showDismissButton=false">添加新任务...</button>
     </div>
 
 
     <div padding *ngIf="!openNewTaskForm">
         <ion-segment [(ngModel)]="taskType">
             <ion-segment-button value="today">
-                今日任务
+                激活任务
             </ion-segment-button>
             <ion-segment-button value="often">
                 候选任务
@@ -62,9 +61,9 @@
     </div>
 
     <div *ngIf="!openNewTaskForm" [ngSwitch]="taskType">
-        <ion-list  *ngSwitchCase="'today'">
-            <ion-item-sliding>
-                <ion-item *ngFor="let task of allTasks.unfinished | TaskPipe:true">
+        <ion-list *ngSwitchCase="'today'">
+            <ion-item-sliding *ngFor="let task of allTasks.unfinished | TaskPipe:true">
+                <ion-item >
                     <ion-avatar item-start>
                         <img src="assets/tomato.png">
                     </ion-avatar>
@@ -73,6 +72,12 @@
                 </ion-item>
                 <ion-item-options side="right">
                     <button ion-button color="primary">
+                        <ion-icon name="text"></ion-icon>开启
+                    </button>
+                    <button ion-button color="primary" (click)="task_activate(task,0)">
+                        <ion-icon name="text"></ion-icon>转到备用
+                    </button>
+                    <button ion-button color="danger" (click)="task_delete(task)">
                             <ion-icon name="text"></ion-icon>删除
                      </button>
                 </ion-item-options>
@@ -80,8 +85,8 @@
         </ion-list>
 
         <ion-list *ngSwitchCase="'often'">
-            <ion-item-sliding>
-                <ion-item *ngFor="let task of allTasks.unfinished | TaskPipe:false">
+            <ion-item-sliding *ngFor="let task of allTasks.unfinished | TaskPipe:false">
+                <ion-item >
                     <ion-avatar item-start>
                         <img src="assets/tomato.png">
                     </ion-avatar>
@@ -89,7 +94,10 @@
                     <h3 class="subtitle">{{ task.target }}({{ task.description }})</h3>
                 </ion-item>
                 <ion-item-options side="right">
-                    <button ion-button color="primary">
+                    <button ion-button color="primary"  (click)="task_activate(task,1)">
+                        <ion-icon name="text"></ion-icon>转到激活
+                    </button>
+                    <button ion-button color="danger" (click)="task_delete(task)">
                       <ion-icon name="text"></ion-icon> 删除
                   </button>
                 </ion-item-options>

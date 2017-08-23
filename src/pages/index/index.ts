@@ -19,6 +19,7 @@ declare let window;
 	templateUrl: "index.html"
 })
 export class IndexPage implements OnInit, OnDestroy {
+	page_title= "首页";
 	// 番茄钟长度
 	items = [];
 	countdown: number = 25;

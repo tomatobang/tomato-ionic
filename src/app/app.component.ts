@@ -22,6 +22,6 @@ export class MyApp {
       // 初始化 jPush
       jPushService.init();
     });
-    rebirthProvider.headers({ Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBlbmd5aSIsInRpbWVzdGFtcCI6MTUwMzA1NjMzNjE4OSwiaWF0IjoxNTAzMDU2MzM2LCJleHAiOjE1MDMxNDI3MzZ9.qUoji9vWzeziBX9McMKWi9Wk2wly-9RTO9kpLJXitNw"});
+    rebirthProvider.headers({ Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBlbmd5aSIsInRpbWVzdGFtcCI6MTUwMzQ4ODMzOTI3NywiaWF0IjoxNTAzNDg4MzM5LCJleHAiOjE1MDM1NzQ3Mzl9.iXPO8VV89VVFEWsa4_eBy-UJe7WwzYeCV8JnEq5YKjA"});
   }
 }
