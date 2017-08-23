@@ -38,13 +38,7 @@
             </ion-item>
 
             <ion-item>
-                <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src="" *ngIf="false"></div>
-                <div #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
-                    按住我说话
-                </div>
-                <div id="play_block" #play_block>
-                    <button ion-button color="secondary" round (click)="play()"> 播放 </button>
-                </div>
+                <voice-recorder></voice-recorder>
             </ion-item>
         </ion-list>
         <button ion-button color="secondary" outline (click)="addTask(true)">添加</button>

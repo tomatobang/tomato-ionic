@@ -16,10 +16,11 @@ import { AngularRoundProgressComponent } from "../../_directives/angular-round-p
 		IndexPage,
 		StringTruncate,
 		DateTransform,
-        AngularRoundProgressComponent
+		AngularRoundProgressComponent
 	],
 	imports: [IonicPageModule.forChild(IndexPage)],
     providers: [OnlineTaskService, OnlineTomatoService],
     entryComponents:[]
 })
+
 export class IndexPageModule {}

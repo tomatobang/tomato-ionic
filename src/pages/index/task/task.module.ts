@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { IonicPageModule } from "ionic-angular";
+import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
 
 import {
 	OnlineTomatoService,
@@ -12,7 +13,8 @@ import { TaskPipe } from "../../../pipes/taskPipe";
 @NgModule({
 	declarations: [
         TaskPage,
-        TaskPipe
+        TaskPipe,
+        VoiceRecorderComponent
 	],
 	imports: [IonicPageModule.forChild(TaskPage)],
     providers: [OnlineTaskService, OnlineTomatoService],
