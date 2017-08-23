@@ -1,5 +1,5 @@
 import {Component, forwardRef} from '@angular/core';
-import {EmojiProvider} from "../../providers/emoji";
+import {EmojiProvider} from "./emoji.service";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 /**

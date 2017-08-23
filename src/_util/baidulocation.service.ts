@@ -140,7 +140,7 @@ export class BaiduLocationService {
 					if (pois.length == 0) {
 						addrDatas.push(addr);
 					} else {
-						for (var i = 0; i < pois.length; i++) {
+						for (let i = 0; i < pois.length; i++) {
 							if (pois[i].title) {
 								addrDatas.push(addr + pois[i].title);
 							}
