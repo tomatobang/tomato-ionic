@@ -6,7 +6,7 @@
 
 <ion-content>
 
-    <ion-slides pager>
+    <ion-slides pager (ionSlideDidChange)="slideChanged()">
         <ion-slide>
             <div>
                 <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>
@@ -15,7 +15,7 @@
         </ion-slide>
 
         <ion-slide class="tomato-today-slide">
-            <h1>今日番茄钟({{tomatoCount}})</h1>
+            <h1 class="today-tomatoCount">{{tomatoCount}}</h1>
             <ion-list>
                 <ion-item *ngFor="let tomato of historyTomatoes">
                     <ion-avatar item-start>
@@ -28,8 +28,8 @@
             </ion-list>
         </ion-slide>
 
-        <ion-slide>
-                <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+        <ion-slide class="tomato-history-slide">
+                <ion-searchbar (ionInput)="getItems($event)" placeholder="番茄钟名称..."></ion-searchbar>
                 <ion-list>
                   <ion-item *ngFor="let item of items">
                     {{ item }}

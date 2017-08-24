@@ -2,11 +2,16 @@
 .text-breaked{
   color: red !important;
 }
-.tomato-today-slide{
+.tomato-today-slide,.tomato-history-slide{
   align-items: flex-start;
 }
 .task-manager-plus{
   position: absolute;
   right: 10px;
   bottom: 40px;
+}
+.today-tomatoCount{
+  font-size: 32px;
+  color: #387ef5;
+  text-align: center;
 }

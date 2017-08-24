@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import {
 	NavController,
 	ViewController,
@@ -11,6 +11,7 @@ import {
 	OnlineTomatoService,
 	OnlineTaskService
 } from "../../providers/data.service";
+import { Slides } from "ionic-angular";
 declare let window;
 
 @IonicPage()
@@ -19,7 +20,9 @@ declare let window;
 	templateUrl: "index.html"
 })
 export class IndexPage implements OnInit, OnDestroy {
-	page_title= "首页";
+	page_title = "首页";
+	@ViewChild(Slides) slides: Slides;
+
 	// 番茄钟长度
 	items = [];
 	countdown: number = 25;
@@ -60,5 +63,20 @@ export class IndexPage implements OnInit, OnDestroy {
 			console.log(data);
 		});
 		profileModal.present();
+	}
+
+	slideChanged() {
+		let currentIndex = this.slides.getActiveIndex();
+		console.log("Current index is", currentIndex);
+		switch (currentIndex) {
+			case 0:this.page_title = "首页";
+				break;
+			case 1:this.page_title = "今日番茄钟";
+				break;
+			case 2:this.page_title = "历史查询";
+				break;
+			default:
+				break;
+		}
 	}
 }
