@@ -42,10 +42,10 @@
             </ion-item>
         </ion-list>
         <button ion-button color="secondary" outline (click)="addTask(true)">添加</button>
-        <button ion-button color="light"  (click)="openNewTaskForm=false;newTask.title='';showDismissButton=true">取消</button>
+        <button ion-button color="light"  (click)="cancleAddTask()">取消</button>
     </div>
     <div padding *ngIf="!openNewTaskForm" style="text-align:center">
-        <button outline ion-button (click)="openNewTaskForm=true;page_title='添加新任务';showDismissButton=false">添加新任务...</button>
+        <button outline ion-button (click)="addNewTaskLink()">添加新任务...</button>
     </div>
 
 
@@ -71,13 +71,13 @@
                     <h3 class="subtitle">{{ task.target }}({{ task.description }})</h3>
                 </ion-item>
                 <ion-item-options side="right">
-                    <button ion-button color="primary">
+                    <button ion-button color="primary" (click)="startTask(task)">
                         <ion-icon name="text"></ion-icon>开启
                     </button>
-                    <button ion-button color="primary" (click)="task_activate(task,0)">
+                    <button ion-button color="primary" (click)="removeTaskFromActiveList(task)">
                         <ion-icon name="text"></ion-icon>转到备用
                     </button>
-                    <button ion-button color="danger" (click)="task_delete(task)">
+                    <button ion-button color="danger" (click)="removeTask(task)">
                             <ion-icon name="text"></ion-icon>删除
                      </button>
                 </ion-item-options>
@@ -94,10 +94,10 @@
                     <h3 class="subtitle">{{ task.target }}({{ task.description }})</h3>
                 </ion-item>
                 <ion-item-options side="right">
-                    <button ion-button color="primary"  (click)="task_activate(task,1)">
+                    <button ion-button color="primary"  (click)="addTaskToActiveList(task,1)">
                         <ion-icon name="text"></ion-icon>转到激活
                     </button>
-                    <button ion-button color="danger" (click)="task_delete(task)">
+                    <button ion-button color="danger" (click)="removeTask(task)">
                       <ion-icon name="text"></ion-icon> 删除
                   </button>
                 </ion-item-options>

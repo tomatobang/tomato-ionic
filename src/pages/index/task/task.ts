@@ -48,6 +48,12 @@ export class TaskPage implements OnInit {
 		);
 	}
 
+	addNewTaskLink(){
+		this.openNewTaskForm=true;
+		this.page_title='添加新任务';
+		this.showDismissButton=false
+	}
+
 	addTask = function(isActive: any) {
 		let task = this.newTask;
 		// task.num = 1;
@@ -66,17 +72,70 @@ export class TaskPage implements OnInit {
 					num: 1
 				};
                 this.openNewTaskForm = false;
-                this.showDismissButton=true;
+				this.showDismissButton=true;
+				this.page_title = "任务管理";
 			}
 		});
-	};
+	}
+
+	removeTask(task: any) {
+        for (let index in this.allTasks.unfinished) {
+            if (this.allTasks.unfinished[index] === task) {
+                let ind = new Number(index);
+                // 删除任务
+                this.taskservice.deleteTask(task._id).subscribe(response => {
+                    let data: any = JSON.parse(response._body);
+                    if (data && data.status == "fail") {
+                    } else {
+                        this.allTasks.unfinished.splice(ind.valueOf(), 1);
+                        this.allTasks.unfinished = this.allTasks.unfinished.slice();
+                    }
+                });
+
+            }
+        }
+	}
+	
+	removeTaskFromActiveList(task: any) {
+        task.isActive = false;
+        this.taskservice.updateTask(task._id, task).subscribe(response => {
+            let data: any = JSON.parse(response._body);
+            if (data && data.status == "fail") {
+            } else {
+                this.allTasks.unfinished = this.allTasks.unfinished.slice();
+            }
+        }, err => {
+            alert(JSON.stringify(err));
+            console.log('updateTask err', err);
+        });
+
+    }
+
+    addTaskToActiveList(task: any) {
+        task.isActive = true;
+        this.taskservice.updateTask(task._id, task).subscribe(response => {
+            let data: any = JSON.parse(response._body);
+            if (data && data.status == "fail") {
+            } else {
+                this.allTasks.unfinished = this.allTasks.unfinished.slice();
+            }
+        }, err => {
+            alert(JSON.stringify(err));
+            console.log('updateTask err', err);
+        });
+
+    }
 
 	dismiss() {
 		let data = { foo: "bar" };
 		this.viewCtrl.dismiss(data);
 	}
 
-	task_activate(task, state) {}
+	cancleAddTask(){
+		this.page_title = "任务管理";
+		this.newTask.title='';
+		this.showDismissButton=true;
+		this.openNewTaskForm=false;
+	}
 
-	task_delete(task) {}
 }
