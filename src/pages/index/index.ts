@@ -6,6 +6,7 @@ import {
 	IonicPage,
 	NavParams
 } from "ionic-angular";
+import { AngularRoundProgressComponent } from "../../_directives/angular-round-progress-directive";
 
 import {
 	OnlineTomatoService,
@@ -25,18 +26,6 @@ export class IndexPage implements OnInit, OnDestroy {
 
 	// 番茄钟长度
 	items = [];
-	countdown: number = 25;
-	timerStatus = {
-		label: this.countdown + ":00",
-		countdown: this.countdown,
-		percentage: 0,
-		count: 0,
-		reset: function() {
-			this.count = 0;
-			this.percentage = 0;
-			this.label = this.countdown + ":00";
-		}
-	};
 
 	historyTomatoes: Array<any> = [];
 	tomatoCount = 0;
@@ -53,6 +42,12 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.historyTomatoes = list;
 			this.tomatoCount = list.length;
 		});
+
+		this.mp3Source.setAttribute("src", "/assets/audios/alert.mp3");
+		this.oggSource.setAttribute("src", "/assets/audios/alert.ogg");
+		this.alertAudio.appendChild(this.mp3Source);
+		this.alertAudio.appendChild(this.oggSource);
+		this.alertAudio.load();
 	}
 
 	ngOnDestroy() {}
@@ -60,7 +55,11 @@ export class IndexPage implements OnInit, OnDestroy {
 	addTask() {
 		let profileModal = this.modalCtrl.create("TaskPage");
 		profileModal.onDidDismiss(data => {
-			console.log(data);
+			if (data.task){
+				debugger
+				console.log(data.task);
+				this.startTask(data.task);
+			} 
 		});
 		profileModal.present();
 	}
@@ -69,14 +68,130 @@ export class IndexPage implements OnInit, OnDestroy {
 		let currentIndex = this.slides.getActiveIndex();
 		console.log("Current index is", currentIndex);
 		switch (currentIndex) {
-			case 0:this.page_title = "首页";
+			case 0:
+				this.page_title = "首页";
 				break;
-			case 1:this.page_title = "今日番茄钟";
+			case 1:
+				this.page_title = "今日番茄钟";
 				break;
-			case 2:this.page_title = "历史查询";
+			case 2:
+				this.page_title = "历史查询";
 				break;
 			default:
 				break;
 		}
+	}
+
+	mp3Source: HTMLSourceElement = document.createElement("source");
+	oggSource: HTMLSourceElement = document.createElement("source");
+	alertAudio: HTMLAudioElement = document.createElement("audio");
+	// 番茄钟长度
+	countdown: number = 25;
+	// 休息时间长度
+	resttime: number = 5;
+	mytimeout: any = null;
+	activeTomato: any = null;
+	isResting: boolean = false;
+	resttimeout: any = null;
+	resttimestart: any = null;
+	timerStatus = {
+		label: this.countdown + ":00",
+		countdown: this.countdown,
+		percentage: 0,
+		count: 0,
+		reset: function() {
+			this.count = 0;
+			this.percentage = 0;
+			this.label = this.countdown + ":00";
+		}
+	};
+	@ViewChild(AngularRoundProgressComponent)
+	child: AngularRoundProgressComponent;
+	ngAfterViewInit() {
+		setInterval(() => {
+			this.child.timerStatusValue == this.timerStatus;
+			this.child.render();
+		}, 1000);
+	}
+	startTask(task: any) {
+		this.activeTomato = task;
+		this.activeTomato.startTime = new Date();
+		this.startTimer();
+		let that = this;
+	}
+
+	startTimer() {
+		this.isResting = false;
+		if (typeof this.mytimeout !== "undefined") {
+			clearTimeout(this.mytimeout);
+			this.timerStatus.reset();
+		}
+		this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
+	}
+
+	onTimeout() {
+		// 重构
+		let datenow: number = new Date().getTime();
+		let startTime: number = this.activeTomato.startTime.getTime();
+		let dataspan: number = datenow - startTime;
+
+		let secondspan: number = dataspan / 1000;
+		let percentage = dataspan / (this.countdown * 60 * 1000);
+
+		this.timerStatus.percentage = percentage;
+		this.timerStatus.label = this.secondsToMMSS(
+			this.countdown * 60 - parseInt(secondspan + "")
+		);
+
+		if (dataspan >= this.countdown * 60 * 1000) {
+			this.alertAudio.play();
+		} else {
+			this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
+		}
+	}
+
+	onRestTimeout() {
+		let datenow: number = new Date().getTime();
+		let startTime: number = this.resttimestart.getTime();
+		let dataspan: number = datenow - startTime;
+
+		let secondspan: number = dataspan / 1000;
+		let percentage = dataspan / (this.resttime * 60 * 1000);
+
+		this.timerStatus.percentage = percentage;
+		this.timerStatus.label = this.secondsToMMSS(
+			this.resttime * 60 - parseInt(secondspan + "")
+		);
+
+		if (dataspan >= this.resttime * 60 * 1000) {
+			this.alertAudio.play();
+			this.isResting = false;
+			this.timerStatus.reset();
+		} else {
+			this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
+		}
+	}
+
+	stopTimer() {
+		clearTimeout(this.mytimeout);
+		this.timerStatus.reset();
+	}
+
+	secondsToMMSS(timeInSeconds: number) {
+		let minutes = Math.floor(timeInSeconds / 60);
+		let seconds = timeInSeconds - minutes * 60;
+		let retStr: string = "";
+		if (minutes < 10) {
+			retStr += "0" + minutes;
+		} else {
+			retStr += minutes;
+		}
+		retStr += ":";
+		if (seconds < 10) {
+			retStr += "0" + seconds;
+		} else {
+			retStr += seconds;
+		}
+		return retStr;
 	}
 }

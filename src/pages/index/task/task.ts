@@ -123,8 +123,11 @@ export class TaskPage implements OnInit {
             alert(JSON.stringify(err));
             console.log('updateTask err', err);
         });
-
-    }
+	}
+	
+	startTask(task){
+		this.viewCtrl.dismiss({task});
+	}
 
 	dismiss() {
 		let data = { foo: "bar" };
@@ -137,5 +140,7 @@ export class TaskPage implements OnInit {
 		this.showDismissButton=true;
 		this.openNewTaskForm=false;
 	}
+
+	
 
 }
