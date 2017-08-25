@@ -38,7 +38,7 @@
             </ion-item>
 
             <ion-item>
-                <voice-recorder></voice-recorder>
+                <voice-recorder voiceUploadUrl="/upload/voicefile" postParams=[(voicepostParams)]></voice-recorder>
             </ion-item>
         </ion-list>
         <button ion-button color="secondary" outline (click)="addTask(true)">添加</button>

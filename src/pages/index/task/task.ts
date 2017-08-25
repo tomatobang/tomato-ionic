@@ -23,6 +23,8 @@ export class TaskPage implements OnInit {
 		num: 1
 	};
 
+	voicepostParams={}
+
 	constructor(
 		public taskservice: OnlineTaskService,
 		public viewCtrl: ViewController
@@ -52,6 +54,10 @@ export class TaskPage implements OnInit {
 		this.openNewTaskForm=true;
 		this.page_title='添加新任务';
 		this.showDismissButton=false
+		this.voicepostParams={
+			userid:'id',
+			tomato:'id'
+		}
 	}
 
 	addTask = function(isActive: any) {

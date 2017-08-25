@@ -31,8 +31,18 @@ export class VoiceRecorderComponent
 		this.uploadUrl = val;
 	}
 
-	uploadProgress = 0;
+	@Input()
+	get postParams(): any {
+		return this.uploadUrl;
+	}
+	set postParams(val) {
+		this.uploadUrl = val;
+	}
+
+
+	_postParams:any;
 	uploadUrl: string;
+	uploadProgress = 0;
 	el: HTMLElement;
 	pressGesture: Gesture;
 	isStartRecord = false;
@@ -89,7 +99,7 @@ export class VoiceRecorderComponent
 	ngOnDestroy() {
 		this.pressGesture.destroy();
 	}
-
+	
 	onHold() {
 		this.isStartRecord = true;
 		this.recordWait = false;
@@ -105,6 +115,7 @@ export class VoiceRecorderComponent
 			console.log(err);
 		}
 	}
+
 	startRec() {
 		if (this.mediaRec) {
 			this.mediaRec.release();
@@ -171,6 +182,7 @@ export class VoiceRecorderComponent
 					tmpPath = this.path + this.src;
 				}
 				tmpPath = tmpPath.replace("file://", "");
+				this.uploadVoiceFile(tmpPath);
 				// 融云发送语音消息示例
 				// RongyunUtil.sendVoiceMessage(
 				//   conversationType,targetId, tmpPath,dur,this.mediaRec,
@@ -237,20 +249,22 @@ export class VoiceRecorderComponent
 	/**
 	 * 上传音频文件
 	 */
-	uploadVoiceFile() {
+	uploadVoiceFile(tmpPath) {
 		if (!this.uploadUrl) {
 			return;
 		} else {
 			const fileTransfer: FileTransferObject = this.transfer.create();
 
 			let options: FileUploadOptions = {
+				httpMethod:'post',
 				fileKey: 'file',
-				fileName: this.src.substr(this.src.lastIndexOf('/') + 1),
+				fileName: tmpPath.substr(tmpPath.lastIndexOf('/') + 1),
 				mimeType: "text/plain",
-				headers: { 'headerParam': 'headerValue', 'headerParam2': 'headerValue2' }
+				headers: {  },
+				params:this._postParams? this._postParams:{}
 			}
 
-			fileTransfer.upload(this.src, this.uploadUrl, options)
+			fileTransfer.upload(tmpPath, this.uploadUrl, options)
 				.then((r) => {
 					console.log("Code = " + r.responseCode);
 					console.log("Response = " + r.response);
