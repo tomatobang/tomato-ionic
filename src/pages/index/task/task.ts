@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef } from "@angular/core";
+import { Component, OnInit, ElementRef,ViewChild } from "@angular/core";
 import { IonicPage, ViewController, Platform } from "ionic-angular";
 import { OnlineTaskService } from "../../../providers/data.service";
+import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
 
 @IonicPage()
 @Component({
@@ -29,6 +30,9 @@ export class TaskPage implements OnInit {
 		public taskservice: OnlineTaskService,
 		public viewCtrl: ViewController
 	) {}
+
+	@ViewChild(VoiceRecorderComponent)
+	voiceRecordCMP: VoiceRecorderComponent;
 
 	ngOnInit() {
 		this.taskservice.getTasks().subscribe(
@@ -69,17 +73,29 @@ export class TaskPage implements OnInit {
 			let data: any = JSON.parse(response._body);
 			if (data && data.status == "fail") {
 			} else {
-				let tt = this.allTasks.unfinished;
-				// replace push to trigger the event
-				this.allTasks.unfinished = [task].concat(tt);
-				this.newTask = {
-					title: "",
-					description: "",
-					num: 1
-				};
-                this.openNewTaskForm = false;
-				this.showDismissButton=true;
-				this.page_title = "任务管理";
+				let _body = data.body;
+				this.voicepostParams = {
+					taskid:_body._id,
+					userid:_body.userid
+				}
+				debugger
+				this.voiceRecordCMP.uploadVoiceFile().then(ret=>{
+					let tt = this.allTasks.unfinished;
+					// replace push to trigger the event
+					this.allTasks.unfinished = [task].concat(tt);
+					this.newTask = {
+						title: "",
+						description: "",
+						num: 1
+					};
+					this.openNewTaskForm = false;
+					this.showDismissButton=true;
+					this.page_title = "任务管理";
+				},err =>{
+					console.error(err);
+				});
+
+				
 			}
 		});
 	}

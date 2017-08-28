@@ -3,26 +3,28 @@ import {
 	forwardRef,
 	ElementRef,
 	OnInit,
-	OnDestroy, Input
+	OnDestroy,
+	Input
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Platform } from "ionic-angular";
 import { Gesture } from "ionic-angular/gestures/gesture";
 import { Media, MediaObject } from "@ionic-native/media";
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
+import {
+	FileTransfer,
+	FileUploadOptions,
+	FileTransferObject
+} from "@ionic-native/file-transfer";
+import { File } from "@ionic-native/file";
 
 declare let window;
-
 
 @Component({
 	selector: "voice-recorder",
 	providers: [Media],
 	templateUrl: "./voice-recorder.html"
 })
-export class VoiceRecorderComponent
-	implements OnInit, OnDestroy {
-
+export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	@Input()
 	get voiceUploadUrl(): any {
 		return this.uploadUrl;
@@ -39,8 +41,9 @@ export class VoiceRecorderComponent
 		this.uploadUrl = val;
 	}
 
+	_temp_file_path: string;
 
-	_postParams:any;
+	_postParams: any;
 	uploadUrl: string;
 	uploadProgress = 0;
 	el: HTMLElement;
@@ -62,7 +65,8 @@ export class VoiceRecorderComponent
 		private media: Media,
 		public platform: Platform,
 		private elRef: ElementRef,
-		private transfer: FileTransfer, private file: File
+		private transfer: FileTransfer,
+		private file: File
 	) {
 		if (this.platform.is("IOS")) {
 			this.path = window.cordova
@@ -77,7 +81,6 @@ export class VoiceRecorderComponent
 		}
 		this.el = elRef.nativeElement;
 	}
-
 
 	ngOnInit() {
 		this.pressGesture = new Gesture(this.el, { time: 300 });
@@ -99,7 +102,7 @@ export class VoiceRecorderComponent
 	ngOnDestroy() {
 		this.pressGesture.destroy();
 	}
-	
+
 	onHold() {
 		this.isStartRecord = true;
 		this.recordWait = false;
@@ -169,7 +172,7 @@ export class VoiceRecorderComponent
 
 		//在html中显示当前状态
 		let counter = 0;
-		let timerDur = setInterval(function () {
+		let timerDur = setInterval(function() {
 			counter = counter + 100;
 			if (counter > 2000) {
 				clearInterval(timerDur);
@@ -181,8 +184,8 @@ export class VoiceRecorderComponent
 				if (this.platform.is("ios")) {
 					tmpPath = this.path + this.src;
 				}
-				tmpPath = tmpPath.replace("file://", "");
-				this.uploadVoiceFile(tmpPath);
+				this._temp_file_path = tmpPath.replace("file://", "");
+				// this.uploadVoiceFile(tmpPath);
 				// 融云发送语音消息示例
 				// RongyunUtil.sendVoiceMessage(
 				//   conversationType,targetId, tmpPath,dur,this.mediaRec,
@@ -203,7 +206,6 @@ export class VoiceRecorderComponent
 		}, 10000);
 		return false;
 	}
-
 
 	play(voiFile) {
 		if (this.mediaRec) {
@@ -249,39 +251,48 @@ export class VoiceRecorderComponent
 	/**
 	 * 上传音频文件
 	 */
-	uploadVoiceFile(tmpPath) {
-		if (!this.uploadUrl) {
-			return;
-		} else {
-			const fileTransfer: FileTransferObject = this.transfer.create();
+	uploadVoiceFile() {
+		return new Promise(function(resolve, reject) {
+			let tmpPath = this._temp_file_path;
+			if (!this.uploadUrl) {
+				reject("uploadUrl 不存在");
+				return;
+			} else {
+				const fileTransfer: FileTransferObject = this.transfer.create();
 
-			let options: FileUploadOptions = {
-				httpMethod:'post',
-				fileKey: 'file',
-				fileName: tmpPath.substr(tmpPath.lastIndexOf('/') + 1),
-				mimeType: "text/plain",
-				headers: {  },
-				params:this._postParams? this._postParams:{}
+				let options: FileUploadOptions = {
+					httpMethod: "post",
+					fileKey: "file",
+					fileName: tmpPath.substr(tmpPath.lastIndexOf("/") + 1),
+					mimeType: "text/plain",
+					headers: {},
+					params: this._postParams ? this._postParams : {}
+				};
+
+				fileTransfer.upload(tmpPath, this.uploadUrl, options).then(
+					r => {
+						console.log("Code = " + r.responseCode);
+						console.log("Response = " + r.response);
+						console.log("Sent = " + r.bytesSent);
+						resolve(r);
+					},
+					err => {
+						reject(err);
+						alert("An error has occurred: Code = " + err.code);
+						console.log("upload error source " + err.source);
+						console.log("upload error target " + err.target);
+					}
+				);
+
+				fileTransfer.onProgress(progressEvent => {
+					if (progressEvent.lengthComputable) {
+						this.uploadProgress =
+							progressEvent.loaded / progressEvent.total;
+					} else {
+						this.uploadProgress += 4;
+					}
+				});
 			}
-
-			fileTransfer.upload(tmpPath, this.uploadUrl, options)
-				.then((r) => {
-					console.log("Code = " + r.responseCode);
-					console.log("Response = " + r.response);
-					console.log("Sent = " + r.bytesSent);
-				}, (err) => {
-					alert("An error has occurred: Code = " + err.code);
-					console.log("upload error source " + err.source);
-					console.log("upload error target " + err.target);
-				})
-
-			fileTransfer.onProgress((progressEvent) => {
-				if (progressEvent.lengthComputable) {
-					this.uploadProgress = progressEvent.loaded / progressEvent.total;
-				} else {
-					this.uploadProgress += 4;
-				}
-			});
-		}
+		});
 	}
 }
