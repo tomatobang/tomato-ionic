@@ -35,10 +35,10 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
 	@Input()
 	get postParams(): any {
-		return this.uploadUrl;
+		return this._postParams;
 	}
 	set postParams(val) {
-		this.uploadUrl = val;
+		this._postParams = val;
 	}
 
 	_temp_file_path: string;
@@ -173,7 +173,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
 		//在html中显示当前状态
 		let counter = 0;
-		let timerDur = setInterval(function() {
+		let timerDur = setInterval(()=> {
 			counter = counter + 100;
 			if (counter > 2000) {
 				clearInterval(timerDur);
@@ -181,7 +181,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 			let dur = this.mediaRec.getDuration();
 			if (dur > 0) {
 				clearInterval(timerDur);
-				let tmpPath = this.mediaRec.src;
+				let tmpPath = this.getMediaURL(this.src);//this.mediaRec.src;
 				if (this.platform.is("ios")) {
 					tmpPath = this.path + this.src;
 				}
@@ -274,8 +274,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 					headers: {},
 					params: this._postParams
 				};
-
-				fileTransfer.upload(tmpPath, this.uploadUrl, options).then(
+				console.log(tmpPath,this.uploadUrl,options);
+				fileTransfer.upload(tmpPath, this.uploadUrl, options,true).then(
 					r => {
 						console.log("Code = " + r.responseCode);
 						console.log("Response = " + r.response);

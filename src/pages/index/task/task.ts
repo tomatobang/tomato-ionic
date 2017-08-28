@@ -59,8 +59,8 @@ export class TaskPage implements OnInit {
 		this.page_title='添加新任务';
 		this.showDismissButton=false
 		this.voicepostParams={
-			userid:'id',
-			tomato:'id'
+			userid:'userid',
+			taskid:'taskid'
 		}
 	}
 
@@ -73,28 +73,27 @@ export class TaskPage implements OnInit {
 			let data: any = JSON.parse(response._body);
 			if (data && data.status == "fail") {
 			} else {
-				let _body = data.body;
 				this.voicepostParams = {
-					taskid:_body._id,
-					userid:_body.userid
+					taskid:data._id,
+					userid:data.userid
 				}
-				this.voiceRecordCMP.uploadVoiceFile().then(ret=>{
-					let tt = this.allTasks.unfinished;
-					// replace push to trigger the event
-					this.allTasks.unfinished = [task].concat(tt);
-					this.newTask = {
-						title: "",
-						description: "",
-						num: 1
-					};
-					this.openNewTaskForm = false;
-					this.showDismissButton=true;
-					this.page_title = "任务管理";
-				},err =>{
-					console.error(err);
-				});
-
-				
+				setTimeout(()=>{
+					this.voiceRecordCMP.uploadVoiceFile().then(ret=>{
+						let tt = this.allTasks.unfinished;
+						// replace push to trigger the event
+						this.allTasks.unfinished = [task].concat(tt);
+						this.newTask = {
+							title: "",
+							description: "",
+							num: 1
+						};
+						this.openNewTaskForm = false;
+						this.showDismissButton=true;
+						this.page_title = "任务管理";
+					},err =>{
+						console.error(err);
+					});
+				},100)
 			}
 		});
 	}
@@ -161,7 +160,5 @@ export class TaskPage implements OnInit {
 		this.showDismissButton=true;
 		this.openNewTaskForm=false;
 	}
-
-	
 
 }

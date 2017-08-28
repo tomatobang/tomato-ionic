@@ -52,6 +52,7 @@
     </feature>
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="~4.1.0" />
+    <plugin name="com.unarin.cordova.beacon" spec="~3.4.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="1.1.4" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
@@ -66,6 +67,5 @@
         <variable name="MI_PUSH_APPID" value="2882303761517596915" />
         <variable name="MI_PUSH_APPKEY" value="5601759690915" />
     </plugin>
-    <plugin name="com.unarin.cordova.beacon" spec="~3.4.0" />
     <plugin name="phonegap-nfc" spec="^0.6.6" />
 </widget>
