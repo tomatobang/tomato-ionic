@@ -21,8 +21,8 @@ declare let window;
 
 @Component({
 	selector: "voice-recorder",
-	providers: [Media],
-	templateUrl: "./voice-recorder.html"
+	providers: [Media,FileTransfer,File],
+	templateUrl: "./voice-recorder.html",
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	@Input()
@@ -45,6 +45,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
 	_postParams: any;
 	uploadUrl: string;
+	isUploading:boolean = false;
 	uploadProgress = 0;
 	el: HTMLElement;
 	pressGesture: Gesture;
@@ -252,13 +253,18 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	 * 上传音频文件
 	 */
 	uploadVoiceFile() {
-		return new Promise(function(resolve, reject) {
+		return new Promise((resolve, reject)=> {
+			this.isUploading = true;
 			let tmpPath = this._temp_file_path;
 			if (!this.uploadUrl) {
 				reject("uploadUrl 不存在");
 				return;
 			} else {
 				const fileTransfer: FileTransferObject = this.transfer.create();
+				if (!this._postParams){
+					reject("_postParams 不存在");
+					return;
+				}
 
 				let options: FileUploadOptions = {
 					httpMethod: "post",
@@ -266,7 +272,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 					fileName: tmpPath.substr(tmpPath.lastIndexOf("/") + 1),
 					mimeType: "text/plain",
 					headers: {},
-					params: this._postParams ? this._postParams : {}
+					params: this._postParams
 				};
 
 				fileTransfer.upload(tmpPath, this.uploadUrl, options).then(
@@ -274,6 +280,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 						console.log("Code = " + r.responseCode);
 						console.log("Response = " + r.response);
 						console.log("Sent = " + r.bytesSent);
+						this.isUploading = false;
 						resolve(r);
 					},
 					err => {

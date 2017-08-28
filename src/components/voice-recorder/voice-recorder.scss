@@ -16,7 +16,7 @@
     color: #444;
   }
   
-   .hold-tips.active {
+  .hold-tips.active {
     background-color: #ccc;
   }
   
@@ -30,4 +30,6 @@
 
   #play_block button{
     height: 30px;
+    width: 30px;
+    border-radius: 50%;
 }

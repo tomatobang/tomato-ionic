@@ -78,7 +78,6 @@ export class TaskPage implements OnInit {
 					taskid:_body._id,
 					userid:_body.userid
 				}
-				debugger
 				this.voiceRecordCMP.uploadVoiceFile().then(ret=>{
 					let tt = this.allTasks.unfinished;
 					// replace push to trigger the event

@@ -8,12 +8,8 @@
 </div>
 <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src="" *ngIf="false"></div>
 
-<ion-list>
-    <ion-item>
-        <ion-range [(ngModel)]="singleValue" color="danger" pin="true"></ion-range>
-    </ion-item>
-
-    <ion-item>
+<ion-list *ngIf="isUploading">
+    <ion-item style="padding-left:0px">
         <ion-range min="0" max="100" [(ngModel)]="uploadProgress" color="secondary">
             <ion-label range-left>0</ion-label>
             <ion-label range-right>100%</ion-label>
