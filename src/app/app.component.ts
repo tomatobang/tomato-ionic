@@ -6,12 +6,11 @@ import { JPushService } from '../_util/jpush.service';
 
 import { RebirthHttpProvider } from 'rebirth-http';
 
-
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = 'TabsPage';
+  rootPage:any = 'LoginPage'; //'TabsPage';
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, jPushService:JPushService,public rebirthProvider: RebirthHttpProvider) {
     platform.ready().then(() => {

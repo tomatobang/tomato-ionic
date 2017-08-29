@@ -18,7 +18,7 @@ import { RebirthHttpModule  } from 'rebirth-http';
 
 @NgModule({
   declarations: [
-    MyApp,
+    MyApp
   ],
   imports: [
     RebirthStorageModule,
