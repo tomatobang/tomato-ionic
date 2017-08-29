@@ -1,4 +1,6 @@
-<div class="login-container">
+<ion-content class="login-container">
+    <div class="login-logo">
+    </div>
     <form #form="ngForm" (ngSubmit)="form.form.valid && doLogin()" novalidate class="form-horizontal" role="form">
         <ion-list>
             <ion-item>
@@ -26,9 +28,9 @@
         </div>
         <!-- 这里用来做服务端验证 -->
         <div *ngIf="error">{{error}}</div>
-        <button type="submit" ion-button block outline>登陆</button>
-        <button type="button" ion-button block outline (click)="navToRegister()">注册</button>
+        <button type="submit" color="primary" ion-button block outline>登陆</button>
+        <button type="button" color="light" ion-button block outline (click)="navToRegister()">注册</button>
 
     </form>
 
-</div>
+</ion-content>
