@@ -50,9 +50,10 @@ export class IndexPage implements OnInit, OnDestroy {
 		});
 
 		// 加载正在进行的番茄钟
-		this._userid = this.globalservice._userinfo.userid;
+		this._userid = this.globalservice.userinfo.userid;
 		this.tomatoIO.load_tomato(this._userid);
 		this.tomatoIO.load_tomato_succeed().subscribe(t=>{
+			debugger;
 			if (t && t!="null"){
 				this.startTask(t);
 			}
@@ -65,7 +66,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		});
 		// 其它终端中断
 		this.tomatoIO.other_end_break_tomato().subscribe(data=>{
-			
+
 		});
 
 		this.mp3Source.setAttribute("src", "/assets/audios/alert.mp3");

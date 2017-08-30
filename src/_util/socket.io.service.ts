@@ -104,7 +104,7 @@ export class TomatoIOService {
 	 * 开启番茄钟
 	 */
 	start_tomato(userid:String,tomato:Tomato) {
-		this.socket.emit("start_tomato", {userid,tomato});
+		this.socket.emit("start_tomato", {userid,endname:'ionic',tomato});
 	}
 
 	/**
