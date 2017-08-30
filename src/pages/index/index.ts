@@ -55,13 +55,13 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.tomatoIO.load_tomato(this._userid);
 		this.tomatoIO.load_tomato_succeed().subscribe(t=>{
 			if (t && t!="null"){
-				this.startTask(t);
+				this.startTask(t,false);
 			}
 		});
 		// 其它终端开启
 		this.tomatoIO.other_end_start_tomato().subscribe(t=>{
 			if (t && t!="null"){
-				this.startTask(t);
+				this.startTask(t,false);
 			}
 		});
 		// 其它终端中断
@@ -83,7 +83,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		profileModal.onDidDismiss(data => {
 			if (data.task){
 				console.log(data.task);
-				this.startTask(data.task);
+				this.startTask(data.task,true);
 			} 
 		});
 		profileModal.present();
@@ -140,19 +140,36 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.child.render();
 		}, 1000);
 	}
-	startTask(task: any) {
+	startTask(task: any,raw:Boolean) {
 		this.activeTomato = task;
-		// 开启番茄钟
-		this.tomatoIO.start_tomato(this._userid,task);
-		this.activeTomato.startTime = new Date();
+		if(raw){
+			// 开启番茄钟
+			this.tomatoIO.start_tomato(this._userid,task);
+			this.activeTomato.startTime = new Date();
+		}else{
+			this.activeTomato.startTime = new Date(this.activeTomato.startTime);
+		}
 		this.startTimer();
 		let that = this;
 	}
 
 	breakActiveTask() {
-        this.stopTimer();
+		this.stopTimer();
+		this.activeTomato = null;
+		this.startRestTimer();
         this.showPrompt();
 	}
+
+	startRestTimer() {
+        this.resttimestart = new Date();
+        if (typeof this.resttimeout !== "undefined") {
+            clearTimeout(this.resttimeout);
+            this.timerStatus.reset();
+        }
+        this.isResting = true;
+        this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
+    };
+
 	
 	showPrompt() {
 		let prompt = this.alertCtrl.create({
