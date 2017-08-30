@@ -3,7 +3,7 @@ import {
 	NavController,
 	ViewController,
 	ModalController,
-	IonicPage,
+	IonicPage,AlertController,
 	NavParams
 } from "ionic-angular";
 import { AngularRoundProgressComponent } from "../../_directives/angular-round-progress-directive";
@@ -39,7 +39,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		public tomatoservice: OnlineTomatoService,
 		public navCtrl: NavController,
 		public modalCtrl: ModalController,
-		public tomatoIO:TomatoIOService
+		public tomatoIO:TomatoIOService,
+		public alertCtrl: AlertController
 	) {}
 
 	ngOnInit() {
@@ -53,7 +54,6 @@ export class IndexPage implements OnInit, OnDestroy {
 		this._userid = this.globalservice.userinfo.userid;
 		this.tomatoIO.load_tomato(this._userid);
 		this.tomatoIO.load_tomato_succeed().subscribe(t=>{
-			debugger;
 			if (t && t!="null"){
 				this.startTask(t);
 			}
@@ -130,6 +130,8 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.label = this.countdown + ":00";
 		}
 	};
+	// 中断缘由
+	breakReason:any;
 	@ViewChild(AngularRoundProgressComponent)
 	child: AngularRoundProgressComponent;
 	ngAfterViewInit() {
@@ -146,6 +148,53 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.startTimer();
 		let that = this;
 	}
+
+	breakActiveTask() {
+        this.stopTimer();
+        this.showPrompt();
+	}
+	
+	showPrompt() {
+		let prompt = this.alertCtrl.create({
+		  title: '中断当前番茄钟',
+		  message: "(可以为空)",
+		  inputs: [
+			{
+			  name: 'title',
+			  placeholder: '请填写中断原因...'
+			},
+		  ],
+		  buttons: [
+			{
+			  text: '取消',
+			  handler: data => {
+				console.log('Cancel clicked');
+			  }
+			},
+			{
+			  text: '提交',
+			  handler: data => {
+				// 创建tomato
+				let tomato: any = {
+					userid: 'test',
+					taskid: this.activeTomato._id,
+					title: this.activeTomato.title,
+					target: this.activeTomato.target,
+					description: this.activeTomato.description,
+					startTime: this.activeTomato.startTime,
+					endTime: new Date(),
+					num: this.activeTomato.num,
+					breakTime: 1,
+					succeed: 0,
+					breakReason: this.breakReason
+				}
+				this.historyTomatoes.push(Object.assign({}, tomato));
+			  }
+			}
+		  ]
+		});
+		prompt.present();
+	  }
 
 	startTimer() {
 		this.isResting = false;
