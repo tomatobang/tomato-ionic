@@ -64,4 +64,9 @@ export class MinePage {
 			]
 		});
 	}
+
+	logout(){
+		this.navCtrl.push("LoginPage",{},()=>{
+		});
+	}
 }

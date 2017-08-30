@@ -3,6 +3,8 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { JPushService } from '../_util/jpush.service';
+import { TomatoIOService } from '../_util/socket.io.service';
+
 
 import { RebirthHttpProvider } from 'rebirth-http';
 

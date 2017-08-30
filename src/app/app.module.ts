@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GlobalService } from '../providers/global.service';
 import { JPushService } from '../_util/jpush.service';
+import { TomatoIOService } from '../_util/socket.io.service';
 
 import { RebirthStorageModule } from 'rebirth-storage'; 
 import { RebirthHttpModule  } from 'rebirth-http';
@@ -39,7 +40,7 @@ import { RebirthHttpModule  } from 'rebirth-http';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GlobalService,JPushService
+    GlobalService,JPushService,TomatoIOService
   ]
 })
 export class AppModule {}

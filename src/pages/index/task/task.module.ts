@@ -18,6 +18,7 @@ import { TaskPipe } from "../../../pipes/taskPipe";
 	],
 	imports: [IonicPageModule.forChild(TaskPage)],
     providers: [OnlineTaskService, OnlineTomatoService],
+    // 打开注释会报错
     // exports: [
     //     TaskPage
     // ]

@@ -15,7 +15,6 @@
 
 <ion-content>
     <div *ngIf="openNewTaskForm">
-        <!-- <h1 class="add-newtask-title">添加新任务</h1> -->
         <ion-list>
             <ion-item>
                 <ion-label stacked>任务名称</ion-label>
@@ -86,7 +85,7 @@
 
         <ion-list *ngSwitchCase="'often'">
             <ion-item-sliding *ngFor="let task of allTasks.unfinished | TaskPipe:false">
-                <ion-item >
+                <ion-item>
                     <ion-avatar item-start>
                         <img src="assets/tomato.png">
                     </ion-avatar>

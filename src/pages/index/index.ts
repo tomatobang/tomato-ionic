@@ -141,7 +141,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.timerStatus.label = this.secondsToMMSS(
 			this.countdown * 60 - parseInt(secondspan + "")
 		);
-
+		// 倒计时结束
 		if (dataspan >= this.countdown * 60 * 1000) {
 			this.alertAudio.play();
 		} else {
