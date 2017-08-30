@@ -108,7 +108,7 @@ export class TomatoIOService {
 	}
 
 	/**
-	 * 开启番茄钟
+	 * 开启番茄钟成功
 	 */
 	start_tomato_succeed(tomato:Tomato) {
 		this.socket.emit("start_tomato_succeed", tomato);

@@ -12,6 +12,9 @@ import {
 	OnlineTomatoService,
 	OnlineTaskService
 } from "../../providers/data.service";
+import { GlobalService } from "../../providers/global.service";
+import { TomatoIOService } from '../../_util/socket.io.service';
+
 import { Slides } from "ionic-angular";
 declare let window;
 
@@ -22,6 +25,7 @@ declare let window;
 })
 export class IndexPage implements OnInit, OnDestroy {
 	page_title = "首页";
+	_userid:string;
 	@ViewChild(Slides) slides: Slides;
 
 	// 番茄钟长度
@@ -31,9 +35,11 @@ export class IndexPage implements OnInit, OnDestroy {
 	tomatoCount = 0;
 
 	constructor(
+		public globalservice:GlobalService,
 		public tomatoservice: OnlineTomatoService,
 		public navCtrl: NavController,
-		public modalCtrl: ModalController
+		public modalCtrl: ModalController,
+		public tomatoIO:TomatoIOService
 	) {}
 
 	ngOnInit() {
@@ -41,6 +47,25 @@ export class IndexPage implements OnInit, OnDestroy {
 			let list = JSON.parse(data._body);
 			this.historyTomatoes = list;
 			this.tomatoCount = list.length;
+		});
+
+		// 加载正在进行的番茄钟
+		this._userid = this.globalservice._userinfo.userid;
+		this.tomatoIO.load_tomato(this._userid);
+		this.tomatoIO.load_tomato_succeed().subscribe(t=>{
+			if (t && t!="null"){
+				this.startTask(t);
+			}
+		});
+		// 其它终端开启
+		this.tomatoIO.other_end_start_tomato().subscribe(t=>{
+			if (t && t!="null"){
+				this.startTask(t);
+			}
+		});
+		// 其它终端中断
+		this.tomatoIO.other_end_break_tomato().subscribe(data=>{
+			
 		});
 
 		this.mp3Source.setAttribute("src", "/assets/audios/alert.mp3");
@@ -114,6 +139,8 @@ export class IndexPage implements OnInit, OnDestroy {
 	}
 	startTask(task: any) {
 		this.activeTomato = task;
+		// 开启番茄钟
+		this.tomatoIO.start_tomato(this._userid,task);
 		this.activeTomato.startTime = new Date();
 		this.startTimer();
 		let that = this;
@@ -129,7 +156,6 @@ export class IndexPage implements OnInit, OnDestroy {
 	}
 
 	onTimeout() {
-		// 重构
 		let datenow: number = new Date().getTime();
 		let startTime: number = this.activeTomato.startTime.getTime();
 		let dataspan: number = datenow - startTime;

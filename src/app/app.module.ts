@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MyApp } from './app.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3000/chat', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:3000/tomatobang', options: {} };
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
