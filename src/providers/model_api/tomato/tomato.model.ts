@@ -10,4 +10,5 @@ export class Tomato {
   num:Number;
   succeed:Number;
   breakReason: string;
+  voiceUrl:string;
 }

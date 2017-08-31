@@ -5,5 +5,6 @@ export class Task {
   target: string;
   description: string;
   num: string;
-  isActive: boolean
+  isActive: boolean;
+  voiceUrl:string;
 }

@@ -68,17 +68,19 @@ export class TaskPage implements OnInit {
 		let task = this.newTask;
 		// task.num = 1;
 		task.isActive = isActive;
+		task.voiceUrl = "";
 		// 创建任务
 		this.taskservice.createTask(task).subscribe((response: any) => {
 			let data: any = JSON.parse(response._body);
 			if (data && data.status == "fail") {
 			} else {
+				// voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
 				this.voicepostParams = {
 					taskid:data._id,
 					userid:data.userid
 				}
 				setTimeout(()=>{
-					this.voiceRecordCMP.uploadVoiceFile().then(ret=>{
+					this.voiceRecordCMP.uploadVoiceFile().then(filename=>{
 						let tt = this.allTasks.unfinished;
 						// replace push to trigger the event
 						this.allTasks.unfinished = [task].concat(tt);
@@ -146,6 +148,9 @@ export class TaskPage implements OnInit {
 	}
 	
 	startTask(task){
+		if (task._id){
+			delete task._id
+		}
 		this.viewCtrl.dismiss({task});
 	}
 

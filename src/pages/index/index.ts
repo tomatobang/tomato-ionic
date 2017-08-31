@@ -195,17 +195,10 @@ export class IndexPage implements OnInit, OnDestroy {
 			  handler: data => {
 				// 创建tomato
 				let tomato: any = {
-					userid: 'test',
 					taskid: this.activeTomato._id,
-					title: this.activeTomato.title,
-					target: this.activeTomato.target,
-					description: this.activeTomato.description,
-					startTime: this.activeTomato.startTime,
-					endTime: new Date(),
 					num: this.activeTomato.num,
 					breakTime: 1,
-					succeed: 0,
-					breakReason: this.breakReason
+					breakReason: data.title
 				}
 				this.historyTomatoes.push(Object.assign({}, tomato));
 				this.tomatoIO.break_tomato(this._userid,tomato);

@@ -82,7 +82,7 @@ export class TomatoIOService {
 	 */
 	break_tomato(userid:string,tomato:Tomato) {
 		this.socket.emit("break_tomato",{
-			userid,tomato
+			userid,endname:"ionic",tomato
 		} );
 	}
 

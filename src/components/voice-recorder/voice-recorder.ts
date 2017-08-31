@@ -281,7 +281,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 						console.log("Response = " + r.response);
 						console.log("Sent = " + r.bytesSent);
 						this.isUploading = false;
-						resolve(r);
+						resolve(options.fileName);
 					},
 					err => {
 						reject(err);
