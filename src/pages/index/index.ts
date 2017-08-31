@@ -51,7 +51,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		});
 
 		// 加载正在进行的番茄钟
-		this._userid = this.globalservice.userinfo.userid;
+		this._userid = this.globalservice.userinfo.username;
+		
 		this.tomatoIO.load_tomato(this._userid);
 		this.tomatoIO.load_tomato_succeed().subscribe(t=>{
 			if (t && t!="null"){
@@ -66,7 +67,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		});
 		// 其它终端中断
 		this.tomatoIO.other_end_break_tomato().subscribe(data=>{
-
+				this.breakActiveTask(false);
 		});
 
 		this.mp3Source.setAttribute("src", "/assets/audios/alert.mp3");
@@ -153,11 +154,12 @@ export class IndexPage implements OnInit, OnDestroy {
 		let that = this;
 	}
 
-	breakActiveTask() {
+	breakActiveTask(raw) {
+		if (raw){
+			this.showPrompt();
+		}
 		this.stopTimer();
-		this.activeTomato = null;
 		this.startRestTimer();
-        this.showPrompt();
 	}
 
 	startRestTimer() {
@@ -206,6 +208,8 @@ export class IndexPage implements OnInit, OnDestroy {
 					breakReason: this.breakReason
 				}
 				this.historyTomatoes.push(Object.assign({}, tomato));
+				this.tomatoIO.break_tomato(this._userid,tomato);
+				this.activeTomato = null;
 			  }
 			}
 		  ]

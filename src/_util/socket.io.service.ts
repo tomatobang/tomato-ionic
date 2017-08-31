@@ -63,7 +63,7 @@ export class TomatoIOService {
 	/**
 	 * 第一次，用于加载当前tomato
 	 */
-	load_tomato(userid:String){
+	load_tomato(userid:string){
 		this.socket.emit("load_tomato", {userid,endname:"ionic"},);
 	}
 
@@ -80,7 +80,7 @@ export class TomatoIOService {
 	/**
 	 * 中断番茄钟
 	 */
-	break_tomato(userid:String,tomato:Tomato) {
+	break_tomato(userid:string,tomato:Tomato) {
 		this.socket.emit("break_tomato",{
 			userid,tomato
 		} );
@@ -103,7 +103,7 @@ export class TomatoIOService {
 	/**
 	 * 开启番茄钟
 	 */
-	start_tomato(userid:String,tomato:Tomato) {
+	start_tomato(userid:string,tomato:Tomato) {
 		this.socket.emit("start_tomato", {userid,endname:'ionic',tomato});
 	}
 

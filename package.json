@@ -1,7 +1,7 @@
 {
     "name": "tomatobang",
     "author": "Ionic Framework",
-    "homepage": "http://ionicframework.com/",
+    "homepage": "http://www.tomatobang.com/",
     "private": true,
     "scripts": {
         "clean": "ionic-app-scripts clean",

@@ -20,7 +20,7 @@
                     <div class="bs-callout bs-callout-info" *ngIf="isResting">
                       <h4 class="rest-title">休息中....</h4>
                     </div>
-                    <button class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask()">中断当前番茄钟</button>
+                    <button class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</button>
            </div>
 
             <button ion-fab mini (click)="addTask()" class="task-manager-plus"><ion-icon name="add"></ion-icon></button>
