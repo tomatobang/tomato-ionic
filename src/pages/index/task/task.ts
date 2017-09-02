@@ -54,6 +54,12 @@ export class TaskPage implements OnInit {
 		);
 	}
 
+	play_voice_record(url){
+		if(url){
+			alert(url)
+		}
+	}
+
 	addNewTaskLink(){
 		this.openNewTaskForm=true;
 		this.page_title='添加新任务';
