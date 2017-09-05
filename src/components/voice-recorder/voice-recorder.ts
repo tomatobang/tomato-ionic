@@ -168,7 +168,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 		this.mediaRec.onError.subscribe(error =>
 			console.log("touchend():Audio Error!", error)
 		);
-		this.mediaRec.play();
+		//this.mediaRec.play();
 		// this.mediaRec.stop();
 
 		//在html中显示当前状态

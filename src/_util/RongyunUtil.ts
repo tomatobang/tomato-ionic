@@ -1,5 +1,6 @@
+import { Injectable } from "@angular/core";
 declare var window;
-
+@Injectable()
 export class RongyunUtil {
 	_curUID = "";
 
