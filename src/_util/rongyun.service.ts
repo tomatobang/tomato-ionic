@@ -5,10 +5,11 @@ import { GlobalService } from "../providers/global.service";
 import { RongyunUtil } from "./RongyunUtil";
 
 declare var window;
-declare var $rootScope;
 
 @Injectable()
 export class RongYunService {
+    $rootScope={connectStatus:'',isEnterChatTab:true,arrMsgs:[]};
+
 	//加载会话列表
 	isLoadedConversationList = false;
 	firstLoadConversationListInterval = null;
@@ -16,19 +17,6 @@ export class RongYunService {
 	loadUnreadMessageNumberInterval = null;
 
 	constructor(public plf: Platform, public _global: GlobalService,public myUtil: RongyunUtil) {
-		// Function 拦截器
-		Object.defineProperty(Function.prototype, "before", {
-			value: function() {
-				var __self = this;
-				return function() {
-					if ($rootScope.connectStatus === "") {
-						return __self.apply(this, arguments);
-					} else {
-						this.myNotice("聊天服务异常，请稍后重试");
-					}
-				};
-			}
-		});
 	}
 
 	// 判断定时器是否有效
@@ -61,27 +49,27 @@ export class RongYunService {
 						break;
 					case "CONNECTED":
 						// 连接成功
-						$rootScope.connectStatus = "";
+						this.$rootScope.connectStatus = "";
 						break;
 					case "CONNECTING":
 						// 连接中
-						$rootScope.connectStatus = "聊天连接中";
+						this.$rootScope.connectStatus = "聊天连接中";
 						break;
 					case "DISCONNECTED":
 						// 断开连接
-						$rootScope.connectStatus = "聊天断开连接";
+						this.$rootScope.connectStatus = "聊天断开连接";
 						break;
 					case "NETWORK_UNAVAILABLE":
 						// 网络不可用
-						$rootScope.connectStatus = "网络不可用";
+						this.$rootScope.connectStatus = "网络不可用";
 						break;
 					case "SERVER_INVALID":
 						// 服务器异常或无法连接
-						$rootScope.connectStatus = "聊天服务器异常";
+						this.$rootScope.connectStatus = "聊天服务器异常";
 						break;
 					case "TOKEN_INCORRECT":
 						// Token 不正确
-						$rootScope.connectStatus = "聊天服务错误";
+						this.$rootScope.connectStatus = "聊天服务错误";
 						break;
 				}
 			}
@@ -116,8 +104,9 @@ export class RongYunService {
 		window.RongCloudLibPlugin.setOnReceiveMessageListener((ret, err) => {
 			//接收消息
 			if (ret) {
-				$rootScope.arrMsgs.push(JSON.stringify(ret.result.message));
-				$rootScope.$apply();
+				console.log(ret.result.message);
+				this.$rootScope.arrMsgs.push(JSON.stringify(ret.result.message));
+
 			}
 			if (err) {
 				this.errCallback("initError", err);
@@ -433,11 +422,11 @@ export class RongYunService {
 				}
 			}, 3000);
 		} else if (type == "chat" && window.cordova) {
-			$rootScope.isEnterChatTab = false;
+			this.$rootScope.isEnterChatTab = false;
 			this.initConversation(callback, type);
 			this.cancelInterval(this.loadUnreadMessageNumberInterval);
 			this.loadUnreadMessageNumberInterval = setInterval(() => {
-				if (!$rootScope.isEnterChatTab) {
+				if (!this.$rootScope.isEnterChatTab) {
 					this.initConversation(callback, type);
 				} else {
 					this.cancelInterval(this.loadUnreadMessageNumberInterval);
@@ -463,7 +452,7 @@ export class RongYunService {
 	//退出或切换用户清理工作
 	_logoutClear() {
 		// 变量
-		$rootScope.isEnterChatTab = false;
+		this.$rootScope.isEnterChatTab = false;
 		this.isLoadedConversationList = false;
 		// 定时器
 		this.cancelInterval(this.firstLoadConversationListInterval);
