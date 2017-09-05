@@ -29,6 +29,8 @@ export class RongyunPage implements OnInit {
 	}
 	token:string;
 	t:any;
+
+	conversationList = [];
 	constructor(
 		public navCtrl: NavController,
 		public platform: Platform,
@@ -58,6 +60,7 @@ export class RongyunPage implements OnInit {
 			alert("连接成功！")
 		}));
 		this.rongyunservice._getConversationList((ret)=>{
+			this.conversationList =  ret.result;
 			console.log(ret);
 		},"chat")
 
@@ -65,11 +68,11 @@ export class RongyunPage implements OnInit {
 
 	sendMsg(msg) {
 		if(this.t == 1){
-			this.rongyunservice._sendMessage("PRIVATE",'384','你好，py',(d)=>{
+			this.rongyunservice._sendMessage("PRIVATE",'384',msg,(d)=>{
 				alert("你好，py,发送成功！")
 			})
 		}else{
-			this.rongyunservice._sendMessage("PRIVATE",'385','你好，ws',(d)=>{
+			this.rongyunservice._sendMessage("PRIVATE",'385',msg,(d)=>{
 				alert("你好，ws,发送成功！")
 			})
 		}

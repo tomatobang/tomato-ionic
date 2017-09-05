@@ -58,7 +58,7 @@ export class GlobalService {
 	}
 
 	get RongyunAppKey() {
-		return "";
+		return "lmxuhwagxgt9d";
 	}
 
 	public get userinfostate(): Observable<any> {

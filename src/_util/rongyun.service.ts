@@ -353,7 +353,7 @@ export class RongYunService {
 				conversationType: ctype,
 				targetId: target.toString(),
 				text: content,
-				extra: "extra text",
+				extra: "admin",
 				user: {
 					id: "userid",
 					name: "username"

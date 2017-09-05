@@ -1,11 +1,17 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>TEST</ion-title>
+        <ion-title>测试</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-item navPush="RongyunPage">
+        <ion-avatar item-left>
+            <img src="./assets/to-user.jpg">
+        </ion-avatar>
+        <h2>融云测试入口</h2>
+    </ion-item>
+    
     <div>
         <div>我是{{userid}}</div>
         <input type="text" #loginInput name="" value="">
@@ -17,11 +23,6 @@
         <p>{{msg}} </p>
     </div>
 
-    <ion-item navPush="RongyunPage" >
-        <ion-avatar item-left>
-            <img src="./assets/to-user.jpg">
-        </ion-avatar>
-        <h2>融云测试入口</h2>
-    </ion-item>
+
 
 </ion-content>

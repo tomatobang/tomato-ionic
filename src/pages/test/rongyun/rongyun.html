@@ -1,11 +1,10 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>TEST</ion-title>
+        <ion-title>测试融云</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <h1>测试融云</h1>
     <div>
         <div>token:{{token}}</div>
         <button ion-button (click)="login(1)">我是ws</button>
@@ -17,4 +16,15 @@
         </div>
         <p>{{msglist}} </p>
     </div>
+
+    <ion-list>
+            <ion-item *ngFor="let conv of conversationList">
+                <ion-avatar item-start>
+                    <img src="assets/tomato.png">
+                </ion-avatar>
+                <h2><span>{{conv.latestMessage.text }}</span></h2>
+                <h3><span>{{conv.latestMessage.extra }}</span>
+                </h3>
+            </ion-item>
+        </ion-list>
 </ion-content>
