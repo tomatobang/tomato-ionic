@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef,ViewChild } from "@angular/core";
 import { IonicPage, ViewController, Platform } from "ionic-angular";
 import { OnlineTaskService } from "../../../providers/data.service";
+import { VoicePlayService } from "../../../_util/voiceplay.service";
+import { GlobalService } from "../../../providers/global.service";
 import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
 
 @IonicPage()
@@ -28,7 +30,9 @@ export class TaskPage implements OnInit {
 
 	constructor(
 		public taskservice: OnlineTaskService,
-		public viewCtrl: ViewController
+		public viewCtrl: ViewController,
+		public voiceService:VoicePlayService,
+		public globalservice:GlobalService,
 	) {}
 
 	@ViewChild(VoiceRecorderComponent)
@@ -54,10 +58,14 @@ export class TaskPage implements OnInit {
 		);
 	}
 
-	play_voice_record(url){
-		if(url){
-			alert(url)
-		}
+	play_voice_record(task){
+		alert()
+		// pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
+		let filename = this.globalservice._userinfo.username+"_"+task._id +"_cordovaIMVoice.amr";
+		this.voiceService.downloadVoiceFile(filename);
+		// if(task.voiceUrl){
+		// 	this.voiceService.downloadVoiceFile(filename);
+		// }
 	}
 
 	addNewTaskLink(){

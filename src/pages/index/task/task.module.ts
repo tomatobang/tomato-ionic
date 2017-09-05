@@ -7,8 +7,15 @@ import {
 	OnlineTaskService
 } from "../../../providers/data.service";
 
+import { VoicePlayService } from "../../../_util/voiceplay.service";
+
 import { TaskPage } from "./task";
 import { TaskPipe } from "../../../pipes/taskPipe";
+import { File } from '@ionic-native/file';
+import { Media } from "@ionic-native/media";
+import {
+	FileTransfer
+} from "@ionic-native/file-transfer";
 
 @NgModule({
 	declarations: [
@@ -17,7 +24,7 @@ import { TaskPipe } from "../../../pipes/taskPipe";
         VoiceRecorderComponent
 	],
 	imports: [IonicPageModule.forChild(TaskPage)],
-    providers: [OnlineTaskService, OnlineTomatoService],
+    providers: [Media,File,FileTransfer,OnlineTaskService, OnlineTomatoService,VoicePlayService],
     // 打开注释会报错
     // exports: [
     //     TaskPage

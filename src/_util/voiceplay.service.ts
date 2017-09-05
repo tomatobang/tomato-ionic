@@ -33,7 +33,8 @@ export class VoicePlayService {
 		fileTransfer.download(this._global.serverAddress+"/download/voicefile/"+filename, targetPath, 
 		trustHosts,
 		 options).then(result => {
-			 // 下载完成后，直接播放
+			 // 下载完成后，直接播放\
+			 console.log("下载完成,播放..");
 			 this.play(targetPath);
 		}).catch(err => {
 			console.log("下载音频文件出错",err);
