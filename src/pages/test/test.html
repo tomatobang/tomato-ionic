@@ -12,17 +12,28 @@
         <h2>融云测试入口</h2>
     </ion-item>
     
-    <div>
-        <div>我是{{userid}}</div>
-        <input type="text" #loginInput name="" value="">
-        <button (click)="login(loginInput.value)">登录</button>
-        <br/>
-        <input type="text" #msgInput name="" value="">
-        <button (click)="sendMsg(msgInput.value)">发送</button>
-        <br>
-        <p>{{msg}} </p>
-    </div>
+    <ion-item navPush="EchartsPage">
+        <ion-avatar item-left>
+            <img src="./assets/to-user.jpg">
+        </ion-avatar>
+        <h2>Echarts测试入口</h2>
+    </ion-item>
 
+    
+    <ion-item navPush="GPSlocationPage">
+        <ion-avatar item-left>
+            <img src="./assets/to-user.jpg">
+        </ion-avatar>
+        <h2>GPS双向定位测试入口</h2>
+    </ion-item>
+
+
+    <ion-item navPush="IBeaconPage">
+        <ion-avatar item-left>
+            <img src="./assets/to-user.jpg">
+        </ion-avatar>
+        <h2>IBeaconPage 测试入口</h2>
+    </ion-item>
 
 
 </ion-content>
