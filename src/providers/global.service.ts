@@ -102,7 +102,7 @@ export class GlobalService {
 	}
 
 	set userinfo(value) {
-		this._token = value;
+		this._userinfo = value;
 		localStorage.setItem("userinfo", value);
 		subject.next(value);
 	}
