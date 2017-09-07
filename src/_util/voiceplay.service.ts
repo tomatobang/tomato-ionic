@@ -33,16 +33,16 @@ export class VoicePlayService {
 		fileTransfer.download(this._global.serverAddress+"/download/voicefile/"+filename, targetPath, 
 		trustHosts,
 		 options).then(result => {
-			 // 下载完成后，直接播放\
 			 console.log("下载完成,播放..");
 			 this.play(targetPath);
 		}).catch(err => {
+			alert("下载音频文件出错");
 			console.log("下载音频文件出错",err);
 		});
 
 		fileTransfer.onProgress((evt:ProgressEvent)=>{
 			let progress = window.parseInt(evt.loaded /evt.total * 100);
-			// 在这里可以更新下载进度
+			console.log(progress)
 		})
 	}
 

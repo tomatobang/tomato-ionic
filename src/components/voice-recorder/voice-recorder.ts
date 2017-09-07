@@ -40,7 +40,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	set postParams(val) {
 		this._postParams = val;
 	}
-
+	couldPlay = false;
 	_temp_file_path: string;
 
 	_postParams: any;
@@ -168,8 +168,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 		this.mediaRec.onError.subscribe(error =>
 			console.log("touchend():Audio Error!", error)
 		);
-		//this.mediaRec.play();
-		// this.mediaRec.stop();
+		this.mediaRec.play();
+		this.mediaRec.stop();
 
 		//在html中显示当前状态
 		let counter = 0;
@@ -185,7 +185,12 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 				if (this.platform.is("ios")) {
 					tmpPath = this.path + this.src;
 				}
+				alert(tmpPath);
 				this._temp_file_path = tmpPath.replace("file://", "");
+				this.couldPlay = true;
+				if (this.mediaRec) {
+					this.mediaRec.release();
+				}
 				// this.uploadVoiceFile(tmpPath);
 				// 融云发送语音消息示例
 				// RongyunUtil.sendVoiceMessage(
@@ -200,11 +205,11 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 		}, 100);
 
 		// 10s 后自动释放
-		setTimeout(() => {
-			if (this.mediaRec) {
-				this.mediaRec.release();
-			}
-		}, 10000);
+		// setTimeout(() => {
+		// 	if (this.mediaRec) {
+		// 		this.mediaRec.release();
+		// 	}
+		// }, 10000);
 		return false;
 	}
 

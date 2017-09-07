@@ -58,9 +58,8 @@ export class TaskPage implements OnInit {
 		);
 	}
 
-	play_voice_record(task){
-		alert()
-		// pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
+	playVoiceRecord(task){
+		// 格式示例:pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
 		let filename = this.globalservice._userinfo.username+"_"+task._id +"_cordovaIMVoice.amr";
 		this.voiceService.downloadVoiceFile(filename);
 		// if(task.voiceUrl){
@@ -96,7 +95,6 @@ export class TaskPage implements OnInit {
 				setTimeout(()=>{
 					this.voiceRecordCMP.uploadVoiceFile().then(filename=>{
 						let tt = this.allTasks.unfinished;
-						// replace push to trigger the event
 						this.allTasks.unfinished = [task].concat(tt);
 						this.newTask = {
 							title: "",

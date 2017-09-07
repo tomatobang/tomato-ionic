@@ -3,7 +3,7 @@
         按住我说话
     </div>
     <div id="play_block" #play_block>
-        <button ion-button color="secondary" round (click)="play()"> 播放 </button>
+        <button ion-button color="secondary" round (click)="play()" *ngIf="couldPlay"> 播放 </button>
     </div>
 </div>
 <div class="voice-mock-img"><img [(src)]="voice.ImgUrl" alt="" src="" *ngIf="false"></div>
