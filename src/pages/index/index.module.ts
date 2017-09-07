@@ -11,6 +11,13 @@ import { StringTruncate } from "../../pipes/stringTruncate";
 import { DateTransform } from "../../pipes/dateTransform";
 import { AngularRoundProgressComponent } from "../../_directives/angular-round-progress-directive";
 
+import { VoicePlayService } from "../../_util/voiceplay.service";
+import { File } from '@ionic-native/file';
+import { Media } from "@ionic-native/media";
+import {
+	FileTransfer
+} from "@ionic-native/file-transfer";
+
 @NgModule({
 	declarations: [
 		IndexPage,
@@ -19,7 +26,7 @@ import { AngularRoundProgressComponent } from "../../_directives/angular-round-p
 		AngularRoundProgressComponent
 	],
 	imports: [IonicPageModule.forChild(IndexPage)],
-    providers: [OnlineTaskService, OnlineTomatoService],
+    providers: [OnlineTaskService, OnlineTomatoService,VoicePlayService,File,Media,FileTransfer],
     entryComponents:[]
 })
 

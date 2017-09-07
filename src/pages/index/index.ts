@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
+import { VoicePlayService } from "../../_util/voiceplay.service";
 import {
 	NavController,
 	ViewController,
@@ -40,7 +41,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		public navCtrl: NavController,
 		public modalCtrl: ModalController,
 		public tomatoIO:TomatoIOService,
-		public alertCtrl: AlertController
+		public alertCtrl: AlertController,
+		public voiceService:VoicePlayService,
 	) {}
 
 	ngOnInit() {
@@ -282,5 +284,16 @@ export class IndexPage implements OnInit, OnDestroy {
 			retStr += seconds;
 		}
 		return retStr;
+	}
+
+	playVoiceRecord(tomato){
+		let filename = this.getFileName(tomato.voiceUrl);
+		this.voiceService.downloadVoiceFile(filename);
+	}
+
+	getFileName(url) {
+		let arr = url.split('/');
+		let fileName = arr[arr.length - 1];
+		return fileName;
 	}
 }

@@ -7,10 +7,29 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>你好，{{username}}</h3>
+  <ion-card>
+    <ion-card-header>
+      你好，{{username}}
+    </ion-card-header>
 
-  <button ion-item (click)="logout()">
-        <ion-icon name="md-exit" item-start></ion-icon>
-        退出
-   </button>
+    <ion-list>
+
+      <button ion-item>
+        <ion-icon name="contact" item-start></ion-icon>
+            我的资料
+          </button>
+
+      <button ion-item>
+            <ion-icon name="cog" item-start></ion-icon>
+            设置
+          </button>
+
+      <button ion-item (click)="logout()">
+              <ion-icon name="exit" item-start></ion-icon>
+              退出
+         </button>
+
+    </ion-list>
+  </ion-card>
+
 </ion-content>
