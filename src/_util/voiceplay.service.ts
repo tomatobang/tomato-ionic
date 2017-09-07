@@ -22,32 +22,39 @@ export class VoicePlayService {
 		private transfer: FileTransfer, private file: File
 	) { }
 
-	init() {}
+	init() { }
 
 	downloadVoiceFile(filename) {
-		var targetPath = this.getBasePath() + 'voices/' + filename;
-		const fileTransfer: FileTransferObject = this.transfer.create();
-		// Download a file:
-		let options = {};
-		let trustHosts = true;
-		fileTransfer.download(this._global.serverAddress+"/download/voicefile/"+filename, targetPath, 
-		trustHosts,
-		 options).then(result => {
-			 console.log("下载完成,播放..");
-			 this.play(targetPath);
-		}).catch(err => {
-			alert("下载音频文件出错");
-			console.log("下载音频文件出错",err);
-		});
-
-		fileTransfer.onProgress((evt:ProgressEvent)=>{
-			let progress = window.parseInt(evt.loaded /evt.total * 100);
-			console.log(progress)
-		})
+		let targetPath = this.getBasePath() + 'voices/';
+		let targetPathWithFileName = this.getBasePath() + 'voices/' + filename;
+		// 检查是否已下载过
+		this.file.checkFile(targetPath, filename).then(
+			 (success)=> {
+				alert("已经下载,直接播放！");
+				this.play(targetPathWithFileName);
+			},  (error)=> {
+				// 此方法采用追加的方式添加
+				let options = {};
+				let trustHosts = true;
+				const fileTransfer: FileTransferObject = this.transfer.create();
+				fileTransfer.download(this._global.serverAddress + "/download/voicefile/" + filename, targetPathWithFileName,
+					trustHosts,
+					options).then(result => {
+						console.log("下载完成,播放..");
+						this.play(targetPathWithFileName);
+					}).catch(err => {
+						alert("下载音频文件出错");
+						console.log("下载音频文件出错", err);
+					});
+				fileTransfer.onProgress((evt: ProgressEvent) => {
+					let progress = window.parseInt(evt.loaded / evt.total * 100);
+					console.log(progress)
+				})
+			})
 	}
 
 	getBasePath() {
-		var basePath;
+		let basePath;
 		if (this.platform.is("ios")) {
 			basePath = window.cordova.file.documentsDirectory + "TomatoBang/";
 		} else {
@@ -58,25 +65,14 @@ export class VoicePlayService {
 
 
 	getFileName(url) {
-        var arr = url.split('/');
-        var fileName = arr[arr.length - 1];
-        return fileName;
-      }
+		let arr = url.split('/');
+		let fileName = arr[arr.length - 1];
+		return fileName;
+	}
 
 	//检查路径中是否存在这个文件，并相应改变state
-	checkFile(dataList) {
-		var targetPath = this.getBasePath() + 'voices/';
-		for (var i = 0; i < dataList.length; i++) {
-			targetPath = this.getBasePath() + 'voices/';
-			let index = i;
-			// 0 代表未下载，3 代表下载完成
-			this.file.checkFile(targetPath, this.getFileName(dataList[index].FilePath)).then(
-				function (success) {
-					dataList[index].state = 3;
-				}, function (error) {
-					dataList[index].state = 0;
-				})
-		}
+	checkFile(filename) {
+
 	}
 
 	/**

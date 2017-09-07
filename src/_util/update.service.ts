@@ -1,5 +1,6 @@
 /**
  * App 更新服务
+ * (暂未启用)
  */
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http'
@@ -114,7 +115,7 @@ export class UpdateService {
                             loading.dismiss();
                         }
                     });
-                    // 显示下载进度
+                    // 下载进度
                     fileTransfer.onProgress(function (progress) {
                         setTimeout(function () {
                             var downloadProgress = (progress.loaded / progress.total) * 100;
