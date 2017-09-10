@@ -1,0 +1,59 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "com.unarin.cordova.beacon": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-media": {
+            "MICROPHONE_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "io.rong.imlib": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "nxtpush-cordova-plugin": {
+            "JIPUSH_APPKEY": "f5e2b59c15255310ed1e9e97",
+            "MI_PUSH_APPID": "2882303761517580870",
+            "MI_PUSH_APPKEY": "5681758071870",
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "phonegap-nfc": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-jcore": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        }
+    }
+}

@@ -3,8 +3,6 @@
  */
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
-import { Events } from "ionic-angular";
-import { GlobalService } from "../providers/global.service";
 
 declare var window;
 
@@ -15,7 +13,7 @@ export class BaiduLocationService {
 	) {}
 
 	startLocation(callback): Promise<any> {
-		return new Promise(function(resolve, reject) {
+		return new Promise((resolve, reject) =>{
 			// 手机环境
 			if (window.cordova) {
 				if (this.plf.is("android")) {
@@ -28,7 +26,7 @@ export class BaiduLocationService {
 								position: this.createDetailAddr(data)
 							});
 						},
-						function(err) {
+						(err)=> {
 							console.log("android location error");
 							// 没有权限进入error
 							reject({

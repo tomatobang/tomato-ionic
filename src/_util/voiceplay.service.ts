@@ -3,10 +3,9 @@
  */
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
-import { Events } from "ionic-angular";
 import { GlobalService } from "../providers/global.service";
 
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Media, MediaObject } from "@ionic-native/media";
 declare var window;

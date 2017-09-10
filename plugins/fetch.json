@@ -158,7 +158,7 @@
     "TalkingData": {
         "source": {
             "type": "local",
-            "path": "C:\\Users\\huxz\\Desktop\\TalkingData-Analytics-SDK-Cordova-Plugin-master"
+            "id": "TalkingData"
         },
         "is_top_level": true,
         "variables": {}
@@ -185,8 +185,8 @@
     },
     "io.rong.imlib": {
         "source": {
-            "type": "local",
-            "path": "..\\cordova-plugin-rongcloud-im-master"
+            "type": "registry",
+            "id": "https://github.com/rongcloud/cordova-plugin-rongcloud-im"
         },
         "is_top_level": true,
         "variables": {}

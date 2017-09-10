@@ -3,7 +3,6 @@
  */
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
-import { Events } from "ionic-angular";
 import { GlobalService } from "../providers/global.service";
 
 declare var window;
@@ -61,9 +60,7 @@ export class JPushService {
     if (this._global.appIsActive == true) {
       this.clearLocAndBadge();
     }
-    var type = this.plf.is("android") ? data.extras.Type : data.Type;
-    var pcode = this.plf.is("android") ? data.extras.PCode : data.PCode;
-    var count = this.plf.is("android") ? data.extras.Count : data.Count;
+    let type = this.plf.is("android") ? data.extras.Type : data.Type;
     // 根据设置是否需要开启音效
     if (true) {
       let audio = new Audio();

@@ -15,13 +15,13 @@ import {
 	FileUploadOptions,
 	FileTransferObject
 } from "@ionic-native/file-transfer";
-import { File } from "@ionic-native/file";
+//import { File } from "@ionic-native/file";
 
 declare let window;
 
 @Component({
 	selector: "voice-recorder",
-	providers: [Media,FileTransfer,File],
+	providers: [Media,FileTransfer],//,File
 	templateUrl: "./voice-recorder.html",
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
@@ -67,7 +67,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 		public platform: Platform,
 		private elRef: ElementRef,
 		private transfer: FileTransfer,
-		private file: File
+		//private file: File
 	) {
 		if (this.platform.is("IOS")) {
 			this.path = window.cordova

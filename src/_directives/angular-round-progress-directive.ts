@@ -4,7 +4,6 @@
 
 import { Directive, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
-declare var Notification: any;
 declare var window: any;
 let hasFixRatio = false;
 @Directive({

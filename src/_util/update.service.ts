@@ -19,7 +19,7 @@ export class UpdateService {
         public _global: GlobalService,
         public alertCtrl: AlertController,
         public loadingCtrl: LoadingController,
-        public http: Http
+        //public http: Http
     ) {
         this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     }

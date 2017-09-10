@@ -1,4 +1,4 @@
-import { Subject, BehaviorSubject, Observable } from "rxjs";
+import { Subject, Observable } from "rxjs";
 
 let subject: Subject<any> = new Subject<any>();
 let tokenSubject: Subject<any> = new Subject<any>();
