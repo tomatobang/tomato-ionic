@@ -120,6 +120,8 @@ www/
 /plugins/phonegap-plugin-barcodescanner
 /plugins/TalkingData
 /plugins/phonegap-nfc
+/plugins/cordova-plugin-screen-locker
+/plugins/cordova-plugin-screenshot
 
 com/
 org/

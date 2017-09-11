@@ -7,24 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
         "com.darktalker.cordova.screenshot": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
@@ -32,6 +14,15 @@
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "com.unarin.cordova.beacon": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-background-mode": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-baidumaplocation": {
@@ -43,7 +34,13 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
-        "cordova-plugin-compat": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-file": {
@@ -61,23 +58,50 @@
         "cordova-plugin-media": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
         "cordova-plugin-pause-resume-download": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-screen-orientation": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
+        "cordova-plugin-screenshot": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
         "cordova-plugin-wechat": {
             "WECHATAPPID": "wx38fc9b5cea9cf3f9",
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "es6-promise-plugin": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "io.rong.imlib": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
         "nxtpush-cordova-plugin": {
-            "JIPUSH_APPKEY": "f5e2b59c15255310ed1e9e97",
-            "MI_PUSH_APPID": "2882303761517580870",
-            "MI_PUSH_APPKEY": "5681758071870",
+            "JIPUSH_APPKEY": "ffb774df5d729759954bf8ee",
+            "MI_PUSH_APPID": "2882303761517596915",
+            "MI_PUSH_APPKEY": "5601759690915",
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "phonegap-nfc": {
@@ -88,37 +112,16 @@
         },
         "TalkingData": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-screen-locker": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         }
     },
     "dependent_plugins": {
-        "com.applurk.cordova-screen-locker": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-app-version": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-background-mode": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-datepicker": {
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         },
         "cordova-plugin-jcore": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "com.tomatobang.ionic"
-        },
-        "es6-promise-plugin": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
         }
     }

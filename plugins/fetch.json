@@ -1,56 +1,24 @@
 {
-    "cordova-plugin-device": {
+    "com.unarin.cordova.beacon": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-device"
+            "id": "com.unarin.cordova.beacon@^3.4.0"
         },
-        "is_top_level": false,
+        "is_top_level": true,
         "variables": {}
     },
     "cordova-plugin-console": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-console"
+            "id": "cordova-plugin-console@^1.0.7"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-whitelist": {
+    "cordova-plugin-device": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-whitelist@1.3.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-splashscreen": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-splashscreen@4.0.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "ionic-plugin-keyboard": {
-        "source": {
-            "type": "registry",
-            "id": "ionic-plugin-keyboard"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-camera": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-camera"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-compat": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-compat"
+            "id": "cordova-plugin-device@^1.1.4"
         },
         "is_top_level": true,
         "variables": {}
@@ -58,7 +26,156 @@
     "cordova-plugin-file": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-file"
+            "id": "cordova-plugin-file@^4.3.3"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat@^1.1.0"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-media": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-media@^3.0.1"
+        },
+        "is_top_level": true,
+        "variables": {
+            "MICROPHONE_USAGE_DESCRIPTION": " "
+        }
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen@^4.0.3"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar@^2.2.3"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@^1.3.2"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "ionic-plugin-keyboard": {
+        "source": {
+            "type": "registry",
+            "id": "ionic-plugin-keyboard@^2.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "nxtpush-cordova-plugin": {
+        "source": {
+            "type": "registry",
+            "id": "nxtpush-cordova-plugin@^1.0.4"
+        },
+        "is_top_level": true,
+        "variables": {
+            "JIPUSH_APPKEY": "ffb774df5d729759954bf8ee",
+            "MI_PUSH_APPID": "2882303761517596915",
+            "MI_PUSH_APPKEY": "5601759690915"
+        }
+    },
+    "phonegap-nfc": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-nfc@^0.6.6"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.darktalker.cordova.screenshot": {
+        "source": {
+            "type": "registry",
+            "id": "com.darktalker.cordova.screenshot"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-app-event": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-app-event"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-app-version": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-app-version"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-background-mode": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-background-mode"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-baidumaplocation": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-baidumaplocation@^3.2.0"
+        },
+        "is_top_level": true,
+        "variables": {
+            "ANDROID_KEY": "tQsNGo0cwMpnN6AQV620WjZNwqGIleiK",
+            "IOS_KEY": "<API_KEY_IOS>",
+            "IOS_LOCATION_DESC": "请点击'好'以允许访问。"
+        }
+    },
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-camera@^2.4.1"
+        },
+        "is_top_level": true,
+        "variables": {
+            "CAMERA_USAGE_DESCRIPTION": " ",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+        }
+    },
+    "cordova-plugin-jcore": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-jcore"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-datepicker": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-datepicker"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-file-opener2": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-file-opener2"
         },
         "is_top_level": true,
         "variables": {}
@@ -71,94 +188,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "phonegap-plugin-barcodescanner": {
+    "cordova-plugin-network-information": {
         "source": {
             "type": "registry",
-            "id": "phonegap-plugin-barcodescanner"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "com.jjdltc.cordova.plugin.zip": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-zip-plugin"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-logtofile": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-logtofile"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "com.darktalker.cordova.screenshot": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/gitawego/cordova-screenshot.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-statusbar": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-statusbar@2.2.2"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-wechat": {
-        "source": {
-            "type": "git",
-            "path": "https://github.com/xu-li/cordova-plugin-wechat.git"
-        },
-        "is_top_level": true,
-        "variables": {
-            "WECHATAPPID": "wx38fc9b5cea9cf3f9"
-        }
-    },
-    "cordova-plugin-file-opener2": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-file-opener2"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-screen-orientation": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-screen-orientation"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "es6-promise-plugin": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/vstirbu/PromisesPlugin.git",
-            "subdir": "."
-        },
-        "is_top_level": false,
-        "variables": {}
-    },
-    "cordova-plugin-jcore": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-jcore"
-        },
-        "is_top_level": false,
-        "variables": {}
-    },
-    "TalkingData": {
-        "source": {
-            "type": "local",
-            "id": "TalkingData"
+            "id": "cordova-plugin-network-information"
         },
         "is_top_level": true,
         "variables": {}
@@ -171,57 +204,110 @@
         "is_top_level": true,
         "variables": {}
     },
-    "nxtpush-cordova-plugin": {
+    "cordova-plugin-screen-orientation": {
         "source": {
             "type": "registry",
-            "id": "nxtpush-cordova-plugin"
+            "id": "cordova-plugin-screen-orientation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-vibration": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-vibration"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-wechat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-wechat@^2.0.0"
         },
         "is_top_level": true,
         "variables": {
-            "JIPUSH_APPKEY": "f5e2b59c15255310ed1e9e97",
-            "MI_PUSH_APPID": "2882303761517580870",
-            "MI_PUSH_APPKEY": "5681758071870"
+            "WECHATAPPID": "wx38fc9b5cea9cf3f9"
         }
+    },
+    "de.appplant.cordova.plugin.local-notification": {
+        "source": {
+            "type": "registry",
+            "id": "de.appplant.cordova.plugin.local-notification"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "es6-promise-plugin": {
+        "source": {
+            "type": "registry",
+            "id": "es6-promise-plugin"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "TalkingData": {
+        "source": {
+            "type": "registry",
+            "id": "talkingdata"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.jjdltc.cordova.plugin.zip": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-zip-plugin@0.0.4"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-screenshot": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-screenshot"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
     "io.rong.imlib": {
         "source": {
             "type": "registry",
-            "id": "https://github.com/rongcloud/cordova-plugin-rongcloud-im"
+            "id": "cordova-plugin-rongcloud-im@^2.3.10"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-media": {
+    "cordova-plugin-logtofile": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-media@3.0.1"
+            "id": "cordova-plugin-logtofile"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-baidumaplocation": {
+    "phonegap-plugin-barcodescanner": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-baidumaplocation@3.0.1"
+            "id": "phonegap-plugin-barcodescanner@^6.0.8"
         },
         "is_top_level": true,
         "variables": {
-            "ANDROID_KEY": "tQsNGo0cwMpnN6AQV620WjZNwqGIleiK",
-            "IOS_KEY": "<API_KEY_IOS>"
+            "CAMERA_USAGE_DESCRIPTION": " "
         }
     },
-    "com.unarin.cordova.beacon": {
+    "com.applurk.cordova-screen-locker": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-ibeacon"
+            "id": "https://github.com/pengkobe/cordova-plugin-screen-locker"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "phonegap-nfc": {
+    "cordova-plugin-screen-locker": {
         "source": {
             "type": "registry",
-            "id": "phonegap-nfc"
+            "id": "cordova-plugin-screen-locker@^0.2.2"
         },
         "is_top_level": true,
         "variables": {}
