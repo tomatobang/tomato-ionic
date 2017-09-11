@@ -30,8 +30,8 @@
         <ion-slide class="tomato-today-slide">
             <h1 class="today-tomatoCount">{{tomatoCount}}</h1>
             <!-- 这里可以按照时间进度进行分组，再进行展示-->
-            <ion-list>
-                <ion-item *ngFor="let tomato of historyTomatoes">
+            <ion-list >
+                <ion-item *ngFor="let tomato of historyTomatoes" class="tomato-today-list" track="tooling">
                     <ion-avatar item-start>
                         <img src="assets/tomato.png">
                     </ion-avatar>
@@ -39,7 +39,7 @@
                         <span [ngClass]="{'text-breaked':tomato.succeed==0}">{{tomato.title | StringTruncate: 20}}</span>
                         <img src="./assets/voice/voice.png" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
                     </h2>
-                    <h3><span>{{tomato.endTime | date:'shortTime'}}</span>
+                    <h3><span>{{tomato.startTime | date:'shortTime'}} -  </span><span>{{tomato.endTime | date:'shortTime'}}</span>
                     </h3>
                 </ion-item>
             </ion-list>
