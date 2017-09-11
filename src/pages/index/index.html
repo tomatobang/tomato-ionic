@@ -13,22 +13,23 @@
             </div>
 
             <div class="active-task">
-                    <div class="bs-callout bs-callout-info" *ngIf="activeTomato">
-                      <h4 class="active-task-title">{{ activeTomato.title }}</h4>
-                      <p class="active-task-desc">{{ activeTomato.description }}</p>
-                    </div>
-                    <div class="bs-callout bs-callout-info" *ngIf="isResting">
-                      <h4 class="rest-title">休息中....</h4>
-                    </div>
-                    <button class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</button>
-           </div>
+                <div class="bs-callout bs-callout-info" *ngIf="activeTomato">
+                    <h4 class="active-task-title">{{ activeTomato.title }}</h4>
+                    <p class="active-task-desc">{{ activeTomato.description }}</p>
+                </div>
+                <div class="bs-callout bs-callout-info" *ngIf="isResting">
+                    <h4 class="rest-title">休息中....</h4>
+                </div>
+                <button class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</button>
+            </div>
 
             <button ion-fab mini (click)="addTask()" class="task-manager-plus"><ion-icon name="add"></ion-icon></button>
-            
+
         </ion-slide>
 
         <ion-slide class="tomato-today-slide">
             <h1 class="today-tomatoCount">{{tomatoCount}}</h1>
+            <!-- 这里可以按照时间进度进行分组，再进行展示-->
             <ion-list>
                 <ion-item *ngFor="let tomato of historyTomatoes">
                     <ion-avatar item-start>
@@ -45,14 +46,14 @@
         </ion-slide>
 
         <ion-slide class="tomato-history-slide">
-                <ion-searchbar (ionInput)="getItems($event)" placeholder="番茄钟名称..."></ion-searchbar>
-                <ion-list>
-                  <ion-item *ngFor="let item of items">
+            <ion-searchbar (ionInput)="getItems($event)" placeholder="番茄钟名称..."></ion-searchbar>
+            <ion-list>
+                <ion-item *ngFor="let item of items">
                     {{ item }}
-                  </ion-item>
-                </ion-list>
+                </ion-item>
+            </ion-list>
         </ion-slide>
 
     </ion-slides>
-   
+
 </ion-content>

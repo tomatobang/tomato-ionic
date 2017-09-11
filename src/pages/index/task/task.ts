@@ -95,6 +95,7 @@ export class TaskPage implements OnInit {
 				setTimeout(()=>{
 					this.voiceRecordCMP.uploadVoiceFile().then(filename=>{
 						let tt = this.allTasks.unfinished;
+						task.voiceUrl = (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
 						this.allTasks.unfinished = [task].concat(tt);
 						this.newTask = {
 							title: "",

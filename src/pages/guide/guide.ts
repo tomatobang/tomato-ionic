@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { MenuController, NavController, Slides } from 'ionic-angular';
+import { MenuController, NavController, Slides ,IonicPage} from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 	selector: 'page-guide',
 	templateUrl: 'guide.html'
 })
-
+@IonicPage()
 export class GuidePage {
 	showSkip = true;
 
@@ -21,7 +21,7 @@ export class GuidePage {
 	) { }
 
 	startApp() {
-		this.navCtrl.push("TabsPage").then(() => {
+		this.navCtrl.push("LoginPage").then(() => {
 			this.storage.set('hasSeenGuide', 'true');
 		})
 	}

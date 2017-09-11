@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpModule } from "@angular/http";
 import { BrowserModule } from '@angular/platform-browser';
-import * as hidpiCanvas from 'hidpi-canvas/dist/hidpi-canvas.min.js'
+// import * as hidpiCanvas from 'hidpi-canvas/dist/hidpi-canvas.min.js'
 import { MyApp } from './app.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
@@ -16,6 +16,7 @@ import { TomatoIOService } from '../_util/socket.io.service';
 
 import { RebirthStorageModule } from 'rebirth-storage'; 
 import { RebirthHttpModule  } from 'rebirth-http';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { RebirthHttpModule  } from 'rebirth-http';
       tabsHideOnSubPages:true,
       tabsLayout:'icon-left'
     }),
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -40,8 +42,8 @@ import { RebirthHttpModule  } from 'rebirth-http';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GlobalService,JPushService,TomatoIOService
+    GlobalService,JPushService,TomatoIOService,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

@@ -25,7 +25,7 @@
     "@ionic-native/media": "^4.0.1",
     "@ionic-native/splash-screen": "3.12.1",
     "@ionic-native/status-bar": "3.12.1",
-    "@ionic/storage": "2.0.1",
+    "@ionic/storage": "^2.0.1",
     "build": "^0.1.4",
     "com.darktalker.cordova.screenshot": "^0.1.6",
     "com.unarin.cordova.beacon": "^3.4.0",
