@@ -39,7 +39,10 @@
                         <span [ngClass]="{'text-breaked':tomato.succeed==0}">{{tomato.title | StringTruncate: 20}}</span>
                         <img src="./assets/voice/voice.png" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
                     </h2>
-                    <h3><span>{{tomato.startTime | date:'shortTime'}} -  </span><span>{{tomato.endTime | date:'shortTime'}}</span>
+                    <h3>
+                        <span>{{tomato.startTime | date:'shortTime'}} -  </span>
+                        <span>{{tomato.endTime | date:'shortTime'}}</span> 
+                        <span *ngIf="tomato.breakReason">(中断原因:{{tomato.breakReason}})</span>
                     </h3>
                 </ion-item>
             </ion-list>

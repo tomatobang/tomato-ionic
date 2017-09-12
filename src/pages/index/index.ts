@@ -196,14 +196,22 @@ export class IndexPage implements OnInit, OnDestroy {
 			  text: '提交',
 			  handler: data => {
 				// 创建tomato
-				let tomato: any = {
+				let tomatoDTO: any = {
 					taskid: this.activeTomato._id,
 					num: this.activeTomato.num,
 					breakTime: 1,
 					breakReason: data.title
 				}
+				let tomato: any = {
+					title:this.activeTomato.title,
+					startTime:this.activeTomato.startTime,
+					endTime:new Date(),
+					breakTime: 1,
+					breakReason: data.title
+				}
 				this.historyTomatoes.push(Object.assign({}, tomato));
-				this.tomatoIO.break_tomato(this._userid,tomato);
+				this.tomatoCount +=1;
+				this.tomatoIO.break_tomato(this._userid,tomatoDTO);
 				this.activeTomato = null;
 			  }
 			}
@@ -236,6 +244,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		// 倒计时结束
 		if (dataspan >= this.countdown * 60 * 1000) {
 			this.alertAudio.play();
+			this.startRestTimer();
 		} else {
 			this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 		}
