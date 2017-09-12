@@ -72,8 +72,8 @@ export class IndexPage implements OnInit, OnDestroy {
 				this.breakActiveTask(false);
 		});
 
-		this.mp3Source.setAttribute("src", "/assets/audios/alert.mp3");
-		this.oggSource.setAttribute("src", "/assets/audios/alert.ogg");
+		this.mp3Source.setAttribute("src", "./assets/audios/alert.mp3");
+		this.oggSource.setAttribute("src", "./assets/audios/alert.ogg");
 		this.alertAudio.appendChild(this.mp3Source);
 		this.alertAudio.appendChild(this.oggSource);
 		this.alertAudio.load();

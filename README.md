@@ -2,4 +2,4 @@
 ionic/cordova version for tomatobang
 
 ## License
-GUN
+MIT@[yipeng.info](https://yipeng.info)
