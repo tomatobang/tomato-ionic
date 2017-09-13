@@ -13,7 +13,8 @@ import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
 })
 export class TaskPage implements OnInit {
     showDismissButton = true;
-    page_title = "任务管理";
+	page_title = "任务管理";
+	taskType = "today";
 	openNewTaskForm = false;
 	allTasks = {
 		finished: new Array(),

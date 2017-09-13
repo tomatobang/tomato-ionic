@@ -246,6 +246,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		if (dataspan >= this.countdown * 60 * 1000) {
 			this.alertAudio.play();
 			this.startRestTimer();
+			this.activeTomato = null;
 		} else {
 			this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 		}

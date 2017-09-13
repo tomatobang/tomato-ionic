@@ -15,7 +15,6 @@ import {
 	FileUploadOptions,
 	FileTransferObject
 } from "@ionic-native/file-transfer";
-//import { File } from "@ionic-native/file";
 
 declare let window;
 
@@ -66,10 +65,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 		private media: Media,
 		public platform: Platform,
 		private elRef: ElementRef,
-		private transfer: FileTransfer,
-		//private file: File
+		private transfer: FileTransfer
 	) {
-		if (this.platform.is("IOS")) {
+		if (this.platform.is("ios")) {
 			this.path = window.cordova
 				? window.cordova.file.documentsDirectory
 				: "";
@@ -203,13 +201,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 				// );
 			}
 		}, 100);
-
-		// 10s 后自动释放
-		// setTimeout(() => {
-		// 	if (this.mediaRec) {
-		// 		this.mediaRec.release();
-		// 	}
-		// }, 10000);
 		return false;
 	}
 
@@ -221,7 +212,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 		if (!voiFile) {
 			voiFile = this.getNewMediaURL(this.src);
 		}
-		if (this.platform.is("IOS")) {
+		if (this.platform.is("ios")) {
 			voiFile = voiFile.replace("file://", "");
 		}
 		this.mediaRec = this.media.create(voiFile);
