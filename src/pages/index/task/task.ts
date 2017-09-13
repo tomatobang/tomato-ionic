@@ -15,7 +15,6 @@ export class TaskPage implements OnInit {
     showDismissButton = true;
     page_title = "任务管理";
 	openNewTaskForm = false;
-	taskType = "today";
 	allTasks = {
 		finished: new Array(),
 		unfinished: new Array()

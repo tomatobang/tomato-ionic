@@ -1,17 +1,21 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar no-border-bottom>
         <ion-title>{{page_title}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="addTask()">
+                  <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-slides pager (ionSlideDidChange)="slideChanged()">
+    <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
         <ion-slide>
             <div>
                 <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>
             </div>
-
             <div class="active-task">
                 <div class="bs-callout bs-callout-info" *ngIf="activeTomato">
                     <h4 class="active-task-title">{{ activeTomato.title }}</h4>
@@ -20,17 +24,14 @@
                 <div class="bs-callout bs-callout-info" *ngIf="isResting">
                     <h4 class="rest-title">休息中....</h4>
                 </div>
-                <button class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</button>
+                <button ion-button block outline color="danger" class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</button>
             </div>
-
-            <button ion-fab mini (click)="addTask()" class="task-manager-plus"><ion-icon name="add"></ion-icon></button>
-
         </ion-slide>
 
         <ion-slide class="tomato-today-slide">
             <h1 class="today-tomatoCount">{{tomatoCount}}</h1>
             <!-- 这里可以按照时间进度进行分组，再进行展示-->
-            <ion-list >
+            <ion-list>
                 <ion-item *ngFor="let tomato of historyTomatoes" class="tomato-today-list" track="tooling">
                     <ion-avatar item-start>
                         <img src="assets/tomato.png">
@@ -41,7 +42,7 @@
                     </h2>
                     <h3>
                         <span>{{tomato.startTime | date:'shortTime'}} -  </span>
-                        <span>{{tomato.endTime | date:'shortTime'}}</span> 
+                        <span>{{tomato.endTime | date:'shortTime'}}</span>
                         <span *ngIf="tomato.breakReason">(中断原因:{{tomato.breakReason}})</span>
                     </h3>
                 </ion-item>
@@ -56,7 +57,6 @@
                 </ion-item>
             </ion-list>
         </ion-slide>
-
     </ion-slides>
 
 </ion-content>

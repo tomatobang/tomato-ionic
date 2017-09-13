@@ -26,6 +26,7 @@ declare let window;
 })
 export class IndexPage implements OnInit, OnDestroy {
 	page_title = "首页";
+	segment="index";
 	_userid:string;
 	@ViewChild(Slides) slides: Slides;
 

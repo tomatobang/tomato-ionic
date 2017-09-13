@@ -14,9 +14,9 @@ export class AngularRoundProgressComponent {
 
     width: any = 270;
     height: any = 270;
-    outerCircleWidth: number = 25;
+    outerCircleWidth: number = 20;
     innerCircleWidth: number = 5;
-    outerCircleRadius: number = 115;
+    outerCircleRadius: number = 110;
     innerCircleRadius: number = 80;
 
     labelFont: string = "40pt Arial";
