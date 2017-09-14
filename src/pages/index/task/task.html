@@ -3,6 +3,18 @@
         <ion-title *ngIf="openNewTaskForm">
             {{page_title}}
         </ion-title>
+        <ion-buttons left *ngIf="showDismissButton">
+            <button ion-button (click)="dismiss()">
+              <返回
+              <!-- <ion-icon name="md-close" showWhen="android,windows"></ion-icon> -->
+            </button>
+        </ion-buttons>
+
+        <ion-buttons left *ngIf="openNewTaskForm">
+            <button ion-button (click)="cancleAddTask()">
+                        取消
+            </button>
+        </ion-buttons>
 
         <div padding *ngIf="!openNewTaskForm">
             <ion-segment [(ngModel)]="taskType">
@@ -15,25 +27,13 @@
             </ion-segment>
         </div>
 
-        <ion-buttons start *ngIf="showDismissButton">
-            <button ion-button (click)="dismiss()">
-              <span ion-text color="primary" showWhen="ios"><返回</span>
-              <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-            </button>
-        </ion-buttons>
-        <ion-buttons end *ngIf="!openNewTaskForm">
+        <ion-buttons right *ngIf="!openNewTaskForm">
             <button ion-button icon-only (click)="addNewTaskLink()">
                   <ion-icon name="create"></ion-icon>
                 </button>
         </ion-buttons>
-
-
-        <ion-buttons start *ngIf="openNewTaskForm">
-            <button ion-button (click)="cancleAddTask()">
-                        取消
-            </button>
-        </ion-buttons>
-        <ion-buttons end *ngIf="openNewTaskForm">
+        
+        <ion-buttons right *ngIf="openNewTaskForm">
             <button ion-button icon-only color="secondary" (click)="addTask()">
                         添加
             </button>

@@ -221,7 +221,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		prompt.present();
 	  }
 
-	startTimer() {
+	
+	  startTimer() {
 		this.isResting = false;
 		if (typeof this.mytimeout !== "undefined") {
 			clearTimeout(this.mytimeout);

@@ -58,7 +58,7 @@ export class AngularRoundProgressComponent {
     }
 
     fixPixelRatio(context) {
-        if (!hasFixRatio) {
+        //if (!hasFixRatio) {
             let backingStore = context.backingStorePixelRatio ||
                 context.webkitBackingStorePixelRatio ||
                 context.mozBackingStorePixelRatio ||
@@ -81,7 +81,7 @@ export class AngularRoundProgressComponent {
             }
 
             hasFixRatio = true;
-        }
+        //}
     };
 
     render() {
