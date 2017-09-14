@@ -11,7 +11,7 @@
         </ion-avatar>
         <h2>融云测试入口</h2>
     </ion-item>
-    
+
     <ion-item navPush="EchartsPage">
         <ion-avatar item-left>
             <img src="./assets/to-user.jpg">
@@ -19,7 +19,7 @@
         <h2>Echarts测试入口</h2>
     </ion-item>
 
-    
+
     <ion-item navPush="GPSlocationPage">
         <ion-avatar item-left>
             <img src="./assets/to-user.jpg">
@@ -35,5 +35,12 @@
         <h2>IBeaconPage 测试入口</h2>
     </ion-item>
 
-<button ion-fab mini (click)="addTask()" class="task-manager-plus"><ion-icon name="add"></ion-icon></button>
+    <ion-item navPush="AMapPage">
+        <ion-avatar item-left>
+            <img src="./assets/to-user.jpg">
+        </ion-avatar>
+        <h2>高德地图 测试入口</h2>
+    </ion-item>
+
+    <button ion-fab mini (click)="addTask()" class="task-manager-plus"><ion-icon name="add"></ion-icon></button>
 </ion-content>

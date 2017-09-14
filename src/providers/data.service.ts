@@ -68,6 +68,13 @@ export class DataService {
         return opts
     }
 
+
+    amapHttpUtil(url:string,options: Object): Observable<any> {
+        let params: RequestOptions = this.interceptor()
+        params.search = new URLSearchParams(querystring.stringify(options))
+        return this.http.get(url, params)
+    }
+
 }
 
 
