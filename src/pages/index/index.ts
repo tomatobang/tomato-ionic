@@ -101,7 +101,7 @@ export class IndexPage implements OnInit, OnDestroy {
 				this.page_title = "首页";
 				break;
 			case 1:
-				this.page_title = "今日番茄钟";
+				this.page_title = "今日番茄钟("+this.tomatoCount+")";
 				break;
 			case 2:
 				this.page_title = "历史查询";

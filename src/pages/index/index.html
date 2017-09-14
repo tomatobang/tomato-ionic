@@ -10,7 +10,6 @@
 </ion-header>
 
 <ion-content>
-    
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
         <ion-slide>
             <div>
@@ -29,7 +28,7 @@
         </ion-slide>
 
         <ion-slide class="tomato-today-slide">
-            <h1 class="today-tomatoCount">{{tomatoCount}}</h1>
+            <!-- <h1 class="today-tomatoCount">{{tomatoCount}}</h1> -->
             <!-- 这里可以按照时间进度进行分组，再进行展示-->
             <ion-list>
                 <ion-item *ngFor="let tomato of historyTomatoes" class="tomato-today-list" track="tooling">
