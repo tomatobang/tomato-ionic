@@ -75,7 +75,7 @@ export class JPushService {
   }
   //启动极光推送,读取用户设置，进行初始化操作，如果没有自定义设置，默认开启
 
-  init() {
+  init(alias) {
     document.addEventListener(
       "deviceready",
       () => {
@@ -122,7 +122,7 @@ export class JPushService {
         var pushState = true;
         //默认开启，除非明确设置为false,
         if (pushState) {
-          this.setAlias("10000");
+          this.setAlias(alias);
         } else {
           this.stopPush();
         }

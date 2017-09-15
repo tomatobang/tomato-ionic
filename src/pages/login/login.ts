@@ -1,7 +1,6 @@
 /**
  * TODO
  * 1. 微信
- * 2. 账号密码
  * 3. 手机号
  */
 
@@ -10,15 +9,16 @@ import { NavController,IonicPage,ToastController} from 'ionic-angular';
 import { OnlineUserService, User } from "../../providers/data.service";
 import { GlobalService } from "../../providers/global.service";
 import { RebirthHttpProvider } from "rebirth-http";
+import { JPushService } from '../../_util/jpush.service';
+
 
 @IonicPage()
 @Component({
 	selector: "login",
-	providers: [OnlineUserService, GlobalService],
-	templateUrl: "login.html",
-	//styleUrls: ["./login.scss"],
-	
+	providers: [OnlineUserService, GlobalService,JPushService],
+	templateUrl: "login.html"
 })
+
 export class LoginPage {
 	user = new User();
 	error = "";
@@ -31,7 +31,8 @@ export class LoginPage {
 		public globalservice: GlobalService,
 		public rebirthProvider: RebirthHttpProvider,
 		public navCtrl:NavController,
-		private toastCtrl: ToastController
+		private toastCtrl: ToastController,
+		public jPushService: JPushService
 	) {}
 
 	ngOnInit() {
@@ -56,6 +57,7 @@ export class LoginPage {
 			this.globalservice.token = token;
 			this.globalservice.userinfo = JSON.stringify(this.user);
 			this.rebirthProvider.headers({ Authorization: token });
+			this.jPushService.init(this.user.username);
 			this.navCtrl.push("TabsPage",{},()=>{
 			});
 			// 页面跳转
