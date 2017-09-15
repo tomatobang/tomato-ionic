@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef,ViewChild } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { IonicPage, ViewController, Platform } from "ionic-angular";
 import { OnlineTaskService } from "../../../providers/data.service";
 import { VoicePlayService } from "../../../_util/voiceplay.service";
@@ -12,7 +12,7 @@ import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
 	providers: []
 })
 export class TaskPage implements OnInit {
-    showDismissButton = true;
+	showDismissButton = true;
 	page_title = "任务管理";
 	taskType = "today";
 	openNewTaskForm = false;
@@ -26,14 +26,15 @@ export class TaskPage implements OnInit {
 		num: 1
 	};
 
-	voicepostParams={}
+	voicepostParams = {}
 
 	constructor(
 		public taskservice: OnlineTaskService,
 		public viewCtrl: ViewController,
-		public voiceService:VoicePlayService,
-		public globalservice:GlobalService,
-	) {}
+		public voiceService: VoicePlayService,
+		public globalservice: GlobalService,
+		public platform: Platform
+	) { }
 
 	@ViewChild(VoiceRecorderComponent)
 	voiceRecordCMP: VoiceRecorderComponent;
@@ -58,26 +59,33 @@ export class TaskPage implements OnInit {
 		);
 	}
 
-	playVoiceRecord(task){
-		// 格式示例:pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
-		let filename = this.globalservice._userinfo.username+"_"+task._id +"_cordovaIMVoice.amr";
-		this.voiceService.downloadVoiceFile(filename);
-		// if(task.voiceUrl){
-		// 	this.voiceService.downloadVoiceFile(filename);
-		// }
-	}
-
-	addNewTaskLink(){
-		this.openNewTaskForm=true;
-		this.page_title='添加新任务';
-		this.showDismissButton=false
-		this.voicepostParams={
-			userid:'userid',
-			taskid:'taskid'
+	playVoiceRecord(task) {
+		if(task.voiceUrl){
+			let filename = this.getFileName(task.voiceUrl);
+			// filename格式示例:pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
+			this.voiceService.downloadVoiceFile(filename);
+		}else{
+			alert("此任务无音频记录！")
 		}
 	}
 
-	addTask = function(isActive: any) {
+	getFileName(url) {
+		let arr = url.split('/');
+		let fileName = arr[arr.length - 1];
+		return fileName;
+	}
+
+	addNewTaskLink() {
+		this.openNewTaskForm = true;
+		this.page_title = '添加新任务';
+		this.showDismissButton = false
+		this.voicepostParams = {
+			userid: 'userid',
+			taskid: 'taskid'
+		}
+	}
+
+	addTask = function (isActive: any) {
 		let task = this.newTask;
 		// task.num = 1;
 		task.isActive = isActive;
@@ -89,13 +97,13 @@ export class TaskPage implements OnInit {
 			} else {
 				// voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
 				this.voicepostParams = {
-					taskid:data._id,
-					userid:data.userid
+					taskid: data._id,
+					userid: data.userid
 				}
-				setTimeout(()=>{
-					this.voiceRecordCMP.uploadVoiceFile().then(filename=>{
+				setTimeout(() => {
+					this.voiceRecordCMP.uploadVoiceFile().then(filename => {
 						let tt = this.allTasks.unfinished;
-						task.voiceUrl = (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
+						task.voiceUrl = (this.voicepostParams.userid + "_" + this.voicepostParams.taskid + "_" + filename);
 						this.allTasks.unfinished = [task].concat(tt);
 						this.newTask = {
 							title: "",
@@ -103,68 +111,68 @@ export class TaskPage implements OnInit {
 							num: 1
 						};
 						this.openNewTaskForm = false;
-						this.showDismissButton=true;
+						this.showDismissButton = true;
 						this.page_title = "任务管理";
-					},err =>{
+					}, err => {
 						console.error(err);
 					});
-				},100)
+				}, 100)
 			}
 		});
 	}
 
 	removeTask(task: any) {
-        for (let index in this.allTasks.unfinished) {
-            if (this.allTasks.unfinished[index] === task) {
-                let ind = new Number(index);
-                // 删除任务
-                this.taskservice.deleteTask(task._id).subscribe(response => {
-                    let data: any = JSON.parse(response._body);
-                    if (data && data.status == "fail") {
-                    } else {
-                        this.allTasks.unfinished.splice(ind.valueOf(), 1);
-                        this.allTasks.unfinished = this.allTasks.unfinished.slice();
-                    }
-                });
+		for (let index in this.allTasks.unfinished) {
+			if (this.allTasks.unfinished[index] === task) {
+				let ind = new Number(index);
+				// 删除任务
+				this.taskservice.deleteTask(task._id).subscribe(response => {
+					let data: any = JSON.parse(response._body);
+					if (data && data.status == "fail") {
+					} else {
+						this.allTasks.unfinished.splice(ind.valueOf(), 1);
+						this.allTasks.unfinished = this.allTasks.unfinished.slice();
+					}
+				});
 
-            }
-        }
+			}
+		}
 	}
-	
+
 	removeTaskFromActiveList(task: any) {
-        task.isActive = false;
-        this.taskservice.updateTask(task._id, task).subscribe(response => {
-            let data: any = JSON.parse(response._body);
-            if (data && data.status == "fail") {
-            } else {
-                this.allTasks.unfinished = this.allTasks.unfinished.slice();
-            }
-        }, err => {
-            alert(JSON.stringify(err));
-            console.log('updateTask err', err);
-        });
+		task.isActive = false;
+		this.taskservice.updateTask(task._id, task).subscribe(response => {
+			let data: any = JSON.parse(response._body);
+			if (data && data.status == "fail") {
+			} else {
+				this.allTasks.unfinished = this.allTasks.unfinished.slice();
+			}
+		}, err => {
+			alert(JSON.stringify(err));
+			console.log('updateTask err', err);
+		});
 
-    }
-
-    addTaskToActiveList(task: any) {
-        task.isActive = true;
-        this.taskservice.updateTask(task._id, task).subscribe(response => {
-            let data: any = JSON.parse(response._body);
-            if (data && data.status == "fail") {
-            } else {
-                this.allTasks.unfinished = this.allTasks.unfinished.slice();
-            }
-        }, err => {
-            alert(JSON.stringify(err));
-            console.log('updateTask err', err);
-        });
 	}
-	
-	startTask(task){
-		if (task._id){
+
+	addTaskToActiveList(task: any) {
+		task.isActive = true;
+		this.taskservice.updateTask(task._id, task).subscribe(response => {
+			let data: any = JSON.parse(response._body);
+			if (data && data.status == "fail") {
+			} else {
+				this.allTasks.unfinished = this.allTasks.unfinished.slice();
+			}
+		}, err => {
+			alert(JSON.stringify(err));
+			console.log('updateTask err', err);
+		});
+	}
+
+	startTask(task) {
+		if (task._id) {
 			delete task._id
 		}
-		this.viewCtrl.dismiss({task});
+		this.viewCtrl.dismiss({ task });
 	}
 
 	dismiss() {
@@ -172,11 +180,11 @@ export class TaskPage implements OnInit {
 		this.viewCtrl.dismiss(data);
 	}
 
-	cancleAddTask(){
+	cancleAddTask() {
 		this.page_title = "任务管理";
-		this.newTask.title='';
-		this.showDismissButton=true;
-		this.openNewTaskForm=false;
+		this.newTask.title = '';
+		this.showDismissButton = true;
+		this.openNewTaskForm = false;
 	}
 
 }

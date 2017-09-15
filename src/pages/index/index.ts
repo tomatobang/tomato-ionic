@@ -299,8 +299,13 @@ export class IndexPage implements OnInit, OnDestroy {
 	}
 
 	playVoiceRecord(tomato){
-		let filename = this.getFileName(tomato.voiceUrl);
-		this.voiceService.downloadVoiceFile(filename);
+		if(tomato.voiceUrl){
+			let filename = this.getFileName(tomato.voiceUrl);
+			this.voiceService.downloadVoiceFile(filename);
+		}else{
+			alert('此番茄钟无音频记录！')
+		}
+	
 	}
 
 	getFileName(url) {
