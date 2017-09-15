@@ -103,4 +103,25 @@ export class VoicePlayService {
 		//开始播放录音
 		this.mediaRec.play();
 	}
+
+	play_local_voice(file_url) {
+		if (this.mediaRec) {
+			this.mediaRec.stop();
+			this.mediaRec.release();
+		}
+		let applicationDirectory = window.cordova.file.applicationDirectory;
+		alert(applicationDirectory);
+		let path  =  applicationDirectory + file_url
+		this.mediaRec = this.media.create(path);
+
+		this.mediaRec.onSuccess.subscribe(() => {
+			console.log("play_local_voice():Audio Success");
+		});
+		this.mediaRec.onError.subscribe(error => {
+			console.log("play_local_voice():Audio Error: ", error);
+		});
+		//开始播放录音
+		this.mediaRec.play();
+		return false;
+	}
 }

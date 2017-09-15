@@ -46,6 +46,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	uploadUrl: string;
 	isUploading:boolean = false;
 	uploadProgress = 0;
+
 	el: HTMLElement;
 	pressGesture: Gesture;
 	isStartRecord = false;
@@ -298,4 +299,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 			}
 		});
 	}
+
+
 }

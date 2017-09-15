@@ -50,6 +50,7 @@
 
         <ion-slide class="tomato-history-slide">
             <ion-searchbar (ionInput)="getItems($event)" placeholder="番茄钟名称..."></ion-searchbar>
+            <button ion-button block outline color="danger" (click)="testPlayVoice(true)">testPlayVoice</button>
             <ion-list>
                 <ion-item *ngFor="let item of items">
                     {{ item }}

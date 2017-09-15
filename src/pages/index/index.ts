@@ -245,7 +245,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		);
 		// 倒计时结束
 		if (dataspan >= this.countdown * 60 * 1000) {
-			this.alertAudio.play();
+			//this.alertAudio.play();
+			this.voiceService.play_local_voice("assets/audios/alert.mp3");
 			this.startRestTimer();
 			this.activeTomato = null;
 		} else {
@@ -267,7 +268,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		);
 
 		if (dataspan >= this.resttime * 60 * 1000) {
-			this.alertAudio.play();
+			this.voiceService.play_local_voice("assets/audios/alert.mp3");
+			//this.alertAudio.play();
 			this.isResting = false;
 			this.timerStatus.reset();
 		} else {
@@ -306,6 +308,10 @@ export class IndexPage implements OnInit, OnDestroy {
 			alert('此番茄钟无音频记录！')
 		}
 	
+	}
+
+	testPlayVoice(){
+		this.voiceService.play_local_voice("assets/audios/alert.mp3");
 	}
 
 	getFileName(url) {
