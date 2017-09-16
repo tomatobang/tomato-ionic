@@ -86,7 +86,7 @@ export class VoicePlayService {
 		if (!voiFile) {
 			return;
 		}
-		if (this.platform.is("IOS")) {
+		if (this.platform.is("ios")) {
 			voiFile = voiFile.replace("file://", "");
 		}
 		this.mediaRec = this.media.create(voiFile);
@@ -109,8 +109,12 @@ export class VoicePlayService {
 			this.mediaRec.stop();
 			this.mediaRec.release();
 		}
-		let applicationDirectory = window.cordova.file.applicationDirectory;
-		alert(applicationDirectory);
+		// function getPhoneGapPath() {
+		// 		let path = window.location.pathname;
+		// 		path = path.substr(0,path.length - 10 );
+		// 		return 'file://' + path;
+		// };
+		let applicationDirectory = "";//getPhoneGapPath();//window.cordova.file.applicationDirectory;
 		let path  =  applicationDirectory + file_url
 		this.mediaRec = this.media.create(path);
 
