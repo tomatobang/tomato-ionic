@@ -5,6 +5,7 @@ let tokenSubject: Subject<any> = new Subject<any>();
 export class GlobalService {
 	public notificationSubject: Subject<any> = new Subject<any>();
 	_isActive: boolean = false;
+	_isFirstTimeOpen:boolean;
 	_token: string;
 	_userinfo: any;
 	_countdown: number = 0;
@@ -106,4 +107,31 @@ export class GlobalService {
 		localStorage.setItem("userinfo", value);
 		subject.next(value);
 	}
+
+	get isFirstTimeOpen() {
+		if (this._isFirstTimeOpen) {
+			return this._isFirstTimeOpen;
+		} else {
+			let isFirstTimeOpen = localStorage.getItem("isFirstTimeOpen");
+			if(isFirstTimeOpen == "false"){
+				return false;
+			}else{
+				return true;
+			}
+			
+		}
+	}
+
+	set isFirstTimeOpen(value) {
+		this._isFirstTimeOpen = value;
+		let str  = "";
+		if(value){
+			str="true";
+		}else{
+			str="false";
+		}
+		localStorage.setItem("isFirstTimeOpen", str);
+	}
+
+	
 }

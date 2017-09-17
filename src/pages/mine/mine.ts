@@ -21,5 +21,6 @@ export class MinePage {
 		this.jPushService.clearAlias();
 		this.navCtrl.push("LoginPage", null, {}, () => {
 		});
+		this.globalservice.userinfo="";
 	}
 }

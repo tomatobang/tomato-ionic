@@ -1,5 +1,11 @@
-
-.add-newtask-title{
+.add-newtask-title {
   text-align: center;
   margin-top: 0px;
+}
+
+.subtitle {
+  font-size: 12px;
+  span {
+    color: gray;
+  }
 }

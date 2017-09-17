@@ -63,10 +63,11 @@ export class JPushService {
     let type = this.plf.is("android") ? data.extras.Type : data.Type;
     // 根据设置是否需要开启音效
     if (true) {
-      let audio = new Audio();
-      audio.src = "http://remote.address.com/example.mp3";
-      audio.load();
-      audio.play();
+      // 
+      // let audio = new Audio();
+      // audio.src = "http://remote.address.com/example.mp3";
+      // audio.load();
+      // audio.play();
     }
     if (type == 1) {
     } else if (type == 2) {

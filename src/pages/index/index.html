@@ -40,9 +40,8 @@
                         <img src="./assets/voice/voice.png" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
                     </h2>
                     <h3>
-                        <span>{{tomato.startTime | date:'shortTime'}} -  </span>
-                        <span>{{tomato.endTime | date:'shortTime'}}</span>
-                        <span *ngIf="tomato.breakReason">(中断原因:{{tomato.breakReason}})</span>
+                        <span class="tomato-start-end-time">{{tomato.startTime | date:'shortTime'}} - {{tomato.endTime | date:'shortTime'}}</span>
+                        <div *ngIf="tomato.breakReason" class="tomato-break-reason">(中断原因:{{tomato.breakReason}})</div>
                     </h3>
                 </ion-item>
             </ion-list>
