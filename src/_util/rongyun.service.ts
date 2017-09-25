@@ -1,14 +1,17 @@
+/**
+ * 融云服务
+ */
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { Events } from "ionic-angular";
 import { GlobalService } from "../providers/global.service";
-import { RongyunUtil } from "./RongyunUtil";
+import { RongyunUtil } from "./rongyun.util";
 
 declare var window;
 
 @Injectable()
 export class RongYunService {
-    $rootScope={connectStatus:'',isEnterChatTab:true,arrMsgs:[]};
+	$rootScope = { connectStatus: '', isEnterChatTab: true, arrMsgs: [] };
 
 	//加载会话列表
 	isLoadedConversationList = false;
@@ -16,7 +19,7 @@ export class RongYunService {
 	loadConversationInterval = null;
 	loadUnreadMessageNumberInterval = null;
 
-	constructor(public plf: Platform, public _global: GlobalService,public myUtil: RongyunUtil) {
+	constructor(public plf: Platform, public _global: GlobalService, public myUtil: RongyunUtil) {
 	}
 
 	// 判断定时器是否有效
@@ -137,8 +140,8 @@ export class RongYunService {
 
 	/**
      * 初始化步骤一次进行，解决可能出现的 33002 错误，未 init 完成就 connect 
-     */ 
-	_init(RongyunToken,callback) {
+     */
+	_init(RongyunToken, callback) {
 		//如果没有融云，如果在pc端运行，则不进行融云相关服务
 		if (window.cordova) {
 			window.RongCloudLibPlugin.init(
@@ -326,11 +329,7 @@ export class RongYunService {
 				targetId: targetId.toString(),
 				voicePath: tmpPath,
 				duration: dur,
-				extra: "",
-				user: {
-					id: "userid",
-					name: "username"
-				}
+				extra: ""
 			},
 			(ret, err) => {
 				mediaRec.release();

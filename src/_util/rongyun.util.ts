@@ -1,3 +1,6 @@
+/**
+ * 融云辅助库
+ */
 import { Injectable } from "@angular/core";
 declare var window;
 @Injectable()

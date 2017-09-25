@@ -58,36 +58,39 @@ export class AngularRoundProgressComponent {
     }
 
     fixPixelRatio(context) {
+        /* todo:
+            模块切换时，hasFixRatio 会被重置，但是并不会触发 constructor 函数 
+        */
         //if (!hasFixRatio) {
-            let backingStore = context.backingStorePixelRatio ||
-                context.webkitBackingStorePixelRatio ||
-                context.mozBackingStorePixelRatio ||
-                context.msBackingStorePixelRatio ||
-                context.oBackingStorePixelRatio ||
-                context.backingStorePixelRatio || 1;
-            let ratio = (window.devicePixelRatio || 1) / backingStore;
-            this.width *= ratio;
-            this.height *= ratio;
-            this.outerCircleWidth *= ratio;
-            this.innerCircleWidth *= ratio;
-            this.outerCircleRadius *= ratio;
-            this.innerCircleRadius *= ratio;
+        let backingStore = context.backingStorePixelRatio ||
+            context.webkitBackingStorePixelRatio ||
+            context.mozBackingStorePixelRatio ||
+            context.msBackingStorePixelRatio ||
+            context.oBackingStorePixelRatio ||
+            context.backingStorePixelRatio || 1;
+        let ratio = (window.devicePixelRatio || 1) / backingStore;
+        this.width *= ratio;
+        this.height *= ratio;
+        this.outerCircleWidth *= ratio;
+        this.innerCircleWidth *= ratio;
+        this.outerCircleRadius *= ratio;
+        this.innerCircleRadius *= ratio;
 
-            if (ratio >=2){
-                this.labelFont = "80pt Arial";
-            }
-            if (ratio >=3){
-                this.labelFont = "120pt Arial";
-            }
+        if (ratio >= 2) {
+            this.labelFont = "80pt Arial";
+        }
+        if (ratio >= 3) {
+            this.labelFont = "120pt Arial";
+        }
 
-            hasFixRatio = true;
+        hasFixRatio = true;
         //}
     };
 
     render() {
         // Create the content of the canvas
         let ctx = this.canvas.getContext('2d');
-        
+
         ctx.clearRect(0, 0, this.width, this.height);
 
         // The "background" circle

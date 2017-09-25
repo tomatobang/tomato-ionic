@@ -32,7 +32,7 @@ export class VoicePlayService {
 				alert("已经下载,直接播放！");
 				this.play(targetPathWithFileName);
 			},  (error)=> {
-				// 此方法采用追加的方式添加
+				// 注意:此方法采用追加的方式添加
 				let options = {};
 				let trustHosts = true;
 				const fileTransfer: FileTransferObject = this.transfer.create();
@@ -67,11 +67,6 @@ export class VoicePlayService {
 		let arr = url.split('/');
 		let fileName = arr[arr.length - 1];
 		return fileName;
-	}
-
-	//检查路径中是否存在这个文件，并相应改变state
-	checkFile(filename) {
-
 	}
 
 	/**
@@ -109,6 +104,7 @@ export class VoicePlayService {
 			this.mediaRec.stop();
 			this.mediaRec.release();
 		}
+		// cordova:旧版路径获取方式
 		// function getPhoneGapPath() {
 		// 		let path = window.location.pathname;
 		// 		path = path.substr(0,path.length - 10 );
@@ -124,6 +120,7 @@ export class VoicePlayService {
 		this.mediaRec.onError.subscribe(error => {
 			console.log("play_local_voice():Audio Error: ", error);
 		});
+		
 		//开始播放录音
 		this.mediaRec.play();
 		return false;

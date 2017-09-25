@@ -20,7 +20,7 @@ declare let window;
 
 @Component({
 	selector: "voice-recorder",
-	providers: [Media,FileTransfer],//,File
+	providers: [Media, FileTransfer],//,File
 	templateUrl: "./voice-recorder.html",
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
@@ -44,7 +44,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
 	_postParams: any;
 	uploadUrl: string;
-	isUploading:boolean = false;
+	isUploading: boolean = false;
 	uploadProgress = 0;
 
 	el: HTMLElement;
@@ -172,7 +172,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
 		//在html中显示当前状态
 		let counter = 0;
-		let timerDur = setInterval(()=> {
+		let timerDur = setInterval(() => {
 			counter = counter + 100;
 			if (counter > 2000) {
 				clearInterval(timerDur);
@@ -190,16 +190,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 				if (this.mediaRec) {
 					this.mediaRec.release();
 				}
-				// this.uploadVoiceFile(tmpPath);
-				// 融云发送语音消息示例
-				// RongyunUtil.sendVoiceMessage(
-				//   conversationType,targetId, tmpPath,dur,this.mediaRec,
-				//   function(ret) {
-				//     if (ret.status == "prepare") {
-				//       appendNewMsg(ret.result.message, true);
-				//     }
-				//   }
-				// );
 			}
 		}, 100);
 		return false;
@@ -250,7 +240,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	 * 上传音频文件
 	 */
 	uploadVoiceFile() {
-		return new Promise((resolve, reject)=> {
+		return new Promise((resolve, reject) => {
 			this.isUploading = true;
 			let tmpPath = this._temp_file_path;
 			if (!this.uploadUrl) {
@@ -258,7 +248,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 				return;
 			} else {
 				const fileTransfer: FileTransferObject = this.transfer.create();
-				if (!this._postParams){
+				if (!this._postParams) {
 					reject("_postParams 不存在");
 					return;
 				}
@@ -271,8 +261,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 					headers: {},
 					params: this._postParams
 				};
-				console.log(tmpPath,this.uploadUrl,options);
-				fileTransfer.upload(tmpPath, this.uploadUrl, options,true).then(
+				console.log(tmpPath, this.uploadUrl, options);
+				fileTransfer.upload(tmpPath, this.uploadUrl, options, true).then(
 					r => {
 						console.log("Code = " + r.responseCode);
 						console.log("Response = " + r.response);

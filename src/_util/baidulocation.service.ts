@@ -10,10 +10,10 @@ declare var window;
 export class BaiduLocationService {
 	constructor(
 		public plf: Platform //	public _global: GlobalService
-	) {}
+	) { }
 
 	startLocation(callback): Promise<any> {
-		return new Promise((resolve, reject) =>{
+		return new Promise((resolve, reject) => {
 			// 手机环境
 			if (window.cordova) {
 				if (this.plf.is("android")) {
@@ -26,9 +26,8 @@ export class BaiduLocationService {
 								position: this.createDetailAddr(data)
 							});
 						},
-						(err)=> {
+						(err) => {
 							console.log("android location error");
-							// 没有权限进入error
 							reject({
 								code: -1,
 								message: "手机定位功能未开启(Android)"
@@ -61,9 +60,9 @@ export class BaiduLocationService {
 				position => {
 					console.log(
 						"(IOS)Latitude: " +
-							position.coords.latitude +
-							"Longitude: " +
-							position.coords.longitude
+						position.coords.latitude +
+						"Longitude: " +
+						position.coords.longitude
 					);
 					//注意：在得到准确位置前，需要对原生的坐标系转化成百度的坐标系
 					var point = new window.BMap.Point(

@@ -54,12 +54,12 @@ export class IBeaconService {
 						data.beacons[i].major == 0 &&
 						data.beacons[i].minor == 1
 					) {
-						alert("总部")
+						alert("1")
 					} else if (
 						data.beacons[i].major == 1 &&
 						data.beacons[i].minor == 1
 					) {
-						alert("园区")
+						alert("2")
 					}
 				}
 				// 成功后即停止扫描

@@ -1,5 +1,5 @@
 /**
- * App 更新服务
+ * App 更新服务( Android )
  * (暂未启用)
  */
 import { Injectable } from "@angular/core";
@@ -48,9 +48,8 @@ export class UpdateService {
     * @param  {[type]}  appSystem [系统名称]
     */
     getServerVersion(appSystem): Observable<any> {
-        // var creds = "appSystem=" + appSystem;
         // return this.http.post('url',
-        //     creds, this.interceptor()).map(res => res.json());
+        //     {}, this.interceptor()).map(res => res.json());
 
         return new Observable((responseObserver) => {
             responseObserver.next(1);
