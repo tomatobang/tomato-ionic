@@ -14,6 +14,8 @@ import { AngularRoundProgressComponent } from "../../_directives/angular-round-p
 import { VoicePlayService } from "../../_util/voiceplay.service";
 import { File } from '@ionic-native/file';
 import { Media } from "@ionic-native/media";
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
 import {
 	FileTransfer
 } from "@ionic-native/file-transfer";
@@ -26,7 +28,7 @@ import {
 		AngularRoundProgressComponent
 	],
 	imports: [IonicPageModule.forChild(IndexPage)],
-    providers: [OnlineTaskService, OnlineTomatoService,VoicePlayService,File,Media,FileTransfer],
+    providers: [OnlineTaskService, OnlineTomatoService,VoicePlayService,File,Media,FileTransfer,LocalNotifications],
     entryComponents:[]
 })
 

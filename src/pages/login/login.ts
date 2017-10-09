@@ -58,8 +58,10 @@ export class LoginPage {
 			this.globalservice.userinfo = JSON.stringify(this.user);
 			this.rebirthProvider.headers({ Authorization: token });
 			this.jPushService.init(this.user.username);
-			this.navCtrl.push("TabsPage",{},()=>{
-			});
+			debugger
+			this.navCtrl.setRoot("TabsPage");
+			// this.navCtrl.push("TabsPage",{},()=>{
+			// });
 			// 页面跳转
 			//this.router.navigate(['/dash'] , { replaceUrl: true});
 		});

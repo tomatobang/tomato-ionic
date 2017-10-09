@@ -1,10 +1,11 @@
 import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { VoicePlayService } from "../../_util/voiceplay.service";
 import {
 	NavController,
 	ViewController,
 	ModalController,
-	IonicPage,AlertController,
+	IonicPage, AlertController,
 	NavParams
 } from "ionic-angular";
 import { AngularRoundProgressComponent } from "../../_directives/angular-round-progress-directive";
@@ -26,8 +27,10 @@ declare let window;
 })
 export class IndexPage implements OnInit, OnDestroy {
 	page_title = "首页";
-	segment="index";
-	_userid:string;
+	segment = "index";
+	_userid: string;
+	_notifyID: any;
+	_rest_notifyID: any;
 	@ViewChild(Slides) slides: Slides;
 
 	// 番茄钟长度
@@ -37,14 +40,15 @@ export class IndexPage implements OnInit, OnDestroy {
 	tomatoCount = 0;
 
 	constructor(
-		public globalservice:GlobalService,
+		public globalservice: GlobalService,
 		public tomatoservice: OnlineTomatoService,
 		public navCtrl: NavController,
 		public modalCtrl: ModalController,
-		public tomatoIO:TomatoIOService,
+		public tomatoIO: TomatoIOService,
 		public alertCtrl: AlertController,
-		public voiceService:VoicePlayService,
-	) {}
+		public voiceService: VoicePlayService,
+		private localNotifications: LocalNotifications
+	) { }
 
 	ngOnInit() {
 		this.tomatoservice.getTodayTomatos().subscribe(data => {
@@ -55,22 +59,22 @@ export class IndexPage implements OnInit, OnDestroy {
 
 		// 加载正在进行的番茄钟
 		this._userid = this.globalservice.userinfo.username;
-		
+
 		this.tomatoIO.load_tomato(this._userid);
-		this.tomatoIO.load_tomato_succeed().subscribe(t=>{
-			if (t && t!="null"){
-				this.startTask(t,false);
+		this.tomatoIO.load_tomato_succeed().subscribe(t => {
+			if (t && t != "null") {
+				this.startTask(t, false);
 			}
 		});
 		// 其它终端开启
-		this.tomatoIO.other_end_start_tomato().subscribe(t=>{
-			if (t && t!="null"){
-				this.startTask(t,false);
+		this.tomatoIO.other_end_start_tomato().subscribe(t => {
+			if (t && t != "null") {
+				this.startTask(t, false);
 			}
 		});
 		// 其它终端中断
-		this.tomatoIO.other_end_break_tomato().subscribe(data=>{
-				this.breakActiveTask(false);
+		this.tomatoIO.other_end_break_tomato().subscribe(data => {
+			this.breakActiveTask(false);
 		});
 
 		this.mp3Source.setAttribute("src", "./assets/audios/alert.mp3");
@@ -80,15 +84,15 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.alertAudio.load();
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() { }
 
 	addTask() {
 		let profileModal = this.modalCtrl.create("TaskPage");
 		profileModal.onDidDismiss(data => {
-			if (data.task){
+			if (data.task) {
 				console.log(data.task);
-				this.startTask(data.task,true);
-			} 
+				this.startTask(data.task, true);
+			}
 		});
 		profileModal.present();
 	}
@@ -101,7 +105,7 @@ export class IndexPage implements OnInit, OnDestroy {
 				this.page_title = "首页";
 				break;
 			case 1:
-				this.page_title = "今日番茄钟("+this.tomatoCount+")";
+				this.page_title = "今日番茄钟(" + this.tomatoCount + ")";
 				break;
 			case 2:
 				this.page_title = "历史查询";
@@ -128,14 +132,14 @@ export class IndexPage implements OnInit, OnDestroy {
 		countdown: this.countdown,
 		percentage: 0,
 		count: 0,
-		reset: function() {
+		reset: function () {
 			this.count = 0;
 			this.percentage = 0;
 			this.label = this.countdown + ":00";
 		}
 	};
 	// 中断缘由
-	breakReason:any;
+	breakReason: any;
 	@ViewChild(AngularRoundProgressComponent)
 	child: AngularRoundProgressComponent;
 	ngAfterViewInit() {
@@ -144,13 +148,13 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.child.render();
 		}, 1000);
 	}
-	startTask(task: any,raw:Boolean) {
+	startTask(task: any, raw: Boolean) {
 		this.activeTomato = task;
-		if(raw){
+		if (raw) {
 			// 开启番茄钟
-			this.tomatoIO.start_tomato(this._userid,task);
+			this.tomatoIO.start_tomato(this._userid, task);
 			this.activeTomato.startTime = new Date();
-		}else{
+		} else {
 			this.activeTomato.startTime = new Date(this.activeTomato.startTime);
 		}
 		this.startTimer();
@@ -158,7 +162,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	}
 
 	breakActiveTask(raw) {
-		if (raw){
+		if (raw) {
 			this.showPrompt();
 		}
 		this.stopTimer();
@@ -166,69 +170,91 @@ export class IndexPage implements OnInit, OnDestroy {
 	}
 
 	startRestTimer() {
-        this.resttimestart = new Date();
-        if (typeof this.resttimeout !== "undefined") {
-            clearTimeout(this.resttimeout);
-            this.timerStatus.reset();
-        }
-        this.isResting = true;
-        this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
-    };
+		this.resttimestart = new Date();
+		if (typeof this.resttimeout !== "undefined") {
+			clearTimeout(this.resttimeout);
+			this.timerStatus.reset();
+		}
+		this.isResting = true;
+		this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
+		// 休息任务提醒
+		this._rest_notifyID = this.localNotifications.schedule({
+			text: '休息完了，赶紧开启下一个番茄钟吧!',
+			at: new Date(new Date().getTime() + 5 * 60 * 1000),
+			led: 'FF0000',
+		});
+	};
 
-	
+
 	showPrompt() {
 		let prompt = this.alertCtrl.create({
-		  title: '中断当前番茄钟',
-		  message: "(可以为空)",
-		  inputs: [
-			{
-			  name: 'title',
-			  placeholder: '请填写中断原因...'
-			},
-		  ],
-		  buttons: [
-			{
-			  text: '取消',
-			  handler: data => {
-				console.log('Cancel clicked');
-			  }
-			},
-			{
-			  text: '提交',
-			  handler: data => {
-				// 创建tomato
-				let tomatoDTO: any = {
-					taskid: this.activeTomato._id,
-					num: this.activeTomato.num,
-					breakTime: 1,
-					breakReason: data.title
+			title: '中断当前番茄钟',
+			message: "(可以为空)",
+			inputs: [
+				{
+					name: 'title',
+					placeholder: '请填写中断原因...'
+				},
+			],
+			buttons: [
+				{
+					text: '取消',
+					handler: data => {
+						console.log('Cancel clicked');
+					}
+				},
+				{
+					text: '提交',
+					handler: data => {
+						// 创建tomato
+						let tomatoDTO: any = {
+							taskid: this.activeTomato._id,
+							num: this.activeTomato.num,
+							breakTime: 1,
+							breakReason: data.title
+						}
+						let tomato: any = {
+							title: this.activeTomato.title,
+							startTime: this.activeTomato.startTime,
+							endTime: new Date(),
+							breakTime: 1,
+							breakReason: data.title
+						}
+						this.historyTomatoes.push(Object.assign({}, tomato));
+						this.tomatoCount += 1;
+						this.tomatoIO.break_tomato(this._userid, tomatoDTO);
+						this.activeTomato = null;
+					}
 				}
-				let tomato: any = {
-					title:this.activeTomato.title,
-					startTime:this.activeTomato.startTime,
-					endTime:new Date(),
-					breakTime: 1,
-					breakReason: data.title
-				}
-				this.historyTomatoes.push(Object.assign({}, tomato));
-				this.tomatoCount +=1;
-				this.tomatoIO.break_tomato(this._userid,tomatoDTO);
-				this.activeTomato = null;
-			  }
-			}
-		  ]
+			]
 		});
 		prompt.present();
-	  }
+	}
 
-	
-	  startTimer() {
+
+	startTimer() {
 		this.isResting = false;
 		if (typeof this.mytimeout !== "undefined") {
 			clearTimeout(this.mytimeout);
 			this.timerStatus.reset();
 		}
 		this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
+
+		if (this._rest_notifyID) {
+			this.localNotifications.cancel(this._rest_notifyID).then(() => {
+				this._rest_notifyID = null;
+			});
+
+		}
+		// 本地通知任务 cancel
+		this._notifyID = this.localNotifications.schedule({
+			title:this.activeTomato.title,
+			text: '你又完成了一个番茄钟!',
+			at: new Date(new Date().getTime() + this.countdown * 60 * 1000),
+			led: 'FF0000',
+			//sound: null,
+			//icon: 'http://example.com/icon.png'
+		});
 	}
 
 	onTimeout() {
@@ -280,6 +306,9 @@ export class IndexPage implements OnInit, OnDestroy {
 	stopTimer() {
 		clearTimeout(this.mytimeout);
 		this.timerStatus.reset();
+		this.localNotifications.cancel(this._notifyID).then(() => {
+			this._notifyID = null;
+		});
 	}
 
 	secondsToMMSS(timeInSeconds: number) {
@@ -300,17 +329,17 @@ export class IndexPage implements OnInit, OnDestroy {
 		return retStr;
 	}
 
-	playVoiceRecord(tomato){
-		if(tomato.voiceUrl){
+	playVoiceRecord(tomato) {
+		if (tomato.voiceUrl) {
 			let filename = this.getFileName(tomato.voiceUrl);
 			this.voiceService.downloadVoiceFile(filename);
-		}else{
+		} else {
 			alert('此番茄钟无音频记录！')
 		}
-	
+
 	}
 
-	testPlayVoice(){
+	testPlayVoice() {
 		this.voiceService.play_local_voice("assets/audios/alert.mp3");
 	}
 
