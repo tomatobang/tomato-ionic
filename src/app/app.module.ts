@@ -29,8 +29,12 @@ import { IonicStorageModule } from '@ionic/storage';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp,{
+      // 子页隐藏 TAB
       tabsHideOnSubPages:true,
-      tabsLayout:'icon-left'
+      tabsLayout:'icon-left',
+      iconMode:"ios",
+      // 禁用 IOS 手势滑动返回
+      swipeBackEnabled:false
     }),
     SocketIoModule.forRoot(config),
     IonicStorageModule.forRoot()
