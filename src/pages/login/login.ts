@@ -58,7 +58,6 @@ export class LoginPage {
 			this.globalservice.userinfo = JSON.stringify(this.user);
 			this.rebirthProvider.headers({ Authorization: token });
 			this.jPushService.init(this.user.username);
-			debugger
 			this.navCtrl.setRoot("TabsPage");
 			// this.navCtrl.push("TabsPage",{},()=>{
 			// });

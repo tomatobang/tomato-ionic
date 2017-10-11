@@ -17,39 +17,7 @@ export class GlobalService {
 		return this.notificationSubject.asObservable();
 	}
 
-	/**
-	 * 打开通知
-	 * @param data 
-	 */
-	openNotificationCallback(data) {
-		this.notificationSubject.next({
-			type: "open",
-			data: data
-		});
-	}
-
-	/**
-	 * 收到通知
-	 * @param data 
-	 */
-	receiveNotificationCallback(data) {
-		this.notificationSubject.next({
-			type: "receive",
-			data: data
-		});
-	}
-
-	/**
-	 * 设置别名
-	 * @param data 
-	 */
-	setTagsWithAliasCallback(data) {
-		this.notificationSubject.next({
-			type: "setAlias",
-			data: data
-		});
-	}
-
+	
 	get appIsActive() {
 		return this._isActive;
 	}
@@ -133,5 +101,38 @@ export class GlobalService {
 		localStorage.setItem("isFirstTimeOpen", str);
 	}
 
+
+	/**
+	 * 打开通知
+	 * @param data 
+	 */
+	openNotificationCallback(data) {
+		this.notificationSubject.next({
+			type: "open",
+			data: data
+		});
+	}
+
+	/**
+	 * 收到通知
+	 * @param data 
+	 */
+	receiveNotificationCallback(data) {
+		this.notificationSubject.next({
+			type: "receive",
+			data: data
+		});
+	}
+
+	/**
+	 * 设置别名
+	 * @param data 
+	 */
+	setTagsWithAliasCallback(data) {
+		this.notificationSubject.next({
+			type: "setAlias",
+			data: data
+		});
+	}
 	
 }

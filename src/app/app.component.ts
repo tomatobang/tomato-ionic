@@ -34,7 +34,11 @@ export class MyApp {
       global.isFirstTimeOpen = false;
       this.rootPage = "GuidePage";
     }else{
-      this.rootPage = "LoginPage";
+      if(global.userinfo){
+        this.rootPage = "TabsPage";
+      }else{
+        this.rootPage = "LoginPage";
+      }
     }
   }
 
