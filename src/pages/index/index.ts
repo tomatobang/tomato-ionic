@@ -29,8 +29,8 @@ export class IndexPage implements OnInit, OnDestroy {
 	page_title = "首页";
 	segment = "index";
 	_userid: string;
-	_notifyID: any;
-	_rest_notifyID: any;
+	_notifyID = 0;
+	_rest_notifyID = 100;
 	@ViewChild(Slides) slides: Slides;
 
 	// 番茄钟长度
@@ -148,6 +148,7 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.child.render();
 		}, 1000);
 	}
+	
 	startTask(task: any, raw: Boolean) {
 		this.activeTomato = task;
 		if (raw) {
@@ -178,7 +179,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.isResting = true;
 		this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
 		// 休息任务提醒
-		this._rest_notifyID = this.localNotifications.schedule({
+		this.localNotifications.schedule({
+			id:this._rest_notifyID++,
 			text: '休息完了，赶紧开启下一个番茄钟吧!',
 			at: new Date(new Date().getTime() + 5 * 60 * 1000),
 			led: 'FF0000',
@@ -240,18 +242,19 @@ export class IndexPage implements OnInit, OnDestroy {
 		}
 		this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 
-		if (this._rest_notifyID) {
+		if (this._rest_notifyID > 100) {
 			this.localNotifications.cancel(this._rest_notifyID).then(() => {
-				this._rest_notifyID = null;
 			});
 
 		}
 		// 本地通知任务 cancel
-		this._notifyID = this.localNotifications.schedule({
-			title:this.activeTomato.title,
+		this.localNotifications.schedule({
+			id:this._notifyID++,
+			title: this.activeTomato.title,
 			text: '你又完成了一个番茄钟!',
 			at: new Date(new Date().getTime() + this.countdown * 60 * 1000),
 			led: 'FF0000',
+			badge:1
 			//sound: null,
 			//icon: 'http://example.com/icon.png'
 		});
@@ -306,9 +309,11 @@ export class IndexPage implements OnInit, OnDestroy {
 	stopTimer() {
 		clearTimeout(this.mytimeout);
 		this.timerStatus.reset();
-		this.localNotifications.cancel(this._notifyID).then(() => {
-			this._notifyID = null;
-		});
+		if (this._notifyID > 0) {
+			this.localNotifications.cancel(this._notifyID).then(() => {
+				
+			});
+		}
 	}
 
 	secondsToMMSS(timeInSeconds: number) {

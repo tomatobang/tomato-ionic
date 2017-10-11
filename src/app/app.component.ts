@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { JPushService } from '../_util/jpush.service';
 import { GlobalService } from '../providers/global.service';
 import { RebirthHttpProvider } from "rebirth-http";
+import { BackgroundMode } from '@ionic-native/background-mode';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -18,17 +20,18 @@ export class MyApp {
     splashScreen: SplashScreen,
     jPushService: JPushService,
     public rebirthProvider: RebirthHttpProvider,
+    private backgroundMode: BackgroundMode,
     global:GlobalService
   ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
-
+      // 开启后台运行
+      backgroundMode.enable();
       // 初始化 jPush
       // if (global.userinfo){
       //   jPushService.init(global.userinfo.username);
       // }
-      
     });
 
     // Check if the user has already seen the tutorial
@@ -44,7 +47,5 @@ export class MyApp {
       }
     }
   }
-
-
 
 }
