@@ -37,6 +37,10 @@ export class LoginPage {
 
 	ngOnInit() {
 		console.log("hello `login` component");
+		if(this.globalservice.userinfo){
+			this.user.username = this.globalservice.userinfo.username;
+			this.user.password = this.globalservice.userinfo.password;
+		}
 	}
 
 	public doLogin(): void {

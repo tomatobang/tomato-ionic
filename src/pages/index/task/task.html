@@ -72,12 +72,13 @@
             <ion-item-sliding *ngFor="let task of allTasks.unfinished | TaskPipe:true">
                 <ion-item>
                     <ion-avatar item-start>
-                        <img src="assets/tomato.png">
+                        <img src="assets/tomato-active.png">
                     </ion-avatar>
-                    <h2 class="title">{{ task.title }}
-                        <img src="./assets/voice/voice.png" alt="" class="play-icon" (click)="playVoiceRecord(task)">
-                    </h2>
+                    <h2 class="title">{{ task.title }}</h2>
                     <div class="subtitle">{{ task.target }}<span *ngIf="task.description">({{ task.description }})</span></div>
+                    <ion-avatar item-end>
+                        <img src="./assets/voice/voice.png" alt="" class="play-icon" (click)="playVoiceRecord(task)">
+                    </ion-avatar>
                 </ion-item>
                 <ion-item-options side="right">
                     <button ion-button color="primary" (click)="startTask(task)">
@@ -97,7 +98,7 @@
             <ion-item-sliding *ngFor="let task of allTasks.unfinished | TaskPipe:false">
                 <ion-item>
                     <ion-avatar item-start>
-                        <img src="assets/tomato.png">
+                        <img src="assets/tomato-grey.png">
                     </ion-avatar>
                     <h2 class="title">{{ task.title }}</h2>
                     <h3 class="subtitle">{{ task.target }}<span *ngIf="task.description">({{ task.description }})</span></h3>

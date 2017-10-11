@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { JPushService } from '../_util/jpush.service';
 import { GlobalService } from '../providers/global.service';
+import { RebirthHttpProvider } from "rebirth-http";
 
 @Component({
   templateUrl: 'app.html'
@@ -16,6 +17,7 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     jPushService: JPushService,
+    public rebirthProvider: RebirthHttpProvider,
     global:GlobalService
   ) {
     platform.ready().then(() => {
@@ -35,6 +37,7 @@ export class MyApp {
       this.rootPage = "GuidePage";
     }else{
       if(global.userinfo){
+        this.rebirthProvider.headers({ Authorization: global.token });
         this.rootPage = "TabsPage";
       }else{
         this.rootPage = "LoginPage";
