@@ -82,6 +82,8 @@ node_modules/
 platforms/
 resources/
 www/
+/plugins/android.json
+/plugins/fetch.json
 /plugins/cordova-plugin-whitelist/
 /plugins/cordova-plugin-device/
 /plugins/cordova-plugin-console/
