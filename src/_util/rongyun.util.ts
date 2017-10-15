@@ -205,11 +205,12 @@ export class RongyunUtil {
 				text = this.resoveDizNft(message.content);
 				message.content.text = text;
 			}
+			return message;
 		} catch (e) {
 			console.error("resolveMsg error:" + e);
 			console.error("resolveMsg error:" + JSON.stringify(msg));
 		}
-		return message;
+	
 	}
 	play(obj, src) {}
 	openImage(src) {}
