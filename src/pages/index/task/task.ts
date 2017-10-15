@@ -4,6 +4,7 @@ import { OnlineTaskService } from "../../../providers/data.service";
 import { VoicePlayService } from "../../../_util/voiceplay.service";
 import { GlobalService } from "../../../providers/global.service";
 import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
+import { baseUrl } from '../../../config'
 
 @IonicPage()
 @Component({
@@ -27,6 +28,10 @@ export class TaskPage implements OnInit {
 	};
 
 	voicepostParams = {}
+
+	voiceUploadUrl ={
+		url:baseUrl + "upload/voicefile"
+	}
 
 	constructor(
 		public taskservice: OnlineTaskService,

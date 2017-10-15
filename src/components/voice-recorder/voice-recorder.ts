@@ -29,7 +29,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 		return this.uploadUrl;
 	}
 	set voiceUploadUrl(val) {
-		this.uploadUrl = val;
+		this.uploadUrl = val.url;
 	}
 
 	@Input()
