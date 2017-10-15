@@ -31,7 +31,7 @@ export class RongYunService {
 	cancelInterval(flag) {
 		if (flag && flag.$setIntervalId != null) {
 			clearInterval(flag);
-			for (var attr in flag) {
+			for (let attr in flag) {
 				delete flag[attr];
 			}
 		}
@@ -45,7 +45,7 @@ export class RongYunService {
 	setStatusListener() {
 		window.RongCloudLibPlugin.setConnectionStatusListener((ret, err) => {
 			if (ret) {
-				var status = ret.result.connectionStatus;
+				let status = ret.result.connectionStatus;
 				switch (status) {
 					case "KICKED":
 						// 只允许单用户登录,KICKED表示用户账户在其他设备登录，本机会被踢掉线
@@ -251,7 +251,7 @@ export class RongYunService {
      */
 	_getLatestMessages(targetId, ctype, members, callback) {
 		if (window.cordova) {
-			var isIOS = this.plf.is("ios");
+			let isIOS = this.plf.is("ios");
 			window.RongCloudLibPlugin.getLatestMessages(
 				{
 					conversationType: ctype,
@@ -260,12 +260,12 @@ export class RongYunService {
 				},
 				(ret, err) => {
 					if (ret) {
-						var result = [],
+						let result = [],
 							tmp;
-						for (var i = ret.result.length - 1; i >= 0; i--) {
+						for (let i = ret.result.length - 1; i >= 0; i--) {
 							tmp = ret.result[i];
 							if (ctype == "GROUP" && members.length > 0) {
-								for (var m = 0; m < members.length; m++) {
+								for (let m = 0; m < members.length; m++) {
 									if (members[m].id == tmp.senderUserId) {
 										tmp.name = members[m].name;
 										break;

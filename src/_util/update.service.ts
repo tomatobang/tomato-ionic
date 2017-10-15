@@ -28,9 +28,9 @@ export class UpdateService {
     }
 
     checkUpdate() {
-        var appSystem = this.platform.is("android") ? 'android' : 'ios';
+        let appSystem = this.platform.is("android") ? 'android' : 'ios';
         this.getServerVersion(appSystem).subscribe(data => {
-            var appVersionInfo = data.data;
+            let appVersionInfo = data.data;
             if (window.cordova) {
                 // 注意区分测试版与正式版
                 window.cordova.getAppVersion.getVersionNumber().then(function (version) {
@@ -90,9 +90,9 @@ export class UpdateService {
 
     downloadApp(isAndroid, downloadUrl: string) {
         if (isAndroid) {
-            var that = this;
-            var trustHosts = true;
-            var options = {};
+            let that = this;
+            let trustHosts = true;
+            let options = {};
             const fileTransfer = new Transfer();
             // APP下载存放的路径，可以使用 window.cordova file 插件进行相关配置
             window.resolveLocalFileSystemURL(window.cordova.file.externalApplicationStorageDirectory, function (fileEntry) {
@@ -117,7 +117,7 @@ export class UpdateService {
                     // 下载进度
                     fileTransfer.onProgress(function (progress) {
                         setTimeout(function () {
-                            var downloadProgress = (progress.loaded / progress.total) * 100;
+                            let downloadProgress = (progress.loaded / progress.total) * 100;
                             loading = that.loadingCtrl.create({
                                 content: "已经下载：" + Math.floor(downloadProgress) + "%"
                             });
