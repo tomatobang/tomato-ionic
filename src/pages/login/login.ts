@@ -5,7 +5,7 @@
  */
 
 import { Component } from "@angular/core";
-import { NavController,IonicPage,ToastController} from 'ionic-angular';
+import { NavController, IonicPage, ToastController, NavParams } from 'ionic-angular';
 import { OnlineUserService, User } from "../../providers/data.service";
 import { GlobalService } from "../../providers/global.service";
 import { RebirthHttpProvider } from "rebirth-http";
@@ -15,7 +15,7 @@ import { JPushService } from '../../_util/jpush.service';
 @IonicPage()
 @Component({
 	selector: "login",
-	providers: [OnlineUserService, GlobalService,JPushService],
+	providers: [OnlineUserService, GlobalService, JPushService],
 	templateUrl: "login.html"
 })
 
@@ -30,14 +30,18 @@ export class LoginPage {
 		public service: OnlineUserService,
 		public globalservice: GlobalService,
 		public rebirthProvider: RebirthHttpProvider,
-		public navCtrl:NavController,
+		public navCtrl: NavController,
 		private toastCtrl: ToastController,
-		public jPushService: JPushService
-	) {}
+		public jPushService: JPushService,
+		public navParams: NavParams
+	) {
+		this.user.username = navParams.get("username");
+		this.user.password = navParams.get("password");
+	}
 
 	ngOnInit() {
 		console.log("hello `login` component");
-		if(this.globalservice.userinfo){
+		if (this.globalservice.userinfo) {
 			this.user.username = this.globalservice.userinfo.username;
 			this.user.password = this.globalservice.userinfo.password;
 		}
@@ -45,7 +49,7 @@ export class LoginPage {
 
 	public doLogin(): void {
 		console.log("doLogin", this.user);
-		
+
 		this.service.login(this.user).subscribe(data => {
 			let retOBJ = JSON.parse(data._body);
 			let status = retOBJ.status;
@@ -81,15 +85,15 @@ export class LoginPage {
 
 	presentToast(msg) {
 		let toast = this.toastCtrl.create({
-		  message: msg,
-		  duration: 3000,
-		  position: 'top'
+			message: msg,
+			duration: 3000,
+			position: 'top'
 		});
-	  
+
 		toast.onDidDismiss(() => {
-		  console.log('Dismissed toast');
+			console.log('Dismissed toast');
 		});
-	  
+
 		toast.present();
-	  }
+	}
 }

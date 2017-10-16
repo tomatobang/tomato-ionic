@@ -18,9 +18,13 @@ export class MinePage {
 	}
 
 	logout() {
-		this.navCtrl.push("LoginPage", null, {}, () => {
-		});
-		this.globalservice.userinfo="";
+		this.navCtrl.push("LoginPage", {
+			username: this.globalservice.userinfo.username,
+			password: this.globalservice.userinfo.password
+		}, {
+			}, () => {
+			});
+		this.globalservice.userinfo = "";
 		this.jPushService.clearAlias();
 	}
 }
