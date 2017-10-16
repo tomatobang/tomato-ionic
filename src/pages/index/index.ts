@@ -183,6 +183,7 @@ export class IndexPage implements OnInit, OnDestroy {
 			id:this._rest_notifyID++,
 			text: '休息完了，赶紧开启下一个番茄钟吧!',
 			at: new Date(new Date().getTime() + 5 * 60 * 1000),
+			sound:'file://assets/audios/finish.wav', 
 			led: 'FF0000',
 		});
 	};
@@ -254,8 +255,8 @@ export class IndexPage implements OnInit, OnDestroy {
 			text: '你又完成了一个番茄钟!',
 			at: new Date(new Date().getTime() + this.countdown * 60 * 1000),
 			led: 'FF0000',
+			sound:'file://assets/audios/start.wav', 
 			badge:1
-			//sound: null,
 			//icon: 'http://example.com/icon.png'
 		});
 	}

@@ -4,6 +4,7 @@ import { HttpModule } from "@angular/http";
 import { BrowserModule } from '@angular/platform-browser';
 // import * as hidpiCanvas from 'hidpi-canvas/dist/hidpi-canvas.min.js'
 import { MyApp } from './app.component';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { baseUrl } from '../config'
@@ -45,7 +46,7 @@ import { IonicStorageModule } from '@ionic/storage';
     MyApp,
   ],
   providers: [
-    StatusBar,
+    StatusBar,BackgroundMode,
     SplashScreen,
     GlobalService,JPushService,TomatoIOService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
