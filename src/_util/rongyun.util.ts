@@ -10,7 +10,7 @@ export class RongyunUtil {
 	constructor() {}
 
 	stringFormat(str, a1?, a2?, a3?) {
-		for (var i = 1; i < arguments.length; i++) {
+		for (let i = 1; i < arguments.length; i++) {
 			str = str.replace(
 				new RegExp("\\{" + (i - 1) + "\\}", "g"),
 				arguments[i] != undefined ? arguments[i] : ""
@@ -29,9 +29,9 @@ export class RongyunUtil {
 
     //解析一条会话  flas:0-conversation;1-message
 	resoveDizNft(msg) {
-		var result = "",
+		let result = "",
 			operator = msg.operator;
-		var userId = this._curUID,
+		let userId = this._curUID,
 			extension = msg.extension;
 		if (userId == operator) result = "您";
 		else result = operator;
@@ -40,8 +40,8 @@ export class RongyunUtil {
 				if (userId == operator) {
 					result += "邀请了" + extension + "加入了群聊";
 				} else {
-					var memberId = extension.split(",");
-					var otherId = this.arrayRemove(memberId, userId);
+					let memberId = extension.split(",");
+					let otherId = this.arrayRemove(memberId, userId);
 					//result += '邀请了您';
 					if (otherId) {
 						result += "邀请了您";
@@ -77,16 +77,16 @@ export class RongyunUtil {
      * */
 	resolveCon(conversation, flag, user, groupMemberinfo) {
 		try {
-			//var date = new Date(conversation.sentTime);
-			//var time = date.getHours() + ":" + date.getMinutes();
+			//let date = new Date(conversation.sentTime);
+			//let time = date.getHours() + ":" + date.getMinutes();
 			//conversation.sentTime = time;
-			//var targetId = conversation.targetId;
-			var text = "";
-			var conversationType = conversation.conversationType;
-			var conversationTitle = conversation.conversationTitle;
-			var senderUserId = conversation.senderUserId;
-			var title = "";
-			var temp;
+			//let targetId = conversation.targetId;
+			let text = "";
+			let conversationType = conversation.conversationType;
+			let conversationTitle = conversation.conversationTitle;
+			let senderUserId = conversation.senderUserId;
+			let title = "";
+			let temp;
 
 			//加工每条回话的标题
 			switch (conversationType) {
@@ -107,7 +107,7 @@ export class RongyunUtil {
 			conversation.conversationTitle = title;
 
 			//加工每条回话的内容
-			var objectName = conversation.objectName;
+			let objectName = conversation.objectName;
 			if (objectName == "RC:TxtMsg") {
 				if (flag) {
 					text = conversation.content.text;
@@ -163,25 +163,25 @@ export class RongyunUtil {
      * */
 	resolveMsg(msg) {
 		try {
-			var message = msg;
-			var date = new Date(message.sentTime);
-			var h =
+			let message = msg;
+			let date = new Date(message.sentTime);
+			let h =
 				(date.getHours() + "").length === 1
 					? "0" + date.getHours()
 					: date.getHours();
-			var m =
+			let m =
 				(date.getMinutes() + "").length === 1
 					? "0" + date.getMinutes()
 					: date.getMinutes();
-			var time = h + ":" + m;
-			var dateStr =
+			let time = h + ":" + m;
+			let dateStr =
 				date.getFullYear() +
 				"-" +
 				(date.getMonth() + 1) +
 				"-" +
 				date.getDate();
 			message.showTime = null;
-			//var messageType = message.conversationType;
+			//let messageType = message.conversationType;
 			//确定消息的具体时间
 			if (this.isToday(message.sentTime)) {
 				message.showTime = time;
@@ -192,8 +192,8 @@ export class RongyunUtil {
 			}
 
 			//确定消息内容
-			var text = "";
-			var objectName = message.objectName;
+			let text = "";
+			let objectName = message.objectName;
 			if (objectName == "RC:TxtMsg") {
 				text = message.content.text;
 				if (text) {
@@ -205,11 +205,12 @@ export class RongyunUtil {
 				text = this.resoveDizNft(message.content);
 				message.content.text = text;
 			}
+			return message;
 		} catch (e) {
 			console.error("resolveMsg error:" + e);
 			console.error("resolveMsg error:" + JSON.stringify(msg));
 		}
-		return message;
+	
 	}
 	play(obj, src) {}
 	openImage(src) {}
@@ -251,7 +252,7 @@ export class RongyunUtil {
 				);
 			case window.RongIMClient.MessageType.DiscussionNotificationMessage:
 				// 您收到一条新信息:{"messageType":"DiscussionNotificationMessage","details":{"type":1,"operator":"aaa8925","extension":"apple"},"objectName":"RC:DizNtf"}1 testengine.js:279:3
-				var memberStr = message.getDetail().extension;
+				let memberStr = message.getDetail().extension;
 				if (operator == message.getDetail().operator) {
 					return this.stringFormat(
 						'<div class="msgBody">你邀请{0}加入了群聊</div>',
@@ -275,12 +276,12 @@ export class RongyunUtil {
 		}
 	}
 	initEmotion(str) {
-		var a = document.createElement("span");
+		let a = document.createElement("span");
 		return window.RongIMClient.Expression.retrievalEmoji(str, function(
 			img
 		) {
 			a.appendChild(img.img);
-			var str =
+			let str =
 				'<span class="RongIMexpression_' +
 				img.englishName +
 				'">' +
@@ -312,15 +313,15 @@ export class RongyunUtil {
 
 	//判断是不是今天
 	isToday(timeLong) {
-		var today = new Date();
-		var date = new Date(timeLong);
-		var todayStr =
+		let today = new Date();
+		let date = new Date(timeLong);
+		let todayStr =
 			today.getFullYear() +
 			"-" +
 			(today.getMonth() + 1) +
 			"-" +
 			today.getDate();
-		var dateStr =
+		let dateStr =
 			date.getFullYear() +
 			"-" +
 			(date.getMonth() + 1) +
@@ -331,15 +332,15 @@ export class RongyunUtil {
 
 	//判断是不是昨天
 	isYesterday(timeLong) {
-		var today = new Date();
-		var date = new Date(timeLong);
-		var todayStr =
+		let today = new Date();
+		let date = new Date(timeLong);
+		let todayStr =
 			today.getFullYear() +
 			"-" +
 			(today.getMonth() + 1) +
 			"-" +
 			today.getDate();
-		var dateStr =
+		let dateStr =
 			date.getFullYear() +
 			"-" +
 			(date.getMonth() + 1) +
@@ -349,14 +350,14 @@ export class RongyunUtil {
 	}
 
 	arrayIndexOf(arr, val) {
-		for (var i = 0; i < arr.length; i++) {
+		for (let i = 0; i < arr.length; i++) {
 			if (arr[i] == val) return i;
 		}
 		return -1;
 	}
 
 	arrayRemove(arr, val) {
-		var index = this.arrayIndexOf(arr, val);
+		let index = this.arrayIndexOf(arr, val);
 		if (index > -1) {
 			arr.splice(index, 1);
 			return arr;
@@ -380,14 +381,14 @@ export class RongyunUtil {
 		if (!name) {
 			return name;
 		}
-		var htmName = name.replace(/\[.+?\]/g, function(a, b) {
+		let htmName = name.replace(/\[.+?\]/g, function(a, b) {
 			return this.getCls(a);
 		});
 		return htmName;
 	}
 
 	getCls(name) {
-		var className = "";
+		let className = "";
 		switch (name) {
 			case "[微笑]":
 				className = "qqface0";
@@ -496,7 +497,7 @@ export class RongyunUtil {
 
 	//比较json结构是否相同
 	jsonEqualsStruc(jsonA, jsonB) {
-		var p;
+		let p;
 		for (p in jsonA) {
 			if (typeof jsonB[p] == "undefined") {
 				console.info("equalsStruc 1 break by " + p);
@@ -541,7 +542,7 @@ export class RongyunUtil {
 
 	//比较json是否完全相同
 	jsonEquals(jsonA, jsonB) {
-		var p;
+		let p;
 		for (p in jsonA) {
 			if (typeof jsonB[p] == "undefined") {
 				return false;
@@ -589,14 +590,14 @@ export class RongyunUtil {
    **/
 	SHA1(msg) {
 		function rotate_left(n, s) {
-			var t4 = (n << s) | (n >>> (32 - s));
+			let t4 = (n << s) | (n >>> (32 - s));
 			return t4;
 		}
 
 		function cvt_hex(val) {
-			var str = "";
-			var i;
-			var v;
+			let str = "";
+			let i;
+			let v;
 
 			for (i = 7; i >= 0; i--) {
 				v = (val >>> (i * 4)) & 0x0f;
@@ -607,10 +608,10 @@ export class RongyunUtil {
 
 		function Utf8Encode(string) {
 			string = string.replace(/\r\n/g, "\n");
-			var utftext = "";
+			let utftext = "";
 
-			for (var n = 0; n < string.length; n++) {
-				var c = string.charCodeAt(n);
+			for (let n = 0; n < string.length; n++) {
+				let c = string.charCodeAt(n);
 
 				if (c < 128) {
 					utftext += String.fromCharCode(c);
@@ -627,22 +628,22 @@ export class RongyunUtil {
 			return utftext;
 		}
 
-		var blockstart;
-		var i, j;
-		var W = new Array(80);
-		var H0 = 0x67452301;
-		var H1 = 0xefcdab89;
-		var H2 = 0x98badcfe;
-		var H3 = 0x10325476;
-		var H4 = 0xc3d2e1f0;
-		var A, B, C, D, E;
-		var temp;
+		let blockstart;
+		let i, j;
+		let W = new Array(80);
+		let H0 = 0x67452301;
+		let H1 = 0xefcdab89;
+		let H2 = 0x98badcfe;
+		let H3 = 0x10325476;
+		let H4 = 0xc3d2e1f0;
+		let A, B, C, D, E;
+		let temp;
 
 		msg = Utf8Encode(msg);
 
-		var msg_len = msg.length;
+		let msg_len = msg.length;
 
-		var word_array = new Array();
+		let word_array = new Array();
 		for (i = 0; i < msg_len - 3; i += 4) {
 			j =
 				(msg.charCodeAt(i) << 24) |

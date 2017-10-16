@@ -46,8 +46,8 @@ export class JPushService {
   openNotificationCallback(data) {
     //点击通知打开应用，清除badge和本地通知
     this.clearLocAndBadge();
-    var isAndroid = this.plf.is("android");
-    var type = isAndroid ? data.extras.Type : data.Type;
+    let isAndroid = this.plf.is("android");
+    let type = isAndroid ? data.extras.Type : data.Type;
     if (type == 1) {
       //涉及到页面重绘，在controller中监听实现跳转
     } else if (type == 2) {
@@ -87,7 +87,7 @@ export class JPushService {
           }
         });
         this.resumePush(); //如果stopPush后，必须resume再init，否则无效
-        var config = {
+        let config = {
           stac: this.setTagsWithAliasCallback,
           onc: this.openNotificationCallback,
           rnc: this.receiveNotificationCallback,
@@ -120,7 +120,7 @@ export class JPushService {
         window.plugins.NXTPlugin.requestPermission(); //用于在 Android 6.0 及以上系统，申请一些权限
         this.clearLocAndBadge();
         // 根据实际状况设置推送是否开启
-        var pushState = true;
+        let pushState = true;
         //默认开启，除非明确设置为false,
         if (pushState) {
           this.setAlias(alias);

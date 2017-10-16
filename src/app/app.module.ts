@@ -6,7 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MyApp } from './app.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://115.29.51.196:5555/tomatobang', options: {} };
+import { baseUrl } from '../config'
+const config: SocketIoConfig = { url: baseUrl+'tomatobang', options: {} };
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
