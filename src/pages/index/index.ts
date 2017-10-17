@@ -59,6 +59,8 @@ export class IndexPage implements OnInit, OnDestroy {
 
 		// 加载正在进行的番茄钟
 		this._userid = this.globalservice.userinfo.username;
+		this.countdown = this.globalservice.countdown;
+        this.resttime = this.globalservice.resttime;
 
 		this.tomatoIO.load_tomato(this._userid);
 		this.tomatoIO.load_tomato_succeed().subscribe(t => {
@@ -153,7 +155,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.activeTomato = task;
 		if (raw) {
 			// 开启番茄钟
-			this.tomatoIO.start_tomato(this._userid, task);
+			this.tomatoIO.start_tomato(this._userid, task,this.countdown);
 			this.activeTomato.startTime = new Date();
 		} else {
 			this.activeTomato.startTime = new Date(this.activeTomato.startTime);

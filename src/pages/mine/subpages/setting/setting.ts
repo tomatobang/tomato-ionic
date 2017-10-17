@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { Media, MediaObject } from "@ionic-native/media";
-import { ElementRef } from "@angular/core";
 
-import { Platform, IonicPage } from "ionic-angular";
+import { IonicPage } from "ionic-angular";
+import { GlobalService } from "../../../../providers/global.service";
 
 declare var window;
 @IonicPage()
@@ -11,15 +10,25 @@ declare var window;
 	templateUrl: "setting.html"
 })
 export class SettingPage implements OnInit {
+	resttime: number;
+	countdown: number;
 	constructor(
-		public platform: Platform,
-		private elRef: ElementRef
+		public globalservice: GlobalService
 	) {
 
 	}
 
 	ngOnInit() {
+		this.countdown = this.globalservice.countdown;
+		this.resttime = this.globalservice.resttime;
+	}
 
+	setCountdown(value: number) {
+		this.globalservice.countdown = value;
+	}
+
+	setResttime(value: number) {
+		this.globalservice.resttime = value;
 	}
 
 }

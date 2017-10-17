@@ -2,10 +2,11 @@ import { Subject, Observable } from "rxjs";
 
 let subject: Subject<any> = new Subject<any>();
 let tokenSubject: Subject<any> = new Subject<any>();
+let settingSubject: Subject<any> = new Subject<any>();
 export class GlobalService {
 	public notificationSubject: Subject<any> = new Subject<any>();
 	_isActive: boolean = false;
-	_isFirstTimeOpen:boolean;
+	_isFirstTimeOpen: boolean;
 	_token: string;
 	_userinfo: any;
 	_countdown: number = 0;
@@ -16,8 +17,13 @@ export class GlobalService {
 	public get projectChangeMonitor(): Observable<any> {
 		return this.notificationSubject.asObservable();
 	}
+	/**
+	 * 配置改变
+	 */
+	public get settingState(): Observable<any> {
+		return settingSubject.asObservable();
+	}
 
-	
 	get appIsActive() {
 		return this._isActive;
 	}
@@ -81,22 +87,22 @@ export class GlobalService {
 			return this._isFirstTimeOpen;
 		} else {
 			let isFirstTimeOpen = localStorage.getItem("isFirstTimeOpen");
-			if(isFirstTimeOpen == "false"){
+			if (isFirstTimeOpen == "false") {
 				return false;
-			}else{
+			} else {
 				return true;
 			}
-			
+
 		}
 	}
 
 	set isFirstTimeOpen(value) {
 		this._isFirstTimeOpen = value;
-		let str  = "";
-		if(value){
-			str="true";
-		}else{
-			str="false";
+		let str = "";
+		if (value) {
+			str = "true";
+		} else {
+			str = "false";
 		}
 		localStorage.setItem("isFirstTimeOpen", str);
 	}
@@ -134,5 +140,50 @@ export class GlobalService {
 			data: data
 		});
 	}
-	
+
+
+	get countdown() {
+		if (this._countdown != 0) {
+			return this._countdown;
+		} else {
+			let countdownStr = localStorage.getItem("_countdown");
+			if (countdownStr) {
+				return parseInt(countdownStr);
+			} else {
+				return 25;
+			}
+		}
+	}
+
+	set countdown(value: number) {
+		this._countdown = value;
+		localStorage.setItem("_countdown", value + "");
+		settingSubject.next({
+			countdown: this._countdown,
+			resttime: this._resttime
+		});
+	}
+
+	get resttime() {
+		if (this._resttime != 0) {
+			return this._resttime;
+		} else {
+			let restStr = localStorage.getItem("_resttime");
+			if (restStr) {
+				return parseInt(restStr);
+			} else {
+				return 5;
+			}
+		}
+	}
+
+	set resttime(value: number) {
+		this._resttime = value;
+		localStorage.setItem("_resttime", value + "");
+		settingSubject.next({
+			countdown: this._countdown,
+			resttime: this._resttime
+		});
+	}
+
 }
