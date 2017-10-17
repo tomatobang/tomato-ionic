@@ -2,6 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { NavController, IonicPage } from "ionic-angular";
 import { GlobalService } from "../../providers/global.service";
 import { JPushService } from '../../_util/jpush.service';
+
 @IonicPage()
 @Component({
 	selector: "page-mine",
@@ -26,5 +27,14 @@ export class MinePage {
 			});
 		this.globalservice.userinfo = "";
 		this.jPushService.clearAlias();
+	}
+
+	setting() {
+		console.log("setting!")
+		
+		this.navCtrl.push("SettingPage", {
+		}, {
+			}, () => {
+			});
 	}
 }
