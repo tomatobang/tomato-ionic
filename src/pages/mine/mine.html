@@ -9,7 +9,8 @@
 <ion-content padding>
 
   <ion-card-header>
-    你好，{{username}}
+    <img src="{{headImg}}" class="headImg" (click)="changeHeadImg()"/>
+    <span class="username">{{username}}</span>
   </ion-card-header>
 
   <ion-list>
@@ -17,9 +18,9 @@
       <ion-icon name="contact" item-start></ion-icon>
       我的资料
     </button>
-    
+
     <button ion-item (click)="setting()">
-      <ion-icon name="cog" item-start ></ion-icon>
+      <ion-icon name="cog" item-start></ion-icon>
       设置
     </button>
 

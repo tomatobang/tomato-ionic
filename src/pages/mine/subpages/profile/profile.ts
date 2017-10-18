@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-
 import { IonicPage } from "ionic-angular";
-// import { GlobalService } from "../../../../providers/global.service";
+
+import { GlobalService } from "../../../../providers/global.service";
 
 declare var window;
 @IonicPage()
@@ -10,11 +10,17 @@ declare var window;
 	templateUrl: "profile.html"
 })
 export class ProfilePage implements OnInit {
+	username: string;
 	constructor(
-		//public globalservice: GlobalService
-	) {}
+		public globalservice: GlobalService
+		
+
+	) { }
 
 	ngOnInit() {
+		this.username = this.globalservice.userinfo.username;
 	}
+
+	
 
 }
