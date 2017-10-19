@@ -8,6 +8,7 @@ import { GlobalService } from "../providers/global.service";
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Media, MediaObject } from "@ionic-native/media";
+import { Helper } from '../_util/helper';
 declare var window;
 
 @Injectable()
@@ -18,14 +19,15 @@ export class VoicePlayService {
 		public platform: Platform,
 		private media: Media,
 		public _global: GlobalService,
+		private helper: Helper,
 		private transfer: FileTransfer, private file: File
 	) { }
 
 	init() { }
 
 	downloadVoiceFile(filename) {
-		let targetPath = this.getBasePath() + 'voices/';
-		let targetPathWithFileName = this.getBasePath() + 'voices/' + filename;
+		let targetPath = this.helper.getBasePath() + 'voices/';
+		let targetPathWithFileName = this.helper.getBasePath() + 'voices/' + filename;
 		// 检查是否已下载过
 		this.file.checkFile(targetPath, filename).then(
 			 (success)=> {
@@ -50,16 +52,6 @@ export class VoicePlayService {
 					console.log(progress)
 				})
 			})
-	}
-
-	getBasePath() {
-		let basePath;
-		if (this.platform.is("ios")) {
-			basePath = window.cordova.file.documentsDirectory + "TomatoBang/";
-		} else {
-			basePath = window.cordova.file.externalApplicationStorageDirectory;
-		}
-		return basePath;
 	}
 
 

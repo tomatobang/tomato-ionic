@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { GlobalService } from '../providers/global.service';
 import { JPushService } from '../_util/jpush.service';
 import { TomatoIOService } from '../_util/socket.io.service';
+import { Helper } from '../_util/helper';
 
 import { RebirthStorageModule } from 'rebirth-storage'; 
 import { RebirthHttpModule  } from 'rebirth-http';
@@ -48,7 +49,7 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,BackgroundMode,
     SplashScreen,
-    GlobalService,JPushService,TomatoIOService,
+    GlobalService,JPushService,TomatoIOService,Helper,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
