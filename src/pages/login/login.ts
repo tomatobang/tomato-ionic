@@ -54,8 +54,10 @@ export class LoginPage {
 			let retOBJ = JSON.parse(data._body);
 			let status = retOBJ.status;
 			let token = "";
+			let userinfo = this.user;
 			if (status == "success") {
 				token = retOBJ.token;
+				userinfo = retOBJ.userinfo;
 			} else {
 				this.error = "登陆出错！";
 				return;
@@ -63,7 +65,7 @@ export class LoginPage {
 			console.log(data);
 			// 这里需要保存 token
 			this.globalservice.token = token;
-			this.globalservice.userinfo = JSON.stringify(this.user);
+			this.globalservice.userinfo = JSON.stringify(userinfo);
 			this.rebirthProvider.headers({ Authorization: token });
 			this.jPushService.init(this.user.username);
 			this.navCtrl.setRoot("TabsPage");

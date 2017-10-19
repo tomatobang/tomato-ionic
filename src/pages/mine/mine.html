@@ -24,11 +24,6 @@
       设置
     </button>
 
-    <button ion-item>
-      <ion-icon name="share-alt" item-start></ion-icon>
-      分享
-    </button>
-
     <button ion-item (click)="about()">
       <ion-icon name="information-circle" item-start></ion-icon>
       关于
@@ -37,6 +32,11 @@
     <button (click)="logout()" ion-item>
       <ion-icon name="log-out" item-start></ion-icon>
       退出
+    </button>
+
+    <button ion-item disabled>
+      <ion-icon name="share-alt" item-start></ion-icon>
+      分享
     </button>
 
   </ion-list>
