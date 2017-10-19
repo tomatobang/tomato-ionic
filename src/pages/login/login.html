@@ -14,14 +14,16 @@
                 <ion-input [ngClass]="{ 'is-success': form.submitted && !userName.valid }" required minlength="6" [(ngModel)]="user.password"
                     name="password" #password="ngModel" type="password" placeholder="请输入密码..."></ion-input>
             </ion-item>
+            
             <!-- <ion-item>
                 <ion-label>记住我</ion-label>
                 <ion-checkbox name="remeberMe" [(ngModel)]="remeberMe.selected" #remeberMe="ngModel"></ion-checkbox>
             </ion-item> -->
+            
         </ion-list>
 
         <div *ngIf="form.submitted && !password.valid" class="text-danger">
-            密码必须输入,至少要8位！
+            密码必须输入,至少要6位！
         </div>
         <div *ngIf="form.submitted && !userName.valid" class="text-danger">
             用户名必须输入！

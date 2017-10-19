@@ -28,7 +28,6 @@ export class Helper {
     }
 
     isWeb(){
-        debugger
         return !this.platform.is("ios") && !this.platform.is("andorid");
     }
 }

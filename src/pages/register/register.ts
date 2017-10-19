@@ -14,12 +14,12 @@ import { JPushService } from '../../_util/jpush.service';
 
 @IonicPage()
 @Component({
-	selector: "login",
+	selector: "register",
 	providers: [OnlineUserService, GlobalService, JPushService],
-	templateUrl: "login.html"
+	templateUrl: "register.html"
 })
 
-export class LoginPage {
+export class RegisterPage {
 	user = new User();
 	error = "";
 	remeberMe = {
@@ -35,22 +35,23 @@ export class LoginPage {
 		public jPushService: JPushService,
 		public navParams: NavParams
 	) {
-		this.user.username = navParams.get("username");
-		this.user.password = navParams.get("password");
+		this.user.username ="";
+		this.user.password = "";
+		this.user.email = "";
+		this.user.displayName = "";
+		this.user.confirmPassword = "";
 	}
 
 	ngOnInit() {
 		console.log("hello `login` component");
 		if (this.globalservice.userinfo) {
-			this.user.username = this.globalservice.userinfo.username;
-			this.user.password = this.globalservice.userinfo.password;
 		}
 	}
 
-	public doLogin(): void {
-		console.log("doLogin", this.user);
+	public doRegister(): void {
+		console.log("doRegister", this.user);
 
-		this.service.login(this.user).subscribe(data => {
+		this.service.register(this.user).subscribe(data => {
 			let retOBJ = JSON.parse(data._body);
 			let status = retOBJ.status;
 			let token = "";
@@ -69,20 +70,12 @@ export class LoginPage {
 			this.rebirthProvider.headers({ Authorization: token });
 			this.jPushService.init(this.user.username);
 			this.navCtrl.setRoot("TabsPage");
-			// this.navCtrl.push("TabsPage",{},()=>{
-			// });
-			// 页面跳转
-			//this.router.navigate(['/dash'] , { replaceUrl: true});
 		});
 	}
 
-	public doLogout(): void {
-		this.globalservice.token = "";
-	}
-
-	public navToRegister(): void {
+	public navToLogin(): void {
 		// 注册
-		this.navCtrl.setRoot("RegisterPage");
+		this.navCtrl.setRoot("LoginPage");
 	}
 
 	presentToast(msg) {
