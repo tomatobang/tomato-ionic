@@ -1,52 +1,55 @@
 <ion-content class="login-container">
     <div class="register-logo">
     </div>
-    <form #form="ngForm" (ngSubmit)="form.form.valid && doRegister()" novalidate class="form-horizontal" role="form">
+    <form [formGroup]="userForm" (ngSubmit)="doRegister()" c novalidate class="form-horizontal" role="form">
         <ion-list>
             <ion-item>
                 <ion-label color="primary">用户名</ion-label>
-                <ion-input required placeholder="请输入用户名..." [ngClass]="{'is-success': form.submitted && !userName.valid }" name="userName"
-                    [(ngModel)]="user.username" #userName="ngModel" type="text"></ion-input>
+                <ion-input required placeholder="请输入用户名..." [ngClass]="{' is-danger': formErrors.username }" formControlName="username"
+                    [(ngModel)]="user.username"type="text"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">昵称</ion-label>
-                <ion-input required placeholder="昵称..." [ngClass]="{'is-success': form.submitted && !displayName.valid }" name="displayName"
-                    [(ngModel)]="user.displayName" #displayName="ngModel" type="text"></ion-input>
+                <ion-input required placeholder="昵称..." [ngClass]="{' is-danger': formErrors.displayName }" formControlName="displayName"
+                    [(ngModel)]="user.displayName"  type="text"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">邮箱</ion-label>
-                <ion-input required type="email"  name="email" class="input" [ngClass]="{' is-success': form.submitted && !email.valid}" placeholder="邮箱"
-                    [(ngModel)]="user.email" value="hello@qq.com"></ion-input>
+                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }" 
+                    placeholder="邮箱" value="hello@qq.com"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">密码</ion-label>
-                <ion-input [ngClass]="{ 'is-success': form.submitted && !password.valid }" required minlength="6" [(ngModel)]="user.password"
-                    name="password" #password="ngModel" type="password" placeholder="请输入密码..."></ion-input>
+                <ion-input  [ngClass]="{' is-danger': formErrors.password }"  
+                    formControlName="password" type="password" placeholder="请输入密码..."></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">确认密码</ion-label>
-                <ion-input [ngClass]="{ 'is-success': form.submitted && !confirmPassword.valid }" required minlength="6" [(ngModel)]="user.confirmPassword"
-                    name="confirmPassword" #password="ngModel" type="password" placeholder="请输入密码..."></ion-input>
+                <ion-input  [ngClass]="{' is-danger': formErrors.confirmPassword }"  
+                    formControlName="confirmPassword" type="password" placeholder="请输入密码..."></ion-input>
             </ion-item>
 
         </ion-list>
-        <div *ngIf="form.submitted && !email.valid" class="text-danger">邮箱必须输入！</div>
-        <div *ngIf="form.submitted && !password.valid" class="text-danger">
-            密码必须输入,至少要 6 位！
+        <div *ngIf="formErrors.username" class="text-danger">
+            {{ formErrors.username }}
         </div>
-        <div *ngIf="form.submitted && !confirmPassword.valid" class="text-danger">
-            确认密码必须输入,至少要 6 位！
+        <div *ngIf="formErrors.displayName" class="text-danger">
+            {{ formErrors.displayName }}
         </div>
-        <div *ngIf="form.submitted && !userName.valid" class="text-danger">
-            用户名必须输入！
+        <div *ngIf="formErrors.email" class="text-danger">
+            {{ formErrors.email }}
         </div>
-        <div *ngIf="form.submitted && !displayName.valid" class="text-danger">
-            昵称必须输入！
+        <div *ngIf="formErrors.password" class="text-danger">
+            {{ formErrors.password }}
         </div>
+        <div *ngIf="formErrors.confirmPassword" class="text-danger">
+            {{ formErrors.confirmPassword }}
+        </div>
+       
         <!-- 这里用来做服务端验证 -->
         <div *ngIf="error">{{error}}</div>
         <button type="submit" color="primary" ion-button block outline>注册</button>
