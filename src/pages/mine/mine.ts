@@ -18,6 +18,7 @@ import { Platform } from 'ionic-angular';
 	providers: [JPushService, OnlineUserService, Helper, FileTransfer, File]
 })
 export class MinePage {
+	userid = "";
 	username = '';
 	headImg = "./assets/tomato-active.png";
 
@@ -34,11 +35,12 @@ export class MinePage {
 
 	public ngOnInit(): void {
 		this.username = this.globalservice.userinfo.username;
+		this.userid = this.globalservice.userinfo._id;
 		if (this.globalservice.userinfo.img) {
 			this.platform.ready().then((readySource) => {
 				if (readySource == "cordova") {
-					this.downloadHeadImg(this.username).then(() => {
-						this.headImg = this.globalservice.serverAddress + this.globalservice.userinfo.img;
+					this.downloadHeadImg(this.userid).then((url) => {
+						this.headImg = url;
 					})
 				}
 			});
@@ -77,14 +79,18 @@ export class MinePage {
 
 	downloadHeadImg(filename): Promise<any> {
 		let targetPath = this.helper.getBasePath() + 'headimg/';
-		let targetPathWithFileName = this.helper.getBasePath() + 'headimg/' + filename;
+		let targetPathWithFileName = this.helper.getBasePath() + 'headimg/' + filename+".png";
 		return new Promise((resolve, reject) => {
 			// 检查是否已下载过
-			this.file.checkFile(targetPath, filename).then(
+			this.file.checkFile(targetPath, filename+".png").then(
 				(success) => {
 					resolve(targetPathWithFileName);
 				}, (error) => {
-					let options = {};
+					let options = {
+						headers:{
+							Authorization:this.globalservice.token
+						}
+					};
 					let trustHosts = true;
 					const fileTransfer: FileTransferObject = this.transfer.create();
 					fileTransfer.download(this.globalservice.serverAddress + "api/user/headimg/" + filename,
@@ -126,10 +132,10 @@ export class MinePage {
 							// If it's base64:
 							let base64Image = 'data:image/jpeg;base64,' + imageData;
 							this.userservice.updateUserHeadImg({
-								userid: this.username,
+								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.username);
+								this.downloadHeadImg(this.userid);
 							});
 						}, (err) => {
 							// Handle error
@@ -154,10 +160,10 @@ export class MinePage {
 							// If it's base64:
 							let base64Image = 'data:image/jpeg;base64,' + imageData;
 							this.userservice.updateUserHeadImg({
-								userid: this.username,
+								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.username);
+								this.downloadHeadImg(this.userid);
 							});
 						}, (err) => {
 							// Handle error

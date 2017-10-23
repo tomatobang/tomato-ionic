@@ -13,7 +13,9 @@ export class GlobalService {
 	_resttime: number = 0;
 	
 	//serverAddress = "http://115.29.51.196:5555/";
-	serverAddress = "http://localhost:7001/";
+	//serverAddress = "http://localhost:7001/";
+	serverAddress = "http://192.168.3.223:7001/";
+	 
 
 	public get projectChangeMonitor(): Observable<any> {
 		return this.notificationSubject.asObservable();
