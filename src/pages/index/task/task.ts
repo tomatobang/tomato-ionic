@@ -68,7 +68,7 @@ export class TaskPage implements OnInit {
 		if(task.voiceUrl){
 			let filename = this.getFileName(task.voiceUrl);
 			// filename格式示例:pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
-			this.voiceService.downloadVoiceFile(filename);
+			this.voiceService.downloadVoiceFile(filename,this.globalservice.token);
 		}else{
 			alert("此任务无音频记录！")
 		}
@@ -106,7 +106,7 @@ export class TaskPage implements OnInit {
 					userid: data.userid
 				}
 				setTimeout(() => {
-					this.voiceRecordCMP.uploadVoiceFile().then(filename => {
+					this.voiceRecordCMP.uploadVoiceFile(this.globalservice.token).then(filename => {
 						let tt = this.allTasks.unfinished;
 						task.voiceUrl = (this.voicepostParams.userid + "_" + this.voicepostParams.taskid + "_" + filename);
 						this.allTasks.unfinished = [task].concat(tt);

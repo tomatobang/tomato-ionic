@@ -60,7 +60,11 @@ export class IndexPage implements OnInit, OnDestroy {
 		// 加载正在进行的番茄钟
 		this._userid = this.globalservice.userinfo.username;
 		this.countdown = this.globalservice.countdown;
-        this.resttime = this.globalservice.resttime;
+		this.resttime = this.globalservice.resttime;
+		this.globalservice.settingState.subscribe(settings =>{
+			this.countdown = settings.countdown;
+			this.resttime = settings.resttime;
+		})
 
 		this.tomatoIO.load_tomato(this._userid);
 		this.tomatoIO.load_tomato_succeed().subscribe(t => {
@@ -340,7 +344,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	playVoiceRecord(tomato) {
 		if (tomato.voiceUrl) {
 			let filename = this.getFileName(tomato.voiceUrl);
-			this.voiceService.downloadVoiceFile(filename);
+			this.voiceService.downloadVoiceFile(filename,this.globalservice.token);
 		} else {
 			alert('此番茄钟无音频记录！')
 		}

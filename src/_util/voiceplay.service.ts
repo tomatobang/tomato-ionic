@@ -25,7 +25,7 @@ export class VoicePlayService {
 
 	init() { }
 
-	downloadVoiceFile(filename) {
+	downloadVoiceFile(filename,token) {
 		let targetPath = this.helper.getBasePath() + 'voices/';
 		let targetPathWithFileName = this.helper.getBasePath() + 'voices/' + filename;
 		// 检查是否已下载过
@@ -35,7 +35,11 @@ export class VoicePlayService {
 				this.play(targetPathWithFileName);
 			},  (error)=> {
 				// 注意:此方法采用追加的方式添加
-				let options = {};
+				let options = {
+					headers:{
+						Authorization:token
+					}
+				};
 				let trustHosts = true;
 				const fileTransfer: FileTransferObject = this.transfer.create();
 				fileTransfer.download(this._global.serverAddress + "/download/voicefile/" + filename, targetPathWithFileName,

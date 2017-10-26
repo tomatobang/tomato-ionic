@@ -239,7 +239,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	/**
 	 * 上传音频文件
 	 */
-	uploadVoiceFile() {
+	uploadVoiceFile(token) {
 		return new Promise((resolve, reject) => {
 			this.isUploading = true;
 			let tmpPath = this._temp_file_path;
@@ -258,7 +258,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 					fileKey: "file",
 					fileName: tmpPath.substr(tmpPath.lastIndexOf("/") + 1),
 					mimeType: "text/plain",
-					headers: {},
+					headers:{
+						Authorization:token
+					},
 					params: this._postParams
 				};
 				console.log(tmpPath, this.uploadUrl, options);
