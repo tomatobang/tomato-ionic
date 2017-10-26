@@ -39,12 +39,14 @@ export class MinePage {
 		if (this.globalservice.userinfo.img) {
 			this.platform.ready().then((readySource) => {
 				if (readySource == "cordova") {
-					this.downloadHeadImg(this.userid).then((url) => {
+					this.downloadHeadImg(this.userid, false).then((url) => {
 						this.headImg = url;
 					})
+				} else {
+					//this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
 				}
 			});
-			//this.headImg = this.globalservice.serverAddress + this.globalservice.userinfo.img;
+
 		}
 	}
 
@@ -77,38 +79,42 @@ export class MinePage {
 
 	}
 
-	downloadHeadImg(filename): Promise<any> {
+	/**
+	 * 下载头像
+	 * @param filename 
+	 * @param change 
+	 */
+	downloadHeadImg(filename, change): Promise<any> {
 		let targetPath = this.helper.getBasePath() + 'headimg/';
-		let targetPathWithFileName = this.helper.getBasePath() + 'headimg/' + filename+".png";
+		let targetPathWithFileName = this.helper.getBasePath() + 'headimg/' + filename + ".png";
+
 		return new Promise((resolve, reject) => {
-			// 检查是否已下载过
-			this.file.checkFile(targetPath, filename+".png").then(
-				(success) => {
-					resolve(targetPathWithFileName);
-				}, (error) => {
-					let options = {
-						headers:{
-							Authorization:this.globalservice.token
-						}
-					};
-					let trustHosts = true;
-					const fileTransfer: FileTransferObject = this.transfer.create();
-					fileTransfer.download(this.globalservice.serverAddress + "api/user/headimg/" + filename,
-						targetPathWithFileName, trustHosts,
-						options).then(result => {
-							console.log("Headmg 下载完成..");
-							resolve(result.toURL());
-						}).catch(err => {
-							reject("Headmg 下载出错");
-							console.log("Headmg 下载出错", err);
+			if (change) {
+				this.filedownload(filename, targetPathWithFileName).then((file) => {
+					resolve(file)
+				}, (err) => {
+					resolve(err)
+				});
+			} else {
+				// 检查是否已下载过
+				this.file.checkFile(targetPath, filename + ".png").then(
+					(success) => {
+						resolve(targetPathWithFileName);
+					}, (error) => {
+						this.filedownload(filename, targetPathWithFileName).then((file) => {
+							resolve(file)
+						}, (err) => {
+							resolve(err)
 						});
-					fileTransfer.onProgress((evt: ProgressEvent) => {
-						console.log(evt)
-					})
-				})
+					});
+			}
 		})
 	}
 
+
+	/**
+	 * 头像编辑 modal
+	 */
 	changeHeadImg() {
 		let actionSheet = this.actionSheetCtrl.create({
 			title: '修改头像',
@@ -135,7 +141,7 @@ export class MinePage {
 								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid);
+								this.downloadHeadImg(this.userid, true);
 							});
 						}, (err) => {
 							// Handle error
@@ -163,7 +169,7 @@ export class MinePage {
 								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid);
+								this.downloadHeadImg(this.userid, true);
 							});
 						}, (err) => {
 							// Handle error
@@ -179,5 +185,35 @@ export class MinePage {
 			]
 		});
 		actionSheet.present();
+	}
+
+	/**
+	 * 文件下载
+	 * @param filename 
+	 * @param targetPathWithFileName 
+	 */
+	filedownload(filename, targetPathWithFileName) {
+		return new Promise((resolve, reject) => {
+			let options = {
+				headers: {
+					Authorization: this.globalservice.token
+				}
+			};
+			let trustHosts = true;
+			const fileTransfer: FileTransferObject = this.transfer.create();
+			fileTransfer.download(this.globalservice.serverAddress + "api/user/headimg/" + filename,
+				targetPathWithFileName, trustHosts,
+				options).then(result => {
+					console.log("Headmg 下载完成..");
+					resolve(result.toURL());
+				}).catch(err => {
+					reject("Headmg 下载出错");
+					console.log("Headmg 下载出错", err);
+				});
+			fileTransfer.onProgress((evt: ProgressEvent) => {
+				console.log(evt)
+			})
+		});
+
 	}
 }
