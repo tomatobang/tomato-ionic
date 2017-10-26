@@ -42,7 +42,7 @@ export class VoicePlayService {
 				};
 				let trustHosts = true;
 				const fileTransfer: FileTransferObject = this.transfer.create();
-				fileTransfer.download(this._global.serverAddress + "/download/voicefile/" + filename, targetPathWithFileName,
+				fileTransfer.download(this._global.serverAddress + "download/voicefile/" + filename, targetPathWithFileName,
 					trustHosts,
 					options).then(result => {
 						console.log("下载完成,播放..");
