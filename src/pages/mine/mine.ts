@@ -87,7 +87,7 @@ export class MinePage {
 	downloadHeadImg(filename, change): Promise<any> {
 		let targetPath = this.helper.getBasePath() + 'headimg/';
 		let targetPathWithFileName = this.helper.getBasePath() + 'headimg/' + filename + ".png";
-		
+
 		return new Promise((resolve, reject) => {
 			// 检查是否已下载过
 			this.file.checkFile(targetPath, filename + ".png").then(
@@ -98,7 +98,7 @@ export class MinePage {
 							this.filedownload(filename, targetPathWithFileName).then((file) => {
 								resolve(file)
 							}, (err) => {
-								resolve(err)
+								reject(err)
 							});
 						})
 					} else {
@@ -109,7 +109,7 @@ export class MinePage {
 					this.filedownload(filename, targetPathWithFileName).then((file) => {
 						resolve(file)
 					}, (err) => {
-						resolve(err)
+						reject(err)
 					});
 				});
 		})

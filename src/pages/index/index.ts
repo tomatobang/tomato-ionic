@@ -51,17 +51,13 @@ export class IndexPage implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit() {
-		this.tomatoservice.getTodayTomatos().subscribe(data => {
-			let list = JSON.parse(data._body);
-			this.historyTomatoes = list;
-			this.tomatoCount = list.length;
-		});
-
+		// 加载今日番茄钟列表
+		this.loadTomatoes();
 		// 加载正在进行的番茄钟
 		this._userid = this.globalservice.userinfo.username;
 		this.countdown = this.globalservice.countdown;
 		this.resttime = this.globalservice.resttime;
-		this.globalservice.settingState.subscribe(settings =>{
+		this.globalservice.settingState.subscribe(settings => {
 			this.countdown = settings.countdown;
 			this.resttime = settings.resttime;
 		})
@@ -82,12 +78,30 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.tomatoIO.other_end_break_tomato().subscribe(data => {
 			this.breakActiveTask(false);
 		});
+		// 服务端新增
+		this.tomatoIO.new_tomate_added().subscribe(t=>{
+			if (t && t != "null") {
+				this.historyTomatoes.unshift(t);
+				this.tomatoCount +=1;
+			}else{
+				this.loadTomatoes();
+			}
+		})
 
 		this.mp3Source.setAttribute("src", "./assets/audios/alert.mp3");
 		this.oggSource.setAttribute("src", "./assets/audios/alert.ogg");
 		this.alertAudio.appendChild(this.mp3Source);
 		this.alertAudio.appendChild(this.oggSource);
 		this.alertAudio.load();
+	}
+
+
+	loadTomatoes() {
+		this.tomatoservice.getTodayTomatos().subscribe(data => {
+			let list = JSON.parse(data._body);
+			this.historyTomatoes = list;
+			this.tomatoCount = list.length;
+		});
 	}
 
 	ngOnDestroy() { }
@@ -154,12 +168,12 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.child.render();
 		}, 1000);
 	}
-	
+
 	startTask(task: any, raw: Boolean) {
 		this.activeTomato = task;
 		if (raw) {
 			// 开启番茄钟
-			this.tomatoIO.start_tomato(this._userid, task,this.countdown);
+			this.tomatoIO.start_tomato(this._userid, task, this.countdown);
 			this.activeTomato.startTime = new Date();
 		} else {
 			this.activeTomato.startTime = new Date(this.activeTomato.startTime);
@@ -186,10 +200,10 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
 		// 休息任务提醒
 		this.localNotifications.schedule({
-			id:this._rest_notifyID++,
+			id: this._rest_notifyID++,
 			text: '休息完了，赶紧开启下一个番茄钟吧!',
 			at: new Date(new Date().getTime() + 5 * 60 * 1000),
-			sound:'file://assets/audios/finish.wav', 
+			sound: 'file://assets/audios/finish.wav',
 			led: 'FF0000',
 		});
 	};
@@ -256,13 +270,13 @@ export class IndexPage implements OnInit, OnDestroy {
 		}
 		// 本地通知任务 cancel
 		this.localNotifications.schedule({
-			id:this._notifyID++,
+			id: this._notifyID++,
 			title: this.activeTomato.title,
 			text: '你又完成了一个番茄钟!',
 			at: new Date(new Date().getTime() + this.countdown * 60 * 1000),
 			led: 'FF0000',
-			sound:'file://assets/audios/start.wav', 
-			badge:1
+			sound: 'file://assets/audios/start.wav',
+			badge: 1
 			//icon: 'http://example.com/icon.png'
 		});
 	}
@@ -318,7 +332,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.timerStatus.reset();
 		if (this._notifyID > 0) {
 			this.localNotifications.cancel(this._notifyID).then(() => {
-				
+
 			});
 		}
 	}
@@ -344,7 +358,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	playVoiceRecord(tomato) {
 		if (tomato.voiceUrl) {
 			let filename = this.getFileName(tomato.voiceUrl);
-			this.voiceService.downloadVoiceFile(filename,this.globalservice.token);
+			this.voiceService.downloadVoiceFile(filename, this.globalservice.token);
 		} else {
 			alert('此番茄钟无音频记录！')
 		}

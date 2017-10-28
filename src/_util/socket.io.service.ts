@@ -116,4 +116,11 @@ export class TomatoIOService {
 	start_tomato_succeed(tomato:Tomato) {
 		this.socket.emit("start_tomato_succeed", tomato);
 	}
+
+	/**
+	 * 
+	 */
+	new_tomate_added(){
+		return this.socket.fromEvent<any>("new_tomate_added").map(data => data);
+	}
 }
