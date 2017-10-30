@@ -14,6 +14,8 @@ export abstract class TomatoService extends RebirthHttp {
 
   abstract getTomatos(pageIndex: any, pageSize: any, keyword?: string): Observable<SearchResult<Tomato>>;
 
+  abstract searchTomatos(pageIndex: any, pageSize: any, keywords?: string): Observable<SearchResult<Tomato>>;
+
   abstract getTodayTomatos(): Observable<SearchResult<Tomato>>;
 
   abstract getTomatoByTitle(tomatoTitle: string): Observable<Tomato>;
@@ -41,6 +43,16 @@ export class OnlineTomatoService extends TomatoService {
   getTomatos( @Query('pageIndex') pageIndex = 1,
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string): Observable<SearchResult<Tomato>> {
+    return null;
+  }
+
+  @POST(baseUrl+'api/search')
+  searchTomatos( 
+    @Body keywords:{
+      keywords,
+      pageSize?:10,
+      pageIndex?:1
+    }): Observable<SearchResult<Tomato>> {
     return null;
   }
 

@@ -34,7 +34,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	@ViewChild(Slides) slides: Slides;
 
 	// 番茄钟长度
-	items = [];
+	searchReturnItems = [];
 
 	historyTomatoes: Array<any> = [];
 	tomatoCount = 0;
@@ -79,11 +79,11 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.breakActiveTask(false);
 		});
 		// 服务端新增
-		this.tomatoIO.new_tomate_added().subscribe(t=>{
+		this.tomatoIO.new_tomate_added().subscribe(t => {
 			if (t && t != "null") {
 				this.historyTomatoes.unshift(t);
-				this.tomatoCount +=1;
-			}else{
+				this.tomatoCount += 1;
+			} else {
 				this.loadTomatoes();
 			}
 		})
@@ -378,9 +378,14 @@ export class IndexPage implements OnInit, OnDestroy {
 	/**
 	 * 番茄钟搜索
 	 */
-	seachTomatoes(evt){
-		let keyword = evt.data.split('');
-		//this.tomatoservice.getTomatos
-		alert(keyword)
+	seachTomatoes(evt) {
+		let keywords = evt.target.value;
+		// 前端需对关键词做少许过滤
+		console.log('keyword', keywords);
+		this.tomatoservice.searchTomatos({ keywords }).subscribe(data => {
+			//console.log(data);
+			let arr = JSON.parse(data._body);
+			this.searchReturnItems = arr;
+		})
 	}
 }

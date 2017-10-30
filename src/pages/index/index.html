@@ -3,7 +3,7 @@
         <ion-title>{{page_title}}</ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="addTask()">
-                  <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+                <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -53,11 +53,21 @@
         <!-- 历史番茄钟 -->
         <ion-slide class="tomato-history-slide">
             <!-- another way: (keyup.enter)="seachTomatoes(tomatoSearchbar.value)" -->
-            <ion-searchbar #tomatoSearchbar (ionInput)="seachTomatoes($event)" placeholder="番茄钟名称..." ></ion-searchbar>
+            <ion-searchbar #tomatoSearchbar (ionInput)="seachTomatoes($event)" placeholder="番茄钟名称..." debounce="800"></ion-searchbar>
             <!-- <button ion-button block outline color="danger" (click)="testPlayVoice(true)">testPlayVoice</button> -->
             <ion-list>
-                <ion-item *ngFor="let item of items">
-                    {{ item }}
+                <ion-item *ngFor="let item of searchReturnItems" class="tomato-today-list" track="tooling">
+                    <ion-avatar item-start>
+                        <img src="assets/tomato.png">
+                    </ion-avatar>
+                    <h2>
+                        <span [ngClass]="{'text-breaked':item.succeed==0}">{{item.title | StringTruncate: 20}}</span>
+                        <img src="./assets/voice/voice.png" *ngIf="item.voiceUrl" class="play-icon" (click)="playVoiceRecord(item)">
+                    </h2>
+                    <h3>
+                        <span class="tomato-start-end-time">{{item.startTime | date:'shortTime'}} - {{item.endTime | date:'shortTime'}}</span>
+                        <div *ngIf="item.breakReason" class="tomato-break-reason">(中断原因:{{item.breakReason}})</div>
+                    </h3>
                 </ion-item>
             </ion-list>
         </ion-slide>
