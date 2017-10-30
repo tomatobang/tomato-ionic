@@ -11,6 +11,8 @@
 
 <ion-content>
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
+
+        <!-- 首页 -->
         <ion-slide>
             <div>
                 <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>
@@ -27,6 +29,7 @@
             </div>
         </ion-slide>
 
+        <!-- 今日番茄钟 -->
         <ion-slide class="tomato-today-slide">
             <!-- <h1 class="today-tomatoCount">{{tomatoCount}}</h1> -->
             <!-- 这里可以按照时间进度进行分组，再进行展示-->
@@ -47,9 +50,11 @@
             </ion-list>
         </ion-slide>
 
+        <!-- 历史番茄钟 -->
         <ion-slide class="tomato-history-slide">
-            <ion-searchbar (ionInput)="getItems($event)" placeholder="番茄钟名称..."></ion-searchbar>
-            <button ion-button block outline color="danger" (click)="testPlayVoice(true)">testPlayVoice</button>
+            <!-- another way: (keyup.enter)="seachTomatoes(tomatoSearchbar.value)" -->
+            <ion-searchbar #tomatoSearchbar (ionInput)="seachTomatoes($event)" placeholder="番茄钟名称..." ></ion-searchbar>
+            <!-- <button ion-button block outline color="danger" (click)="testPlayVoice(true)">testPlayVoice</button> -->
             <ion-list>
                 <ion-item *ngFor="let item of items">
                     {{ item }}

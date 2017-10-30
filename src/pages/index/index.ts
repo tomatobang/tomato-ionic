@@ -365,13 +365,22 @@ export class IndexPage implements OnInit, OnDestroy {
 
 	}
 
-	testPlayVoice() {
-		this.voiceService.play_local_voice("assets/audios/alert.mp3");
-	}
+	// testPlayVoice() {
+	// 	this.voiceService.play_local_voice("assets/audios/alert.mp3");
+	// }
 
 	getFileName(url) {
 		let arr = url.split('/');
 		let fileName = arr[arr.length - 1];
 		return fileName;
+	}
+
+	/**
+	 * 番茄钟搜索
+	 */
+	seachTomatoes(evt){
+		let keyword = evt.data.split('');
+		//this.tomatoservice.getTomatos
+		alert(keyword)
 	}
 }

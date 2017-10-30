@@ -9,7 +9,7 @@
 <ion-content padding>
 
   <ion-card-header>
-    <img src="{{headImg}}" class="headImg" (click)="changeHeadImg()"/>
+    <img src="{{headImg}}" class="headImg" (click)="changeHeadImg()" />
     <span class="username">{{username}}</span>
   </ion-card-header>
 
@@ -20,7 +20,7 @@
     </button>
 
     <button ion-item (click)="setting()">
-      <ion-icon name="cog" item-start></ion-icon>
+      <ion-icon name="settings" item-start></ion-icon>
       设置
     </button>
 
@@ -29,14 +29,14 @@
       关于
     </button>
 
-    <button (click)="logout()" ion-item>
-      <ion-icon name="log-out" item-start></ion-icon>
-      退出
-    </button>
-
     <button ion-item disabled>
       <ion-icon name="share-alt" item-start></ion-icon>
       分享
+    </button>
+
+    <button (click)="logout()" ion-item>
+      <ion-icon name="log-out" item-start></ion-icon>
+      退出
     </button>
 
   </ion-list>
