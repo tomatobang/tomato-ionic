@@ -242,6 +242,10 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	uploadVoiceFile(token) {
 		return new Promise((resolve, reject) => {
 			this.isUploading = true;
+			if(!this._temp_file_path){
+				reject("没有录音!");
+			}
+
 			let tmpPath = this._temp_file_path;
 			if (!this.uploadUrl) {
 				reject("uploadUrl 不存在");

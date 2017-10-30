@@ -105,11 +105,14 @@ export class TaskPage implements OnInit {
 					taskid: data._id,
 					userid: data.userid
 				}
+				task._id = data._id;
+				// 上传音屏文件
 				setTimeout(() => {
 					this.voiceRecordCMP.uploadVoiceFile(this.globalservice.token).then(filename => {
 						let tt = this.allTasks.unfinished;
 						task.voiceUrl = (this.voicepostParams.userid + "_" + this.voicepostParams.taskid + "_" + filename);
 						this.allTasks.unfinished = [task].concat(tt);
+						this.allTasks.unfinished.slice();
 						this.newTask = {
 							title: "",
 							description: "",
@@ -120,6 +123,19 @@ export class TaskPage implements OnInit {
 						this.page_title = "任务管理";
 					}, err => {
 						console.error(err);
+						let tt = this.allTasks.unfinished;
+						task.voiceUrl = '';
+						this.allTasks.unfinished = [task].concat(tt);
+						debugger;
+						this.allTasks.unfinished.slice();
+						this.newTask = {
+							title: "",
+							description: "",
+							num: 1
+						};
+						this.openNewTaskForm = false;
+						this.showDismissButton = true;
+						this.page_title = "任务管理";
 					});
 				}, 100)
 			}
