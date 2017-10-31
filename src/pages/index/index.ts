@@ -59,7 +59,10 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.resttime = this.globalservice.resttime;
 		this.globalservice.settingState.subscribe(settings => {
 			this.countdown = settings.countdown;
+			this.timerStatus.countdown = this.countdown;
 			this.resttime = settings.resttime;
+			this.refreshTimeUI();
+			setTimeout(this.stopRefreshTimeUI(), 1500);
 		})
 
 		this.tomatoIO.load_tomato(this._userid);
@@ -160,14 +163,27 @@ export class IndexPage implements OnInit, OnDestroy {
 	};
 	// 中断缘由
 	breakReason: any;
+	// 
 	@ViewChild(AngularRoundProgressComponent)
 	child: AngularRoundProgressComponent;
 	ngAfterViewInit() {
-		setInterval(() => {
+		this.refreshTimeUI();
+	}
+
+	// 刷新时间圆圈
+	UIRefreshIntervalID = 0;
+	refreshTimeUI(){
+		clearInterval(this.UIRefreshIntervalID);
+		this.UIRefreshIntervalID = setInterval(() => {
 			this.child.timerStatusValue == this.timerStatus;
 			this.child.render();
 		}, 1000);
 	}
+
+	stopRefreshTimeUI(){
+		clearInterval(this.UIRefreshIntervalID);
+	}
+
 
 	startTask(task: any, raw: Boolean) {
 		this.activeTomato = task;
@@ -182,33 +198,22 @@ export class IndexPage implements OnInit, OnDestroy {
 		let that = this;
 	}
 
-	breakActiveTask(raw) {
-		if (raw) {
+	/**
+	 * 中断
+	 * @param isLocal 是否本地中断
+	 */
+	breakActiveTask(isLocal) {
+		if (isLocal) {
 			this.showPrompt();
 		}
 		this.stopTimer();
 		this.startRestTimer();
 	}
 
-	startRestTimer() {
-		this.resttimestart = new Date();
-		if (typeof this.resttimeout !== "undefined") {
-			clearTimeout(this.resttimeout);
-			this.timerStatus.reset();
-		}
-		this.isResting = true;
-		this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
-		// 休息任务提醒
-		this.localNotifications.schedule({
-			id: this._rest_notifyID++,
-			text: '休息完了，赶紧开启下一个番茄钟吧!',
-			at: new Date(new Date().getTime() + 5 * 60 * 1000),
-			sound: 'file://assets/audios/finish.wav',
-			led: 'FF0000',
-		});
-	};
 
-
+	/**
+	 * 中断番茄钟弹出框
+	 */
 	showPrompt() {
 		let prompt = this.alertCtrl.create({
 			title: '中断当前番茄钟',
@@ -254,8 +259,33 @@ export class IndexPage implements OnInit, OnDestroy {
 		prompt.present();
 	}
 
+	/**
+	 * 开启休息时钟
+	 */
+	startRestTimer() {
+		this.refreshTimeUI();
+		this.resttimestart = new Date();
+		if (typeof this.resttimeout !== "undefined") {
+			clearTimeout(this.resttimeout);
+			this.timerStatus.reset();
+		}
+		this.isResting = true;
+		this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
+		// 休息任务提醒
+		this.localNotifications.schedule({
+			id: this._rest_notifyID++,
+			text: '休息完了，赶紧开启下一个番茄钟吧!',
+			at: new Date(new Date().getTime() + 5 * 60 * 1000),
+			sound: 'file://assets/audios/finish.wav',
+			led: 'FF0000',
+		});
+	};
 
+	/**
+	 * 开启番茄钟
+	 */
 	startTimer() {
+		this.refreshTimeUI();
 		this.isResting = false;
 		if (typeof this.mytimeout !== "undefined") {
 			clearTimeout(this.mytimeout);
@@ -322,6 +352,7 @@ export class IndexPage implements OnInit, OnDestroy {
 			//this.alertAudio.play();
 			this.isResting = false;
 			this.timerStatus.reset();
+			setTimeout(this.stopRefreshTimeUI(), 1500);
 		} else {
 			this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
 		}
@@ -335,6 +366,7 @@ export class IndexPage implements OnInit, OnDestroy {
 
 			});
 		}
+		setTimeout(this.stopRefreshTimeUI(), 1500);
 	}
 
 	secondsToMMSS(timeInSeconds: number) {
@@ -365,9 +397,9 @@ export class IndexPage implements OnInit, OnDestroy {
 
 	}
 
-	testPlayVoice() {
-		this.voiceService.play_local_voice("assets/audios/alert.mp3");
-	}
+	// testPlayVoice() {
+	// 	this.voiceService.play_local_voice("assets/audios/alert.mp3");
+	// }
 
 	getFileName(url) {
 		let arr = url.split('/');

@@ -68,7 +68,15 @@ $categories: (
       padding-left: 10px;
     }
    }
-
    overflow: auto;
  }
- 
+ .tomato-history-slide{
+   height: 100%;
+ }
+  .tomato-history-slide,.tomato-history-slide .slide-zoom{
+   height: 100%;
+ }
+ .tomato-history-list{
+  height: 100%;
+  overflow: auto;
+ }

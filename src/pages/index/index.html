@@ -54,8 +54,8 @@
         <ion-slide class="tomato-history-slide">
             <!-- another way: (keyup.enter)="seachTomatoes(tomatoSearchbar.value)" -->
             <ion-searchbar #tomatoSearchbar (ionInput)="seachTomatoes($event)" placeholder="番茄钟名称..." debounce="800"></ion-searchbar>
-            <button ion-button block outline color="danger" (click)="testPlayVoice(true)">testPlayVoice</button>
-            <ion-list>
+            <!-- <button ion-button block outline color="danger" (click)="testPlayVoice(true)">testPlayVoice</button> -->
+            <ion-list class="tomato-history-list">
                 <ion-item *ngFor="let item of searchReturnItems" class="tomato-today-list" track="tooling">
                     <ion-avatar item-start>
                         <img src="assets/tomato.png">

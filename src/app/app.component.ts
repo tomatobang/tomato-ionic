@@ -27,7 +27,7 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
       // 开启后台运行
-      backgroundMode.enable();
+      //backgroundMode.enable();
       // 初始化 jPush
       // if (global.userinfo){
       //   jPushService.init(global.userinfo.username);
