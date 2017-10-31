@@ -100,13 +100,15 @@ export class VoicePlayService {
 			this.mediaRec.stop();
 			this.mediaRec.release();
 		}
-		// cordova:旧版路径获取方式
-		// function getPhoneGapPath() {
-		// 		let path = window.location.pathname;
-		// 		path = path.substr(0,path.length - 10 );
-		// 		return 'file://' + path;
-		// };
-		let applicationDirectory = "";//getPhoneGapPath();//window.cordova.file.applicationDirectory;
+		function getPhoneGapPath() {
+				let path = window.location.pathname;
+				path = path.substr(0,path.length - 10 );
+				return 'file://' + path;
+		};
+		let applicationDirectory = "";//window.cordova.file.applicationDirectory;
+		if (this.platform.is("android")) {
+			applicationDirectory = getPhoneGapPath();;
+		}
 		let path  =  applicationDirectory + file_url
 		this.mediaRec = this.media.create(path);
 

@@ -1,3 +1,7 @@
+/**
+ * 这块设计到业务，应该算不上纯组件
+ */
+
 import {
 	Component,
 	forwardRef,

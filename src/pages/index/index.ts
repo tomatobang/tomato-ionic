@@ -365,9 +365,9 @@ export class IndexPage implements OnInit, OnDestroy {
 
 	}
 
-	// testPlayVoice() {
-	// 	this.voiceService.play_local_voice("assets/audios/alert.mp3");
-	// }
+	testPlayVoice() {
+		this.voiceService.play_local_voice("assets/audios/alert.mp3");
+	}
 
 	getFileName(url) {
 		let arr = url.split('/');
