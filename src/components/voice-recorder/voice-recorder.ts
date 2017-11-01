@@ -188,7 +188,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 				if (this.platform.is("ios")) {
 					tmpPath = this.path + this.src;
 				}
-				alert(tmpPath);
+				//alert(tmpPath);
 				this._temp_file_path = tmpPath.replace("file://", "");
 				this.couldPlay = true;
 				if (this.mediaRec) {

@@ -56,13 +56,17 @@ export class IndexPage implements OnInit, OnDestroy {
 		// 加载正在进行的番茄钟
 		this._userid = this.globalservice.userinfo.username;
 		this.countdown = this.globalservice.countdown;
+		this.timerStatus.countdown =  this.countdown;
+		this.timerStatus.label =  this.countdown + ":00";
 		this.resttime = this.globalservice.resttime;
 		this.globalservice.settingState.subscribe(settings => {
+			// 不适用于开启番茄钟时进行设置
 			this.countdown = settings.countdown;
-			this.timerStatus.countdown = this.countdown;
+			this.timerStatus.label =  this.countdown + ":00";
+			this.timerStatus.countdown =  this.countdown ;
 			this.resttime = settings.resttime;
 			this.refreshTimeUI();
-			setTimeout(this.stopRefreshTimeUI(), 1500);
+			//setTimeout(this.stopRefreshTimeUI(), 1500);
 		})
 
 		this.tomatoIO.load_tomato(this._userid);
@@ -175,7 +179,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	refreshTimeUI(){
 		clearInterval(this.UIRefreshIntervalID);
 		this.UIRefreshIntervalID = setInterval(() => {
-			this.child.timerStatusValue == this.timerStatus;
+			this.child.timerStatusValue = this.timerStatus;
 			this.child.render();
 		}, 1000);
 	}
