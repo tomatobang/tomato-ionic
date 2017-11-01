@@ -79,6 +79,12 @@ export class MinePage {
 
 	}
 
+	gotest(){
+		//this.navCtrl.setRoot("TestPage")
+		this.navCtrl.push("TestPage", {
+		}, {}, () => { });
+	}
+
 	/**
 	 * 下载头像
 	 * @param filename 

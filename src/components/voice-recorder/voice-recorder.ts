@@ -124,79 +124,88 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	}
 
 	startRec() {
-		if (this.mediaRec) {
-			this.mediaRec.release();
-		}
-		// 模拟声音大小变化
-		let voicechange = setInterval(() => {
-			if (!this.recordWait) {
-				let i = Math.round(Math.random() * 9);
-				this.voice.ImgUrl = "assets/voice/recog00" + i + ".png";
-			} else {
-				voicechange = undefined;
+		try {
+			if (this.mediaRec) {
+				this.mediaRec.release();
 			}
-		}, 400);
-		//实例化录音类
-		this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
-		// fires when file status changes
-		this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
-		this.mediaRec.onSuccess.subscribe(() =>
-			console.log("audio is successful")
-		);
-		this.mediaRec.onError.subscribe(error => console.log("Error!", error));
+			// 模拟声音大小变化
+			let voicechange = setInterval(() => {
+				if (!this.recordWait) {
+					let i = Math.round(Math.random() * 9);
+					this.voice.ImgUrl = "assets/voice/recog00" + i + ".png";
+				} else {
+					voicechange = undefined;
+				}
+			}, 400);
+			//实例化录音类
+			this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
+			// fires when file status changes
+			this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
+			this.mediaRec.onSuccess.subscribe(() =>
+				console.log("audio is successful")
+			);
+			this.mediaRec.onError.subscribe(error => console.log("Error!", error));
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	onRelease() {
-		//如果没有开始直接返回
-		if (!this.isStartedVoice) {
-			return;
-		}
-		//还原标识
-		this.isStartedVoice = false;
-		this.recordWait = true;
-		setTimeout(() => {
-			this.isStartRecord = false;
-		}, 1000);
-		if (this.mediaRec) {
-			this.mediaRec.stopRecord();
-			this.mediaRec.release();
-		}
-		//实例化录音类, src:需要播放的录音的路径
-		this.mediaRec = this.media.create(this.getMediaURL(this.src));
-		// 录音执行函数
-		this.mediaRec.onSuccess.subscribe(() =>
-			console.log("touchend():Audio Success")
-		);
-		// 录音失败执行函数
-		this.mediaRec.onError.subscribe(error =>
-			console.log("touchend():Audio Error!", error)
-		);
-		this.mediaRec.play();
-		this.mediaRec.stop();
+		try {
+			//如果没有开始直接返回
+			if (!this.isStartedVoice) {
+				return;
+			}
+			//还原标识
+			this.isStartedVoice = false;
+			this.recordWait = true;
+			setTimeout(() => {
+				this.isStartRecord = false;
+			}, 1000);
+			if (this.mediaRec) {
+				this.mediaRec.stopRecord();
+				this.mediaRec.release();
+			}
+			//实例化录音类, src:需要播放的录音的路径
+			this.mediaRec = this.media.create(this.getMediaURL(this.src));
+			// 录音执行函数
+			this.mediaRec.onSuccess.subscribe(() =>
+				console.log("touchend():Audio Success")
+			);
+			// 录音失败执行函数
+			this.mediaRec.onError.subscribe(error =>
+				console.log("touchend():Audio Error!", error)
+			);
+			this.mediaRec.play();
+			this.mediaRec.stop();
 
-		//在html中显示当前状态
-		let counter = 0;
-		let timerDur = setInterval(() => {
-			counter = counter + 100;
-			if (counter > 2000) {
-				clearInterval(timerDur);
-			}
-			let dur = this.mediaRec.getDuration();
-			if (dur > 0) {
-				clearInterval(timerDur);
-				let tmpPath = this.getMediaURL(this.src);//this.mediaRec.src;
-				if (this.platform.is("ios")) {
-					tmpPath = this.path + this.src;
+			//在html中显示当前状态
+			let counter = 0;
+			let timerDur = setInterval(() => {
+				counter = counter + 100;
+				if (counter > 2000) {
+					clearInterval(timerDur);
 				}
-				//alert(tmpPath);
-				this._temp_file_path = tmpPath.replace("file://", "");
-				this.couldPlay = true;
-				if (this.mediaRec) {
-					this.mediaRec.release();
+				let dur = this.mediaRec.getDuration();
+				if (dur > 0) {
+					clearInterval(timerDur);
+					let tmpPath = this.getMediaURL(this.src);//this.mediaRec.src;
+					if (this.platform.is("ios")) {
+						tmpPath = this.path + this.src;
+					}
+					//alert(tmpPath);
+					this._temp_file_path = tmpPath.replace("file://", "");
+					this.couldPlay = true;
+					if (this.mediaRec) {
+						this.mediaRec.release();
+					}
 				}
-			}
-		}, 100);
-		return false;
+			}, 100);
+			return false;
+		}
+		catch (e) {
+			console.log(e);
+		}
 	}
 
 	play(voiFile) {
@@ -246,7 +255,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	uploadVoiceFile(token) {
 		return new Promise((resolve, reject) => {
 			this.isUploading = true;
-			if(!this._temp_file_path){
+			if (!this._temp_file_path) {
 				reject("没有录音!");
 			}
 
@@ -266,8 +275,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 					fileKey: "file",
 					fileName: tmpPath.substr(tmpPath.lastIndexOf("/") + 1),
 					mimeType: "text/plain",
-					headers:{
-						Authorization:token
+					headers: {
+						Authorization: token
 					},
 					params: this._postParams
 				};

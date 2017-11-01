@@ -12,9 +12,7 @@ export class TabsPage {
   tab0Root: any = 'IndexPage';
   tab1Root: any = 'FriendPage';
   tab2Root: any = 'MinePage';
-  TESTRoot: any = 'TestPage';
-  
-  // tab3Root: any = 'ContactPage';
+  // TESTRoot: any = 'TestPage';
 
   constructor() {
 

@@ -1,7 +1,7 @@
 <div class="voice-recorder-container">
-    <div #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
-        按住我说话
-    </div>
+    <button #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
+        <ion-icon name="mic" item-start></ion-icon>  按住我说话
+    </button>
     <div id="play_block" #play_block>
         <button ion-button color="secondary" round (click)="play()" *ngIf="couldPlay"> 播放 </button>
     </div>
