@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { JPushService } from '../_util/jpush.service';
+//import { JPushService } from '../_util/jpush.service';
 import { GlobalService } from '../providers/global.service';
 import { RebirthHttpProvider } from "rebirth-http";
 import { BackgroundMode } from '@ionic-native/background-mode';
@@ -18,7 +18,7 @@ export class MyApp {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    jPushService: JPushService,
+    //jPushService: JPushService,
     public rebirthProvider: RebirthHttpProvider,
     private backgroundMode: BackgroundMode,
     global:GlobalService
