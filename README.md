@@ -1,7 +1,7 @@
-# tomato-ionic
-ionic/cordova version for tomatobang
+# Tomatobang
+> ionic/cordova version for tomatobang
 
-## run
+## Install & Start
 just follow these commands
 ```
 git clone https://github.com/tomatobang/tomato-ionic
@@ -11,7 +11,7 @@ npm run dev
 ```
 now you can see your tomatobang running at your browser
 
-## platform 
+## Platform Supported
 android and ios are both supported.
 
 ## License
