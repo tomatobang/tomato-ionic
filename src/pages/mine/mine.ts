@@ -41,7 +41,7 @@ export class MinePage {
 				if (readySource == "cordova") {
 					this.downloadHeadImg(this.userid, false).then((url) => {
 						this.headImg = url;
-					})
+					});
 				} else {
 					//this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
 				}
@@ -151,7 +151,9 @@ export class MinePage {
 								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid, true);
+								this.downloadHeadImg(this.userid, true).then((url) => {
+									this.headImg = url+"?"+new Date().getTime();
+								});
 							});
 						}, (err) => {
 							// Handle error
@@ -179,7 +181,9 @@ export class MinePage {
 								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid, true);
+								this.downloadHeadImg(this.userid, true).then((url) => {
+									this.headImg = url+"?"+new Date().getTime();
+								});
 							});
 						}, (err) => {
 							// Handle error

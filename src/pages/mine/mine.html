@@ -9,7 +9,7 @@
 <ion-content padding>
 
   <ion-card-header>
-    <img src="{{headImg}}" class="headImg" (click)="changeHeadImg()" />
+    <img [src]="headImg" class="headImg" (click)="changeHeadImg()" />
     <span class="username">{{username}}</span>
   </ion-card-header>
 
