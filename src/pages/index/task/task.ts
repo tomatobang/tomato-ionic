@@ -5,6 +5,7 @@ import { VoicePlayService } from "../../../_util/voiceplay.service";
 import { GlobalService } from "../../../providers/global.service";
 import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
 import { baseUrl } from '../../../config'
+import { transition } from "@angular/core/src/animation/dsl";
 
 @IonicPage()
 @Component({
@@ -32,7 +33,6 @@ export class TaskPage implements OnInit {
 	voiceUploadUrl ={
 		url:baseUrl + "upload/voicefile"
 	}
-	voicePlaySrc = "./assets/voice/voice.png";
 
 	constructor(
 		public taskservice: OnlineTaskService,
@@ -68,12 +68,19 @@ export class TaskPage implements OnInit {
 	playVoiceRecord(task) {
 		if(task.voiceUrl){
 			let filename = this.getFileName(task.voiceUrl);
-			// filename格式示例:pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
-			this.voiceService.downloadVoiceFile(filename,this.globalservice.token).then((filename)=>{
-				this.voicePlaySrc = "./assets/voice/voice_play_me.gif";
-				this.voiceService.play(filename).then(()=>{
-					this.voicePlaySrc="./assets/voice/voice.png";
-				});
+			task.inDownloading = true;
+			task.progress="0%";
+			this.voiceService.downloadVoiceFile_observable(filename,this.globalservice.token).subscribe(data=>{
+				if(data.data){
+					task.inDownloading = false;
+					this.voiceService.play(data.value).then(()=>{
+						task.isplaying = false;
+					});
+				}else{
+					// 显示进度
+					task.progress=data.value +"%";
+					console.log("下载进度",data.value)
+				}
 			});
 		}else{
 			alert("此任务无音频记录！")
@@ -132,7 +139,6 @@ export class TaskPage implements OnInit {
 						let tt = this.allTasks.unfinished;
 						task.voiceUrl = '';
 						this.allTasks.unfinished = [task].concat(tt);
-						debugger;
 						this.allTasks.unfinished.slice();
 						this.newTask = {
 							title: "",

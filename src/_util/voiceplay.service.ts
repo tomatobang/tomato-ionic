@@ -1,5 +1,5 @@
 /**
- * VoicePlay 服务
+ * 音频播放服务
  */
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
@@ -11,6 +11,8 @@ import { Media, MediaObject } from "@ionic-native/media";
 import { Helper } from '../_util/helper';
 import { resolve } from "url";
 import { reject } from "q";
+import { Observable } from "rxjs/Observable";
+import { observeOn } from "rxjs/operator/observeOn";
 declare var window;
 
 @Injectable()
@@ -25,8 +27,11 @@ export class VoicePlayService {
 		private transfer: FileTransfer, private file: File
 	) { }
 
-	init() { }
-
+	/**
+	 * 下载音频接口
+	 * @param filename 
+	 * @param token 
+	 */
 	downloadVoiceFile(filename, token) {
 		return new Promise((resolve, reject) => {
 			let targetPath = this.helper.getBasePath() + 'voices/';
@@ -65,6 +70,63 @@ export class VoicePlayService {
 	}
 
 
+	/**
+	 * 下载音频接口 observable 版本
+	 * @param filename 
+	 * @param token 
+	 */
+	downloadVoiceFile_observable(filename, token) {
+		return Observable.create((observer) => {
+			let targetPath = this.helper.getBasePath() + 'voices/';
+			let targetPathWithFileName = this.helper.getBasePath() + 'voices/' + filename;
+			// 检查是否已下载过
+			this.file.checkFile(targetPath, filename).then(
+				(success) => {
+					alert("已经下载,直接播放！");
+					observer.next({
+						data: true,
+						value: targetPathWithFileName
+					});
+					observer.complete();
+				}, (error) => {
+					// 注意:此方法采用追加的方式添加
+					let options = {
+						headers: {
+							Authorization: token
+						}
+					};
+					let trustHosts = true;
+					const fileTransfer: FileTransferObject = this.transfer.create();
+					fileTransfer.download(this._global.serverAddress + "download/voicefile/" + filename, targetPathWithFileName,
+						trustHosts,
+						options).then(result => {
+							console.log("下载完成,播放..");
+							observer.next({
+								data: true,
+								value: targetPathWithFileName
+							});
+							observer.complete();
+						}).catch(err => {
+							alert("下载音频文件出错");
+							console.log("下载音频文件出错", err);
+							observer.complete();
+						});
+					fileTransfer.onProgress((evt: ProgressEvent) => {
+						let progress = window.parseInt(evt.loaded / evt.total * 100);
+						observer.next({
+							data: false,
+							value: progress
+						});
+						console.log(progress)
+					})
+				});
+		});
+	}
+
+	/**
+	 * 截取文件名
+	 * @param url 
+	 */
 	getFileName(url) {
 		let arr = url.split('/');
 		let fileName = arr[arr.length - 1];
@@ -106,6 +168,10 @@ export class VoicePlayService {
 		});
 	}
 
+	/**
+	 * 播放本地音频 www/ 内
+	 * @param file_url 
+	 */
 	play_local_voice(file_url) {
 		if (this.mediaRec) {
 			this.mediaRec.stop();
