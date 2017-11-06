@@ -9,6 +9,8 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Media, MediaObject } from "@ionic-native/media";
 import { Helper } from '../_util/helper';
+import { resolve } from "url";
+import { reject } from "q";
 declare var window;
 
 @Injectable()
@@ -25,37 +27,41 @@ export class VoicePlayService {
 
 	init() { }
 
-	downloadVoiceFile(filename,token) {
-		let targetPath = this.helper.getBasePath() + 'voices/';
-		let targetPathWithFileName = this.helper.getBasePath() + 'voices/' + filename;
-		// 检查是否已下载过
-		this.file.checkFile(targetPath, filename).then(
-			 (success)=> {
-				alert("已经下载,直接播放！");
-				this.play(targetPathWithFileName);
-			},  (error)=> {
-				// 注意:此方法采用追加的方式添加
-				let options = {
-					headers:{
-						Authorization:token
-					}
-				};
-				let trustHosts = true;
-				const fileTransfer: FileTransferObject = this.transfer.create();
-				fileTransfer.download(this._global.serverAddress + "download/voicefile/" + filename, targetPathWithFileName,
-					trustHosts,
-					options).then(result => {
-						console.log("下载完成,播放..");
-						this.play(targetPathWithFileName);
-					}).catch(err => {
-						alert("下载音频文件出错");
-						console.log("下载音频文件出错", err);
-					});
-				fileTransfer.onProgress((evt: ProgressEvent) => {
-					let progress = window.parseInt(evt.loaded / evt.total * 100);
-					console.log(progress)
+	downloadVoiceFile(filename, token) {
+		return new Promise((resolve, reject) => {
+			let targetPath = this.helper.getBasePath() + 'voices/';
+			let targetPathWithFileName = this.helper.getBasePath() + 'voices/' + filename;
+			// 检查是否已下载过
+			this.file.checkFile(targetPath, filename).then(
+				(success) => {
+					alert("已经下载,直接播放！");
+					resolve(targetPathWithFileName);
+				}, (error) => {
+					// 注意:此方法采用追加的方式添加
+					let options = {
+						headers: {
+							Authorization: token
+						}
+					};
+					let trustHosts = true;
+					const fileTransfer: FileTransferObject = this.transfer.create();
+					fileTransfer.download(this._global.serverAddress + "download/voicefile/" + filename, targetPathWithFileName,
+						trustHosts,
+						options).then(result => {
+							console.log("下载完成,播放..");
+							resolve(targetPathWithFileName);
+						}).catch(err => {
+							alert("下载音频文件出错");
+							console.log("下载音频文件出错", err);
+							reject(err);
+						});
+					fileTransfer.onProgress((evt: ProgressEvent) => {
+						let progress = window.parseInt(evt.loaded / evt.total * 100);
+						console.log(progress)
+					})
 				})
-			})
+		});
+
 	}
 
 
@@ -70,29 +76,34 @@ export class VoicePlayService {
 	 * @param voiFile 文件路径
 	 */
 	play(voiFile) {
-		if (this.mediaRec) {
-			this.mediaRec.stop();
-			this.mediaRec.release();
-		}
-		if (!voiFile) {
-			return;
-		}
-		if (this.platform.is("ios")) {
-			voiFile = voiFile.replace("file://", "");
-		}
-		this.mediaRec = this.media.create(voiFile);
+		return new Promise((resolve, reject) => {
+			if (this.mediaRec) {
+				this.mediaRec.stop();
+				this.mediaRec.release();
+			}
+			if (!voiFile) {
+				resolve(false);
+				return;
+			}
+			if (this.platform.is("ios")) {
+				voiFile = voiFile.replace("file://", "");
+			}
+			this.mediaRec = this.media.create(voiFile);
 
-		this.mediaRec.onSuccess.subscribe(() => {
-			// 播放完成
-			console.log("play():Audio Success");
-		});
-		this.mediaRec.onError.subscribe(error => {
-			// 播放失败
-			console.log("play():Audio Error: ", error);
-		});
+			this.mediaRec.onSuccess.subscribe(() => {
+				// 播放完成
+				resolve(true);
+				console.log("play():Audio Success");
+			});
+			this.mediaRec.onError.subscribe(error => {
+				// 播放失败
+				reject(error);
+				console.log("play():Audio Error: ", error);
+			});
 
-		//开始播放录音
-		this.mediaRec.play();
+			//开始播放录音
+			this.mediaRec.play();
+		});
 	}
 
 	play_local_voice(file_url) {
@@ -101,15 +112,15 @@ export class VoicePlayService {
 			this.mediaRec.release();
 		}
 		function getPhoneGapPath() {
-				let path = window.location.pathname;
-				path = path.substr(0,path.length - 10 );
-				return 'file://' + path;
+			let path = window.location.pathname;
+			path = path.substr(0, path.length - 10);
+			return 'file://' + path;
 		};
 		let applicationDirectory = "";//window.cordova.file.applicationDirectory;
 		if (this.platform.is("android")) {
 			applicationDirectory = getPhoneGapPath();;
 		}
-		let path  =  applicationDirectory + file_url
+		let path = applicationDirectory + file_url
 		this.mediaRec = this.media.create(path);
 
 		this.mediaRec.onSuccess.subscribe(() => {
@@ -118,7 +129,7 @@ export class VoicePlayService {
 		this.mediaRec.onError.subscribe(error => {
 			console.log("play_local_voice():Audio Error: ", error);
 		});
-		
+
 		//开始播放录音
 		this.mediaRec.play();
 		return false;

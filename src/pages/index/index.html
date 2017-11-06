@@ -40,7 +40,7 @@
                     </ion-avatar>
                     <h2>
                         <span [ngClass]="{'text-breaked':tomato.succeed==0}">{{tomato.title | StringTruncate: 20}}</span>
-                        <img src="./assets/voice/voice.png" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
+                        <img [src]="voicePlaySrc" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
                     </h2>
                     <h3>
                         <span class="tomato-start-end-time">{{tomato.startTime | date:'shortTime'}} - {{tomato.endTime | date:'shortTime'}}</span>

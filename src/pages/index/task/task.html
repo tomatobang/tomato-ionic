@@ -77,7 +77,7 @@
                     <h2 class="title">{{ task.title }}</h2>
                     <div class="subtitle">{{ task.target }}<span *ngIf="task.description">({{ task.description }})</span></div>
                     <ion-avatar item-end>
-                        <img src="./assets/voice/voice.png" alt="" class="play-icon" (click)="playVoiceRecord(task)">
+                        <img [src]="voicePlaySrc" alt="" class="play-icon" (click)="playVoiceRecord(task)">
                     </ion-avatar>
                 </ion-item>
                 <ion-item-options side="right">

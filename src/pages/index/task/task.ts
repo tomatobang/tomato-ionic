@@ -32,6 +32,7 @@ export class TaskPage implements OnInit {
 	voiceUploadUrl ={
 		url:baseUrl + "upload/voicefile"
 	}
+	voicePlaySrc = "./assets/voice/voice.png";
 
 	constructor(
 		public taskservice: OnlineTaskService,
@@ -68,7 +69,12 @@ export class TaskPage implements OnInit {
 		if(task.voiceUrl){
 			let filename = this.getFileName(task.voiceUrl);
 			// filename格式示例:pengyi_59ae098c49b3972f7176003b_cordovaIMVoice
-			this.voiceService.downloadVoiceFile(filename,this.globalservice.token);
+			this.voiceService.downloadVoiceFile(filename,this.globalservice.token).then((filename)=>{
+				this.voicePlaySrc = "./assets/voice/voice_play_me.gif";
+				this.voiceService.play(filename).then(()=>{
+					this.voicePlaySrc="./assets/voice/voice.png";
+				});
+			});
 		}else{
 			alert("此任务无音频记录！")
 		}

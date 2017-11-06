@@ -31,6 +31,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	_userid: string;
 	_notifyID = 0;
 	_rest_notifyID = 100;
+	voicePlaySrc="./assets/voice/voice.png";
 	@ViewChild(Slides) slides: Slides;
 
 	// 番茄钟长度
@@ -175,7 +176,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	}
 
 	// 刷新时间圆圈
-	UIRefreshIntervalID = 0;
+	UIRefreshIntervalID:any;
 	refreshTimeUI(){
 		clearInterval(this.UIRefreshIntervalID);
 		this.UIRefreshIntervalID = setInterval(() => {
@@ -394,7 +395,12 @@ export class IndexPage implements OnInit, OnDestroy {
 	playVoiceRecord(tomato) {
 		if (tomato.voiceUrl) {
 			let filename = this.getFileName(tomato.voiceUrl);
-			this.voiceService.downloadVoiceFile(filename, this.globalservice.token);
+			this.voiceService.downloadVoiceFile(filename, this.globalservice.token).then((filename)=>{
+				this.voicePlaySrc = "./assets/voice/voice_play_me.gif";
+				this.voiceService.play(filename).then(()=>{
+					this.voicePlaySrc="./assets/voice/voice.png";
+				});
+			});;
 		} else {
 			alert('此番茄钟无音频记录！')
 		}
