@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { NavController, ActionSheetController, IonicPage } from "ionic-angular";
+import { NavController, ActionSheetController, IonicPage,App} from "ionic-angular";
 import { GlobalService } from "../../providers/global.service";
 import { JPushService } from '../../_util/jpush.service';
 import { Helper } from '../../_util/helper';
@@ -31,7 +31,9 @@ export class MinePage {
 		private file: File,
 		private helper: Helper,
 		public platform: Platform,
-		private userservice: OnlineUserService, ) { }
+		private userservice: OnlineUserService, 
+		private app:App
+	) { }
 
 	public ngOnInit(): void {
 		this.username = this.globalservice.userinfo.username;
@@ -51,7 +53,7 @@ export class MinePage {
 	}
 
 	logout() {
-		this.navCtrl.push("LoginPage", {
+		this.app.getRootNav().setRoot("LoginPage", {
 			username: this.globalservice.userinfo.username,
 			password: this.globalservice.userinfo.password
 		}, {}, () => {

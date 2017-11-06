@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import {IonicPage} from "ionic-angular";
+import { IonicPage, Tabs } from "ionic-angular";
 
 @IonicPage()
 @Component({
@@ -13,6 +13,11 @@ export class TabsPage {
   tab1Root: any = 'FriendPage';
   tab2Root: any = 'MinePage';
   // TESTRoot: any = 'TestPage';
+  @ViewChild('myTabs') tabRef: Tabs;
+
+  ionViewDidEnter() {
+    this.tabRef.select(0);
+  }
 
   constructor() {
 

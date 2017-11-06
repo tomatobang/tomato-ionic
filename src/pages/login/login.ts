@@ -68,11 +68,11 @@ export class LoginPage {
 			this.globalservice.userinfo = JSON.stringify(userinfo);
 			this.rebirthProvider.headers({ Authorization: token });
 			this.jPushService.init(this.user.username);
-			this.navCtrl.setRoot("TabsPage");
+			this.navCtrl.setRoot("TabsPage",{
+				animate:true
+			});
 			// this.navCtrl.push("TabsPage",{},()=>{
 			// });
-			// 页面跳转
-			//this.router.navigate(['/dash'] , { replaceUrl: true});
 		});
 	}
 
@@ -82,7 +82,7 @@ export class LoginPage {
 
 	public navToRegister(): void {
 		// 注册
-		this.navCtrl.setRoot("RegisterPage");
+		this.navCtrl.push("RegisterPage");
 	}
 
 	presentToast(msg) {
