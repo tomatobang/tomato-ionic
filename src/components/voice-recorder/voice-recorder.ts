@@ -87,7 +87,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.pressGesture = new Gesture(this.el, { time: 300 });
+		this.pressGesture = new Gesture(this.el, { time: 200 });
 		this.pressGesture.listen();
 		// 长按录音
 		this.pressGesture.on("press", e => {
