@@ -57,9 +57,11 @@ export class MinePage {
 			username: this.globalservice.userinfo.username,
 			password: this.globalservice.userinfo.password
 		}, {}, () => {
+			this.globalservice.userinfo = "";
+			this.globalservice.token = "";
+			this.jPushService.clearAlias();
 		});
-		this.globalservice.userinfo = "";
-		this.jPushService.clearAlias();
+		
 	}
 
 	setting() {

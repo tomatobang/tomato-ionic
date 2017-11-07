@@ -8,7 +8,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { baseUrl } from '../config'
-const config: SocketIoConfig = { url: baseUrl+'tomatobang', options: {} };
+const config: SocketIoConfig = { url: baseUrl + 'tomatobang', options: {} };
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,9 +17,21 @@ import { JPushService } from '../_util/jpush.service';
 import { TomatoIOService } from '../_util/socket.io.service';
 import { Helper } from '../_util/helper';
 
-import { RebirthStorageModule } from 'rebirth-storage'; 
-import { RebirthHttpModule  } from 'rebirth-http';
+import { RebirthStorageModule } from 'rebirth-storage';
+import { RebirthHttpModule } from 'rebirth-http';
 import { IonicStorageModule } from '@ionic/storage';
+
+
+import * as Raven from 'raven-js';
+Raven
+  .config('https://8583117beafb40a8be2906252ee80fcc@sentry.io/240912')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    Raven.captureException(err);
+  }
+}
 
 
 @NgModule({
@@ -31,13 +43,13 @@ import { IonicStorageModule } from '@ionic/storage';
     RebirthHttpModule,
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp,{
+    IonicModule.forRoot(MyApp, {
       // 子页隐藏 TAB
-      tabsHideOnSubPages:true,
-      tabsLayout:'icon-left',
-      iconMode:"ios",
+      tabsHideOnSubPages: true,
+      tabsLayout: 'icon-left',
+      iconMode: "ios",
       // 禁用 IOS 手势滑动返回
-      swipeBackEnabled:false
+      swipeBackEnabled: false
     }),
     SocketIoModule.forRoot(config),
     IonicStorageModule.forRoot()
@@ -47,10 +59,11 @@ import { IonicStorageModule } from '@ionic/storage';
     MyApp,
   ],
   providers: [
-    StatusBar,BackgroundMode,
+    StatusBar, BackgroundMode,
     SplashScreen,
-    GlobalService,JPushService,TomatoIOService,Helper,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    GlobalService, JPushService, TomatoIOService, Helper,
+    // {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: RavenErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

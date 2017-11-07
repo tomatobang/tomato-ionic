@@ -31,8 +31,8 @@ $ ionic cordova platform add ios
 To run 
 
 ```sh
-$ ionic run android
-$ ionic run ios
+$ ionic cordova  run android
+$ ionic cordova  run ios
 ```
 
 
