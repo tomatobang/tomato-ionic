@@ -31,7 +31,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	_userid: string;
 	_notifyID = 0;
 	_rest_notifyID = 100;
-	voicePlaySrc="./assets/voice/voice.png";
+	voicePlaySrc = "./assets/voice/voice.png";
 	@ViewChild(Slides) slides: Slides;
 
 	// 番茄钟长度
@@ -57,14 +57,14 @@ export class IndexPage implements OnInit, OnDestroy {
 		// 加载正在进行的番茄钟
 		this._userid = this.globalservice.userinfo.username;
 		this.countdown = this.globalservice.countdown;
-		this.timerStatus.countdown =  this.countdown;
-		this.timerStatus.label =  this.countdown + ":00";
+		this.timerStatus.countdown = this.countdown;
+		this.timerStatus.label = this.countdown + ":00";
 		this.resttime = this.globalservice.resttime;
 		this.globalservice.settingState.subscribe(settings => {
 			// 不适用于开启番茄钟时进行设置
 			this.countdown = settings.countdown;
-			this.timerStatus.label =  this.countdown + ":00";
-			this.timerStatus.countdown =  this.countdown ;
+			this.timerStatus.label = this.countdown + ":00";
+			this.timerStatus.countdown = this.countdown;
 			this.resttime = settings.resttime;
 			this.refreshTimeUI();
 			//setTimeout(this.stopRefreshTimeUI(), 1500);
@@ -176,8 +176,8 @@ export class IndexPage implements OnInit, OnDestroy {
 	}
 
 	// 刷新时间圆圈
-	UIRefreshIntervalID:any;
-	refreshTimeUI(){
+	UIRefreshIntervalID: any;
+	refreshTimeUI() {
 		clearInterval(this.UIRefreshIntervalID);
 		this.UIRefreshIntervalID = setInterval(() => {
 			this.child.timerStatusValue = this.timerStatus;
@@ -185,7 +185,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		}, 1000);
 	}
 
-	stopRefreshTimeUI(){
+	stopRefreshTimeUI() {
 		clearInterval(this.UIRefreshIntervalID);
 	}
 
@@ -292,10 +292,13 @@ export class IndexPage implements OnInit, OnDestroy {
 	startTimer() {
 		this.refreshTimeUI();
 		this.isResting = false;
+		if (typeof this.resttimeout !== "undefined") {
+			clearTimeout(this.resttimeout);
+		}
 		if (typeof this.mytimeout !== "undefined") {
 			clearTimeout(this.mytimeout);
-			this.timerStatus.reset();
 		}
+		this.timerStatus.reset();
 		this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 
 		if (this._rest_notifyID > 100) {
@@ -367,7 +370,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		clearTimeout(this.mytimeout);
 		this.timerStatus.reset();
 		if (this._notifyID > 0) {
-			this.localNotifications.cancel(this._notifyID).then(() => {});
+			this.localNotifications.cancel(this._notifyID).then(() => { });
 		}
 		this.stopRefreshTimeUI();
 	}
@@ -393,10 +396,10 @@ export class IndexPage implements OnInit, OnDestroy {
 	playVoiceRecord(tomato) {
 		if (tomato.voiceUrl) {
 			let filename = this.getFileName(tomato.voiceUrl);
-			this.voiceService.downloadVoiceFile(filename, this.globalservice.token).then((filename)=>{
+			this.voiceService.downloadVoiceFile(filename, this.globalservice.token).then((filename) => {
 				this.voicePlaySrc = "./assets/voice/voice_play_me.gif";
-				this.voiceService.play(filename).then(()=>{
-					this.voicePlaySrc="./assets/voice/voice.png";
+				this.voiceService.play(filename).then(() => {
+					this.voicePlaySrc = "./assets/voice/voice.png";
 				});
 			});;
 		} else {
