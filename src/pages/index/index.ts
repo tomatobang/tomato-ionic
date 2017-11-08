@@ -160,7 +160,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		countdown: this.countdown,
 		percentage: 0,
 		count: 0,
-		reset: function () {
+		reset() {
 			this.count = 0;
 			this.percentage = 0;
 			this.label = this.countdown + ":00";
@@ -331,9 +331,9 @@ export class IndexPage implements OnInit, OnDestroy {
 		// 倒计时结束
 		if (dataspan >= this.countdown * 60 * 1000) {
 			//this.alertAudio.play();
-			this.voiceService.play_local_voice("assets/audios/alert.mp3");
 			this.startRestTimer();
 			this.activeTomato = null;
+			this.voiceService.play_local_voice("assets/audios/alert.mp3");
 		} else {
 			this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 		}
@@ -353,11 +353,11 @@ export class IndexPage implements OnInit, OnDestroy {
 		);
 
 		if (dataspan >= this.resttime * 60 * 1000) {
-			this.voiceService.play_local_voice("assets/audios/alert.mp3");
 			//this.alertAudio.play();
 			this.isResting = false;
 			this.timerStatus.reset();
-			setTimeout(this.stopRefreshTimeUI(), 1500);
+			setTimeout(this.stopRefreshTimeUI, 3500);
+			this.voiceService.play_local_voice("assets/audios/alert.mp3");
 		} else {
 			this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
 		}
@@ -367,11 +367,9 @@ export class IndexPage implements OnInit, OnDestroy {
 		clearTimeout(this.mytimeout);
 		this.timerStatus.reset();
 		if (this._notifyID > 0) {
-			this.localNotifications.cancel(this._notifyID).then(() => {
-
-			});
+			this.localNotifications.cancel(this._notifyID).then(() => {});
 		}
-		setTimeout(this.stopRefreshTimeUI(), 1500);
+		this.stopRefreshTimeUI();
 	}
 
 	secondsToMMSS(timeInSeconds: number) {

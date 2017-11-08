@@ -73,6 +73,7 @@ export class TaskPage implements OnInit {
 			this.voiceService.downloadVoiceFile_observable(filename,this.globalservice.token).subscribe(data=>{
 				if(data.data){
 					task.inDownloading = false;
+					task.isplaying = true;
 					this.voiceService.play(data.value).then(()=>{
 						task.isplaying = false;
 					});
