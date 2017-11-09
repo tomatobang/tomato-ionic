@@ -84,9 +84,8 @@ export class MinePage {
 	}
 
 	gotest(){
-		//this.navCtrl.setRoot("TestPage")
-		this.navCtrl.push("TestPage", {
-		}, {}, () => { });
+		// this.navCtrl.push("TestPage", {
+		// }, {}, () => { });
 	}
 
 	/**

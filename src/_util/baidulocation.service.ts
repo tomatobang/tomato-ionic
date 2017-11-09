@@ -9,7 +9,7 @@ declare var window;
 @Injectable()
 export class BaiduLocationService {
 	constructor(
-		public plf: Platform //	public _global: GlobalService
+		public plf: Platform 
 	) { }
 
 	startLocation(callback): Promise<any> {
