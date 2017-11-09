@@ -18,6 +18,7 @@ declare var window;
 @Injectable()
 export class VoicePlayService {
 	mediaRec: MediaObject;
+	isPlaying: boolean = false;
 
 	constructor(
 		public platform: Platform,
@@ -172,7 +173,7 @@ export class VoicePlayService {
 	 * 播放本地音频 www/ 内
 	 * @param file_url 
 	 */
-	play_local_voice(file_url) {
+	play_local_voice(file_url, repeat?) {
 		if (this.mediaRec) {
 			this.mediaRec.stop();
 			this.mediaRec.release();
@@ -191,13 +192,33 @@ export class VoicePlayService {
 
 		this.mediaRec.onSuccess.subscribe(() => {
 			console.log("play_local_voice():Audio Success");
+			this.isPlaying = false;
 		});
 		this.mediaRec.onError.subscribe(error => {
 			console.log("play_local_voice():Audio Error: ", error);
+			this.isPlaying = false;
 		});
 
-		//开始播放录音
-		this.mediaRec.play();
+		if (this.platform.is("ios")) {
+			// 屏幕锁住仍然播放
+			this.mediaRec.play({ playAudioWhenScreenIsLocked: true });
+		} else {
+			this.mediaRec.play();
+		}
+		this.isPlaying = true;
 		return false;
+	}
+
+	pause_local_voice() {
+		if (this.mediaRec && this.isPlaying) {
+			this.mediaRec.pause();
+		}
+	}
+
+	stop_local_voice() {
+		if (this.mediaRec && this.isPlaying) {
+			this.mediaRec.stop();
+			this.mediaRec.release();
+		}
 	}
 }

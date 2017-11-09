@@ -80,3 +80,13 @@ $categories: (
   height: 100%;
   overflow: auto;
  }
+
+ .white-noise-tag-icon{
+   position: absolute;
+   right: 25px;
+   bottom: 55px;
+ }
+
+ .white-noise-tag-icon ion-icon::before, .white-noise-tag-icon ion-icon::before{
+  font-size: 36px;
+ }

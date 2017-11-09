@@ -32,6 +32,8 @@ export class IndexPage implements OnInit, OnDestroy {
 	_notifyID = 0;
 	_rest_notifyID = 100;
 	voicePlaySrc = "./assets/voice/voice.png";
+	showWhiteNoiseIcon = false;
+	whiteNoiseIsplaying = false;
 	@ViewChild(Slides) slides: Slides;
 
 	// 番茄钟长度
@@ -317,6 +319,10 @@ export class IndexPage implements OnInit, OnDestroy {
 			badge: 1
 			//icon: 'http://example.com/icon.png'
 		});
+
+		this.showWhiteNoiseIcon = true;
+		this.whiteNoiseIsplaying = true;
+		this.voiceService.play_local_voice("assets/audios/white_noise.mp3");
 	}
 
 	onTimeout() {
@@ -337,6 +343,8 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.startRestTimer();
 			this.activeTomato = null;
 			this.voiceService.play_local_voice("assets/audios/alert.mp3");
+			this.showWhiteNoiseIcon = false;
+			this.whiteNoiseIsplaying = false;
 		} else {
 			this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 		}
@@ -372,6 +380,8 @@ export class IndexPage implements OnInit, OnDestroy {
 		if (this._notifyID > 0) {
 			this.localNotifications.cancel(this._notifyID).then(() => { });
 		}
+		this.showWhiteNoiseIcon = false;
+		this.whiteNoiseIsplaying = false;
 		this.stopRefreshTimeUI();
 	}
 
@@ -430,5 +440,15 @@ export class IndexPage implements OnInit, OnDestroy {
 			let arr = JSON.parse(data._body);
 			this.searchReturnItems = arr;
 		})
+	}
+
+	stopPlayWhiteNoise(){
+		this.whiteNoiseIsplaying = false;
+		this.voiceService.stop_local_voice();
+	}
+
+	startPlayWhiteNoise(){
+		this.whiteNoiseIsplaying = true;
+		this.voiceService.play_local_voice("assets/audios/white_noise.mp3");
 	}
 }
