@@ -29,6 +29,7 @@
     "@ionic-native/core": "3.12.1",
     "@ionic-native/file": "^4.2.0",
     "@ionic-native/file-transfer": "^4.1.0",
+    "@ionic-native/insomnia": "^4.3.3",
     "@ionic-native/local-notifications": "^4.3.1",
     "@ionic-native/media": "^4.0.1",
     "@ionic-native/splash-screen": "3.12.1",
@@ -50,6 +51,7 @@
     "cordova-plugin-file": "^4.3.3",
     "cordova-plugin-file-opener2": "^2.0.19",
     "cordova-plugin-file-transfer": "^1.6.3",
+    "cordova-plugin-insomnia": "^4.3.0",
     "cordova-plugin-jcore": "^1.1.8",
     "cordova-plugin-logtofile": "^1.1.2",
     "cordova-plugin-media": "^3.0.1",
@@ -172,7 +174,8 @@
       "phonegap-plugin-barcodescanner": {
         "CAMERA_USAGE_DESCRIPTION": " "
       },
-      "cordova-plugin-compat": {}
+      "cordova-plugin-compat": {},
+      "cordova-plugin-insomnia": {}
     },
     "platforms": [
       "android",

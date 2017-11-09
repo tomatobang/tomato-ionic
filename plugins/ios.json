@@ -122,6 +122,9 @@
         },
         "cordova-plugin-screen-locker": {
             "PACKAGE_NAME": "com.tomatobang.ionic"
+        },
+        "cordova-plugin-insomnia": {
+            "PACKAGE_NAME": "com.tomatobang.ionic"
         }
     },
     "dependent_plugins": {

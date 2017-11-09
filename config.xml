@@ -131,4 +131,5 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="talkingdata" spec="^1.2.2" />
+    <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
 </widget>

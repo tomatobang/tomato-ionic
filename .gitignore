@@ -97,7 +97,7 @@ www/
 /plugins/cordova-plugin-media/
 /plugins/io.rong.imlib/
 /plugins/com.unarin.cordova.beacon/
-
+/plugins/cordova-plugin-insomnia
 
 # 后续添加用于测试
 /plugins/com.applurk.cordova-screen-locker/

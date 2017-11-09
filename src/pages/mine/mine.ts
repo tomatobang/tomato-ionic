@@ -72,7 +72,6 @@ export class MinePage {
 
 	about() {
 		console.log("about!")
-
 		this.navCtrl.push("AboutPage", {
 		}, {}, () => { });
 	}

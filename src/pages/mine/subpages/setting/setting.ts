@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 
 import { IonicPage } from "ionic-angular";
 import { GlobalService } from "../../../../providers/global.service";
+import { Insomnia } from '@ionic-native/insomnia';
 
 declare var window;
 @IonicPage()
@@ -12,8 +13,10 @@ declare var window;
 export class SettingPage implements OnInit {
 	resttime: number;
 	countdown: number;
+	isAlwaysLight: boolean = false;
 	constructor(
-		public globalservice: GlobalService
+		public globalservice: GlobalService,
+		private insomnia: Insomnia
 	) {
 
 	}
@@ -29,6 +32,22 @@ export class SettingPage implements OnInit {
 
 	setResttime(value: number) {
 		this.globalservice.resttime = value;
+	}
+
+	changeLightState() {
+		if (this.isAlwaysLight) {
+			this.insomnia.keepAwake()
+				.then(
+				() => console.log('success'),
+				() => console.log('error')
+				);
+		} else {
+			this.insomnia.allowSleepAgain()
+				.then(
+				() => console.log('success'),
+				() => console.log('error')
+				);
+		}
 	}
 
 }
