@@ -82,9 +82,9 @@ export class MinePage {
 
 	}
 
-	gotest(){
-		// this.navCtrl.push("TestPage", {
-		// }, {}, () => { });
+	statistics(){
+		this.navCtrl.push("StatisticsPage", {
+		}, {}, () => { });
 	}
 
 	/**
