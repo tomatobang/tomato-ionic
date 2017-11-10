@@ -30,7 +30,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	segment = "index";
 	_userid: string;
 	_notifyID = 0;
-	_rest_notifyID = 100;
+	_rest_notifyID = 10000;
 	voicePlaySrc = "./assets/voice/voice.png";
 	showWhiteNoiseIcon = false;
 	whiteNoiseIsplaying = false;
@@ -279,13 +279,15 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.isResting = true;
 		this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
 		// 休息任务提醒
+		this._rest_notifyID+=1;
 		this.localNotifications.schedule({
-			id: this._rest_notifyID++,
+			id: this._rest_notifyID,
 			text: '休息完了，赶紧开启下一个番茄钟吧!',
 			at: new Date(new Date().getTime() + 5 * 60 * 1000),
 			sound: 'file://assets/audios/finish.wav',
 			led: 'FF0000',
 		});
+		
 	};
 
 	/**
@@ -303,21 +305,21 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.timerStatus.reset();
 		this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 
-		if (this._rest_notifyID > 100) {
+		if (this._rest_notifyID > 10000) {
 			this.localNotifications.cancel(this._rest_notifyID).then(() => {
 			});
 
 		}
 		// 本地通知任务 cancel
+		this._notifyID+=1;
 		this.localNotifications.schedule({
-			id: this._notifyID++,
+			id: this._notifyID,
 			title: this.activeTomato.title,
 			text: '你又完成了一个番茄钟!',
-			at: new Date(new Date().getTime() + this.countdown * 60 * 1000),
+			at: new Date(this.activeTomato.startTime.getTime() + this.countdown * 60 * 1000),
 			led: 'FF0000',
 			sound: 'file://assets/audios/start.wav',
 			badge: 1
-			//icon: 'http://example.com/icon.png'
 		});
 
 		this.showWhiteNoiseIcon = true;
