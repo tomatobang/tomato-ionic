@@ -321,8 +321,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		});
 
 		this.showWhiteNoiseIcon = true;
-		this.whiteNoiseIsplaying = true;
-		this.voiceService.play_local_voice("assets/audios/white_noise.mp3");
+		this.startPlayWhiteNoise();
 	}
 
 	onTimeout() {
@@ -342,9 +341,9 @@ export class IndexPage implements OnInit, OnDestroy {
 			//this.alertAudio.play();
 			this.startRestTimer();
 			this.activeTomato = null;
-			this.voiceService.play_local_voice("assets/audios/alert.mp3");
 			this.showWhiteNoiseIcon = false;
-			this.whiteNoiseIsplaying = false;
+			this.stopPlayWhiteNoise();
+			this.voiceService.play_local_voice("assets/audios/alert.mp3");
 		} else {
 			this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
 		}
@@ -381,7 +380,7 @@ export class IndexPage implements OnInit, OnDestroy {
 			this.localNotifications.cancel(this._notifyID).then(() => { });
 		}
 		this.showWhiteNoiseIcon = false;
-		this.whiteNoiseIsplaying = false;
+		this.stopPlayWhiteNoise();
 		this.stopRefreshTimeUI();
 	}
 
@@ -418,10 +417,6 @@ export class IndexPage implements OnInit, OnDestroy {
 
 	}
 
-	// testPlayVoice() {
-	// 	this.voiceService.play_local_voice("assets/audios/alert.mp3");
-	// }
-
 	getFileName(url) {
 		let arr = url.split('/');
 		let fileName = arr[arr.length - 1];
@@ -442,13 +437,13 @@ export class IndexPage implements OnInit, OnDestroy {
 		})
 	}
 
-	stopPlayWhiteNoise(){
+	stopPlayWhiteNoise() {
 		this.whiteNoiseIsplaying = false;
 		this.voiceService.stop_local_voice();
 	}
 
-	startPlayWhiteNoise(){
+	startPlayWhiteNoise() {
 		this.whiteNoiseIsplaying = true;
-		this.voiceService.play_local_voice("assets/audios/white_noise.mp3");
+		this.voiceService.play_local_voice("assets/audios/white_noise.mp3", true);
 	}
 }

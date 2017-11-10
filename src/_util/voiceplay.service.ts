@@ -7,7 +7,7 @@ import { GlobalService } from "../providers/global.service";
 
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
-import { Media, MediaObject } from "@ionic-native/media";
+import { Media, MediaObject, MEDIA_STATUS } from "@ionic-native/media";
 import { Helper } from '../_util/helper';
 import { resolve } from "url";
 import { reject } from "q";
@@ -183,7 +183,7 @@ export class VoicePlayService {
 			path = path.substr(0, path.length - 10);
 			return 'file://' + path;
 		};
-		let applicationDirectory = "";//window.cordova.file.applicationDirectory;
+		let applicationDirectory = "";
 		if (this.platform.is("android")) {
 			applicationDirectory = getPhoneGapPath();;
 		}
@@ -191,12 +191,19 @@ export class VoicePlayService {
 		this.mediaRec = this.media.create(path);
 
 		this.mediaRec.onSuccess.subscribe(() => {
-			console.log("play_local_voice():Audio Success");
-			this.isPlaying = false;
+			console.log("play_local_voice():Audio Init Success");
 		});
 		this.mediaRec.onError.subscribe(error => {
 			console.log("play_local_voice():Audio Error: ", error);
 			this.isPlaying = false;
+		});
+		this.mediaRec.onStatusUpdate.subscribe((state) => {
+			// 循环播放
+			if (this.isPlaying && repeat && state == MEDIA_STATUS.STOPPED) {
+				console.log("play_local_voice():Audio Stoped: ", state);
+				this.mediaRec.play();
+				this.isPlaying = true;
+			}
 		});
 
 		if (this.platform.is("ios")) {
@@ -206,17 +213,25 @@ export class VoicePlayService {
 			this.mediaRec.play();
 		}
 		this.isPlaying = true;
-		return false;
+	}
+
+	resume_local_voice() {
+		if (this.mediaRec && !this.isPlaying) {
+			this.isPlaying = true;
+			this.mediaRec.play();
+		}
 	}
 
 	pause_local_voice() {
 		if (this.mediaRec && this.isPlaying) {
+			this.isPlaying = false;
 			this.mediaRec.pause();
 		}
 	}
 
 	stop_local_voice() {
 		if (this.mediaRec && this.isPlaying) {
+			this.isPlaying = false;
 			this.mediaRec.stop();
 			this.mediaRec.release();
 		}
