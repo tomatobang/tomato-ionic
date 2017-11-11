@@ -23,8 +23,8 @@ export class StatisticsPage implements OnInit {
 	) {
 	}
 
-	cellSize = [50, 50];
-	pieRadius = 15;
+	cellSize = [45, 45];
+	pieRadius = 12;
 
 	getVirtulData() {
 		let date = +echarts.number.parseDate('2017-02-01');
@@ -33,8 +33,8 @@ export class StatisticsPage implements OnInit {
 		let data = [];
 		for (let time = date; time < end; time += dayTime) {
 			data.push([
-				echarts.format.formatTime('yyyy-MM-dd', time),
-				Math.floor(Math.random() * 10000)
+				echarts.format.formatTime('yyyy-MM-dd', time), // 日期
+				Math.floor(Math.random() * 10000)  // 值
 			]);
 		}
 		return data;
@@ -50,13 +50,53 @@ export class StatisticsPage implements OnInit {
 				label: {
 					normal: {
 						formatter: '{c}',
-						position: 'inside'
+						position: 'inside',
+						fontSize: 12,
+						color:"#FF3D00"
 					}
 				},
 				radius: this.pieRadius,
 				data: [
-					{ name: '完成', value: Math.round(Math.random() * 24) },
-					{ name: '中断', value: Math.round(Math.random() * 24) }
+					{
+						name: '完成',
+						itemStyle: {
+							normal: {
+								color: {
+									type: 'radial',
+									x: 0.5,
+									y: 0.5,
+									r: 0.5,
+									colorStops: [{
+										offset: 0, color: 'red' // 0% 处的颜色
+									}, {
+										offset: 1, color: 'white' // 100% 处的颜色
+									}],
+									globalCoord: false // 缺省为 false
+								}
+							}
+						},
+						value: Math.round(Math.random() * 24)
+					},
+					{
+						name: '中断',
+						itemStyle: {
+							normal: {
+								color: {
+									type: 'radial',
+									x: 0.5,
+									y: 0.5,
+									r: 0.5,
+									colorStops: [{
+										offset: 0, color: '#4D8CF6' // 0% 处的颜色
+									}, {
+										offset: 1, color: 'white' // 100% 处的颜色
+									}],
+									globalCoord: false // 缺省为 false
+								}
+							}
+						},
+						value: Math.round(Math.random() * 24)
+					}
 				]
 			};
 		});
@@ -86,6 +126,13 @@ export class StatisticsPage implements OnInit {
 				left: 'center',
 				orient: 'vertical',
 				cellSize: this.cellSize,
+				splitLine :{
+					lineStyle :{
+							color: '#FF3D00',
+							type:'dashed',
+							opacity:0.5
+					}
+				},
 				yearLabel: {
 					show: false,
 					textStyle: {
@@ -95,10 +142,12 @@ export class StatisticsPage implements OnInit {
 				dayLabel: {
 					margin: 20,
 					firstDay: 1,
-					nameMap: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+					color:'#FF3D00',
+					nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 				},
 				monthLabel: {
-					show: false
+					show: false,
+					nameMap: 'cn'
 				},
 				range: ['2017-02']
 			},
@@ -113,12 +162,15 @@ export class StatisticsPage implements OnInit {
 						formatter(params) {
 							return echarts.format.formatTime('dd', params.value[0]);
 						},
-						offset: [-this.cellSize[0] / 2 + 10, -this.cellSize[1] / 2 + 10],
+						offset: [-this.cellSize[0] / 2 + 8, -this.cellSize[1] / 2 + 8],
 						textStyle: {
-							color: '#000',
-							fontSize: 14
+							color: '#FF3D00',//
+							fontSize: 12
 						}
 					}
+				},
+				markLine:{
+					
 				},
 				data: scatterData
 			}]

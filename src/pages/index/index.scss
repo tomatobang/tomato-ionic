@@ -43,6 +43,10 @@ img.play-icon{
   font-size: 1.5rem;
 }
 
+.break-tomato span{
+  border-color: #FF3D00;
+  color:#FF3D00;
+}
 
 $categories: (
   ionic: color($colors, primary),
@@ -83,10 +87,16 @@ $categories: (
 
  .white-noise-tag-icon{
    position: absolute;
-   right: 25px;
-   bottom: 55px;
+   right: 15px;
+   top: 25px;
  }
 
  .white-noise-tag-icon ion-icon::before, .white-noise-tag-icon ion-icon::before{
   font-size: 36px;
+ }
+
+ .white-noise-icon-label{
+  font-size: 12px;
+  vertical-align: text-top;
+  margin-left: 3px;
  }

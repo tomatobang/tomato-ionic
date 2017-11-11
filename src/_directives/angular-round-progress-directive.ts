@@ -14,17 +14,17 @@ export class AngularRoundProgressComponent {
 
     width: any = 270;
     height: any = 270;
-    outerCircleWidth: number = 20;
-    innerCircleWidth: number = 5;
+    outerCircleWidth: number = 12;
+    innerCircleWidth: number = 3;
     outerCircleRadius: number = 110;
     innerCircleRadius: number = 80;
 
-    labelFont: string = "40pt Arial";
-    outerCircleBackgroundColor: string = "#505769";
-    outerCircleForegroundColor: string = "#12eeb9";
-    innerCircleColor: string = "#387ef5";
+    labelFont: string = "40pt lighter 微软雅黑";
+    outerCircleBackgroundColor: string = "#505769";//"#505769";
+    outerCircleForegroundColor: string = "#FF3D00";//"#12eeb9";
+    innerCircleColor: string = "#FF3D00";//"#387ef5";
 
-    labelColor: string = "#387ef5";
+    labelColor: string = "#FF3D00";
 
     timerStatusValue: any;
 
@@ -77,10 +77,10 @@ export class AngularRoundProgressComponent {
         this.innerCircleRadius *= ratio;
 
         if (ratio >= 2) {
-            this.labelFont = "80pt Arial";
+            this.labelFont = "80pt  lighter 微软雅黑";
         }
         if (ratio >= 3) {
-            this.labelFont = "120pt Arial";
+            this.labelFont = "120pt  lighter 微软雅黑";
         }
 
         hasFixRatio = true;
