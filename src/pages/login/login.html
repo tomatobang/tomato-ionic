@@ -25,8 +25,13 @@
         </div>
         <!-- 这里用来做服务端验证 -->
         <div *ngIf="error" class="text-danger">{{error}}</div>
-        <button type="submit" color="primary" ion-button block outline>登陆</button>
-        <button type="button" color="light" ion-button block outline (click)="navToRegister()">注册</button>
+        <div class="login-button-area">
+            <button type="submit" color="primary" ion-button>登陆</button>
+        </div>
+        <div class="login-button-area">
+            <button type="button" color="light" ion-button outline (click)="navToRegister()">注册</button>
+        </div>
+
 
     </form>
 

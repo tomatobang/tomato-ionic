@@ -212,9 +212,10 @@ export class IndexPage implements OnInit, OnDestroy {
 	breakActiveTask(isLocal) {
 		if (isLocal) {
 			this.showPrompt();
+		}else{
+			this.stopTimer();
+			this.startRestTimer();
 		}
-		this.stopTimer();
-		this.startRestTimer();
 	}
 
 
@@ -241,6 +242,8 @@ export class IndexPage implements OnInit, OnDestroy {
 				{
 					text: '提交',
 					handler: data => {
+						this.stopTimer();
+						this.startRestTimer();
 						// 创建tomato
 						let tomatoDTO: any = {
 							taskid: this.activeTomato._id,
