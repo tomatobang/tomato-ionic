@@ -15,9 +15,9 @@ export class SettingPage implements OnInit {
 	countdown: number;
 	isAlwaysLight: boolean = false;
 
-	longbreakTomatoNum:number;
+	longbreakTomatoNum: number;
 	IsLoopMode: boolean = false;
-	whiteNoiseType:string;
+	whiteNoiseType: string;
 	constructor(
 		public globalservice: GlobalService,
 		private insomnia: Insomnia
@@ -38,7 +38,7 @@ export class SettingPage implements OnInit {
 		this.globalservice.resttime = value;
 	}
 
-	setLongResttimev(value: number){
+	setLongResttimev(value: number) {
 	}
 
 	changeLightState() {
@@ -57,15 +57,15 @@ export class SettingPage implements OnInit {
 		}
 	}
 
-	setLongbreakTomatoNum(){
+	setLongbreakTomatoNum() {
 
 	}
 
-	setLoopMode(){
+	setLoopMode() {
 
 	}
 
-	setWhiteNoiseType(){
+	setWhiteNoiseType() {
 
 	}
 }
