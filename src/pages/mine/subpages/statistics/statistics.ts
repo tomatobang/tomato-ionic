@@ -24,7 +24,6 @@ export class StatisticsPage implements OnInit {
 	}
 
 	cellSize = [45, 45];
-	pieRadius = 12;
 
 	getVirtulData() {
 		let date = +echarts.number.parseDate('2017-02-01');
@@ -34,82 +33,10 @@ export class StatisticsPage implements OnInit {
 		for (let time = date; time < end; time += dayTime) {
 			data.push([
 				echarts.format.formatTime('yyyy-MM-dd', time), // 日期
-				Math.floor(Math.random() * 10000)  // 值
+				Math.floor(Math.random() * 1000)  // 值
 			]);
 		}
 		return data;
-	}
-
-	getPieSeries(scatterData, chart) {
-		return echarts.util.map(scatterData, (item, index) => {
-			let center = chart.convertToPixel('calendar', item);
-			return {
-				id: index + 'pie',
-				type: 'pie',
-				center: center,
-				label: {
-					normal: {
-						formatter: '{c}',
-						position: 'inside',
-						fontSize: 12,
-						color:"#FF3D00"
-					}
-				},
-				radius: this.pieRadius,
-				data: [
-					{
-						name: '完成',
-						itemStyle: {
-							normal: {
-								color: {
-									type: 'radial',
-									x: 0.5,
-									y: 0.5,
-									r: 0.5,
-									colorStops: [{
-										offset: 0, color: 'red' // 0% 处的颜色
-									}, {
-										offset: 1, color: 'white' // 100% 处的颜色
-									}],
-									globalCoord: false // 缺省为 false
-								}
-							}
-						},
-						value: Math.round(Math.random() * 24)
-					},
-					{
-						name: '中断',
-						itemStyle: {
-							normal: {
-								color: {
-									type: 'radial',
-									x: 0.5,
-									y: 0.5,
-									r: 0.5,
-									colorStops: [{
-										offset: 0, color: '#4D8CF6' // 0% 处的颜色
-									}, {
-										offset: 1, color: 'white' // 100% 处的颜色
-									}],
-									globalCoord: false // 缺省为 false
-								}
-							}
-						},
-						value: Math.round(Math.random() * 24)
-					}
-				]
-			};
-		});
-	}
-
-	getPieSeriesUpdate(scatterData, chart) {
-		return echarts.util.map(scatterData, (item, index) => {
-			let center = chart.convertToPixel('calendar', item);
-			return {
-				id: index + 'pie',
-				center: center
-			};
-		});
 	}
 
 	ngOnInit() {
@@ -126,23 +53,30 @@ export class StatisticsPage implements OnInit {
 				left: 'center',
 				orient: 'vertical',
 				cellSize: this.cellSize,
-				splitLine :{
-					lineStyle :{
-							color: '#FF3D00',
-							type:'dashed',
-							opacity:0.5
+				splitLine: {
+					lineStyle: {
+						color: '#387ef5',
+						type: 'dashed',
+						opacity: 0.2
+					}
+				},
+				itemStyle:{
+					normal:{
+						borderWidth :0
 					}
 				},
 				yearLabel: {
-					show: false,
+					show: true,
 					textStyle: {
-						fontSize: 30
+						fontSize: 30,
+						color:"#387ef5"
 					}
 				},
 				dayLabel: {
+					show: false,
 					margin: 20,
 					firstDay: 1,
-					color:'#FF3D00',
+					color: '#FF3D00',
 					nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 				},
 				monthLabel: {
@@ -155,7 +89,12 @@ export class StatisticsPage implements OnInit {
 				id: 'label',
 				type: 'scatter',
 				coordinateSystem: 'calendar',
-				symbolSize: 1,
+				symbol:'roundRect',
+				itemStyle:{
+					normal:{
+						color :"#FF3D00"
+					}
+				},
 				label: {
 					normal: {
 						show: true,
@@ -164,36 +103,26 @@ export class StatisticsPage implements OnInit {
 						},
 						offset: [-this.cellSize[0] / 2 + 8, -this.cellSize[1] / 2 + 8],
 						textStyle: {
-							color: '#FF3D00',//
+							color: '#387ef5',//
 							fontSize: 12
 						}
 					}
 				},
-				markLine:{
-					
+				markLine: {
+
 				},
-				data: scatterData
+				data: scatterData,
+				animationEasing:'bounceInOut',
+				animationDelay: function (idx) {
+					// 越往后的数据延迟越大
+					return idx * 50;
+				},
+				symbolSize: function (val) {
+					return val[1] / 60;
+				}
 			}]
 		};
-
-		if (!window.inNode) {
-			let pieInitialized;
-			setTimeout(() => {
-				pieInitialized = true;
-				let series = this.getPieSeries(scatterData, myChart);
-				myChart.setOption({
-					series: series
-				});
-			}, 10);
-
-			window.onresize = function () {
-				if (pieInitialized) {
-					myChart.setOption({
-						series: this.getPieSeriesUpdate(scatterData, myChart)
-					});
-				}
-			};
-		}
+		
 		if (option && typeof option === "object") {
 			myChart.setOption(option, true);
 		}
