@@ -19,7 +19,7 @@ export class UpdateService {
         public _global: GlobalService,
         public alertCtrl: AlertController,
         public loadingCtrl: LoadingController,
-        //public http: Http
+        public http: Http
     ) {
         this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     }
@@ -33,8 +33,8 @@ export class UpdateService {
             let appVersionInfo = data.data;
             if (window.cordova) {
                 // 注意区分测试版与正式版
-                window.cordova.getAppVersion.getVersionNumber().then(function (version) {
-                    if (appVersionInfo.Version > version && appVersionInfo.AppType === '1') {
+                window.cordova.getAppVersion.getVersionNumber().then((version) => {
+                    if (appVersionInfo.Version > version) {
                         this.showUpdateConfirm(appVersionInfo.Content, appVersionInfo.DownloadUrl);
                     }
                 });
@@ -48,18 +48,18 @@ export class UpdateService {
     * @param  {[type]}  appSystem [系统名称]
     */
     getServerVersion(appSystem): Observable<any> {
-        // return this.http.post('url',
-        //     {}, this.interceptor()).map(res => res.json());
-
         return new Observable((responseObserver) => {
-            responseObserver.next(1);
-            responseObserver.complete();
+            this.http.post(this._global.serverAddress + 'api/version',
+                {}, this.interceptor()).map(res => {
+                    responseObserver.next(res.json());
+                    responseObserver.complete();
+                });
         });
     }
 
     /**
- * 请求头处理
- */
+     * 请求头处理
+     */
     interceptor(): RequestOptions {
         const opts: RequestOptions = new RequestOptions()
         opts.headers = this.headers
@@ -88,6 +88,11 @@ export class UpdateService {
         prompt.present();
     }
 
+    /**
+     * Android 版下载
+     * @param isAndroid 
+     * @param downloadUrl 
+     */
     downloadApp(isAndroid, downloadUrl: string) {
         if (isAndroid) {
             let that = this;
@@ -95,16 +100,16 @@ export class UpdateService {
             let options = {};
             const fileTransfer = new Transfer();
             // APP下载存放的路径，可以使用 window.cordova file 插件进行相关配置
-            window.resolveLocalFileSystemURL(window.cordova.file.externalApplicationStorageDirectory, function (fileEntry) {
-                fileEntry.getDirectory("Download", { create: true, exclusive: false }, function (fileEntry) {
+            window.resolveLocalFileSystemURL(window.cordova.file.externalApplicationStorageDirectory, (fileEntry) => {
+                fileEntry.getDirectory("Download", { create: true, exclusive: false }, (fileEntry) => {
                     const targetPath: string = fileEntry.toInternalURL() + "TomatoBang.apk";
                     let loading = null;
-                    fileTransfer.download(downloadUrl, targetPath, trustHosts, options).then(function (result) {
+                    fileTransfer.download(downloadUrl, targetPath, trustHosts, options).then((result) => {
                         FileOpener.open(targetPath, 'application/vnd.android.package-archive');
                         if (loading) {
                             loading.dismiss();
                         }
-                    }, function (error) {
+                    }, (error) => {
                         let alert = this.alertCtrl.create({
                             title: '下载失败!',
                             buttons: ['OK']
@@ -115,8 +120,8 @@ export class UpdateService {
                         }
                     });
                     // 下载进度
-                    fileTransfer.onProgress(function (progress) {
-                        setTimeout(function () {
+                    fileTransfer.onProgress((progress) => {
+                        setTimeout(() => {
                             let downloadProgress = (progress.loaded / progress.total) * 100;
                             loading = that.loadingCtrl.create({
                                 content: "已经下载：" + Math.floor(downloadProgress) + "%"

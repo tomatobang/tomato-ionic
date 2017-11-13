@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { Media, MediaObject } from "@ionic-native/media";
 import { ElementRef } from "@angular/core";
 
-import { Platform, IonicPage } from "ionic-angular";
-import { Gesture } from "ionic-angular/gestures/gesture";
+import { IonicPage } from "ionic-angular";
 import * as echarts from "echarts";
 import { debug } from "util";
 import { OnlineTomatoService } from "../../../../providers/data.service";
@@ -17,26 +15,29 @@ declare var window;
 export class StatisticsPage implements OnInit {
 	@ViewChild("divContainer") divContainer;
 
-	conversationList = [];
 	constructor(
-		public platform: Platform,
 		private elRef: ElementRef,
 		public tomatoservice: OnlineTomatoService,
 	) {
 	}
 
+	/**
+	 * 日期空格大小
+	 */
 	cellSize = [45, 45];
 
+	/**
+	 * 加载数据
+	 */
 	loadData() {
 		return new Promise((resolve, reject) => {
-			this.tomatoservice.statistics({ isSuccess: 0 }).subscribe(data => {
-				debugger
+			this.tomatoservice.statistics({ isSuccess: 1 }).subscribe(data => {
 				data = JSON.parse(data._body);
 				let ret = [];
 				for (let i = 0; i < data.length; i += 1) {
 					ret.push([
-						data[i]._id, // 日期
-						data[i].count // 值
+						data[i]._id,
+						data[i].count
 					]);
 				}
 				resolve(ret);
@@ -48,6 +49,9 @@ export class StatisticsPage implements OnInit {
 
 	}
 
+	/**
+	 * 模拟数据
+	 */
 	getVirtulData() {
 		let date = +echarts.number.parseDate('2017-11-4');
 		let end = +echarts.number.parseDate('2017-11-22');
@@ -55,8 +59,8 @@ export class StatisticsPage implements OnInit {
 		let data = [];
 		for (let time = date; time < end; time += dayTime) {
 			data.push([
-				echarts.format.formatTime('yyyy-MM-dd', time), // 日期
-				Math.floor(Math.random() * 1)  // 值
+				echarts.format.formatTime('yyyy-MM-dd', time),
+				Math.floor(Math.random() * 1)
 			]);
 		}
 		return data;
@@ -67,7 +71,11 @@ export class StatisticsPage implements OnInit {
 		// let scatterData = this.getVirtulData();
 		this.loadData().then((scatterData) => {
 			let option = {
-				tooltip: {},
+				tooltip: {
+					formatter(dd) {
+						return dd.data[0] + "<br/>番茄钟:" + dd.data[1];
+					}
+				},
 				legend: {
 					data: ['完成', '中断'],
 					bottom: 20
@@ -132,17 +140,23 @@ export class StatisticsPage implements OnInit {
 							}
 						}
 					},
-					markLine: {
-
-					},
+					markLine: {},
 					data: scatterData,
 					animationEasing: 'bounceInOut',
 					animationDelay: function (idx) {
-						// 越往后的数据延迟越大
 						return idx * 50;
 					},
 					symbolSize: function (val) {
-						return val[1]*3;
+						if (val[1] < 3) {
+							return 6;
+						}
+						if (val[1] < 5) {
+							return 8;
+						}
+						if (val[1] > 10) {
+							return 20;
+						}
+						return val[1] * 2;
 					}
 				}]
 			};
