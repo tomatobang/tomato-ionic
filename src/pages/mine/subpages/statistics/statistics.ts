@@ -14,11 +14,28 @@ declare var window;
 })
 export class StatisticsPage implements OnInit {
 	@ViewChild("divContainer") divContainer;
+	yearMonth: Date;
+	monthlabel: Number;
+	yearlabel: Number;
+	myChart: any;
 
 	constructor(
 		private elRef: ElementRef,
 		public tomatoservice: OnlineTomatoService,
 	) {
+		this.setLabel(0);
+	}
+
+	setLabel(offset) {
+		if (!this.yearMonth) {
+			this.yearMonth = new Date();
+		} else {
+			let month = this.yearMonth.getMonth() +offset;
+			this.yearMonth.setMonth(month);
+		}
+		this.monthlabel = this.yearMonth.getMonth()+1;
+		this.yearlabel = this.yearMonth.getFullYear();
+		this.refreshData();
 	}
 
 	/**
@@ -29,9 +46,9 @@ export class StatisticsPage implements OnInit {
 	/**
 	 * 加载数据
 	 */
-	loadData() {
+	loadData(date) {
 		return new Promise((resolve, reject) => {
-			this.tomatoservice.statistics({ isSuccess: 1 }).subscribe(data => {
+			this.tomatoservice.statistics({ isSuccess: 1, date: date }).subscribe(data => {
 				data = JSON.parse(data._body);
 				let ret = [];
 				for (let i = 0; i < data.length; i += 1) {
@@ -67,9 +84,13 @@ export class StatisticsPage implements OnInit {
 	}
 
 	ngOnInit() {
-		let myChart = echarts.init(this.divContainer.nativeElement);
+		this.myChart = echarts.init(this.divContainer.nativeElement);
+		this.refreshData();
 		// let scatterData = this.getVirtulData();
-		this.loadData().then((scatterData) => {
+	}
+
+	refreshData() {
+		this.loadData(this.yearMonth).then((scatterData) => {
 			let option = {
 				tooltip: {
 					formatter(dd) {
@@ -98,7 +119,7 @@ export class StatisticsPage implements OnInit {
 						}
 					},
 					yearLabel: {
-						show: true,
+						show: false,
 						textStyle: {
 							fontSize: 30,
 							color: "#387ef5"
@@ -162,9 +183,16 @@ export class StatisticsPage implements OnInit {
 			};
 
 			if (option && typeof option === "object") {
-				myChart.setOption(option, true);
+				this.myChart.setOption(option, true);
 			}
 		});
+	}
 
+	monthDropleft() {
+		this.setLabel(-1);
+	}
+
+	monthDropright() {
+		this.setLabel(1);
 	}
 }

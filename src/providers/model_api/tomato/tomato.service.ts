@@ -25,7 +25,7 @@ export abstract class TomatoService extends RebirthHttp {
   abstract deleteTomato(tomatoUrl: string): Observable<any>;
 
   abstract statistics(isSuccess: {
-    isSuccess
+    isSuccess,date
   }): Observable<any>;
 }
 
@@ -84,7 +84,8 @@ export class OnlineTomatoService extends TomatoService {
 
   @POST(baseUrl + 'api/tomato/statistics')
   statistics( @Body isSuccess: {
-    isSuccess
+    isSuccess,
+    date
   }): Observable<any> {
     return null;
   }

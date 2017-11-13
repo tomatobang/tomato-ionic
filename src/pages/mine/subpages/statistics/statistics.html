@@ -7,6 +7,19 @@
 </ion-header>
 
 <ion-content padding>
+    <div class="calendar-nav">
+        <div class="left-nav">
+            <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft" (click)="monthDropleft()"></ion-icon>
+        </div>
+        <div class="year-month-block">
+            <h1 class="month-label">{{monthlabel}}</h1>
+            <div class="year-label">{{yearlabel}}</div>
+        </div>
+        <div class="right-nav">
+            <ion-icon ios="ios-arrow-dropright" md="md-arrow-dropright" (click)="monthDropright()"></ion-icon>
+        </div>
+    </div>
+
     <div #divContainer class="divContainer">
     </div>
-  </ion-content>
+</ion-content>
