@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tomatobang.ionic" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tomatobang.ionic" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>TomatoBang</name>
     <description>for your better work &amp; life.</description>
     <author email="yipeng.info@gmail.com" href="http://yipeng.info/">Create By Kobepeng</author>
@@ -102,9 +102,10 @@
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.0.19" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
     <plugin name="cordova-plugin-logtofile" spec="^1.1.2" />
     <plugin name="cordova-plugin-media" spec="^3.0.1">
-        <variable name="MICROPHONE_USAGE_DESCRIPTION" value="需要开启麦克风才能录音哦！" />
+        <variable name="MICROPHONE_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-network-information" spec="^1.3.3" />
     <plugin name="cordova-plugin-pause-resume-download" spec="^1.5.5" />
@@ -131,5 +132,4 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="talkingdata" spec="^1.2.2" />
-    <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
 </widget>

@@ -91,6 +91,7 @@ export class StatisticsPage implements OnInit {
 
 	refreshData() {
 		this.loadData(this.yearMonth).then((scatterData) => {
+			let range = this.yearMonth.getFullYear()+"-" +(this.yearMonth.getMonth()+1)
 			let option = {
 				tooltip: {
 					formatter(dd) {
@@ -136,7 +137,7 @@ export class StatisticsPage implements OnInit {
 						show: false,
 						nameMap: 'cn'
 					},
-					range: ['2017-11']
+					range: range
 				},
 				series: [{
 					id: 'label',
