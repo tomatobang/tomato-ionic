@@ -84,8 +84,14 @@ export class StatisticsPage implements OnInit {
 	}
 
 	ngOnInit() {
-		this.myChart = echarts.init(this.divContainer.nativeElement);
-		this.refreshData();
+		this.divContainer.nativeElement.style.width = window.screen.width;
+		this.divContainer.nativeElement.style.height = "300px";
+		this.cellSize = [(window.screen.width-20)/7,(window.screen.width-20)/7];
+		setTimeout(()=>{
+			this.myChart = echarts.init(this.divContainer.nativeElement);
+			this.refreshData();
+		},10)
+	
 		// let scatterData = this.getVirtulData();
 	}
 
@@ -104,7 +110,7 @@ export class StatisticsPage implements OnInit {
 				},
 				calendar: {
 					top: 'middle',
-					left: 'center',
+					left: 0,//'center',
 					orient: 'vertical',
 					cellSize: this.cellSize,
 					splitLine: {
