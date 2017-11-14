@@ -1,8 +1,10 @@
 import { Subject, Observable } from "rxjs";
+import { baseUrl } from '../config'
 
 let subject: Subject<any> = new Subject<any>();
 let tokenSubject: Subject<any> = new Subject<any>();
 let settingSubject: Subject<any> = new Subject<any>();
+
 export class GlobalService {
 	public notificationSubject: Subject<any> = new Subject<any>();
 	_isActive: boolean = false;
@@ -12,11 +14,8 @@ export class GlobalService {
 	_countdown: number = 0;
 	_resttime: number = 0;
 	
-	serverAddress = "http://115.29.51.196:7001/";
-	//serverAddress = "http://localhost:7001/";
-	//serverAddress = "http://192.168.3.223:7001/";
+	serverAddress = baseUrl;
 	 
-
 	public get projectChangeMonitor(): Observable<any> {
 		return this.notificationSubject.asObservable();
 	}
