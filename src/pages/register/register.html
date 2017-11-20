@@ -1,0 +1,63 @@
+<ion-content class="login-container">
+    <div class="register-logo">
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="doRegister()" c novalidate class="form-horizontal" role="form">
+        <ion-list>
+            <ion-item>
+                <ion-label color="primary">用户名</ion-label>
+                <ion-input required placeholder="请输入用户名..." [ngClass]="{' is-danger': formErrors.username }" formControlName="username" [(ngModel)]="user.username"
+                    type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">昵称</ion-label>
+                <ion-input required placeholder="昵称..." [ngClass]="{' is-danger': formErrors.displayName }" formControlName="displayName"
+                    [(ngModel)]="user.displayName" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">邮箱</ion-label>
+                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }" placeholder="邮箱"
+                    value="hello@qq.com"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">密码</ion-label>
+                <ion-input [ngClass]="{' is-danger': formErrors.password }" formControlName="password" type="password" placeholder="请输入密码..."></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">确认密码</ion-label>
+                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" formControlName="confirmPassword" type="password" placeholder="请输入密码..."></ion-input>
+            </ion-item>
+
+        </ion-list>
+        <div *ngIf="formErrors.username" class="text-danger">
+            {{ formErrors.username }}
+        </div>
+        <div *ngIf="formErrors.displayName" class="text-danger">
+            {{ formErrors.displayName }}
+        </div>
+        <div *ngIf="formErrors.email" class="text-danger">
+            {{ formErrors.email }}
+        </div>
+        <div *ngIf="formErrors.password" class="text-danger">
+            {{ formErrors.password }}
+        </div>
+        <div *ngIf="formErrors.confirmPassword" class="text-danger">
+            {{ formErrors.confirmPassword }}
+        </div>
+
+        <!-- 这里用来做服务端验证 -->
+        <div *ngIf="error">{{error}}</div>
+
+        <div class="login-button-area">
+            <button type="submit" color="primary" ion-button>注册</button>
+        </div>
+        <div class="login-button-area">
+            <button type="button" color="light" ion-button  outline (click)="navToLogin()">登陆</button>
+        </div>
+
+    </form>
+
+</ion-content>

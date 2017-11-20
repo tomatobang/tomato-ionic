@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      我
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card-header>
+    <img [src]="headImg" class="headImg" (click)="changeHeadImg()" />
+    <span class="username">{{username}}</span>
+  </ion-card-header>
+
+  <ion-list>
+    <button ion-item (click)="profile()">
+      <ion-icon name="contact" item-start></ion-icon>
+      我的资料
+    </button>
+
+    <button ion-item (click)="statistics()">
+      <ion-icon name="podium" item-start></ion-icon>
+      统计
+    </button>
+
+    <button ion-item (click)="setting()">
+      <ion-icon name="settings" item-start></ion-icon>
+      设置
+    </button>
+
+    <button ion-item (click)="about()">
+      <ion-icon name="information-circle" item-start></ion-icon>
+      关于
+    </button>
+
+    <button ion-item disabled>
+      <ion-icon name="share-alt" item-start></ion-icon>
+      分享
+    </button>
+
+    <!-- <button ion-item (click)="gotest()">
+      <ion-icon name="bug" item-start></ion-icon>
+      测试
+    </button> -->
+
+    <button (click)="logout()" ion-item>
+      <ion-icon name="log-out" item-start></ion-icon>
+      退出
+    </button>
+
+
+
+  </ion-list>
+
+</ion-content>

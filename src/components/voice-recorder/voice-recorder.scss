@@ -1,0 +1,35 @@
+.voice-recorder-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.hold-tips {
+    height: 55px;
+    flex: 3;
+    text-align: center;
+    padding-top: 6px;
+    border-radius: 55px;
+  }
+  
+  .hold-tips {
+    background-color: #eee;
+    color: #444;
+  }
+  
+  .hold-tips.active {
+    background-color: #ccc;
+  }
+  
+  .voice-mock-img,#play_block{
+    text-align: center;
+    
+  }
+  #play_block{
+      flex: 1;
+  }
+
+  #play_block button{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}

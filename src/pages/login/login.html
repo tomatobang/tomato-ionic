@@ -1,0 +1,38 @@
+<ion-content class="login-container">
+    <div class="login-logo">
+    </div>
+    <form #form="ngForm" (ngSubmit)="form.form.valid && doLogin()" novalidate class="form-horizontal" role="form">
+        <ion-list>
+            <ion-item>
+                <ion-label color="primary">用户名</ion-label>
+                <ion-input required placeholder="请输入用户名..." [ngClass]="{'is-success': form.submitted && !userName.valid }" name="username"
+                    [(ngModel)]="user.username" #userName="ngModel" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">密码</ion-label>
+                <ion-input [ngClass]="{ 'is-success': form.submitted && !password.valid }" required minlength="6" [(ngModel)]="user.password"
+                    name="password" #password="ngModel" type="password" placeholder="请输入密码..."></ion-input>
+            </ion-item>
+
+        </ion-list>
+
+        <div *ngIf="form.submitted && !password.valid" class="text-danger">
+            密码必须输入,至少要6位！
+        </div>
+        <div *ngIf="form.submitted && !userName.valid" class="text-danger">
+            用户名必须输入！
+        </div>
+        <!-- 这里用来做服务端验证 -->
+        <div *ngIf="error" class="text-danger">{{error}}</div>
+        <div class="login-button-area">
+            <button type="submit" color="primary" ion-button>登陆</button>
+        </div>
+        <div class="login-button-area">
+            <button type="button" color="light" ion-button outline (click)="navToRegister()">注册</button>
+        </div>
+
+
+    </form>
+
+</ion-content>

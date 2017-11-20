@@ -1,0 +1,102 @@
+img.play-icon{
+  width: 25px;
+}
+.tomato-break-reason{
+  color: gray;
+  font-size: 12px;
+}
+.tomato-start-end-time{
+  font-size: 12px;
+}
+.tomato-canvas-style{
+  width:240px;
+  height: 240px;
+}
+.text-breaked{
+  color: red !important;
+}
+.tomato-today-slide,.tomato-history-slide{
+  align-items: flex-start;
+}
+.task-manager-plus{
+  position: absolute;
+  right: 10px;
+  bottom: 40px;
+}
+.today-tomatoCount{
+  font-size: 32px;
+  color: #387ef5;
+  text-align: center;
+}
+
+.active-task-title {
+  font-size: 27px;
+  color: #12eeb9;
+}
+.rest-title {
+  color: grey;
+}
+.break-tomato{
+  margin-top:10px;
+  margin-bottom:10px;
+  padding: 10px 25px;
+  font-size: 1.5rem;
+}
+
+.break-tomato span{
+  border-color: #FF3D00;
+  color:#FF3D00;
+}
+
+$categories: (
+  ionic: color($colors, primary),
+  angular: #AC282B,
+  communication: #8E8D93,
+  tooling: #FE4C52,
+  services: #FD8B2D,
+  design: #FED035,
+  workshop: #69BB7B,
+  food: #3BC7C4,
+  documentation: #B16BE3,
+  navigation: #6600CC,
+ );
+ 
+ @function auxiliary-categories() {
+   @return map-remove($categories);
+ }
+ 
+.tomato-today-slide {
+   @each $track, $value in auxiliary-categories() {
+    .tomato-today-list[track=#{$track}]  {
+      border-left: 2px solid $value;
+      padding-left: 10px;
+    }
+   }
+   overflow: auto;
+ }
+ .tomato-history-slide{
+   height: 100%;
+ }
+  .tomato-history-slide,.tomato-history-slide .slide-zoom{
+   height: 100%;
+ }
+ .tomato-history-list{
+  height: 100%;
+  overflow: auto;
+ }
+
+ .white-noise-tag-icon{
+   position: absolute;
+   right: 15px;
+   top: 25px;
+ }
+
+ .white-noise-tag-icon ion-icon::before, .white-noise-tag-icon ion-icon::before{
+  font-size: 36px;
+ }
+
+ .white-noise-icon-label{
+  font-size: 12px;
+  vertical-align: text-top;
+  margin-left: 3px;
+ }
