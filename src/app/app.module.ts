@@ -1,3 +1,9 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-11-20 19:19:52 
+ * @Last Modified by: kobepeng
+ * @Last Modified time: 2017-11-20 19:43:49
+ */
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpModule } from "@angular/http";
@@ -14,12 +20,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GlobalService } from '../providers/global.service';
 import { JPushService } from '../providers/utils/jpush.service';
+import { UpdateService } from '../providers/utils/update.service';
 import { TomatoIOService } from '../providers/utils/socket.io.service';
 import { Helper } from '../providers/utils/helper';
 
 import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
 import { IonicStorageModule } from '@ionic/storage';
+import {
+	FileTransfer
+} from "@ionic-native/file-transfer";
+import { FileOpener } from '@ionic-native/file-opener'
 
 
 import * as Raven from 'raven-js';
@@ -54,16 +65,25 @@ export class RavenErrorHandler implements ErrorHandler {
     SocketIoModule.forRoot(config),
     IonicStorageModule.forRoot()
   ],
-  bootstrap: [IonicApp],
+  bootstrap: [
+    IonicApp
+  ],
   entryComponents: [
     MyApp,
   ],
   providers: [
-    StatusBar, BackgroundMode,
+    StatusBar, 
+    BackgroundMode,
     SplashScreen,
-    GlobalService, JPushService, TomatoIOService, Helper,
-    // {provide: ErrorHandler, useClass: IonicErrorHandler},
-    { provide: ErrorHandler, useClass: RavenErrorHandler }
+    GlobalService, 
+    JPushService, 
+    TomatoIOService, 
+    Helper, 
+    UpdateService,
+    FileTransfer,
+    FileOpener,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ]
 })
 export class AppModule { }

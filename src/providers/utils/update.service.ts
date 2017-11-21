@@ -6,7 +6,10 @@ import { Injectable } from "@angular/core";
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http'
 import { Platform, AlertController, LoadingController } from "ionic-angular";
 import { GlobalService } from "../global.service";
-import { Transfer, FileOpener } from 'ionic-native';
+// import {  FileOpener } from 'ionic-native';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileOpener } from '@ionic-native/file-opener'
+
 import { Subject, Observable } from 'rxjs'
 
 declare var window;
@@ -19,14 +22,22 @@ export class UpdateService {
         public _global: GlobalService,
         public alertCtrl: AlertController,
         public loadingCtrl: LoadingController,
-        public http: Http
+        public http: Http,
+        public transfer: FileTransfer,
+        private fileOpener: FileOpener
+
     ) {
         this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     }
 
-    init() {
-    }
+    /**
+     * 初始化
+     */
+    init() { }
 
+    /**
+     * 检查更新
+     */
     checkUpdate() {
         let appSystem = this.platform.is("android") ? 'android' : 'ios';
         this.getServerVersion(appSystem).subscribe(data => {
@@ -34,12 +45,35 @@ export class UpdateService {
             if (window.cordova) {
                 // 注意区分测试版与正式版
                 window.cordova.getAppVersion.getVersionNumber().then((version) => {
-                    if (appVersionInfo.Version > version) {
+                    if (this.compare(appVersionInfo.Version, version)) {
                         this.showUpdateConfirm(appVersionInfo.Content, appVersionInfo.DownloadUrl);
                     }
                 });
             }
         })
+    }
+
+    /**
+     * 版本号对比
+     * @param curV 当前版本
+     * @param reqV 请求版本
+     */
+    compare(curV, reqV) {
+        if (curV && reqV) {
+            var arr1 = curV.split('.'),
+                arr2 = reqV.split('.');
+            var minLength = Math.min(arr1.length, arr2.length),
+                position = 0,
+                diff = 0;
+            while (position < minLength && ((diff = parseInt(arr1[position]) - parseInt(arr2[position])) == 0)) {
+                position++;
+            }
+            diff = (diff != 0) ? diff : (arr1.length - arr2.length);
+            return diff > 0;
+        } else {
+            console.log("版本号不能为空");
+            return false;
+        }
     }
 
 
@@ -49,11 +83,11 @@ export class UpdateService {
     */
     getServerVersion(appSystem): Observable<any> {
         return new Observable((responseObserver) => {
-            this.http.post(this._global.serverAddress + 'api/version',
-                {}, this.interceptor()).map(res => {
-                    responseObserver.next(res.json());
-                    responseObserver.complete();
-                });
+            this.http.get(this._global.serverAddress + 'api/version',
+            {}).subscribe(res => {
+                responseObserver.next(res.json());
+                responseObserver.complete();
+            });
         });
     }
 
@@ -66,6 +100,11 @@ export class UpdateService {
         return opts
     }
 
+    /**
+     * 更新提示框
+     * @param updateContent 内容
+     * @param downloadUrl 下载地址
+     */
     showUpdateConfirm(updateContent, downloadUrl) {
         let prompt = this.alertCtrl.create({
             title: '发现新版本',
@@ -98,14 +137,14 @@ export class UpdateService {
             let that = this;
             let trustHosts = true;
             let options = {};
-            const fileTransfer = new Transfer();
+            let fileTransfer: FileTransferObject = this.transfer.create();
             // APP下载存放的路径，可以使用 window.cordova file 插件进行相关配置
             window.resolveLocalFileSystemURL(window.cordova.file.externalApplicationStorageDirectory, (fileEntry) => {
                 fileEntry.getDirectory("Download", { create: true, exclusive: false }, (fileEntry) => {
                     const targetPath: string = fileEntry.toInternalURL() + "TomatoBang.apk";
                     let loading = null;
                     fileTransfer.download(downloadUrl, targetPath, trustHosts, options).then((result) => {
-                        FileOpener.open(targetPath, 'application/vnd.android.package-archive');
+                        this.fileOpener.open(targetPath, 'application/vnd.android.package-archive');
                         if (loading) {
                             loading.dismiss();
                         }
