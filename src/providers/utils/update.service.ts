@@ -1,3 +1,9 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-11-22 14:15:36 
+ * @Last Modified by:   kobepeng 
+ * @Last Modified time: 2017-11-22 14:15:36 
+ */
 /**
  * App 更新服务( Android )
  * (暂未启用)
@@ -41,11 +47,14 @@ export class UpdateService {
     checkUpdate() {
         let appSystem = this.platform.is("android") ? 'android' : 'ios';
         this.getServerVersion(appSystem).subscribe(data => {
-            let appVersionInfo = data.data;
+            let appVersionInfo;
+            if (data && data.length > 0) {
+                appVersionInfo = data[0];
+            }
             if (window.cordova) {
                 // 注意区分测试版与正式版
                 window.cordova.getAppVersion.getVersionNumber().then((version) => {
-                    if (this.compare(appVersionInfo.Version, version)) {
+                    if (this.compare(appVersionInfo.version, version)) {
                         this.showUpdateConfirm(appVersionInfo.Content, appVersionInfo.DownloadUrl);
                     }
                 });
@@ -84,10 +93,10 @@ export class UpdateService {
     getServerVersion(appSystem): Observable<any> {
         return new Observable((responseObserver) => {
             this.http.get(this._global.serverAddress + 'api/version',
-            {}).subscribe(res => {
-                responseObserver.next(res.json());
-                responseObserver.complete();
-            });
+                {}).subscribe(res => {
+                    responseObserver.next(res.json());
+                    responseObserver.complete();
+                });
         });
     }
 

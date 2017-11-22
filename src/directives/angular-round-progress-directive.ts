@@ -20,9 +20,9 @@ export class AngularRoundProgressComponent {
     innerCircleRadius: number = 80;
 
     labelFont: string = "40pt lighter 微软雅黑";
-    outerCircleBackgroundColor: string = "#505769";//"#505769";
-    outerCircleForegroundColor: string = "#F97271";//"#12eeb9";
-    innerCircleColor: string = "#F97271";//"#387ef5";
+    outerCircleBackgroundColor: string = "#8C8C8C";
+    outerCircleForegroundColor: string = "#F97271";
+    innerCircleColor: string = "#F97271";
 
     labelColor: string = "#F97271";
 

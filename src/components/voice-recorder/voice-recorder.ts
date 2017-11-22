@@ -299,8 +299,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
 				fileTransfer.onProgress(progressEvent => {
 					if (progressEvent.lengthComputable) {
-						this.uploadProgress =
-							progressEvent.loaded / progressEvent.total;
+						let progress = window.parseInt(progressEvent.loaded / progressEvent.total * 100);
+						this.uploadProgress = progress;
 					} else {
 						this.uploadProgress += 14;
 					}

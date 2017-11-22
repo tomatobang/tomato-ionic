@@ -1,28 +1,34 @@
 .voice-recorder-container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
 }
 
 .hold-tips {
-    height: 55px;
+    width: 120px;
+    height: 120px;
     flex: 3;
     text-align: center;
     padding-top: 6px;
-    border-radius: 55px;
+    border-radius: 95px;
   }
   
   .hold-tips {
     background-color: #eee;
     color: #444;
+    &.active {
+      background-color: #fff;
+    }
   }
   
-  .hold-tips.active {
-    background-color: #ccc;
-  }
   
   .voice-mock-img,#play_block{
     text-align: center;
-    
+  }
+  .voice-mock-img{
+    img{
+      width: 120px;
+    }
   }
   #play_block{
       flex: 1;
@@ -32,4 +38,11 @@
     height: 30px;
     width: 30px;
     border-radius: 50%;
+}
+
+.voice-uploading-range{
+  width: 100%;
+  ion-item{
+    border: none !important;
+  }
 }
