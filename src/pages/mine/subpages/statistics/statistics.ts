@@ -115,7 +115,7 @@ export class StatisticsPage implements OnInit {
 					cellSize: this.cellSize,
 					splitLine: {
 						lineStyle: {
-							color: '#387ef5',
+							color: '#8c8c8c',
 							type: 'dashed',
 							opacity: 0.2
 						}
@@ -129,7 +129,7 @@ export class StatisticsPage implements OnInit {
 						show: false,
 						textStyle: {
 							fontSize: 30,
-							color: "#387ef5"
+							color: "#8c8c8c"
 						}
 					},
 					dayLabel: {
@@ -152,7 +152,7 @@ export class StatisticsPage implements OnInit {
 					symbol: 'roundRect',
 					itemStyle: {
 						normal: {
-							color: "#FF3D00"
+							color: "#F97271"
 						}
 					},
 					label: {
@@ -163,7 +163,7 @@ export class StatisticsPage implements OnInit {
 							},
 							offset: [-this.cellSize[0] / 2 + 8, -this.cellSize[1] / 2 + 8],
 							textStyle: {
-								color: '#387ef5',//
+								color: '#8c8c8c',//
 								fontSize: 12
 							}
 						}

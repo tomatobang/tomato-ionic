@@ -28,7 +28,6 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
       // 检查更新
-      debugger
       updateService.checkUpdate()
       // 开启后台运行
       //backgroundMode.enable();

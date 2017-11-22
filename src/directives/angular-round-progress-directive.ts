@@ -21,10 +21,10 @@ export class AngularRoundProgressComponent {
 
     labelFont: string = "40pt lighter 微软雅黑";
     outerCircleBackgroundColor: string = "#505769";//"#505769";
-    outerCircleForegroundColor: string = "#FF3D00";//"#12eeb9";
-    innerCircleColor: string = "#FF3D00";//"#387ef5";
+    outerCircleForegroundColor: string = "#F97271";//"#12eeb9";
+    innerCircleColor: string = "#F97271";//"#387ef5";
 
-    labelColor: string = "#FF3D00";
+    labelColor: string = "#F97271";
 
     timerStatusValue: any;
 
