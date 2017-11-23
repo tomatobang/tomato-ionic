@@ -1,3 +1,9 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-11-23 11:07:20 
+ * @Last Modified by:   kobepeng 
+ * @Last Modified time: 2017-11-23 11:07:20 
+ */
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ElementRef } from "@angular/core";
 
@@ -26,22 +32,38 @@ export class StatisticsPage implements OnInit {
 		this.setLabel(0);
 	}
 
-	setLabel(offset) {
-		if (!this.yearMonth) {
-			this.yearMonth = new Date();
-		} else {
-			let month = this.yearMonth.getMonth() +offset;
-			this.yearMonth.setMonth(month);
-		}
-		this.monthlabel = this.yearMonth.getMonth()+1;
-		this.yearlabel = this.yearMonth.getFullYear();
-		this.refreshData();
+	ngOnInit() {
+		this.divContainer.nativeElement.style.width = window.screen.width;
+		this.divContainer.nativeElement.style.height = "350px";
+		this.cellSize = [(window.screen.width - 20) / 7, (window.screen.width - 20) / 7];
+		setTimeout(() => {
+			this.myChart = echarts.init(this.divContainer.nativeElement);
+			this.refreshData();
+		}, 10)
+
+		// let scatterData = this.getVirtulData();
 	}
 
 	/**
 	 * 日期空格大小
 	 */
 	cellSize = [45, 45];
+
+	/**
+	 * 设置日历标题
+	 * @param offset 偏移量
+	 */
+	setLabel(offset) {
+		if (!this.yearMonth) {
+			this.yearMonth = new Date();
+		} else {
+			let month = this.yearMonth.getMonth() + offset;
+			this.yearMonth.setMonth(month);
+		}
+		this.monthlabel = this.yearMonth.getMonth() + 1;
+		this.yearlabel = this.yearMonth.getFullYear();
+		this.refreshData();
+	}
 
 	/**
 	 * 加载数据
@@ -83,25 +105,37 @@ export class StatisticsPage implements OnInit {
 		return data;
 	}
 
-	ngOnInit() {
-		this.divContainer.nativeElement.style.width = window.screen.width;
-		this.divContainer.nativeElement.style.height = "300px";
-		this.cellSize = [(window.screen.width-20)/7,(window.screen.width-20)/7];
-		setTimeout(()=>{
-			this.myChart = echarts.init(this.divContainer.nativeElement);
-			this.refreshData();
-		},10)
-	
-		// let scatterData = this.getVirtulData();
-	}
-
+	/**
+	 * 数据刷新
+	 */
 	refreshData() {
-		this.loadData(this.yearMonth).then((scatterData) => {
-			let range = this.yearMonth.getFullYear()+"-" +(this.yearMonth.getMonth()+1)
+		this.loadData(this.yearMonth).then((scatterData: any) => {
+			let max_count = 0;
+			for (let i = 0; i < scatterData.length; i++) {
+				if (scatterData[i][1] > max_count) {
+					max_count = scatterData[i][1];
+				}
+			}
+			for (let i = 0; i < scatterData.length; i++) {
+				let t_data = scatterData[i];
+				let value = t_data[1];
+				if (max_count !== 0) {
+					let color_tmp = value / max_count;
+					if (color_tmp < 0.3) {
+						color_tmp = 0.3;
+					}
+					let itemStyle = { normal: { color: 'rgba(249,114,113,' + color_tmp + ')' } };
+					scatterData[i] = {
+						value: t_data,
+						itemStyle
+					};
+				}
+			}
+			let range = this.yearMonth.getFullYear() + "-" + (this.yearMonth.getMonth() + 1)
 			let option = {
 				tooltip: {
 					formatter(dd) {
-						return dd.data[0] + "<br/>番茄钟:" + dd.data[1];
+						return dd.value[0] + "<br/>番茄钟:" + dd.value[1];
 					}
 				},
 				legend: {
@@ -133,10 +167,10 @@ export class StatisticsPage implements OnInit {
 						}
 					},
 					dayLabel: {
-						show: false,
-						margin: 20,
+						show: true,
+						margin: 5,
 						firstDay: 1,
-						color: '#FF3D00',
+						color: '#8c8c8c',
 						nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 					},
 					monthLabel: {
@@ -150,11 +184,6 @@ export class StatisticsPage implements OnInit {
 					type: 'scatter',
 					coordinateSystem: 'calendar',
 					symbol: 'roundRect',
-					itemStyle: {
-						normal: {
-							color: "#F97271"
-						}
-					},
 					label: {
 						normal: {
 							show: true,
@@ -175,16 +204,7 @@ export class StatisticsPage implements OnInit {
 						return idx * 50;
 					},
 					symbolSize: function (val) {
-						if (val[1] < 3) {
-							return 6;
-						}
-						if (val[1] < 5) {
-							return 8;
-						}
-						if (val[1] > 10) {
-							return 20;
-						}
-						return val[1] * 2;
+						return 25;
 					}
 				}]
 			};
@@ -195,10 +215,16 @@ export class StatisticsPage implements OnInit {
 		});
 	}
 
+	/**
+	 * 上一月
+	 */
 	monthDropleft() {
 		this.setLabel(-1);
 	}
 
+	/**
+	 * 下一月
+	 */
 	monthDropright() {
 		this.setLabel(1);
 	}
