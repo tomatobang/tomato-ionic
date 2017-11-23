@@ -5,39 +5,39 @@
         <ion-list>
             <ion-item>
                 <ion-label color="primary">用户名</ion-label>
-                <ion-input required placeholder="请输入用户名..." [ngClass]="{' is-danger': formErrors.username }" formControlName="username" [(ngModel)]="user.username"
+                <ion-input required placeholder="用户名" [ngClass]="{' is-danger': formErrors.username }" formControlName="username" [(ngModel)]="user.username"
                     type="text"></ion-input>
             </ion-item>
 
-            <ion-item>
+            <!-- <ion-item>
                 <ion-label color="primary">昵称</ion-label>
                 <ion-input required placeholder="昵称..." [ngClass]="{' is-danger': formErrors.displayName }" formControlName="displayName"
                     [(ngModel)]="user.displayName" type="text"></ion-input>
-            </ion-item>
+            </ion-item> -->
 
             <ion-item>
                 <ion-label color="primary">邮箱</ion-label>
-                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }" placeholder="邮箱"
-                    value="hello@qq.com"></ion-input>
+                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }" 
+                placeholder="邮箱"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">密码</ion-label>
-                <ion-input [ngClass]="{' is-danger': formErrors.password }" formControlName="password" type="password" placeholder="请输入密码..."></ion-input>
+                <ion-input [ngClass]="{' is-danger': formErrors.password }" formControlName="password" type="password" placeholder="密码"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">确认密码</ion-label>
-                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" formControlName="confirmPassword" type="password" placeholder="请输入密码..."></ion-input>
+                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" formControlName="confirmPassword" type="password" placeholder="确认密码"></ion-input>
             </ion-item>
 
         </ion-list>
         <div *ngIf="formErrors.username" class="text-danger">
             {{ formErrors.username }}
         </div>
-        <div *ngIf="formErrors.displayName" class="text-danger">
+        <!-- <div *ngIf="formErrors.displayName" class="text-danger">
             {{ formErrors.displayName }}
-        </div>
+        </div> -->
         <div *ngIf="formErrors.email" class="text-danger">
             {{ formErrors.email }}
         </div>
