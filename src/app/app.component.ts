@@ -1,10 +1,17 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-11-23 19:33:38 
+ * @Last Modified by:   kobepeng 
+ * @Last Modified time: 2017-11-23 19:33:38 
+ */
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-//import { JPushService } from '../providers/utils/jpush.service';
+//import { JPushService } from '../providers/utils/jpush.service'; // 暂未启用
 import { GlobalService } from '../providers/global.service';
 import { UpdateService } from '../providers/utils/update.service';
+import { NativeService } from '../providers/utils/native.service';
 import { RebirthHttpProvider } from "rebirth-http";
 import { BackgroundMode } from '@ionic-native/background-mode';
 
@@ -22,13 +29,16 @@ export class MyApp {
     updateService: UpdateService,
     public rebirthProvider: RebirthHttpProvider,
     private backgroundMode: BackgroundMode,
-    global:GlobalService
+    global:GlobalService,
+    native:NativeService,
+    
   ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
       // 检查更新
       updateService.checkUpdate()
+      native.initNativeService();
       // 开启后台运行
       //backgroundMode.enable();
       // 初始化 jPush

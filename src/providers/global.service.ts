@@ -1,3 +1,9 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-11-23 19:26:51 
+ * @Last Modified by: kobepeng
+ * @Last Modified time: 2017-11-23 19:27:53
+ */
 import { Subject, Observable } from "rxjs";
 import { baseUrl } from '../config'
 
@@ -13,9 +19,10 @@ export class GlobalService {
 	_userinfo: any;
 	_countdown: number = 0;
 	_resttime: number = 0;
-	
+	_isAlwaysLight: boolean = false;
+
 	serverAddress = baseUrl;
-	 
+
 	public get projectChangeMonitor(): Observable<any> {
 		return this.notificationSubject.asObservable();
 	}
@@ -46,6 +53,9 @@ export class GlobalService {
 		return tokenSubject.asObservable();
 	}
 
+	/**
+	 * authorization token
+	 */
 	get token() {
 		if (this._token) {
 			return this._token;
@@ -109,6 +119,29 @@ export class GlobalService {
 		localStorage.setItem("isFirstTimeOpen", str);
 	}
 
+	get isAlwaysLight() {
+		if (this._isAlwaysLight) {
+			return this._isAlwaysLight;
+		} else {
+			let isAlwaysLight = localStorage.getItem("isAlwaysLight");
+			if (isAlwaysLight == "false") {
+				return false;
+			} else {
+				return true;
+			}
+
+		}
+	}
+	set isAlwaysLight(value: boolean) {
+		this._isAlwaysLight = value;
+		let str = "";
+		if (value) {
+			str = "true";
+		} else {
+			str = "false";
+		}
+		localStorage.setItem("isAlwaysLight", str);
+	}
 
 	/**
 	 * 打开通知

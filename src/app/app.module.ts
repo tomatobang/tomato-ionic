@@ -2,7 +2,7 @@
  * @Author: kobepeng 
  * @Date: 2017-11-20 19:19:52 
  * @Last Modified by: kobepeng
- * @Last Modified time: 2017-11-20 19:43:49
+ * @Last Modified time: 2017-11-23 19:34:56
  */
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -18,20 +18,20 @@ const config: SocketIoConfig = { url: baseUrl + 'tomatobang', options: {} };
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { GlobalService } from '../providers/global.service';
 import { JPushService } from '../providers/utils/jpush.service';
 import { UpdateService } from '../providers/utils/update.service';
 import { TomatoIOService } from '../providers/utils/socket.io.service';
 import { Helper } from '../providers/utils/helper';
+import { NativeService } from '../providers/utils/native.service';
 
 import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
 import { IonicStorageModule } from '@ionic/storage';
-import {
-	FileTransfer
-} from "@ionic-native/file-transfer";
+import { FileTransfer } from "@ionic-native/file-transfer";
 import { FileOpener } from '@ionic-native/file-opener'
-
+import { Insomnia } from '@ionic-native/insomnia';
 
 import * as Raven from 'raven-js';
 Raven
@@ -55,12 +55,10 @@ export class RavenErrorHandler implements ErrorHandler {
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp, {
-      // 子页隐藏 TAB
-      tabsHideOnSubPages: true,
+      tabsHideOnSubPages: true, // 子页隐藏 TAB
       tabsLayout: 'icon-left',
       iconMode: "ios",
-      // 禁用 IOS 手势滑动返回
-      swipeBackEnabled: false
+      swipeBackEnabled: false // 禁用 IOS 手势滑动返回
     }),
     SocketIoModule.forRoot(config),
     IonicStorageModule.forRoot()
@@ -72,17 +70,19 @@ export class RavenErrorHandler implements ErrorHandler {
     MyApp,
   ],
   providers: [
-    StatusBar, 
+    StatusBar,
     BackgroundMode,
     SplashScreen,
-    GlobalService, 
-    JPushService, 
-    TomatoIOService, 
-    Helper, 
+    GlobalService,
+    JPushService,
+    NativeService,
+    TomatoIOService,
+    Helper,
     UpdateService,
     FileTransfer,
     FileOpener,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    Insomnia,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ]
 })
