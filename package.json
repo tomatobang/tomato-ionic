@@ -33,6 +33,7 @@
     "@ionic-native/insomnia": "^4.3.3",
     "@ionic-native/local-notifications": "^4.3.1",
     "@ionic-native/media": "^4.0.1",
+    "@ionic-native/network": "^4.4.2",
     "@ionic-native/splash-screen": "^4.4.0",
     "@ionic-native/status-bar": "^4.4.0",
     "@ionic/storage": "^2.0.1",

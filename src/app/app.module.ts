@@ -32,6 +32,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { FileTransfer } from "@ionic-native/file-transfer";
 import { FileOpener } from '@ionic-native/file-opener'
 import { Insomnia } from '@ionic-native/insomnia';
+import { Network } from '@ionic-native/network';
 
 import * as Raven from 'raven-js';
 Raven
@@ -82,6 +83,7 @@ export class RavenErrorHandler implements ErrorHandler {
     FileTransfer,
     FileOpener,
     Insomnia,
+    Network,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ]
