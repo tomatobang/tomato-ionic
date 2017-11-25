@@ -1,5 +1,11 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-11-25 20:32:32 
+ * @Last Modified by:   kobepeng 
+ * @Last Modified time: 2017-11-25 20:32:32 
+ */
 import { Component, ViewChild } from "@angular/core";
-import { NavController, ActionSheetController, IonicPage,App} from "ionic-angular";
+import { NavController, ActionSheetController, IonicPage, App, Platform } from "ionic-angular";
 import { GlobalService } from "../../providers/global.service";
 import { JPushService } from '../../providers/utils/jpush.service';
 import { Helper } from '../../providers/utils/helper';
@@ -9,7 +15,6 @@ import { OnlineUserService } from "../../providers/data.service";
 
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
-import { Platform } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -21,6 +26,7 @@ export class MinePage {
 	userid = "";
 	username = '';
 	headImg = "./assets/tomato-active.png";
+	showBigHeadImg = false;
 
 	constructor(public navCtrl: NavController,
 		public globalservice: GlobalService,
@@ -31,8 +37,8 @@ export class MinePage {
 		private file: File,
 		private helper: Helper,
 		public platform: Platform,
-		private userservice: OnlineUserService, 
-		private app:App
+		private userservice: OnlineUserService,
+		private app: App
 	) { }
 
 	public ngOnInit(): void {
@@ -48,7 +54,6 @@ export class MinePage {
 					//this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
 				}
 			});
-
 		}
 	}
 
@@ -61,7 +66,7 @@ export class MinePage {
 			this.globalservice.token = "";
 			this.jPushService.clearAlias();
 		});
-		
+
 	}
 
 	setting() {
@@ -82,9 +87,16 @@ export class MinePage {
 
 	}
 
-	statistics(){
+	statistics() {
 		this.navCtrl.push("StatisticsPage", {
 		}, {}, () => { });
+	}
+
+	/**
+	 * 显示头像大图
+	 */
+	toShowBigHeadImg() {
+		this.showBigHeadImg = true;
 	}
 
 	/**
@@ -123,86 +135,6 @@ export class MinePage {
 		})
 	}
 
-
-	/**
-	 * 头像编辑 modal
-	 */
-	changeHeadImg() {
-		let actionSheet = this.actionSheetCtrl.create({
-			title: '修改头像',
-			buttons: [
-				{
-					text: '从相册中选择',
-					handler: () => {
-						console.log('从相册中选择 clicked');
-						const options: CameraOptions = {
-							quality: 100,
-							sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-							destinationType: this.camera.DestinationType.DATA_URL,
-							encodingType: this.camera.EncodingType.PNG,
-							mediaType: this.camera.MediaType.PICTURE,
-							targetWidth: 180,
-							targetHeight: 180
-						}
-
-						this.camera.getPicture(options).then((imageData) => {
-							// imageData is either a base64 encoded string or a file URI
-							// If it's base64:
-							let base64Image = 'data:image/jpeg;base64,' + imageData;
-							this.userservice.updateUserHeadImg({
-								userid: this.userid,
-								imgData: base64Image
-							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid, true).then((url) => {
-									this.headImg = url+"?"+new Date().getTime();
-								});
-							});
-						}, (err) => {
-							// Handle error
-						});
-					}
-				}, {
-					text: '拍摄照片',
-					handler: () => {
-						console.log('拍摄照片 clicked');
-						const options: CameraOptions = {
-							quality: 100,
-							sourceType: this.camera.PictureSourceType.CAMERA,
-							destinationType: this.camera.DestinationType.DATA_URL,
-							encodingType: this.camera.EncodingType.PNG,
-							mediaType: this.camera.MediaType.PICTURE,
-							targetWidth: 180,
-							targetHeight: 180
-						}
-
-						this.camera.getPicture(options).then((imageData) => {
-							// imageData is either a base64 encoded string or a file URI
-							// If it's base64:
-							let base64Image = 'data:image/jpeg;base64,' + imageData;
-							this.userservice.updateUserHeadImg({
-								userid: this.userid,
-								imgData: base64Image
-							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid, true).then((url) => {
-									this.headImg = url+"?"+new Date().getTime();
-								});
-							});
-						}, (err) => {
-							// Handle error
-						});
-					}
-				}, {
-					text: '取消',
-					role: 'cancel',
-					handler: () => {
-						console.log('Cancel 修改头像');
-					}
-				}
-			]
-		});
-		actionSheet.present();
-	}
-
 	/**
 	 * 文件下载
 	 * @param filename 
@@ -231,5 +163,13 @@ export class MinePage {
 			})
 		});
 
+	}
+
+
+	/**
+	 * 关闭头像大图
+	 */
+	closeBigHeadImg() {
+		this.showBigHeadImg = false;
 	}
 }

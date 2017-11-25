@@ -5,10 +5,31 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-card>
-        <ion-card-content>
-         （TODO）
-        </ion-card-content>
-      </ion-card>
+    <ion-list>
+        <ion-item (click)="changeUserName()">
+            <h2>用户名</h2>
+            <ion-note item-end>
+                {{username}}
+            </ion-note>
+        </ion-item>
+        <button ion-item (click)="changeHeadImg()">
+            <h2>头像</h2>
+            <ion-note item-end>
+                <img [src]="headImg" class="headImg" (click)="changeHeadImg()" />
+            </ion-note>
+        </button>
+        <button ion-item (click)="changeSex()">
+            <h2>性别</h2>
+            <ion-note item-end> {{sex}} </ion-note>
+        </button>
+        <button ion-item (click)="changeDisplayName()">
+            <h2>昵称</h2>
+            <ion-note item-end> {{displayName}} </ion-note>
+        </button>
+        <button ion-item (click)="changeEmail()">
+            <h2>邮箱</h2>
+            <ion-note item-end> {{email}} </ion-note>
+        </button>
+    </ion-list>
 
 </ion-content>

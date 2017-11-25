@@ -14,6 +14,18 @@ page-about {
     border-radius: 50%;
 }
 
+.big-headImg{
+    text-align: center;
+    width: 100%;
+    img{
+        width: 148px;
+        height: 148px;
+        margin:auto;
+        border-radius: 50%;
+    }
+   
+}
+
 .setting-icon{
     color:$primary_tb;
 }
