@@ -1,18 +1,47 @@
 <ion-header>
-  <ion-title>
-    {{page_title}}
-  </ion-title>
-  <ion-buttons left>
-    <button ion-button (click)="dismiss()">取消
-    </button>
-  </ion-buttons>
+  <ion-toolbar>
+    <ion-title>
+      {{page_title}}
+    </ion-title>
+    <ion-buttons left>
+      <button ion-button (click)="dismiss()">取消
+      </button>
+    </ion-buttons>
 
-  <ion-buttons right>
-    <button ion-button icon-only outline color="secondary" (click)="save()" class="add-task-button">保存
-    </button>
-  </ion-buttons>
+    <ion-buttons right>
+      <button ion-button icon-only outline color="secondary" (click)="save()" class="add-task-button">保存
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  用户信息更新区域
+  <ion-item *ngIf="update!='sex'">
+    <ion-label color="primary">{{label}}</ion-label>
+    <ion-input placeholder="{{label}}" [(ngModel)]="value"></ion-input>
+  </ion-item>
+
+
+  <ion-list radio-group [(ngModel)]="value" *ngIf="update=='sex'">
+    <ion-list-header>
+      性别
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>男</ion-label>
+      <ion-radio value="man"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>女</ion-label>
+      <ion-radio value="woman"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>保密</ion-label>
+      <ion-radio value="sec"></ion-radio>
+    </ion-item>
+
+  </ion-list>
+
 </ion-content>

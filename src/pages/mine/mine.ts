@@ -10,7 +10,6 @@ import { GlobalService } from "../../providers/global.service";
 import { JPushService } from '../../providers/utils/jpush.service';
 import { Helper } from '../../providers/utils/helper';
 
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { OnlineUserService } from "../../providers/data.service";
 
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
@@ -32,7 +31,6 @@ export class MinePage {
 		public globalservice: GlobalService,
 		public jPushService: JPushService,
 		public actionSheetCtrl: ActionSheetController,
-		private camera: Camera,
 		private transfer: FileTransfer,
 		private file: File,
 		private helper: Helper,

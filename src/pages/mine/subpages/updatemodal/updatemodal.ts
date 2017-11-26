@@ -5,9 +5,7 @@
  * @Last Modified time: 2017-11-25 19:59:59
  */
 import { Component, OnInit, ViewChild } from "@angular/core";
-
-import { IonicPage, ViewController } from "ionic-angular";
-// import { GlobalService } from "../../../../providers/global.service";
+import { IonicPage, ViewController, NavParams } from "ionic-angular";
 
 declare var window;
 @IonicPage()
@@ -16,23 +14,44 @@ declare var window;
 	templateUrl: "updatemodal.html"
 })
 export class UpdatemodalPage implements OnInit {
+	update: string;
 	page_title: string;
+	label: string;
+	value: any;
 	constructor(
-		public viewCtrl: ViewController
-		//public globalservice: GlobalService
+		public viewCtrl: ViewController,
+		params: NavParams
 	) {
-
+		let update = params.get('update');
+		this.update = update;
+		switch (update) {
+			case 'sex': this.page_title = "更新性别"; this.label = "性别"; break;
+			case 'displayname': this.page_title = "更新昵称"; this.label = "昵称"; break;
+			case 'email': this.page_title = "更新邮箱"; this.label = "邮箱"; break;
+			default: break;
+		}
 	}
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
+	/**
+	 * 取消
+	 */
 	dismiss() {
-		let data = { foo: "bar" };
-		this.viewCtrl.dismiss(data);
+		this.viewCtrl.dismiss();
 	}
 
+	/**
+	 * 保存
+	 */
 	save() {
-
+		let ret = {};
+		switch (this.update) {
+			case 'sex': ret = { sex: this.value }; break;
+			case 'displayname': ret = { displayname: this.value }; break;
+			case 'email': ret = { email: this.value }; break;
+			default: break;
+		}
+		this.viewCtrl.dismiss(ret);
 	}
 }

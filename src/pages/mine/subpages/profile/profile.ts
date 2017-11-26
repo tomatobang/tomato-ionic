@@ -16,7 +16,8 @@ declare var window;
 @IonicPage()
 @Component({
 	selector: "page-profile",
-	templateUrl: "profile.html"
+	templateUrl: "profile.html",
+	providers: [OnlineUserService, Helper, FileTransfer, File]
 })
 export class ProfilePage implements OnInit {
 	userid = "";
@@ -62,21 +63,37 @@ export class ProfilePage implements OnInit {
 		}
 	}
 
-	changeUserName() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage");
+	/**
+	 * 更新性别
+	 */
+	changeSex() {
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'sex' });
 		profileModal.onDidDismiss(data => {
+			this.sex = data.sex;
 		});
 		profileModal.present();
-
 	}
 
-	changeSex() {
-	}
-
+	/**
+	 * 更新昵称
+	 */
 	changeDisplayName() {
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'displayname' });
+		profileModal.onDidDismiss(data => {
+			this.displayName = data.displayname;
+		});
+		profileModal.present();
 	}
 
+	/**
+	 * 更新邮箱
+	 */
 	changeEmail() {
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'email' });
+		profileModal.onDidDismiss(data => {
+			this.email = data.email;
+		});
+		profileModal.present();
 	}
 
 	/**
