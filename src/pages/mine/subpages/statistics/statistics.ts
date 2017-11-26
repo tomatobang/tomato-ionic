@@ -34,8 +34,12 @@ export class StatisticsPage implements OnInit {
 
 	ngOnInit() {
 		this.divContainer.nativeElement.style.width = window.screen.width;
-		this.divContainer.nativeElement.style.height = "350px";
-		this.cellSize = [(window.screen.width - 20) / 7, (window.screen.width - 20) / 7];
+		if(window.screen.width < 350){
+			this.divContainer.nativeElement.style.height = window.screen.width+'px';
+		}else{
+			this.divContainer.nativeElement.style.height = "350px";
+		}
+		this.cellSize = [(window.screen.width - 10) / 7, (window.screen.width - 10) / 7];
 		setTimeout(() => {
 			this.myChart = echarts.init(this.divContainer.nativeElement);
 			this.refreshData();
@@ -151,7 +155,7 @@ export class StatisticsPage implements OnInit {
 						lineStyle: {
 							color: '#8c8c8c',
 							type: 'dashed',
-							opacity: 0.2
+							opacity: 0
 						}
 					},
 					itemStyle: {
@@ -190,10 +194,10 @@ export class StatisticsPage implements OnInit {
 							formatter(params) {
 								return echarts.format.formatTime('dd', params.value[0]);
 							},
-							offset: [-this.cellSize[0] / 2 + 8, -this.cellSize[1] / 2 + 8],
+							offset: [-this.cellSize[0] / 2 + 6, -this.cellSize[1] / 2 + 5],
 							textStyle: {
 								color: '#8c8c8c',//
-								fontSize: 12
+								fontSize: 10
 							}
 						}
 					},

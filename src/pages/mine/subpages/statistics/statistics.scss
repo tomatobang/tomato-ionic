@@ -4,6 +4,10 @@
     margin-top:0px;
 }
 
+.statistics-container .scroll-content{
+    padding: 0px 5px;
+}
+
 .calendar-nav{
     display: flex;
     width: 48%;
@@ -25,6 +29,7 @@
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 40px;
             margin-bottom: 0px;
+            margin-top: 0px;
             color: #F97271
         }
     }
