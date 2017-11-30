@@ -1,8 +1,8 @@
 /*
  * @Author: kobepeng 
  * @Date: 2017-11-23 11:07:20 
- * @Last Modified by:   kobepeng 
- * @Last Modified time: 2017-11-23 11:07:20 
+ * @Last Modified by: kobepeng
+ * @Last Modified time: 2017-11-30 16:35:27
  */
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ElementRef } from "@angular/core";
@@ -139,7 +139,7 @@ export class StatisticsPage implements OnInit {
 			let option = {
 				tooltip: {
 					formatter(dd) {
-						return dd.value[0] + "<br/>番茄钟:" + dd.value[1];
+						return `${dd.value[0]}<br/>番茄钟:${dd.value[1]}`;
 					}
 				},
 				legend: {
@@ -196,7 +196,7 @@ export class StatisticsPage implements OnInit {
 							},
 							offset: [-this.cellSize[0] / 2 + 6, -this.cellSize[1] / 2 + 5],
 							textStyle: {
-								color: '#8c8c8c',//
+								color: '#8c8c8c',
 								fontSize: 10
 							}
 						}

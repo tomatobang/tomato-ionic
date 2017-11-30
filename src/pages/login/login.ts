@@ -71,8 +71,6 @@ export class LoginPage {
 			this.navCtrl.setRoot("TabsPage",{
 				animate:true
 			});
-			// this.navCtrl.push("TabsPage",{},()=>{
-			// });
 		});
 	}
 

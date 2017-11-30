@@ -2,7 +2,7 @@
  * @Author: kobepeng 
  * @Date: 2017-11-20 19:19:52 
  * @Last Modified by: kobepeng
- * @Last Modified time: 2017-11-23 19:34:56
+ * @Last Modified time: 2017-11-30 18:45:48
  */
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -14,8 +14,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { baseUrl } from '../config'
-const config: SocketIoConfig = { url: baseUrl + 'tomatobang', options: {} };
-
+// declare let config: SocketIoConfig;
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -45,7 +44,6 @@ export class RavenErrorHandler implements ErrorHandler {
   }
 }
 
-
 @NgModule({
   declarations: [
     MyApp
@@ -61,7 +59,7 @@ export class RavenErrorHandler implements ErrorHandler {
       iconMode: "ios",
       swipeBackEnabled: false // 禁用 IOS 手势滑动返回
     }),
-    SocketIoModule.forRoot(config),
+    SocketIoModule.forRoot({ url: `${baseUrl}tomatobang`, options: {} }),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [
