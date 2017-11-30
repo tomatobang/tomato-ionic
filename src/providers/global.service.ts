@@ -2,7 +2,7 @@
  * @Author: kobepeng 
  * @Date: 2017-11-23 19:26:51 
  * @Last Modified by: kobepeng
- * @Last Modified time: 2017-11-23 19:27:53
+ * @Last Modified time: 2017-11-30 13:45:18
  */
 import { Subject, Observable } from "rxjs";
 import { baseUrl } from '../config'
@@ -13,13 +13,13 @@ let settingSubject: Subject<any> = new Subject<any>();
 
 export class GlobalService {
 	public notificationSubject: Subject<any> = new Subject<any>();
-	_isActive: boolean = false;
-	_isFirstTimeOpen: boolean;
-	_token: string;
-	_userinfo: any;
-	_countdown: number = 0;
-	_resttime: number = 0;
-	_isAlwaysLight: boolean = false;
+	private _isActive: boolean = false;
+	private _isFirstTimeOpen: boolean;
+	private _token: string;
+	private _userinfo: any;
+	private _countdown: number = 0;
+	private _resttime: number = 0;
+	private _isAlwaysLight: boolean = false;
 
 	serverAddress = baseUrl;
 
@@ -88,9 +88,15 @@ export class GlobalService {
 		}
 	}
 
-	set userinfo(value) {
-		this._userinfo = value;
-		localStorage.setItem("userinfo", value);
+	set userinfo(value: any) {
+		if (typeof value == "string") {
+			this._userinfo = JSON.parse(value);
+			localStorage.setItem("userinfo", value);
+		} else if (typeof value == "object") {
+			this._userinfo = value;
+			localStorage.setItem("userinfo", JSON.stringify(value));
+		}
+
 		subject.next(value);
 	}
 

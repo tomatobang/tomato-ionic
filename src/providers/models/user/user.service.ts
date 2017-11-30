@@ -27,6 +27,31 @@ export abstract class UserService extends RebirthHttp {
     userid: string,
     imgData: string
   }): Observable<any>;
+
+  abstract updateSex(data: {
+    userid: string,
+    sex: string
+  }): Observable<any>;
+
+  abstract updateSex(data: {
+    userid: string,
+    sex: string
+  }): Observable<any>;
+
+  abstract updateDisplayName(data: {
+    userid: string,
+    displayname: string
+  }): Observable<any>;
+
+  abstract updateEmail(data: {
+    userid: string,
+    email: string
+  }): Observable<any>;
+
+  abstract updateLocation(data: {
+    userid: string,
+    location: string
+  }): Observable<any>;
 }
 
 
@@ -71,7 +96,6 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
-
   @POST(baseUrl + 'email_username/verify')
   verifyUserNameEmail( @Body email_username: EmailUserName): Observable<any> {
     return null;
@@ -85,6 +109,37 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
+  @POST(baseUrl + 'api/user/sex')
+  updateSex( @Body data: {
+    userid: string,
+    sex: string
+  }): Observable<any> {
+    return null;
+  }
+
+  @POST(baseUrl + 'api/user/displayname')
+  updateDisplayName( @Body data: {
+    userid: string,
+    displayname: string
+  }): Observable<any> {
+    return null;
+  }
+
+  @POST(baseUrl + 'api/user/email')
+  updateEmail( @Body data: {
+    userid: string,
+    email: string
+  }): Observable<any> {
+    return null;
+  }
+
+  @POST(baseUrl + 'api/user/location')
+  updateLocation( @Body data: {
+    userid: string,
+    location: string
+  }): Observable<any> {
+    return null;
+  }
 }
 
 

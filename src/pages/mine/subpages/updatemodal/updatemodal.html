@@ -17,15 +17,15 @@
 
 <ion-content padding>
   <ion-item *ngIf="update!='sex'">
-    <ion-label color="primary">{{label}}</ion-label>
+    <!-- <ion-label color="primary">{{label}}</ion-label> -->
     <ion-input placeholder="{{label}}" [(ngModel)]="value"></ion-input>
   </ion-item>
 
 
   <ion-list radio-group [(ngModel)]="value" *ngIf="update=='sex'">
-    <ion-list-header>
+    <!-- <ion-list-header>
       性别
-    </ion-list-header>
+    </ion-list-header> -->
 
     <ion-item>
       <ion-label>男</ion-label>

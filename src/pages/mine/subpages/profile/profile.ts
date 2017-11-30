@@ -11,6 +11,7 @@ import { File } from '@ionic-native/file';
 
 
 import { GlobalService } from "../../../../providers/global.service";
+import { debug } from "util";
 
 declare var window;
 @IonicPage()
@@ -25,6 +26,7 @@ export class ProfilePage implements OnInit {
 	sex: string;
 	email: string;
 	displayName: string;
+	location: string;
 	headImg = "./assets/tomato-active.png";
 	constructor(
 		public globalservice: GlobalService,
@@ -41,11 +43,14 @@ export class ProfilePage implements OnInit {
 	ngOnInit() {
 		this.username = this.globalservice.userinfo.username;
 		this.email = this.globalservice.userinfo.email;
-		this.email = this.email ? "" : "未知"
+		this.email = this.email ? this.email : "未知"
 		this.sex = this.globalservice.userinfo.sex;
-		this.sex = this.sex ? "" : "未知"
+		this.sex = this.sex ? this.sex : "sec"
 		this.displayName = this.globalservice.userinfo.displayName;
 		this.displayName = this.displayName ? this.displayName : "未知";
+
+		this.location = this.globalservice.userinfo.location;
+		this.location = this.location ? this.location : "未知";
 
 		this.username = this.globalservice.userinfo.username;
 		this.userid = this.globalservice.userinfo._id;
@@ -67,9 +72,16 @@ export class ProfilePage implements OnInit {
 	 * 更新性别
 	 */
 	changeSex() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'sex' });
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'sex',value:this.sex });
 		profileModal.onDidDismiss(data => {
+			if(!data){
+				return;
+			}
 			this.sex = data.sex;
+			this.userservice.updateSex({userid:this.userid,sex:this.sex}).subscribe((data)=>{
+				console.log(data);
+				this.globalservice.userinfo=JSON.parse(data._body);
+			});;
 		});
 		profileModal.present();
 	}
@@ -78,9 +90,16 @@ export class ProfilePage implements OnInit {
 	 * 更新昵称
 	 */
 	changeDisplayName() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'displayname' });
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'displayname',value:this.displayName });
 		profileModal.onDidDismiss(data => {
+			if(!data){
+				return;
+			}
 			this.displayName = data.displayname;
+			this.userservice.updateDisplayName({userid:this.userid,displayname:this.displayName}).subscribe((data)=>{
+				this.globalservice.userinfo=JSON.parse(data._body);
+			});
+			
 		});
 		profileModal.present();
 	}
@@ -89,9 +108,36 @@ export class ProfilePage implements OnInit {
 	 * 更新邮箱
 	 */
 	changeEmail() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'email' });
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'email',value:this.email });
 		profileModal.onDidDismiss(data => {
+			if(!data){
+				return;
+			}
 			this.email = data.email;
+			this.userservice.updateEmail({userid:this.userid,email:this.email}).subscribe((data)=>{
+				console.log(JSON.parse(data._body));
+				debugger
+				this.globalservice.userinfo=JSON.parse(data._body);
+			});;
+		});
+		profileModal.present();
+	}
+
+
+	/**
+	 * 更新地址
+	 */
+	changeLocation() {
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'location',value:this.location });
+		profileModal.onDidDismiss(data => {
+			if(!data){
+				return;
+			}
+			this.location = data.location;
+			this.userservice.updateLocation({userid:this.userid,location:this.location}).subscribe((data)=>{
+				console.log(data);
+				this.globalservice.userinfo=JSON.parse(data._body);
+			});;
 		});
 		profileModal.present();
 	}
