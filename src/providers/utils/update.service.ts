@@ -17,6 +17,7 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileOpener } from '@ionic-native/file-opener'
 
 import { Subject, Observable } from 'rxjs'
+import { loadavg } from "os";
 
 declare var window;
 
@@ -55,7 +56,7 @@ export class UpdateService {
                 // 注意区分测试版与正式版
                 window.cordova.getAppVersion.getVersionNumber().then((version) => {
                     if (this.compare(appVersionInfo.version, version)) {
-                        this.showUpdateConfirm(appVersionInfo.Content, appVersionInfo.DownloadUrl);
+                        this.showUpdateConfirm(appVersionInfo.Content, appVersionInfo.downloadUrl);
                     }
                 });
             }
@@ -143,7 +144,6 @@ export class UpdateService {
      */
     downloadApp(isAndroid, downloadUrl: string) {
         if (isAndroid) {
-            let that = this;
             let trustHosts = true;
             let options = {};
             let fileTransfer: FileTransferObject = this.transfer.create();
@@ -152,32 +152,32 @@ export class UpdateService {
                 fileEntry.getDirectory("Download", { create: true, exclusive: false }, (fileEntry) => {
                     const targetPath: string = fileEntry.toInternalURL() + "TomatoBang.apk";
                     let loading = null;
+                    loading = this.loadingCtrl.create({
+                        content: `下载中...`
+                    });
+                    loading.present();
                     fileTransfer.download(downloadUrl, targetPath, trustHosts, options).then((result) => {
                         this.fileOpener.open(targetPath, 'application/vnd.android.package-archive');
                         if (loading) {
                             loading.dismiss();
                         }
                     }, (error) => {
+                        if (loading) {
+                            loading.dismiss();
+                        }
                         let alert = this.alertCtrl.create({
                             title: '下载失败!',
                             buttons: ['OK']
                         });
                         alert.present();
-                        if (loading) {
-                            loading.dismiss();
-                        }
                     });
                     // 下载进度
-                    fileTransfer.onProgress((progress) => {
-                        setTimeout(() => {
-                            let downloadProgress = (progress.loaded / progress.total) * 100;
-                            loading = that.loadingCtrl.create({
-                                content: "已经下载：" + Math.floor(downloadProgress) + "%"
-                            });
-                            if (downloadProgress == 100) {
-                                loading.dismiss();
-                            }
-                        });
+                    fileTransfer.onProgress((evt: ProgressEvent) => {
+                        let downloadProgress = window.parseInt(evt.loaded / evt.total * 100);
+                        loading.data.content = `<div>已下载${downloadProgress}%</div>`;
+                        if (downloadProgress >= 100) {
+                            loading.dismiss();
+                        }
                     });
                 });
             });
