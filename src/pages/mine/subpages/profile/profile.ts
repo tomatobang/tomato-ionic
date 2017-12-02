@@ -177,6 +177,7 @@ export class ProfilePage implements OnInit {
 							});
 						}, (err) => {
 							// Handle error
+							console.log('从相册上传头像失败：',err)
 						});
 					}
 				}, {
@@ -207,6 +208,7 @@ export class ProfilePage implements OnInit {
 							});
 						}, (err) => {
 							// Handle error
+							console.log('拍照上传头像失败：',err)
 						});
 					}
 				}, {

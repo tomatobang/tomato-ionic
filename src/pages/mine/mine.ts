@@ -46,10 +46,9 @@ export class MinePage {
 			this.platform.ready().then((readySource) => {
 				if (readySource == "cordova") {
 					this.downloadHeadImg(this.userid, false).then((url) => {
-						this.headImg = url;
+						debugger
+						this.headImg = `${url}?${new Date()}`;
 					});
-				} else {
-					//this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
 				}
 			});
 		}
@@ -105,24 +104,11 @@ export class MinePage {
 	downloadHeadImg(filename, change): Promise<any> {
 		let targetPath = this.helper.getBasePath() + 'headimg/';
 		let targetPathWithFileName = this.helper.getBasePath() + 'headimg/' + filename + ".png";
-
 		return new Promise((resolve, reject) => {
 			// 检查是否已下载过
 			this.file.checkFile(targetPath, filename + ".png").then(
 				(success) => {
-					if (change) {
-						// 先删除本地文件再下载
-						this.file.removeFile(targetPath, filename + ".png").then(() => {
-							this.filedownload(filename, targetPathWithFileName).then((file) => {
-								resolve(file)
-							}, (err) => {
-								reject(err)
-							});
-						})
-					} else {
-						// 直接使用本地文件
-						resolve(targetPathWithFileName);
-					}
+					resolve(targetPathWithFileName);
 				}, (error) => {
 					this.filedownload(filename, targetPathWithFileName).then((file) => {
 						resolve(file)
