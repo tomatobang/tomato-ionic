@@ -2,7 +2,7 @@
  * @Author: kobepeng 
  * @Date: 2017-11-20 19:19:52 
  * @Last Modified by: kobepeng
- * @Last Modified time: 2017-11-30 18:45:48
+ * @Last Modified time: 2017-12-02 10:52:03
  */
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -29,7 +29,8 @@ import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
 import { IonicStorageModule } from '@ionic/storage';
 import { FileTransfer } from "@ionic-native/file-transfer";
-import { FileOpener } from '@ionic-native/file-opener'
+import { FileOpener } from '@ionic-native/file-opener';
+import { File } from '@ionic-native/file';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Network } from '@ionic-native/network';
 
@@ -78,6 +79,7 @@ export class RavenErrorHandler implements ErrorHandler {
     TomatoIOService,
     Helper,
     UpdateService,
+    File,
     FileTransfer,
     FileOpener,
     Insomnia,

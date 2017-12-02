@@ -1,15 +1,16 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-12-02 10:25:11 
+ * @Last Modified by: kobepeng
+ * @Last Modified time: 2017-12-02 11:23:39
+ */
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { IonicPage, ModalController, ViewController, ActionSheetController, Platform } from "ionic-angular";
-
-import { Helper } from '../../../../providers/utils/helper';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { OnlineUserService } from "../../../../providers/data.service";
 
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-
-
+import { NativeService } from '../../../../providers/utils/native.service';
 import { GlobalService } from "../../../../providers/global.service";
 import { debug } from "util";
 
@@ -17,8 +18,7 @@ declare var window;
 @IonicPage()
 @Component({
 	selector: "page-profile",
-	templateUrl: "profile.html",
-	providers: [OnlineUserService, Helper, FileTransfer, File]
+	templateUrl: "profile.html"
 })
 export class ProfilePage implements OnInit {
 	userid = "";
@@ -28,14 +28,13 @@ export class ProfilePage implements OnInit {
 	displayName: string;
 	location: string;
 	headImg = "./assets/tomato-active.png";
+	
 	constructor(
 		public globalservice: GlobalService,
 		public modalCtrl: ModalController,
 		public actionSheetCtrl: ActionSheetController,
 		private camera: Camera,
-		private transfer: FileTransfer,
-		private file: File,
-		private helper: Helper,
+		public native: NativeService,
 		public platform: Platform,
 		private userservice: OnlineUserService,
 	) { }
@@ -54,17 +53,17 @@ export class ProfilePage implements OnInit {
 
 		this.username = this.globalservice.userinfo.username;
 		this.userid = this.globalservice.userinfo._id;
+
 		if (this.globalservice.userinfo.img) {
 			this.platform.ready().then((readySource) => {
 				if (readySource == "cordova") {
-					this.downloadHeadImg(this.userid, false).then((url) => {
-						this.headImg = url;
+					this.native.downloadHeadImg(this.userid, false).then((url) => {
+						this.headImg = `${url}?${new Date().getTime()}`;
 					});
 				} else {
 					//this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
 				}
 			});
-
 		}
 	}
 
@@ -72,15 +71,15 @@ export class ProfilePage implements OnInit {
 	 * 更新性别
 	 */
 	changeSex() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'sex',value:this.sex });
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'sex', value: this.sex });
 		profileModal.onDidDismiss(data => {
-			if(!data){
+			if (!data) {
 				return;
 			}
 			this.sex = data.sex;
-			this.userservice.updateSex({userid:this.userid,sex:this.sex}).subscribe((data)=>{
+			this.userservice.updateSex({ userid: this.userid, sex: this.sex }).subscribe((data) => {
 				console.log(data);
-				this.globalservice.userinfo=JSON.parse(data._body);
+				this.globalservice.userinfo = JSON.parse(data._body);
 			});;
 		});
 		profileModal.present();
@@ -90,16 +89,16 @@ export class ProfilePage implements OnInit {
 	 * 更新昵称
 	 */
 	changeDisplayName() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'displayname',value:this.displayName });
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'displayname', value: this.displayName });
 		profileModal.onDidDismiss(data => {
-			if(!data){
+			if (!data) {
 				return;
 			}
 			this.displayName = data.displayname;
-			this.userservice.updateDisplayName({userid:this.userid,displayname:this.displayName}).subscribe((data)=>{
-				this.globalservice.userinfo=JSON.parse(data._body);
+			this.userservice.updateDisplayName({ userid: this.userid, displayname: this.displayName }).subscribe((data) => {
+				this.globalservice.userinfo = JSON.parse(data._body);
 			});
-			
+
 		});
 		profileModal.present();
 	}
@@ -108,16 +107,16 @@ export class ProfilePage implements OnInit {
 	 * 更新邮箱
 	 */
 	changeEmail() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'email',value:this.email });
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'email', value: this.email });
 		profileModal.onDidDismiss(data => {
-			if(!data){
+			if (!data) {
 				return;
 			}
 			this.email = data.email;
-			this.userservice.updateEmail({userid:this.userid,email:this.email}).subscribe((data)=>{
+			this.userservice.updateEmail({ userid: this.userid, email: this.email }).subscribe((data) => {
 				console.log(JSON.parse(data._body));
 				debugger
-				this.globalservice.userinfo=JSON.parse(data._body);
+				this.globalservice.userinfo = JSON.parse(data._body);
 			});;
 		});
 		profileModal.present();
@@ -128,15 +127,15 @@ export class ProfilePage implements OnInit {
 	 * 更新地址
 	 */
 	changeLocation() {
-		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'location',value:this.location });
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'location', value: this.location });
 		profileModal.onDidDismiss(data => {
-			if(!data){
+			if (!data) {
 				return;
 			}
 			this.location = data.location;
-			this.userservice.updateLocation({userid:this.userid,location:this.location}).subscribe((data)=>{
+			this.userservice.updateLocation({ userid: this.userid, location: this.location }).subscribe((data) => {
 				console.log(data);
-				this.globalservice.userinfo=JSON.parse(data._body);
+				this.globalservice.userinfo = JSON.parse(data._body);
 			});;
 		});
 		profileModal.present();
@@ -171,13 +170,13 @@ export class ProfilePage implements OnInit {
 								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid, true).then((url) => {
+								this.native.downloadHeadImg(this.userid, true).then((url) => {
 									this.headImg = url + "?" + new Date().getTime();
 								});
 							});
 						}, (err) => {
 							// Handle error
-							console.log('从相册上传头像失败：',err)
+							console.log('从相册上传头像失败：', err)
 						});
 					}
 				}, {
@@ -202,13 +201,13 @@ export class ProfilePage implements OnInit {
 								userid: this.userid,
 								imgData: base64Image
 							}).subscribe(ret => {
-								this.downloadHeadImg(this.userid, true).then((url) => {
+								this.native.downloadHeadImg(this.userid, true).then((url) => {
 									this.headImg = url + "?" + new Date().getTime();
 								});
 							});
 						}, (err) => {
 							// Handle error
-							console.log('拍照上传头像失败：',err)
+							console.log('拍照上传头像失败：', err)
 						});
 					}
 				}, {
@@ -222,71 +221,4 @@ export class ProfilePage implements OnInit {
 		});
 		actionSheet.present();
 	}
-
-	/**
-	 * 下载头像
-	 * @param filename 
-	 * @param change 
-	 */
-	downloadHeadImg(filename, change): Promise<any> {
-		let targetPath = this.helper.getBasePath() + 'headimg/';
-		let targetPathWithFileName = this.helper.getBasePath() + 'headimg/' + filename + ".png";
-
-		return new Promise((resolve, reject) => {
-			// 检查是否已下载过
-			this.file.checkFile(targetPath, filename + ".png").then(
-				(success) => {
-					if (change) {
-						// 先删除本地文件再下载
-						this.file.removeFile(targetPath, filename + ".png").then(() => {
-							this.filedownload(filename, targetPathWithFileName).then((file) => {
-								resolve(file)
-							}, (err) => {
-								reject(err)
-							});
-						})
-					} else {
-						// 直接使用本地文件
-						resolve(targetPathWithFileName);
-					}
-				}, (error) => {
-					this.filedownload(filename, targetPathWithFileName).then((file) => {
-						resolve(file)
-					}, (err) => {
-						reject(err)
-					});
-				});
-		})
-	}
-
-	/**
-	 * 文件下载
-	 * @param filename 
-	 * @param targetPathWithFileName 
-	 */
-	filedownload(filename, targetPathWithFileName) {
-		return new Promise((resolve, reject) => {
-			let options = {
-				headers: {
-					Authorization: this.globalservice.token
-				}
-			};
-			let trustHosts = true;
-			const fileTransfer: FileTransferObject = this.transfer.create();
-			fileTransfer.download(this.globalservice.serverAddress + "api/user/headimg/" + filename,
-				targetPathWithFileName, trustHosts,
-				options).then(result => {
-					console.log("Headmg 下载完成..");
-					resolve(result.toURL());
-				}).catch(err => {
-					reject("Headmg 下载出错");
-					console.log("Headmg 下载出错", err);
-				});
-			fileTransfer.onProgress((evt: ProgressEvent) => {
-				console.log(evt)
-			})
-		});
-
-	}
-
 }
