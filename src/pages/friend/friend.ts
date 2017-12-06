@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import {NavController, IonicPage} from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,15 +8,16 @@ import {NavController, IonicPage} from 'ionic-angular';
   templateUrl: 'friend.html'
 })
 export class FriendPage {
-
-  toUser:Object;
+  showType = "hot";
+  page_title = "热门";
 
   constructor(public navCtrl: NavController) {
-    this.toUser = {
-      toUserId:'210000198410281948',
-      toUserName:'Hancock'
-    }
   }
 
+  
+  toMessagePage() {
+    console.log("setting!")
+    this.navCtrl.push("MessagePage", {}, {}, () => { });
+  }
 
 }

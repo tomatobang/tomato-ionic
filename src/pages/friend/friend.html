@@ -1,19 +1,37 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>朋友</ion-title>
-  </ion-navbar>
+    <ion-toolbar>
+        <div padding>
+            <ion-segment [(ngModel)]="showType">
+                <ion-segment-button value="hot">
+                    热门
+                </ion-segment-button>
+                <ion-segment-button value="focus">
+                    关注
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+
+        <ion-buttons right>
+            <button ion-button icon-only (click)="toMessagePage()">
+                <ion-icon ios="ios-chatboxes-outline" md="ios-chatboxes-outline"></ion-icon>
+                <ion-badge item-end color="danger">23</ion-badge>
+            </button>
+        </ion-buttons>
+
+    </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
 
-  <ion-list>
-    <button ion-item navPush="Chat"
-              [navParams]="toUser">
-      <ion-avatar item-left>
-        <img src="./assets/tomato-active.png">
-      </ion-avatar>
-      <h2>张三</h2>
-      <p>这是演示消息</p>
-    </button >
-  </ion-list>
+    <div [ngSwitch]="showType">
+        <ion-list *ngSwitchCase="'hot'">
+            热门
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'focus'">
+            关注
+        </ion-list>
+    </div>
+
 </ion-content>
