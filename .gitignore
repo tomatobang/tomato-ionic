@@ -91,7 +91,3 @@ io/
 barcodescanner/
 
 package-lock.json
-
-# Envrionment Variables
-**/environment.*
-!**/environment.model.ts

@@ -85,7 +85,10 @@ export class NativeService {
             message: msg,
             duration: 3000,
             position: "top",
-            cssClass: "my-toast-style"
+            cssClass: "my-toast-style",
+            showCloseButton: true,
+            closeButtonText: "关闭",
+            dismissOnPageChange: true
         });
         toast.present();
     }
