@@ -9,7 +9,7 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class FriendPage {
   showType = "hot";
-  page_title = "热门";
+  page_title = "动态";
 
   constructor(public navCtrl: NavController) {
   }

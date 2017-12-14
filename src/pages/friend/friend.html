@@ -3,10 +3,10 @@
         <div padding>
             <ion-segment [(ngModel)]="showType">
                 <ion-segment-button value="hot">
-                    热门
+                    动态
                 </ion-segment-button>
-                <ion-segment-button value="focus">
-                    关注
+                <ion-segment-button value="rank">
+                    排名
                 </ion-segment-button>
             </ion-segment>
         </div>
@@ -26,11 +26,11 @@
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'hot'">
-            热门
+            
         </ion-list>
 
-        <ion-list *ngSwitchCase="'focus'">
-            关注
+        <ion-list *ngSwitchCase="'rank'">
+            
         </ion-list>
     </div>
 

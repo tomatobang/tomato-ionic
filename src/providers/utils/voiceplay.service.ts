@@ -40,7 +40,7 @@ export class VoicePlayService {
 			// 检查是否已下载过
 			this.file.checkFile(targetPath, filename).then(
 				(success) => {
-					alert("已经下载,直接播放！");
+					// alert("已经下载,直接播放！");
 					resolve(targetPathWithFileName);
 				}, (error) => {
 					// 注意:此方法采用追加的方式添加
@@ -54,7 +54,7 @@ export class VoicePlayService {
 					fileTransfer.download(this._global.serverAddress + "download/voicefile/" + filename, targetPathWithFileName,
 						trustHosts,
 						options).then(result => {
-							console.log("下载完成,播放..");
+							// console.log("下载完成,播放..");
 							resolve(targetPathWithFileName);
 						}).catch(err => {
 							alert("下载音频文件出错");
@@ -83,7 +83,7 @@ export class VoicePlayService {
 			// 检查是否已下载过
 			this.file.checkFile(targetPath, filename).then(
 				(success) => {
-					alert("已经下载,直接播放！");
+					// alert("已经下载,直接播放！");
 					observer.next({
 						data: true,
 						value: targetPathWithFileName
@@ -180,7 +180,7 @@ export class VoicePlayService {
 		}
 		function getPhoneGapPath() {
 			let path = window.location.pathname;
-			path = path.substr(0, path.length - 10);
+			path = path.substr(0, path.length - 9);
 			return 'file://' + path;
 		};
 		let applicationDirectory = "";
