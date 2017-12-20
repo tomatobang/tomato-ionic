@@ -52,6 +52,11 @@ export abstract class UserService extends RebirthHttp {
     userid: string,
     location: string
   }): Observable<any>;
+
+  abstract updateBio(data: {
+    userid: string,
+    bio: string
+  }): Observable<any>;
 }
 
 
@@ -132,11 +137,19 @@ export class OnlineUserService extends UserService {
   }): Observable<any> {
     return null;
   }
-
+  
   @POST(baseUrl + 'api/user/location')
   updateLocation( @Body data: {
     userid: string,
     location: string
+  }): Observable<any> {
+    return null;
+  }
+
+  @POST(baseUrl + 'api/user/bio')
+  updateBio( @Body data: {
+    userid: string,
+    bio: string
   }): Observable<any> {
     return null;
   }

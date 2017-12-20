@@ -31,11 +31,12 @@ export class UpdatemodalPage implements OnInit {
 			case 'displayname': this.page_title = "更新昵称"; this.label = "昵称"; break;
 			case 'email': this.page_title = "更新邮箱"; this.label = "邮箱"; break;
 			case 'location': this.page_title = "更新地址"; this.label = "地址"; break;
+			case 'bio': this.page_title = "更新签名"; this.label = "签名"; break;
 			default: break;
 		}
 	}
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	/**
 	 * 取消
@@ -54,6 +55,7 @@ export class UpdatemodalPage implements OnInit {
 			case 'displayname': ret = { displayname: this.value }; break;
 			case 'email': ret = { email: this.value }; break;
 			case 'location': ret = { location: this.value }; break;
+			case 'bio': ret = { location: this.value }; break;
 			default: break;
 		}
 		this.viewCtrl.dismiss(ret);

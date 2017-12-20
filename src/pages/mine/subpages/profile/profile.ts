@@ -27,8 +27,9 @@ export class ProfilePage implements OnInit {
 	email: string;
 	displayName: string;
 	location: string;
+	bio: string;
 	headImg = "./assets/tomato-active.png";
-	
+
 	constructor(
 		public globalservice: GlobalService,
 		public modalCtrl: ModalController,
@@ -47,6 +48,9 @@ export class ProfilePage implements OnInit {
 		this.sex = this.sex ? this.sex : "sec"
 		this.displayName = this.globalservice.userinfo.displayName;
 		this.displayName = this.displayName ? this.displayName : "未知";
+
+		this.bio = this.globalservice.userinfo.bio;
+		this.bio = this.bio ? this.bio : "";
 
 		this.location = this.globalservice.userinfo.location;
 		this.location = this.location ? this.location : "未知";
@@ -78,6 +82,24 @@ export class ProfilePage implements OnInit {
 			}
 			this.sex = data.sex;
 			this.userservice.updateSex({ userid: this.userid, sex: this.sex }).subscribe((data) => {
+				console.log(data);
+				this.globalservice.userinfo = JSON.parse(data._body);
+			});;
+		});
+		profileModal.present();
+	}
+
+	/** 
+	 * 修改签名
+	*/
+	changeBio() {
+		let profileModal = this.modalCtrl.create("UpdatemodalPage", { update: 'bio', value: this.bio });
+		profileModal.onDidDismiss(data => {
+			if (!data) {
+				return;
+			}
+			this.bio = data.bio;
+			this.userservice.updateBio({ userid: this.userid, bio: this.bio }).subscribe((data) => {
 				console.log(data);
 				this.globalservice.userinfo = JSON.parse(data._body);
 			});;

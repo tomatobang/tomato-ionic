@@ -18,6 +18,12 @@
                 <img [src]="headImg" class="headImg"/>
             </ion-note>
         </button>
+        <button ion-item (click)="changeBio()">
+            <h2>签名</h2>
+            <ion-note item-end>
+                {{bio}} 
+            </ion-note>
+        </button>
         <button ion-item (click)="changeSex()">
             <h2>性别</h2>
             <ion-note item-end> {{sex=="sec"? "保密":sex}} </ion-note>

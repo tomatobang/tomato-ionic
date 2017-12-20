@@ -4,7 +4,7 @@
             <img [(src)]="voice.ImgUrl" *ngIf="isStartRecord" >
         </div>
         <div>
-            <ion-icon name="mic" item-start *ngIf="!isStartRecord"></ion-icon>
+            <ion-icon name="mic" class="voicerecord-mic" item-start *ngIf="!isStartRecord"></ion-icon>
         </div>
         <span *ngIf="!isStartRecord">按住我说话</span>
     </button>
