@@ -1,3 +1,9 @@
+/*
+ * @Author: kobepeng 
+ * @Date: 2017-12-20 14:26:19 
+ * @Last Modified by:   kobepeng 
+ * @Last Modified time: 2017-12-20 14:26:19 
+ */
 import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { VoicePlayService } from "../../providers/utils/voiceplay.service";
@@ -6,7 +12,8 @@ import {
 	ViewController,
 	ModalController,
 	IonicPage, AlertController,
-	NavParams
+	NavParams,
+	App
 } from "ionic-angular";
 import { AngularRoundProgressComponent } from "../../directives/angular-round-progress-directive";
 
@@ -43,6 +50,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	tomatoCount = 0;
 
 	constructor(
+		private app: App,
 		public globalservice: GlobalService,
 		public tomatoservice: OnlineTomatoService,
 		public navCtrl: NavController,
@@ -108,9 +116,20 @@ export class IndexPage implements OnInit, OnDestroy {
 
 	loadTomatoes() {
 		this.tomatoservice.getTodayTomatos().subscribe(data => {
+			// "{"status":"fail","description":"Token verify failed"}"
 			let list = JSON.parse(data._body);
-			this.historyTomatoes = list;
-			this.tomatoCount = list.length;
+			if(Array.isArray(list)){
+				this.historyTomatoes = list;
+				this.tomatoCount = list.length;
+			}else{ // token 过期( TODO )
+				this.app.getRootNav().setRoot("LoginPage", {
+					username: this.globalservice.userinfo.username,
+					password: this.globalservice.userinfo.password
+				}, {}, () => {
+					this.globalservice.userinfo = "";
+					this.globalservice.token = "";
+				});
+			}
 		});
 	}
 
