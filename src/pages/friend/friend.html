@@ -26,11 +26,13 @@
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'hot'">
-            
+            <button ion-item navPush="FriendInfoPage">
+                <ion-icon name="contact" item-start class="setting-icon"></ion-icon>
+                YiPeng
+            </button>
         </ion-list>
 
         <ion-list *ngSwitchCase="'rank'">
-            
         </ion-list>
     </div>
 
