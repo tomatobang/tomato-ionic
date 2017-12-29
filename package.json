@@ -117,22 +117,8 @@
     "ts-node": "^3.0.2",
     "typescript": "2.3.4"
   },
-  "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    "cordova-plugin-console",
-    "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard",
-    "cordova-plugin-splashscreen",
-    "cordova-plugin-device"
-  ],
-  "cordovaPlatforms": [
-    "ios",
-    {
-      "platform": "ios",
-      "version": "",
-      "locator": "ios"
-    }
-  ],
+  "cordovaPlugins": [],
+  "cordovaPlatforms": [],
   "description": "chat: An Ionic project",
   "cordova": {
     "plugins": {
