@@ -13,8 +13,8 @@
 
         <ion-buttons right>
             <button ion-button icon-only (click)="toMessagePage()">
-                <ion-icon ios="ios-chatboxes-outline" md="ios-chatboxes-outline"></ion-icon>
-                <ion-badge item-end color="danger">23</ion-badge>
+                <ion-icon id="message-box-icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
+                <ion-badge item-end color="danger" class="message-box-num">23</ion-badge>
             </button>
         </ion-buttons>
 
@@ -28,7 +28,7 @@
         <ion-list *ngSwitchCase="'hot'">
             <button ion-item navPush="FriendInfoPage">
                 <ion-icon name="contact" item-start class="setting-icon"></ion-icon>
-                YiPeng
+                张三的番茄钟“打卡健身”正在进行中...
             </button>
         </ion-list>
 

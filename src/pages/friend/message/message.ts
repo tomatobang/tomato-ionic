@@ -9,6 +9,7 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class MessagePage {
   toUser: Object;
+  showType = "msg";
 
   constructor(public navCtrl: NavController) {
     this.toUser = {

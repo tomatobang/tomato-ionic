@@ -1,17 +1,39 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>消息</ion-title>
+    <ion-navbar no-border-bottom>
+        <ion-toolbar>
+            <div padding>
+                <ion-segment [(ngModel)]="showType">
+                    <ion-segment-button value="msg">
+                        消息
+                    </ion-segment-button>
+                    <ion-segment-button value="info">
+                        通知
+                    </ion-segment-button>
+                </ion-segment>
+            </div>
+
+        </ion-toolbar>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
+
+    <div [ngSwitch]="showType">
+        <ion-list *ngSwitchCase="'msg'">
+            <button ion-item navPush="Chat" [navParams]="toUser">
+                <ion-avatar item-left>
+                    <img src="./assets/tomato-active.png">
+                </ion-avatar>
+                <h2>张三</h2>
+                <p>这是演示消息</p>
+            </button>
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'info'">
+        </ion-list>
+    </div>
+
     <ion-list>
-        <button ion-item navPush="Chat" [navParams]="toUser">
-            <ion-avatar item-left>
-                <img src="./assets/tomato-active.png">
-            </ion-avatar>
-            <h2>张三</h2>
-            <p>这是演示消息</p>
-        </button>
+
     </ion-list>
 </ion-content>
