@@ -30,8 +30,8 @@ export class TaskPage implements OnInit {
 
 	voicepostParams = {}
 
-	voiceUploadUrl ={
-		url:baseUrl + "upload/voicefile"
+	voiceUploadUrl = {
+		url: baseUrl + "upload/voicefile"
 	}
 
 	constructor(
@@ -66,24 +66,29 @@ export class TaskPage implements OnInit {
 	}
 
 	playVoiceRecord(task) {
-		if(task.voiceUrl){
+		if (task.voiceUrl) {
 			let filename = this.getFileName(task.voiceUrl);
 			task.inDownloading = true;
-			task.progress="0%";
-			this.voiceService.downloadVoiceFile_observable(filename,this.globalservice.token).subscribe(data=>{
-				if(data.data){
+			task.progress = "0%";
+			this.voiceService.downloadVoiceFile_observable(filename, this.globalservice.token).subscribe(data => {
+				if (data.data) {
 					task.inDownloading = false;
 					task.isplaying = true;
-					this.voiceService.play(data.value).then(()=>{
+					this.voiceService.play(data.value).then(() => {
 						task.isplaying = false;
 					});
-				}else{
-					// 显示进度
-					task.progress=data.value +"%";
-					console.log("下载进度",data.value)
+				} else {
+					if (data.value) {
+						// 显示进度
+						task.progress = data.value + "%";
+						console.log("下载进度", data.value);
+					}
 				}
+			}, err => {
+				task.inDownloading = false;
+				task.isplaying = false;
 			});
-		}else{
+		} else {
 			alert("此任务无音频记录！")
 		}
 	}

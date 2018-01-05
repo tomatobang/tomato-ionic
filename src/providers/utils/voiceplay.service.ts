@@ -110,7 +110,7 @@ export class VoicePlayService {
 						}).catch(err => {
 							alert("下载音频文件出错");
 							console.log("下载音频文件出错", err);
-							observer.complete();
+							observer.error(err)
 						});
 					fileTransfer.onProgress((evt: ProgressEvent) => {
 						let progress = window.parseInt(evt.loaded / evt.total * 100);

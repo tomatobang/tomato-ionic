@@ -434,7 +434,9 @@ export class IndexPage implements OnInit, OnDestroy {
 				this.voiceService.play(filename).then(() => {
 					this.voicePlaySrc = "./assets/voice/voice.png";
 				});
-			});;
+			}).catch(e=>{
+				
+			});
 		} else {
 			alert('此番茄钟无音频记录！')
 		}

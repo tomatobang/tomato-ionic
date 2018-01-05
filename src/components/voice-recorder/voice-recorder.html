@@ -6,7 +6,7 @@
         <div>
             <ion-icon name="mic" class="voicerecord-mic" item-start *ngIf="!isStartRecord"></ion-icon>
         </div>
-        <span *ngIf="!isStartRecord">按住我说话</span>
+        <span *ngIf="!isStartRecord" class="voicerecord-mic-label">按住我说话</span>
     </button>
     <div id="play_block" #play_block>
         <button ion-button color="secondary" round (click)="play()" *ngIf="couldPlay"> 播放 </button>

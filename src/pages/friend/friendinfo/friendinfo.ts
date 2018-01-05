@@ -24,7 +24,7 @@ export class FriendInfoPage {
   ) {}
 
   ionViewDidLoad() {
-    this.headerImgUrl = '../../../assets/tomatobang.jpg';
+    this.headerImgUrl = 'assets/tomatobang.jpg';
   }
 
   onScroll($event: any) {
