@@ -5,7 +5,7 @@
  * @Last Modified time: 2017-12-02 11:06:46
  */
 import { Injectable } from "@angular/core";
-import { Platform, AlertController, LoadingController, ToastController } from "ionic-angular";
+import { Platform, AlertController, LoadingController, ToastController, Toast } from "ionic-angular";
 import { GlobalService } from "../global.service";
 import { Insomnia } from '@ionic-native/insomnia';
 import { Network } from '@ionic-native/network';
@@ -41,7 +41,6 @@ export class NativeService {
     initNativeService() {
         this.listenInsomniaState();
         this.listenNetworkState();
-
     }
 
     /**
@@ -59,15 +58,26 @@ export class NativeService {
     /**
      * 监听网络状态
      */
+    private isOffline = false;
     listenNetworkState() {
+        this.createToast();
+        const offlineOnlineThrottle = this.throttle((msg) => {
+            if (this.isOffline === true) {
+                this.toast.setMessage(msg);
+                this.toast.present();
+            }
+        }, 2400);
         this.network.onDisconnect().subscribe(() => {
+            this.isOffline = true;
             console.log('network was disconnected :-(');
-            this.presentToast("网络已断开！");
+            offlineOnlineThrottle('网络已断开！');
         });
 
         this.network.onConnect().subscribe(() => {
             console.log('network connected!');
-            this.presentToast("网络已连接！");
+            this.isOffline = false;
+            this.toast.dismissAll();
+            // offlineOnlineThrottle('网络已连接！');
             setTimeout(() => {
                 if (this.network.type === 'wifi') {
                     console.log('we got a wifi connection, woohoo!');
@@ -77,27 +87,42 @@ export class NativeService {
     }
 
     /**
+     * 函数节流方法
+     * @param Function fn 延时调用函数
+     * @param Number delay 延迟多长时间
+     * @return Function 延迟执行的方法
+     */
+    throttle(fn, delay) {
+        let timer = null;
+        return function (msg) {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                fn(msg);
+            }, delay);
+        }
+    };
+
+    /**
      * 显示消息
      * @param msg 消息
      */
-    presentToast(msg) {
-        let toast = this.toastCtrl.create({
-            message: msg,
-            duration: 3000,
+    toast:Toast;
+    createToast() {
+         this.toast = this.toastCtrl.create({
+            message: '',
+            // duration: 3000,
             position: "top",
             cssClass: "my-toast-style",
             showCloseButton: true,
             closeButtonText: "关闭",
             dismissOnPageChange: true
         });
-        toast.present();
     }
-
 
 	/**
 	 * 下载头像
-	 * @param filename 
-	 * @param change 
+	 * @param filename 文件名称
+	 * @param change 是否为更换头像
 	 */
     downloadHeadImg(filename, change): Promise<any> {
         let targetPath = this.helper.getBasePath() + 'headimg/';
@@ -141,7 +166,7 @@ export class NativeService {
 	/**
 	 * 文件下载
 	 * @param filename 
-	 * @param targetPathWithFileName 
+	 * @param targetPathWithFileName 带文件名的下载地址
 	 */
     filedownload(filename, targetPathWithFileName) {
         return new Promise((resolve, reject) => {
@@ -165,9 +190,5 @@ export class NativeService {
                 console.log(evt)
             })
         });
-
     }
-
-
 }
-
