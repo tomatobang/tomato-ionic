@@ -4,6 +4,7 @@ img.play-icon{
 .tomato-break-reason{
   color: gray;
   font-size: 12px;
+  text-align: left;
 }
 .tomato-start-end-time{
   font-size: 12px;
@@ -25,7 +26,7 @@ img.play-icon{
 }
 .today-tomatoCount{
   font-size: 32px;
-  color: #387ef5;
+  color: #F97271;
   text-align: center;
 }
 
@@ -48,38 +49,47 @@ img.play-icon{
   color:#F97271;
 }
 
-$categories: (
-  ionic: color($colors, primary),
-  angular: #AC282B,
-  communication: #8E8D93,
-  tooling: #FE4C52,
-  services: #FD8B2D,
-  design: #FED035,
-  workshop: #69BB7B,
-  food: #3BC7C4,
-  documentation: #B16BE3,
-  navigation: #6600CC,
- );
+// $categories: (
+//   ionic: color($colors, primary),
+//   angular: #AC282B,
+//   communication: #8E8D93,
+//   tooling: #FE4C52,
+//   services: #FD8B2D,
+//   design: #FED035,
+//   workshop: #69BB7B,
+//   food: #3BC7C4,
+//   documentation: #B16BE3,
+//   navigation: #6600CC,
+//  );
  
- @function auxiliary-categories() {
-   @return map-remove($categories);
- }
+//  @function auxiliary-categories() {
+//    @return map-remove($categories);
+//  }
  
 .tomato-today-slide {
-   @each $track, $value in auxiliary-categories() {
-    .tomato-today-list[track=#{$track}]  {
-      border-left: 2px solid $value;
-      padding-left: 10px;
-    }
-   }
+  //  @each $track, $value in auxiliary-categories() {
+  //   .tomato-today-list[track=#{$track}]  tomatobang-timeline-item{
+  //     border-left: 2px solid $value;
+  //     padding-left: 10px;
+  //   }
+  //  }
    overflow: auto;
+   .tomato-today-list h3{
+    margin-bottom: 0;
+    text-align: left;
+  }
+  .tomatobang-timeline{
+    margin-top:25px;
+    margin-left:25px;
+  }
  }
  .tomato-history-slide{
    height: 100%;
+   tomato-history-slide .slide-zoom{
+    height: 100%;
+  }
  }
-  .tomato-history-slide,.tomato-history-slide .slide-zoom{
-   height: 100%;
- }
+
  .tomato-history-list{
   height: 100%;
   overflow: auto;
@@ -89,10 +99,10 @@ $categories: (
    position: absolute;
    right: 15px;
    top: 25px;
- }
 
- .white-noise-tag-icon ion-icon::before, .white-noise-tag-icon ion-icon::before{
-  font-size: 36px;
+   ion-icon::before, .white-noise-tag-icon ion-icon::before{
+    font-size: 36px;
+   }
  }
 
  .white-noise-icon-label{

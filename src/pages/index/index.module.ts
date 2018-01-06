@@ -10,6 +10,7 @@ import {
 import { StringTruncate } from "../../pipes/stringTruncate";
 import { DateTransform } from "../../pipes/dateTransform";
 import { AngularRoundProgressComponent } from "../../directives/angular-round-progress-directive";
+import { TimelineModule } from "../../components/timeline/timeline.module";
 
 import { VoicePlayService } from "../../providers/utils/voiceplay.service";
 import { File } from '@ionic-native/file';
@@ -27,7 +28,7 @@ import {
 		DateTransform,
 		AngularRoundProgressComponent
 	],
-	imports: [IonicPageModule.forChild(IndexPage)],
+	imports: [IonicPageModule.forChild(IndexPage),TimelineModule],
     providers: [OnlineTaskService, OnlineTomatoService,VoicePlayService,File,Media,FileTransfer,LocalNotifications],
     entryComponents:[]
 })
