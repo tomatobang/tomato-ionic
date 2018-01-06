@@ -1,3 +1,11 @@
+.tomato-user-bio{
+  background: #eee;
+  position: absolute;
+  top: 0px;
+  text-align: center;
+  width: 100%;
+  color: #F97271;
+}
 img.play-icon{
   width: 25px;
 }
@@ -77,6 +85,7 @@ img.play-icon{
    .tomato-today-list h3{
     margin-bottom: 0;
     text-align: left;
+    font-size: 18px;
   }
   .tomatobang-timeline{
     margin-top:25px;

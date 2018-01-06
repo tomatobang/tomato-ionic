@@ -13,6 +13,9 @@
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
         <!-- 首页 -->
         <ion-slide>
+            <div class="tomato-user-bio" >
+               {{_user_bio? _user_bio: '暂无签名！'}}
+            </div>
             <div>
                 <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>
             </div>

@@ -36,6 +36,7 @@ export class IndexPage implements OnInit, OnDestroy {
 	page_title = "首页";
 	segment = "index";
 	_userid: string;
+	_user_bio: string;
 	_notifyID = 0;
 	_rest_notifyID = 10000;
 	voicePlaySrc = "./assets/voice/voice.png";
@@ -66,6 +67,7 @@ export class IndexPage implements OnInit, OnDestroy {
 		this.loadTomatoes();
 		// 加载正在进行的番茄钟
 		this._userid = this.globalservice.userinfo.username;
+		this._user_bio = this.globalservice.userinfo.bio;
 		this.countdown = this.globalservice.countdown;
 		this.timerStatus.countdown = this.countdown;
 		this.timerStatus.label = this.countdown + ":00";
