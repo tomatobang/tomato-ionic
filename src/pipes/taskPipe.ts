@@ -1,10 +1,9 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: 'TaskPipe'
+  name: "TaskPipe"
 })
 export class TaskPipe implements PipeTransform {
-
   transform(value?: any, args?: any): any {
     let flag = args;
     let ret = [];
@@ -16,5 +15,4 @@ export class TaskPipe implements PipeTransform {
     }
     return ret;
   }
-
 }

@@ -21,61 +21,62 @@
     }
  *
  */
-import { Injectable, Inject } from '@angular/core'
-import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http'
-import { Subject, BehaviorSubject, Observable } from 'rxjs'
-import * as querystring from 'querystring'
-import { baseUrl } from '../config'
-import { CacheService } from './cache.service';
+import { Injectable, Inject } from "@angular/core";
+import {
+  Http,
+  Response,
+  Headers,
+  RequestOptions,
+  URLSearchParams
+} from "@angular/http";
+import { Subject, BehaviorSubject, Observable } from "rxjs";
+import * as querystring from "querystring";
+import { baseUrl } from "../config";
+import { CacheService } from "./cache.service";
 
-export * from './models/task';
-export * from './models/tomato';
-export * from './models/user';
+export * from "./models/task";
+export * from "./models/tomato";
+export * from "./models/user";
 
 @Injectable()
 export class DataService {
-    baseUrl:string = baseUrl;
-    headers: Headers = new Headers()
+  baseUrl: string = baseUrl;
+  headers: Headers = new Headers();
 
-    constructor(public http: Http, public cacheService: CacheService) {
-        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    }
+  constructor(public http: Http, public cacheService: CacheService) {
+    this.headers.append("Content-Type", "application/x-www-form-urlencoded");
+  }
 
-    public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
-    public get TasksMonitor(): Observable<any> {
-        return this.taskSubject.asObservable();
-    }
+  public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public get TasksMonitor(): Observable<any> {
+    return this.taskSubject.asObservable();
+  }
 
-    public tomatoesSubject: Subject<any> = new BehaviorSubject<any>(null);
-    public get TomatoesMonitor(): Observable<any> {
-        return this.tomatoesSubject.asObservable();
-    }
+  public tomatoesSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public get TomatoesMonitor(): Observable<any> {
+    return this.tomatoesSubject.asObservable();
+  }
 
-    taskChange(obj) {
-        this.taskSubject.next(obj);
-    }
+  taskChange(obj) {
+    this.taskSubject.next(obj);
+  }
 
-    tomatoeschange(obj) {
-        this.tomatoesSubject.next(obj);
-    }
+  tomatoeschange(obj) {
+    this.tomatoesSubject.next(obj);
+  }
 
-    /**
-     * 请求头处理
-     */
-    interceptor(): RequestOptions {
-        const opts: RequestOptions = new RequestOptions()
-        opts.headers = this.headers
-        return opts
-    }
+  /**
+   * 请求头处理
+   */
+  interceptor(): RequestOptions {
+    const opts: RequestOptions = new RequestOptions();
+    opts.headers = this.headers;
+    return opts;
+  }
 
-
-    amapHttpUtil(url:string,options: Object): Observable<any> {
-        let params: RequestOptions = this.interceptor()
-        params.search = new URLSearchParams(querystring.stringify(options))
-        return this.http.get(url, params)
-    }
-
+  amapHttpUtil(url: string, options: Object): Observable<any> {
+    let params: RequestOptions = this.interceptor();
+    params.search = new URLSearchParams(querystring.stringify(options));
+    return this.http.get(url, params);
+  }
 }
-
-
-

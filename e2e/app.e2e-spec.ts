@@ -1,21 +1,21 @@
-import { Page } from './app.po';
+import { Page } from "./app.po";
 
-describe('App', () => {
+describe("App", () => {
   let page: Page;
 
   beforeEach(() => {
     page = new Page();
   });
 
-  describe('default screen', () => {
+  describe("default screen", () => {
     beforeEach(() => {
-      page.navigateTo('/');
+      page.navigateTo("/");
     });
 
-    it('should have a title saying TomatoBang', () => {
+    it("should have a title saying TomatoBang", () => {
       page.getTitle().then(title => {
-        expect(title).toEqual('TomatoBang');
+        expect(title).toEqual("TomatoBang");
       });
     });
-  })
+  });
 });

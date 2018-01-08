@@ -4,8 +4,8 @@ import { IonicPageModule } from "ionic-angular";
 import { OnlineTomatoService } from "../../../../providers/data.service";
 
 @NgModule({
-	declarations: [StatisticsPage],
-	imports: [IonicPageModule.forChild(StatisticsPage)],
-	providers: [OnlineTomatoService],
+  declarations: [StatisticsPage],
+  imports: [IonicPageModule.forChild(StatisticsPage)],
+  providers: [OnlineTomatoService]
 })
 export class StatisticsPageModule {}

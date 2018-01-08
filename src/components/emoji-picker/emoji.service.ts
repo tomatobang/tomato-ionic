@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 //import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import "rxjs/add/operator/map";
 
 /*
   Generated class for the EmojiProvider provider.
@@ -10,11 +10,9 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class EmojiProvider {
-
-  constructor(
-    //public http: Http
-  ) {
-    console.log('Hello EmojiProvider Provider');
+  constructor() //public http: Http
+  {
+    console.log("Hello EmojiProvider Provider");
   }
 
   getEmojis() {
@@ -28,17 +26,16 @@ export class EmojiProvider {
         👨‍👩‍👧‍👦 👨‍👩‍👦‍👦 👨‍👩‍👧‍👧 👩‍👩‍👦 👩‍👩‍👧 👩‍👩‍👧‍👦 👩‍👩‍👦‍👦 👩‍👩‍👧‍👧 👨‍👨‍👦 👨‍👨‍👧 👨‍👨‍👧‍👦 👨‍👨‍👦‍👦 👨‍👨‍👧‍👧 👩‍👦 👩‍👧
          👩‍👧‍👦 👩‍👦‍👦 👩‍👧‍👧 👨‍👦 👨‍👧 👨‍👧‍👦 👨‍👦‍👦 👨‍👧‍👧 👚 👕 👖 👔 👗 👙 👘 👠 👡 👢 👞 👟 👒 🎩 🎓 👑 ⛑ 🎒 👝 👛 👜 💼 👓
          🕶 🌂 ☂️`;
-    
-    let EmojiArr = EMOJIS.split(' ');
+
+    let EmojiArr = EMOJIS.split(" ");
     // 每组 24 个
-    let groupNum = Math.ceil(EmojiArr.length/(24));
+    let groupNum = Math.ceil(EmojiArr.length / 24);
     let items = [];
 
-    for(let i = 0; i < groupNum; i++){
-      items.push(EmojiArr.slice(i*24,(i+1)*24));
+    for (let i = 0; i < groupNum; i++) {
+      items.push(EmojiArr.slice(i * 24, (i + 1) * 24));
     }
 
-    return items
+    return items;
   }
-
 }

@@ -6,19 +6,13 @@ import { IonicPage } from "ionic-angular";
 declare var window;
 @IonicPage()
 @Component({
-	selector: "page-about",
-	templateUrl: "about.html"
+  selector: "page-about",
+  templateUrl: "about.html"
 })
 export class AboutPage implements OnInit {
-	constructor(
-		//public globalservice: GlobalService
-	) {
+  constructor() //public globalservice: GlobalService
+  {
+  }
 
-	}
-
-	ngOnInit() {
-	}
-
-
-
+  ngOnInit() {}
 }

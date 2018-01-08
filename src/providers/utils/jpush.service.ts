@@ -63,7 +63,7 @@ export class JPushService {
     let type = this.plf.is("android") ? data.extras.Type : data.Type;
     // 根据设置是否需要开启音效
     if (true) {
-      // 
+      //
       // let audio = new Audio();
       // audio.src = "http://remote.address.com/example.mp3";
       // audio.load();
@@ -104,7 +104,10 @@ export class JPushService {
         this.documentBindEventListener("jpush.setTagsWithAlias", config.stac);
         this.documentBindEventListener("jpush.openNotification", config.onc);
         this.documentBindEventListener("jpush.receiveNotification", config.rnc);
-        this.documentBindEventListener("jpush.backgroundNotification",config.bnc);
+        this.documentBindEventListener(
+          "jpush.backgroundNotification",
+          config.bnc
+        );
         // 提交华为 Token
         this.documentBindEventListener("jpush.onReceiveHuaWeiToken", function(
           token
@@ -141,74 +144,74 @@ export class JPushService {
   };
 
   /**
-       * @function: 停止极光推送
-       * android平台:
-       * JPush Service 不在后台运行。
-       * 收不到推送消息。
-       * 不能通过 JPushInterface.init 恢复，需要调用 resumePush 恢复。
-       * 极光推送所有的其他 API 调用都无效。
-       * ios平台：
-       * 不推荐调用，因为这个 API 只是让你的 DeviceToken 失效，在 设置－通知 中您的应用程序没有任何变化。
-       * 建议设置一个 UI 界面， 提醒用户在 设置－通知 中关闭推送服务。
-       * */
+   * @function: 停止极光推送
+   * android平台:
+   * JPush Service 不在后台运行。
+   * 收不到推送消息。
+   * 不能通过 JPushInterface.init 恢复，需要调用 resumePush 恢复。
+   * 极光推送所有的其他 API 调用都无效。
+   * ios平台：
+   * 不推荐调用，因为这个 API 只是让你的 DeviceToken 失效，在 设置－通知 中您的应用程序没有任何变化。
+   * 建议设置一个 UI 界面， 提醒用户在 设置－通知 中关闭推送服务。
+   * */
   stopPush() {
     window.plugins.NXTPlugin.stopPush();
   }
 
   /**
-       * @function 重启极光推送
-       * @description Android平台:极光推送完全恢复正常工作。
-       * @description iOS平台:重新去 APNS 注册。
-       * */
+   * @function 重启极光推送
+   * @description Android平台:极光推送完全恢复正常工作。
+   * @description iOS平台:重新去 APNS 注册。
+   * */
   resumePush() {
     window.plugins.NXTPlugin.resumePush();
   }
 
   /**
-       * @function: 获取状态
-       * @description Android 平台:用来检查 Push Service 是否已经被停止。
-       * @description iOS 平台:平台检查推送服务是否注册。
-       * @param 参数是回调函数：result为0表示开启，其他表示关闭
-       * ps:调用stopPush关闭之后，不会马上生效
-       * */
+   * @function: 获取状态
+   * @description Android 平台:用来检查 Push Service 是否已经被停止。
+   * @description iOS 平台:平台检查推送服务是否注册。
+   * @param 参数是回调函数：result为0表示开启，其他表示关闭
+   * ps:调用stopPush关闭之后，不会马上生效
+   * */
   isPushStopped(fun) {
     window.plugins.NXTPlugin.isPushStopped(fun);
   }
 
   /**
-       * @function 得到RegistrationID
-       * @description 集成了 JPush SDK 的应用程序在第一次成功注册到 JPush 服务器时，JPush 服务器会给客户端返回一个唯一的该设备的标识 - RegistrationID。
-       * @description 应用程序可以把此 RegistrationID 保存以自己的应用服务器上，然后就可以根据 RegistrationID 来向设备推送消息或者通知。
-       * @param 参数是回调函数，result结果为RegistrationID
-       * */
+   * @function 得到RegistrationID
+   * @description 集成了 JPush SDK 的应用程序在第一次成功注册到 JPush 服务器时，JPush 服务器会给客户端返回一个唯一的该设备的标识 - RegistrationID。
+   * @description 应用程序可以把此 RegistrationID 保存以自己的应用服务器上，然后就可以根据 RegistrationID 来向设备推送消息或者通知。
+   * @param 参数是回调函数，result结果为RegistrationID
+   * */
   getRegistrationID(fun) {
     window.plugins.NXTPlugin.getRegistrationID(fun);
   }
 
   /**
-       * 设置别名和标签，本身无返回值，可以注册jpush.setTagsWithAlias 事件来监听设置结果:
-       * document.addEventListener("jpush.setTagsWithAlias", function(event) {}, false)
-       * event结构为{resultCode:null,tags:null,alias:null}
-       * 具体错误码定义见readme.md
-       * */
+   * 设置别名和标签，本身无返回值，可以注册jpush.setTagsWithAlias 事件来监听设置结果:
+   * document.addEventListener("jpush.setTagsWithAlias", function(event) {}, false)
+   * event结构为{resultCode:null,tags:null,alias:null}
+   * 具体错误码定义见readme.md
+   * */
 
   /**
-       * @function 设置别名
-       * @description 为安装了应用程序的用户，取个别名来标识。以后给该用户 Push 消息时，就可以用此别名来指定。尽可能根据别名来唯一确定用户。
-       * @alias 参数类型为字符串。空字符串 （""）表示取消之前的设置。
-       * */
+   * @function 设置别名
+   * @description 为安装了应用程序的用户，取个别名来标识。以后给该用户 Push 消息时，就可以用此别名来指定。尽可能根据别名来唯一确定用户。
+   * @alias 参数类型为字符串。空字符串 （""）表示取消之前的设置。
+   * */
   setAlias(alias) {
     window.plugins.NXTPlugin.setAlias(alias);
   }
 
   /**
-       * @function 设置标签
-       * @description 为安装了应用程序的用户，打上标签。其目的主要是方便开发者根据标签，来批量下发 Push 消息。
-       * @description 可为每个用户打多个标签。
-       * @tags 参数类型为数组。空集合表示取消之前的设置。
-       * @description 每个 tag 命名长度限制为 40 字节，最多支持设置 100 个 tag，但总长度不得超过1K字节（判断长度需采用 UTF-8 编码）。
-       * @description 单个设备最多支持设置 100 个 tag，App 全局 tag 数量无限制。
-       * */
+   * @function 设置标签
+   * @description 为安装了应用程序的用户，打上标签。其目的主要是方便开发者根据标签，来批量下发 Push 消息。
+   * @description 可为每个用户打多个标签。
+   * @tags 参数类型为数组。空集合表示取消之前的设置。
+   * @description 每个 tag 命名长度限制为 40 字节，最多支持设置 100 个 tag，但总长度不得超过1K字节（判断长度需采用 UTF-8 编码）。
+   * @description 单个设备最多支持设置 100 个 tag，App 全局 tag 数量无限制。
+   * */
   setTags(tags) {
     window.plugins.NXTPlugin.setTags(tags);
   }
@@ -219,11 +222,11 @@ export class JPushService {
   }
 
   /**
-       * @function 判断系统设置中是否允许当前应用推送
-       * @description 在 Android 中，返回值为 0 时，代表系统设置中关闭了推送；为 1 时，代表打开了推送（目前仅适用于Android 4.4+）。
-       * @description 在 iOS 中，返回值为 0 时，代表系统设置中关闭了推送；大于 0 时，代表打开了推送，且能够根据返回值判断具体通知形式
-       * @param 参数是回调方法，result状态值
-       * */
+   * @function 判断系统设置中是否允许当前应用推送
+   * @description 在 Android 中，返回值为 0 时，代表系统设置中关闭了推送；为 1 时，代表打开了推送（目前仅适用于Android 4.4+）。
+   * @description 在 iOS 中，返回值为 0 时，代表系统设置中关闭了推送；大于 0 时，代表打开了推送，且能够根据返回值判断具体通知形式
+   * @param 参数是回调方法，result状态值
+   * */
   getUserNotificationSettings(fun) {
     window.plugins.NXTPlugin.getUserNotificationSettings(fun);
   }
@@ -262,7 +265,7 @@ export class JPushService {
 
   /**
    * 获取应用图标数值
-   * @param fun 
+   * @param fun
    */
   getApplicationIconBadgeNumber(fun) {
     window.plugins.NXTPlugin.getApplicationIconBadgeNumber(fun);

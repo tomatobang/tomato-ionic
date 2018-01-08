@@ -1,15 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { User, EmailUserName } from './user.model';
-import { SearchResult } from './search-result.model';
-import { Observable } from 'rxjs/Observable';
-import { Cacheable } from 'rebirth-storage';
-import { RebirthHttp, RebirthHttpProvider, GET, POST, DELETE, Query, Path, Body } from 'rebirth-http';
-import { baseUrl } from '../../../config'
+import { Injectable } from "@angular/core";
+import { Http } from "@angular/http";
+import { User, EmailUserName } from "./user.model";
+import { SearchResult } from "./search-result.model";
+import { Observable } from "rxjs/Observable";
+import { Cacheable } from "rebirth-storage";
+import {
+  RebirthHttp,
+  RebirthHttpProvider,
+  GET,
+  POST,
+  DELETE,
+  Query,
+  Path,
+  Body
+} from "rebirth-http";
+import { baseUrl } from "../../../config";
 
 export abstract class UserService extends RebirthHttp {
-
-  abstract getUsers(pageIndex: any, pageSize: any, keyword?: string): Observable<SearchResult<User>>;
+  abstract getUsers(
+    pageIndex: any,
+    pageSize: any,
+    keyword?: string
+  ): Observable<SearchResult<User>>;
 
   abstract getUserByTitle(userName: string): Observable<User>;
 
@@ -24,137 +36,121 @@ export abstract class UserService extends RebirthHttp {
   abstract verifyUserNameEmail(email: EmailUserName): Observable<any>;
 
   abstract updateUserHeadImg(data: {
-    userid: string,
-    imgData: string
+    userid: string;
+    imgData: string;
   }): Observable<any>;
 
-  abstract updateSex(data: {
-    userid: string,
-    sex: string
-  }): Observable<any>;
+  abstract updateSex(data: { userid: string; sex: string }): Observable<any>;
 
-  abstract updateSex(data: {
-    userid: string,
-    sex: string
-  }): Observable<any>;
+  abstract updateSex(data: { userid: string; sex: string }): Observable<any>;
 
   abstract updateDisplayName(data: {
-    userid: string,
-    displayname: string
+    userid: string;
+    displayname: string;
   }): Observable<any>;
 
   abstract updateEmail(data: {
-    userid: string,
-    email: string
+    userid: string;
+    email: string;
   }): Observable<any>;
 
   abstract updateLocation(data: {
-    userid: string,
-    location: string
+    userid: string;
+    location: string;
   }): Observable<any>;
 
-  abstract updateBio(data: {
-    userid: string,
-    bio: string
-  }): Observable<any>;
+  abstract updateBio(data: { userid: string; bio: string }): Observable<any>;
 }
-
 
 @Injectable()
 export class OnlineUserService extends UserService {
-
-  constructor(protected http: Http, protected rebirthHttpProvider: RebirthHttpProvider) {
+  constructor(
+    protected http: Http,
+    protected rebirthHttpProvider: RebirthHttpProvider
+  ) {
     super();
   }
 
-  @Cacheable({ pool: 'users' })
-  @GET(baseUrl + 'api/user')
-  getUsers( @Query('pageIndex') pageIndex = 1,
-    @Query('pageSize') pageSize = 10,
-    @Query('keyword') keyword?: string): Observable<SearchResult<User>> {
+  @Cacheable({ pool: "users" })
+  @GET(baseUrl + "api/user")
+  getUsers(
+    @Query("pageIndex") pageIndex = 1,
+    @Query("pageSize") pageSize = 10,
+    @Query("keyword") keyword?: string
+  ): Observable<SearchResult<User>> {
     return null;
   }
 
-  @GET(baseUrl + 'api/user/:id')
-  getUserByTitle( @Path('id') userName: string): Observable<User> {
+  @GET(baseUrl + "api/user/:id")
+  getUserByTitle(@Path("id") userName: string): Observable<User> {
     return null;
   }
 
-  @POST(baseUrl + 'api/user/:id')
-  updateUser( @Path('id') userUrl: string, @Body user: User): Observable<any> {
+  @POST(baseUrl + "api/user/:id")
+  updateUser(@Path("id") userUrl: string, @Body user: User): Observable<any> {
     return null;
   }
 
-  @DELETE(baseUrl + 'api/user/:id')
-  deleteUser( @Path('id') userUrl: string): Observable<any> {
+  @DELETE(baseUrl + "api/user/:id")
+  deleteUser(@Path("id") userUrl: string): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + 'api/user')
-  register( @Body user: User): Observable<any> {
+  @POST(baseUrl + "api/user")
+  register(@Body user: User): Observable<any> {
     return null;
   }
 
-
-  @POST(baseUrl + 'api/login/')
-  login( @Body user: User): Observable<any> {
+  @POST(baseUrl + "api/login/")
+  login(@Body user: User): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + 'email_username/verify')
-  verifyUserNameEmail( @Body email_username: EmailUserName): Observable<any> {
+  @POST(baseUrl + "email_username/verify")
+  verifyUserNameEmail(@Body email_username: EmailUserName): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + 'api/user/headimg')
-  updateUserHeadImg( @Body data: {
-    userid: string,
-    imgData: string
+  @POST(baseUrl + "api/user/headimg")
+  updateUserHeadImg(@Body
+  data: {
+    userid: string;
+    imgData: string;
   }): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + 'api/user/sex')
-  updateSex( @Body data: {
-    userid: string,
-    sex: string
+  @POST(baseUrl + "api/user/sex")
+  updateSex(@Body data: { userid: string; sex: string }): Observable<any> {
+    return null;
+  }
+
+  @POST(baseUrl + "api/user/displayname")
+  updateDisplayName(@Body
+  data: {
+    userid: string;
+    displayname: string;
   }): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + 'api/user/displayname')
-  updateDisplayName( @Body data: {
-    userid: string,
-    displayname: string
-  }): Observable<any> {
+  @POST(baseUrl + "api/user/email")
+  updateEmail(@Body data: { userid: string; email: string }): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + 'api/user/email')
-  updateEmail( @Body data: {
-    userid: string,
-    email: string
-  }): Observable<any> {
-    return null;
-  }
-  
-  @POST(baseUrl + 'api/user/location')
-  updateLocation( @Body data: {
-    userid: string,
-    location: string
-  }): Observable<any> {
+  @POST(baseUrl + "api/user/location")
+  updateLocation(@Body data: { userid: string; location: string }): Observable<
+    any
+  > {
     return null;
   }
 
-  @POST(baseUrl + 'api/user/bio')
-  updateBio( @Body data: {
-    userid: string,
-    bio: string
-  }): Observable<any> {
+  @POST(baseUrl + "api/user/bio")
+  updateBio(@Body data: { userid: string; bio: string }): Observable<any> {
     return null;
   }
 }
-
 
 export const USER_SERVICE_PROVIDERS: Array<any> = [
   {
@@ -163,4 +159,3 @@ export const USER_SERVICE_PROVIDERS: Array<any> = [
     useClass: OnlineUserService
   }
 ];
-
