@@ -11,10 +11,17 @@
 
 <ion-content>
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
-        <!-- 首页 -->
+        <!-- 首页   &&-->
         <ion-slide>
-            <div class="tomato-user-bio" >
-               {{_user_bio? _user_bio: '暂无签名！'}}
+            <div class="tomato-user-bio">
+                {{_user_bio? _user_bio: '暂无签名！'}}
+            </div>
+            <div class="start-old-task" *ngIf="_task.title && !activeTomato && !isResting">
+                <label>继续上次任务:</label>
+                <span>{{ _task.title }}</span>
+                <div>
+                    <ion-icon class="tomato-replay-icon" ios="ios-play" md="md-play" (click)="startTask(_task,true)"></ion-icon>
+                </div>
             </div>
             <div>
                 <angular-round-progress [(timerStatus)]="timerStatus"></angular-round-progress>

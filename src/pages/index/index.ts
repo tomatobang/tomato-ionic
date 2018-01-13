@@ -1,8 +1,8 @@
 /*
  * @Author: kobepeng 
  * @Date: 2017-12-20 14:26:19 
- * @Last Modified by:   kobepeng 
- * @Last Modified time: 2017-12-20 14:26:19 
+ * @Last Modified by: kobepeng
+ * @Last Modified time: 2018-01-13 18:05:42
  */
 import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
 import { LocalNotifications } from "@ionic-native/local-notifications";
@@ -40,6 +40,9 @@ export class IndexPage implements OnInit, OnDestroy {
   _user_bio: string;
   _notifyID = 0;
   _rest_notifyID = 10000;
+  _task={
+    title:''
+  };
   voicePlaySrc = "./assets/voice/voice.png";
   showWhiteNoiseIcon = false;
   whiteNoiseIsplaying = false;
@@ -220,6 +223,7 @@ export class IndexPage implements OnInit, OnDestroy {
 
   startTask(task: any, raw: Boolean) {
     this.activeTomato = task;
+    this._task = JSON.parse(JSON.stringify(task));
     if (raw) {
       // 开启番茄钟
       this.tomatoIO.start_tomato(this._userid, task, this.countdown);
