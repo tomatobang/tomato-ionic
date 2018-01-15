@@ -25,11 +25,27 @@
 <ion-content>
 
     <div [ngSwitch]="showType">
-        <ion-list *ngSwitchCase="'hot'">
-            <button ion-item navPush="FriendInfoPage">
-                <ion-icon name="contact" item-start class="setting-icon"></ion-icon>
-                张三的番茄钟“打卡健身”正在进行中...
-            </button>
+        <ion-list *ngSwitchCase="'hot'" class="friend-working-on-list">
+            <div class="tomato-friend-task-list" navPush="FriendInfoPage">
+                <div class="tomato-friend-task-top">
+                    <span class="tomato-friend-task-state">
+                        <span class="tomato-friend-task-name">张三</span>的番茄钟“打卡健身”正在进行中...
+                    </span>
+
+                </div>
+                <div class="tomato-friend-task-bottom">
+                    <div class="tomato-friend-task-left">
+                        <span class="tomato-friend-task-time">
+                            2017-10-11 10:00 开始，已进行
+                            <span class="tomato-friend-task-duration"> 5 </span>分钟
+                        </span>
+                        <br>
+                        <span class="tomato-friend-task-target">目标:</span>
+                        <br>
+                        <span class="tomato-friend-task-notes">备注:</span>
+                    </div>
+                </div>
+            </div>
         </ion-list>
 
         <ion-list *ngSwitchCase="'rank'">
