@@ -1,28 +1,50 @@
 <ion-header>
-    <ion-toolbar>
-        <div padding>
-            <ion-segment [(ngModel)]="showType">
-                <ion-segment-button value="hot">
-                    动态
-                </ion-segment-button>
-                <ion-segment-button value="rank">
-                    排名
-                </ion-segment-button>
-            </ion-segment>
-        </div>
-
+    <ion-navbar>
+        <ion-title>发现</ion-title>
         <ion-buttons right>
             <button ion-button icon-only (click)="toMessagePage()">
                 <ion-icon id="message-box-icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
                 <ion-badge item-end color="danger" class="message-box-num">23</ion-badge>
             </button>
         </ion-buttons>
-
-    </ion-toolbar>
+    </ion-navbar>
 </ion-header>
 
-
 <ion-content>
+    <ion-grid class="friendpage-tool-grid">
+        <ion-row>
+            <ion-col col-4>
+                <div>
+                    <ion-icon ios="ios-qr-scanner" md="md-qr-scanner"></ion-icon>
+                </div>
+                <div>扫码加友</div>
+            </ion-col>
+
+            <ion-col col-4>
+                <div>
+                    <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
+                </div>
+                <div>通讯录</div>
+            </ion-col>
+            <ion-col col-4>
+                <div>
+                    <ion-icon ios="ios-search" md="md-search"></ion-icon>
+                </div>
+                <div> 高级搜索 </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <div padding>
+        <ion-segment [(ngModel)]="showType">
+            <ion-segment-button value="hot">
+                动态
+            </ion-segment-button>
+            <ion-segment-button value="rank">
+                排名
+            </ion-segment-button>
+        </ion-segment>
+    </div>
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'hot'" class="friend-working-on-list">

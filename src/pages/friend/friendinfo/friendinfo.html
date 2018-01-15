@@ -1,28 +1,24 @@
 <ion-header>
+  <ion-navbar [class.show-background]="showToolbar">
+    <ion-title [hidden]="!showToolbar">{{friendName}}</ion-title>
+  </ion-navbar>
+</ion-header>
 
-        <ion-navbar [class.show-background]="showToolbar">
-          <ion-title [hidden]="!showToolbar">{{friendName}}</ion-title>
-        </ion-navbar>
-      </ion-header>
-      
-      <ion-content  class="content"
-                    (ionScroll)="onScroll($event)"
-                    [class.transition]="transition"
-                    [style.background-size]="headerImgSize"
-                    [style.background-image]="'url('+ headerImgUrl+ ')'">
-        <div class="user-info">
-          <img src="assets/tomato-grey.png" alt="">
-          <h4>张三</h4>
-          <p>work hard and you can find your path!</p>
-        </div>
-      
-        <div class="tomatoes">
-          <div class="tomato-item" *ngFor=" let i of tomatoes">
-            <img src="assets/tomato-active.png" alt="">
-            <div class="friend-info-tomato-title"> 
-              常规任务
-            </div>
-          </div>
-      
-        </div>
-      </ion-content>
+<ion-content class="content" (ionScroll)="onScroll($event)" [class.transition]="transition" [style.background-size]="headerImgSize"
+  [style.background-image]="'url('+ headerImgUrl+ ')'">
+  <div class="user-info">
+    <img src="assets/tomato-grey.png" alt="">
+    <h4>张三</h4>
+    <p>work hard and you can find your path!</p>
+  </div>
+
+  <div class="tomatoes">
+    <div class="tomato-item" *ngFor=" let i of tomatoes">
+      <img src="assets/tomato-active.png" alt="">
+      <div class="friend-info-tomato-title">
+        常规任务
+      </div>
+    </div>
+
+  </div>
+</ion-content>
