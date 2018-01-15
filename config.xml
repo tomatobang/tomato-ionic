@@ -86,13 +86,12 @@
         <variable name="MI_PUSH_APPID" value="2882303761517596915" />
         <variable name="MI_PUSH_APPKEY" value="5601759690915" />
     </plugin>
-    <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
-    <plugin name="cordova-plugin-file" spec="^4.3.3" />
+    <plugin name="cordova-plugin-file" spec="^4.1.0" />
     <plugin name="cordova-plugin-media" spec="^3.0.1">
         <variable name="MICROPHONE_USAGE_DESCRIPTION" value=" " />
     </plugin>
@@ -107,12 +106,12 @@
         <variable name="IOS_LOCATION_DESC" value="请点击'好'以允许访问。" />
     </plugin>
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="TomatoBang需要使用您的相机权限！" />
+        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.0.19" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="cordova-plugin-file-transfer" spec="1.6.3" />
     <plugin name="cordova-plugin-network-information" spec="^1.3.3" />
     <plugin name="cordova-plugin-pause-resume-download" spec="^1.5.5" />
     <plugin name="cordova-plugin-screen-orientation" spec="^2.0.1" />
@@ -124,13 +123,10 @@
     <plugin name="es6-promise-plugin" spec="^4.1.0" />
     <plugin name="talkingdata" spec="^1.2.2" />
     <plugin name="cordova-plugin-logtofile" spec="^1.1.2" />
-    <plugin name="phonegap-plugin-barcodescanner" spec="^6.0.8">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
-    </plugin>
     <plugin name="cordova-plugin-compat" spec="^1.1.0" />
     <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
     <plugin name="com.unarin.cordova.beacon" spec="^3.4.0" />
     <plugin name="phonegap-nfc" spec="^0.6.6" />
-    <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="^4.4.0" />
+    <plugin name="cordova-plugin-qrscanner" spec="^2.5.0" />
+    <engine name="android" spec="~6.2.3" />
 </widget>
