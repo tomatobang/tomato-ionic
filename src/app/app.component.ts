@@ -4,22 +4,23 @@
  * @Last Modified by:   kobepeng 
  * @Last Modified time: 2017-11-23 19:33:38 
  */
-import { Component } from "@angular/core";
-import { Platform } from "ionic-angular";
-import { StatusBar } from "@ionic-native/status-bar";
-import { SplashScreen } from "@ionic-native/splash-screen";
+import { Component } from '@angular/core';
+import { Platform, Events } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 //import { JPushService } from '../providers/utils/jpush.service'; // 暂未启用
-import { GlobalService } from "../providers/global.service";
-import { UpdateService } from "../providers/utils/update.service";
-import { NativeService } from "../providers/utils/native.service";
-import { RebirthHttpProvider } from "rebirth-http";
-import { BackgroundMode } from "@ionic-native/background-mode";
+import { GlobalService } from '../providers/global.service';
+import { UpdateService } from '../providers/utils/update.service';
+import { NativeService } from '../providers/utils/native.service';
+import { RebirthHttpProvider } from 'rebirth-http';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 @Component({
-  templateUrl: "app.html"
+  templateUrl: 'app.html',
 })
 export class MyApp {
   rootPage: any;
+  hideNav = false;
 
   constructor(
     platform: Platform,
@@ -30,7 +31,8 @@ export class MyApp {
     public rebirthProvider: RebirthHttpProvider,
     private backgroundMode: BackgroundMode,
     global: GlobalService,
-    native: NativeService
+    native: NativeService,
+    private events: Events
   ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -49,14 +51,21 @@ export class MyApp {
     // Check if the user has already seen the tutorial
     if (global.isFirstTimeOpen) {
       global.isFirstTimeOpen = false;
-      this.rootPage = "GuidePage";
+      this.rootPage = 'GuidePage';
     } else {
       if (global.userinfo) {
         this.rebirthProvider.headers({ Authorization: global.token });
-        this.rootPage = "TabsPage";
+        this.rootPage = 'TabsPage';
       } else {
-        this.rootPage = "LoginPage";
+        this.rootPage = 'LoginPage';
       }
     }
+
+    events.subscribe('qrScanner:show', () => {
+      this.hideNav = true;
+    });
+    events.subscribe('qrScanner:hide', () => {
+      this.hideNav = false;
+    });
   }
 }

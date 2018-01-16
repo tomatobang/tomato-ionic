@@ -1,0 +1,100 @@
+import { Component } from '@angular/core';
+import {
+  App,
+  IonicPage,
+  ViewController,
+  Events,
+  Platform,
+} from 'ionic-angular';
+
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+
+import { setTimeout } from 'timers';
+import { Vibration } from '@ionic-native/vibration';
+
+import lodash from 'lodash';
+
+@IonicPage()
+@Component({
+  selector: 'modal-qr-scanner',
+  templateUrl: 'qr-scanner.html',
+  providers: [Vibration],
+})
+export class QRScannerModal {
+  private ionApp: HTMLElement;
+
+  constructor(
+    private app: App,
+    private events: Events,
+    private qrScanner: QRScanner,
+    private viewCtrl: ViewController,
+    private platform: Platform,
+    private vibration: Vibration
+  ) {
+    this.scanQrCode();
+  }
+
+  private scanQrCode(): void {
+    this.qrScanner
+      .prepare()
+      .then((status: QRScannerStatus) => {
+        this.ionApp = <HTMLElement>document.getElementsByTagName(
+          'ion-app'
+        )[0];
+        if (status.authorized) {
+          let scanSub = this.qrScanner.scan().subscribe((qrCode: string) => {
+            this.vibration.vibrate(30);
+            let response;
+            try {
+              response = JSON.parse(qrCode);
+            } catch (e) {
+              response = qrCode;
+            }
+
+            this.hideCamera();
+            scanSub.unsubscribe();
+            this.dismiss(response);
+          });
+
+          this.ionApp.classList.add('transparent');
+          this.showCamera();
+        } else if (status.denied) {
+          console.error('QR_CODE.PERMISSION_PERMANENTLY_DENIED');
+          this.dismiss();
+        } else {
+          console.error('QR_CODE.PERMISSION_DENIED');
+          this.dismiss();
+        }
+      })
+      .catch((e: any) => {
+        console.error('QR_CODE.PROBLEM_TEXT');
+        this.dismiss();
+      });
+  }
+
+  private showCamera() {
+    this.qrScanner.show();
+    this.events.publish('qrScanner:show');
+  }
+
+  private hideCamera() {
+    this.qrScanner.hide();
+    this.events.publish('qrScanner:hide');
+  }
+
+  private dismiss(qrCode: object = null) {
+    this.qrScanner.getStatus().then((status: QRScannerStatus) => {
+      if (status.showing) {
+        this.hideCamera();
+      }
+    });
+
+    this.ionApp.classList.remove('transparent');
+    this.viewCtrl.dismiss(qrCode);
+  }
+
+  ionViewDidLeave() {
+    this.hideCamera();
+    this.qrScanner.destroy();
+  }
+}

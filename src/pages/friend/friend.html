@@ -15,7 +15,7 @@
         <ion-row>
             <ion-col col-4 (click)="scanToAddFriend()">
                 <div>
-                    <ion-icon ios="ios-qr-scanner" md="md-qr-scanner" ></ion-icon>
+                    <ion-icon ios="ios-qr-scanner" md="md-qr-scanner"></ion-icon>
                 </div>
                 <div>扫码加友</div>
             </ion-col>
@@ -75,3 +75,5 @@
     </div>
 
 </ion-content>
+
+<qr-scanner (onSuccess)="onScanQRCode($event)" #qrScanner></qr-scanner>
