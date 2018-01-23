@@ -78,7 +78,7 @@
     "echarts": "^3.8.2",
     "es6-promise-plugin": "^4.2.2",
     "hidpi-canvas": "^1.0.10",
-    "ionic-angular": "3.5.0",
+    "ionic-angular": "^3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
     "moment": "^2.18.1",
@@ -88,14 +88,14 @@
     "raven-js": "^3.19.1",
     "rebirth-http": "0.0.19",
     "rebirth-storage": "0.0.10",
-    "rxjs": "5.4.0",
+    "rxjs": "^5.4.2",
     "sw-toolbox": "3.6.0",
     "talkingdata": "^1.2.2",
     "zone.js": "0.8.12"
   },
   "devDependencies": {
     "@angular/cli": "1.5.5",
-    "@ionic/app-scripts": "3.0.0",
+    "@ionic/app-scripts": "^3.1.8",
     "@types/echarts": "0.0.6",
     "@types/jasmine": "^2.5.41",
     "@types/node": "^7.0.8",
@@ -116,7 +116,7 @@
     "protractor": "^5.1.1",
     "ts-loader": "^2.0.3",
     "ts-node": "^3.0.2",
-    "typescript": "2.3.4"
+    "typescript": "^2.4.0"
   },
   "cordovaPlugins": [],
   "cordovaPlatforms": [],
