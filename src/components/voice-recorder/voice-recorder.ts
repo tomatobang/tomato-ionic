@@ -24,7 +24,7 @@ declare let window;
 
 @Component({
   selector: 'voice-recorder',
-  providers: [Media, FileTransfer], //,File
+  providers: [Media, FileTransfer], // ,File
   templateUrl: './voice-recorder.html'
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
@@ -109,11 +109,11 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.isStartRecord = true;
     this.recordWait = false;
     try {
-      //实例化录音类
+      // 实例化录音类
       this.startRec();
-      //开始录音
+      // 开始录音
       this.mediaRec.startRecord();
-      //已经开始
+      // 已经开始
       this.isStartedVoice = true;
       return false;
     } catch (err) {
@@ -135,7 +135,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
           voicechange = undefined;
         }
       }, 400);
-      //实例化录音类
+      // 实例化录音类
       this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
       // fires when file status changes
       this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
@@ -150,11 +150,11 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
   onRelease() {
     try {
-      //如果没有开始直接返回
+      // 如果没有开始直接返回
       if (!this.isStartedVoice) {
         return;
       }
-      //还原标识
+      // 还原标识
       this.isStartedVoice = false;
       this.recordWait = true;
       setTimeout(() => {
@@ -164,7 +164,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         this.mediaRec.stopRecord();
         this.mediaRec.release();
       }
-      //实例化录音类, src:需要播放的录音的路径
+      // 实例化录音类, src:需要播放的录音的路径
       this.mediaRec = this.media.create(this.getMediaURL(this.src));
       // 录音执行函数
       this.mediaRec.onSuccess.subscribe(() =>
@@ -177,7 +177,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       this.mediaRec.play();
       this.mediaRec.stop();
 
-      //在html中显示当前状态
+      // 在html中显示当前状态
       let counter = 0;
       const timerDur = setInterval(() => {
         counter = counter + 100;
@@ -187,11 +187,11 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         const dur = this.mediaRec.getDuration();
         if (dur > 0) {
           clearInterval(timerDur);
-          let tmpPath = this.getMediaURL(this.src); //this.mediaRec.src;
+          let tmpPath = this.getMediaURL(this.src); // this.mediaRec.src;
           if (this.platform.is('ios')) {
             tmpPath = this.path + this.src;
           }
-          //alert(tmpPath);
+          // alert(tmpPath);
           this._temp_file_path = tmpPath.replace('file://', '');
           this.couldPlay = true;
           if (this.mediaRec) {
@@ -227,7 +227,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       console.log('play():Audio Error: ', error);
     });
 
-    //开始播放录音
+    // 开始播放录音
     this.mediaRec.play();
     return false;
   }

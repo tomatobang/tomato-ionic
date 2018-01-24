@@ -152,7 +152,7 @@ export class StatisticsPage implements OnInit {
         },
         calendar: {
           top: 'middle',
-          left: 0, //'center',
+          left: 0, // 'center',
           orient: 'vertical',
           cellSize: this.cellSize,
           splitLine: {

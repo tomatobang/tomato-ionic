@@ -12,7 +12,7 @@ import { TimelineItemComponent } from './timeline-item';
 
 @Component({
   selector: 'timeline',
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.Emulated,
   template: `
       <ul class="tomatobang-timeline" [class.tomatobang-timeline-pending]="_isPending">
         <ng-content></ng-content>

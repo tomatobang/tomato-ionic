@@ -21,14 +21,14 @@ export class BaiduLocationService {
               resolve({
                 code: 0,
                 message: '定位成功',
-                position: this.createDetailAddr(data)
+                position: this.createDetailAddr(data),
               });
             },
             err => {
               console.log('android location error');
               reject({
                 code: -1,
-                message: '手机定位功能未开启(Android)'
+                message: '手机定位功能未开启(Android)',
               });
             }
           );
@@ -39,7 +39,7 @@ export class BaiduLocationService {
               resolve({
                 code: 0,
                 message: '定位成功',
-                position: this.createDetailAddr(data)
+                position: this.createDetailAddr(data),
               });
             },
             err => {
@@ -62,16 +62,16 @@ export class BaiduLocationService {
               'Longitude: ' +
               position.coords.longitude
           );
-          //注意：在得到准确位置前，需要对原生的坐标系转化成百度的坐标系
+          // 注意：在得到准确位置前，需要对原生的坐标系转化成百度的坐标系
           const point = new window.BMap.Point(
             position.coords.longitude,
             position.coords.latitude
           );
-          window.BMap.Convertor.translate(point, 0, point => {
-            //调用百度的逆地址解析
+          window.BMap.Convertor.translate(point, 0, TranslatedPoint => {
+            // 调用百度的逆地址解析
             const geoc = new window.BMap.Geocoder();
             geoc.getLocation(
-              point,
+              TranslatedPoint,
               rs => {
                 success(rs);
               },
@@ -89,7 +89,7 @@ export class BaiduLocationService {
           }
         },
         {
-          enableHighAccuracy: true
+          enableHighAccuracy: true,
         }
       );
     } else {
@@ -98,11 +98,8 @@ export class BaiduLocationService {
   }
 
   createDetailAddr(data) {
-    let addr,
-      pois,
-      addrDatas = [],
-      isAndroid = this.plf.is('android');
-
+    let addr, pois;
+    const addrDatas = [],  isAndroid = this.plf.is('android');
     if (isAndroid) {
       addr = data.addr.substring(2);
       pois = data.pois;
@@ -110,7 +107,7 @@ export class BaiduLocationService {
         addrDatas.push(addr);
       } else {
         if (Array.isArray(pois)) {
-          if (pois.length == 0) {
+          if (pois.length === 0) {
             addrDatas.push(addr);
           } else {
             for (let i = 0; i < pois.length; i++) {
@@ -128,11 +125,11 @@ export class BaiduLocationService {
     } else {
       addr = data.address;
       pois = data.surroundingPois;
-      if (pois == null) {
+      if (pois === null) {
         addrDatas.push(addr);
       } else {
         if (Array.isArray(pois)) {
-          if (pois.length == 0) {
+          if (pois.length === 0) {
             addrDatas.push(addr);
           } else {
             for (let i = 0; i < pois.length; i++) {

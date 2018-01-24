@@ -89,10 +89,10 @@ export class GlobalService {
   }
 
   set userinfo(value: any) {
-    if (typeof value == 'string') {
+    if (typeof value === 'string') {
       this._userinfo = JSON.parse(value);
       localStorage.setItem('userinfo', value);
-    } else if (typeof value == 'object') {
+    } else if (typeof value === 'object') {
       this._userinfo = value;
       localStorage.setItem('userinfo', JSON.stringify(value));
     }
@@ -105,7 +105,7 @@ export class GlobalService {
       return this._isFirstTimeOpen;
     } else {
       const isFirstTimeOpen = localStorage.getItem('isFirstTimeOpen');
-      if (isFirstTimeOpen == 'false') {
+      if (isFirstTimeOpen === 'false') {
         return false;
       } else {
         return true;
@@ -129,7 +129,7 @@ export class GlobalService {
       return this._isAlwaysLight;
     } else {
       const isAlwaysLight = localStorage.getItem('isAlwaysLight');
-      if (isAlwaysLight == 'false') {
+      if (isAlwaysLight === 'false') {
         return false;
       } else {
         return true;
@@ -181,12 +181,12 @@ export class GlobalService {
   }
 
   get countdown() {
-    if (this._countdown != 0) {
+    if (this._countdown !== 0) {
       return this._countdown;
     } else {
       const countdownStr = localStorage.getItem('_countdown');
       if (countdownStr) {
-        return parseInt(countdownStr);
+        return parseInt(countdownStr, 10);
       } else {
         return 25;
       }
@@ -203,12 +203,12 @@ export class GlobalService {
   }
 
   get resttime() {
-    if (this._resttime != 0) {
+    if (this._resttime !== 0) {
       return this._resttime;
     } else {
       const restStr = localStorage.getItem('_resttime');
       if (restStr) {
-        return parseInt(restStr);
+        return parseInt(restStr, 10);
       } else {
         return 5;
       }

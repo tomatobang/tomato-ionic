@@ -121,7 +121,7 @@ export class TaskPage implements OnInit {
     // 创建任务
     this.taskservice.createTask(task).subscribe((response: any) => {
       const data: any = JSON.parse(response._body);
-      if (data && data.status == 'fail') {
+      if (data && data.status === 'fail') {
       } else {
         // voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
         this.voicepostParams = {
@@ -179,7 +179,7 @@ export class TaskPage implements OnInit {
         // 删除任务
         this.taskservice.deleteTask(task._id).subscribe(response => {
           const data: any = JSON.parse(response._body);
-          if (data && data.status == 'fail') {
+          if (data && data.status === 'fail') {
           } else {
             this.allTasks.unfinished.splice(ind.valueOf(), 1);
             this.allTasks.unfinished = this.allTasks.unfinished.slice();
@@ -194,7 +194,7 @@ export class TaskPage implements OnInit {
     this.taskservice.updateTask(task._id, task).subscribe(
       response => {
         const data: any = JSON.parse(response._body);
-        if (data && data.status == 'fail') {
+        if (data && data.status === 'fail') {
         } else {
           this.allTasks.unfinished = this.allTasks.unfinished.slice();
         }
@@ -211,7 +211,7 @@ export class TaskPage implements OnInit {
     this.taskservice.updateTask(task._id, task).subscribe(
       response => {
         const data: any = JSON.parse(response._body);
-        if (data && data.status == 'fail') {
+        if (data && data.status === 'fail') {
         } else {
           this.allTasks.unfinished = this.allTasks.unfinished.slice();
         }

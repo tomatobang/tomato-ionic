@@ -85,11 +85,11 @@ export class UpdateService {
         diff = 0;
       while (
         position < minLength &&
-        (diff = parseInt(arr1[position]) - parseInt(arr2[position])) == 0
+        (diff = parseInt(arr1[position], 10) - parseInt(arr2[position], 10)) === 0
       ) {
         position++;
       }
-      diff = diff != 0 ? diff : arr1.length - arr2.length;
+      diff = diff !== 0 ? diff : arr1.length - arr2.length;
       return diff > 0;
     } else {
       console.log('版本号不能为空');
@@ -165,9 +165,9 @@ export class UpdateService {
           fileEntry.getDirectory(
             'Download',
             { create: true, exclusive: false },
-            fileEntry => {
+            dir => {
               const targetPath: string =
-                fileEntry.toInternalURL() + 'TomatoBang.apk';
+              dir.toInternalURL() + 'TomatoBang.apk';
               let loading = null;
               loading = this.loadingCtrl.create({
                 content: `下载中...`
@@ -199,7 +199,7 @@ export class UpdateService {
               // 下载进度
               fileTransfer.onProgress((evt: ProgressEvent) => {
                 const downloadProgress = window.parseInt(
-                  evt.loaded / evt.total * 100
+                  evt.loaded / evt.total * 100, 10
                 );
                 loading.data.content = `<div>已下载${downloadProgress}%</div>`;
                 if (downloadProgress >= 100) {

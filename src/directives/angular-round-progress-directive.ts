@@ -66,7 +66,7 @@ export class AngularRoundProgressComponent {
     /* todo:
             模块切换时，hasFixRatio 会被重置，但是并不会触发 constructor 函数
         */
-    //if (!hasFixRatio) {
+    //  if (!hasFixRatio) {
     const backingStore =
       context.backingStorePixelRatio ||
       context.webkitBackingStorePixelRatio ||
@@ -91,7 +91,7 @@ export class AngularRoundProgressComponent {
     }
 
     hasFixRatio = true;
-    //}
+    //  }
   }
 
   render() {

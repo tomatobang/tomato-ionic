@@ -66,12 +66,12 @@ export class ProfilePage implements OnInit {
 
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
-        if (readySource == 'cordova') {
+        if (readySource === 'cordova') {
           this.native.downloadHeadImg(this.userid, false).then(url => {
             this.headImg = `${url}?${new Date().getTime()}`;
           });
         } else {
-          //this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
+          // this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
         }
       });
     }
@@ -92,9 +92,9 @@ export class ProfilePage implements OnInit {
       this.sex = data.sex;
       this.userservice
         .updateSex({ userid: this.userid, sex: this.sex })
-        .subscribe(data => {
-          console.log(data);
-          this.globalservice.userinfo = JSON.parse(data._body);
+        .subscribe(userdata => {
+          console.log(userdata);
+          this.globalservice.userinfo = JSON.parse(userdata._body);
         });
     });
     profileModal.present();
@@ -141,8 +141,8 @@ export class ProfilePage implements OnInit {
           userid: this.userid,
           displayname: this.displayName
         })
-        .subscribe(data => {
-          this.globalservice.userinfo = JSON.parse(data._body);
+        .subscribe(userinfo => {
+          this.globalservice.userinfo = JSON.parse(userinfo._body);
         });
     });
     profileModal.present();
@@ -163,9 +163,8 @@ export class ProfilePage implements OnInit {
       this.email = data.email;
       this.userservice
         .updateEmail({ userid: this.userid, email: this.email })
-        .subscribe(data => {
-          console.log(JSON.parse(data._body));
-          debugger;
+        .subscribe(userdata => {
+          console.log(JSON.parse(userdata._body));
           this.globalservice.userinfo = JSON.parse(data._body);
         });
     });
@@ -187,9 +186,9 @@ export class ProfilePage implements OnInit {
       this.location = data.location;
       this.userservice
         .updateLocation({ userid: this.userid, location: this.location })
-        .subscribe(data => {
-          console.log(data);
-          this.globalservice.userinfo = JSON.parse(data._body);
+        .subscribe(userdata => {
+          console.log(userdata);
+          this.globalservice.userinfo = JSON.parse(userdata._body);
         });
     });
     profileModal.present();

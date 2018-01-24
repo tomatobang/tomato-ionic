@@ -71,7 +71,7 @@ export class VoicePlayService {
               reject(err);
             });
           fileTransfer.onProgress((evt: ProgressEvent) => {
-            const progress = window.parseInt(evt.loaded / evt.total * 100);
+            const progress = window.parseInt(evt.loaded / evt.total * 100, 10);
             console.log(progress);
           });
         }
@@ -129,7 +129,7 @@ export class VoicePlayService {
               observer.error(err);
             });
           fileTransfer.onProgress((evt: ProgressEvent) => {
-            const progress = window.parseInt(evt.loaded / evt.total * 100);
+            const progress = window.parseInt(evt.loaded / evt.total * 100, 10);
             observer.next({
               data: false,
               value: progress
@@ -181,7 +181,7 @@ export class VoicePlayService {
         console.log('play():Audio Error: ', error);
       });
 
-      //开始播放录音
+      // 开始播放录音
       this.mediaRec.play();
     });
   }
@@ -216,7 +216,7 @@ export class VoicePlayService {
     });
     this.mediaRec.onStatusUpdate.subscribe(state => {
       // 循环播放
-      if (this.isPlaying && repeat && state == MEDIA_STATUS.STOPPED) {
+      if (this.isPlaying && repeat && state === MEDIA_STATUS.STOPPED) {
         console.log('play_local_voice():Audio Stoped: ', state);
         this.mediaRec.play();
         this.isPlaying = true;

@@ -101,7 +101,7 @@ export class RegisterPage {
           // 邮箱可用
           if (ret.success) {
             this.service.register(this.user).subscribe(
-              data => {
+              d => {
                 alert('注册成功！即将跳转至登录页...');
                 this.globalservice.userinfo = JSON.stringify(this.user);
                 this.navToLogin();
@@ -112,10 +112,10 @@ export class RegisterPage {
               }
             );
           } else {
-            if (ret.msg == '用户名已存在！') {
+            if (ret.msg === '用户名已存在！') {
               this.formErrors['username'] += ret.msg;
             }
-            if (ret.msg == '邮箱已存在！') {
+            if (ret.msg === '邮箱已存在！') {
               this.formErrors['email'] += ret.msg;
             }
           }

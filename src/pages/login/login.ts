@@ -58,7 +58,7 @@ export class LoginPage {
       const status = retOBJ.status;
       let token = '';
       let userinfo = this.user;
-      if (status == 'success') {
+      if (status === 'success') {
         token = retOBJ.token;
         userinfo = retOBJ.userinfo;
       } else {

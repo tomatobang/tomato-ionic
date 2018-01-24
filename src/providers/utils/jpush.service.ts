@@ -20,9 +20,9 @@ export class JPushService {
   }
 
   clearLocAndBadge() {
-    this.clearLocalNotifications(); //进入时清除本地通知数据
-    this.setApplicationIconBadgeNumber(0); //进入应用徽章清空
-    this.resetBadge(); //还原极光服务器
+    this.clearLocalNotifications(); // 进入时清除本地通知数据
+    this.setApplicationIconBadgeNumber(0); // 进入应用徽章清空
+    this.resetBadge(); // 还原极光服务器
   }
 
   documentBindEventListener(eventType, callback) {
@@ -30,34 +30,34 @@ export class JPushService {
     document.addEventListener(eventType, callback, false);
   }
 
-  //应用程序处于前台时收到推送会触发该事件
+  // 应用程序处于前台时收到推送会触发该事件
   setTagsWithAliasCallback(event) {
     if (event.resultCode !== 0) {
       setTimeout(() => {
         this.setAlias('1000');
       }, 6000);
-      //myNote.myNotice("注册推送服务失败，错误码：" + event.resultCode, 3000);
+      // myNote.myNotice("注册推送服务失败，错误码：" + event.resultCode, 3000);
     } else {
-      //设置别名成功才算开启推送
+      // 设置别名成功才算开启推送
     }
     this._global.setTagsWithAliasCallback(event);
   }
 
   openNotificationCallback(data) {
-    //点击通知打开应用，清除badge和本地通知
+    // 点击通知打开应用，清除badge和本地通知
     this.clearLocAndBadge();
     const isAndroid = this.plf.is('android');
     const type = isAndroid ? data.extras.Type : data.Type;
-    if (type == 1) {
-      //涉及到页面重绘，在controller中监听实现跳转
-    } else if (type == 2) {
+    if (type === 1) {
+      // 涉及到页面重绘，在controller中监听实现跳转
+    } else if (type === 2) {
     }
     this._global.openNotificationCallback(data);
   }
 
   receiveCallback(data) {
-    //应用在激活状态，不添加badge和本地通知
-    if (this._global.appIsActive == true) {
+    // 应用在激活状态，不添加badge和本地通知
+    if (this._global.appIsActive === true) {
       this.clearLocAndBadge();
     }
     const type = this.plf.is('android') ? data.extras.Type : data.Type;
@@ -69,12 +69,12 @@ export class JPushService {
       // audio.load();
       // audio.play();
     }
-    if (type == 1) {
-    } else if (type == 2) {
+    if (type === 1) {
+    } else if (type === 2) {
     }
     this._global.receiveNotificationCallback(data);
   }
-  //启动极光推送,读取用户设置，进行初始化操作，如果没有自定义设置，默认开启
+  // 启动极光推送,读取用户设置，进行初始化操作，如果没有自定义设置，默认开启
 
   init(alias) {
     document.addEventListener(
@@ -82,11 +82,11 @@ export class JPushService {
       () => {
         this.getUserNotificationSettings(function(result) {
           if (result === 0) {
-            //推送被关闭,提示用户开启权限
+            // 推送被关闭,提示用户开启权限
             // myNote.myNotice("告警推送需要在设置中开启应用推送权限", 3000);
           }
         });
-        this.resumePush(); //如果stopPush后，必须resume再init，否则无效
+        this.resumePush(); // 如果stopPush后，必须resume再init，否则无效
         const config = {
           stac: this.setTagsWithAliasCallback,
           onc: this.openNotificationCallback,
@@ -94,13 +94,13 @@ export class JPushService {
           bnc: this.backgroundNotificationCallback
         };
         if (this.plf.is('ios')) {
-          //ios不同于android，需要注册apns服务
+          // ios不同于android，需要注册apns服务
           window.plugins.NXTPlugin.startJPushSDK();
         }
-        //本功能是一个完全本地的状态操作，也就是说：停止推送服务的状态不会保存到服务器上。
-        //推送服务停止期间推送的消息，恢复推送服务后，如果推送的消息还在保留的时长范围内，则客户端是会收到离线消息。
+        // 本功能是一个完全本地的状态操作，也就是说：停止推送服务的状态不会保存到服务器上。
+        // 推送服务停止期间推送的消息，恢复推送服务后，如果推送的消息还在保留的时长范围内，则客户端是会收到离线消息。
         window.plugins.NXTPlugin.init();
-        //设置tag和Alias触发事件处理
+        // 设置tag和Alias触发事件处理
         this.documentBindEventListener('jpush.setTagsWithAlias', config.stac);
         this.documentBindEventListener('jpush.openNotification', config.onc);
         this.documentBindEventListener('jpush.receiveNotification', config.rnc);
@@ -116,15 +116,15 @@ export class JPushService {
           // 保存 token 至服务端，token
           console.log('收到华为TOKEN:', token);
         });
-        //开发周期建议打开debug模式，可以获得额外帮助,发布时关闭，节省性能
+        // 开发周期建议打开debug模式，可以获得额外帮助,发布时关闭，节省性能
         window.plugins.NXTPlugin.setDebugMode(false);
-        //以下仅限android，插件内部做了平台判断
-        window.plugins.NXTPlugin.setBasicPushNotificationBuilder(); //声音，振动提示等,
-        window.plugins.NXTPlugin.requestPermission(); //用于在 Android 6.0 及以上系统，申请一些权限
+        // 以下仅限android，插件内部做了平台判断
+        window.plugins.NXTPlugin.setBasicPushNotificationBuilder(); // 声音，振动提示等,
+        window.plugins.NXTPlugin.requestPermission(); // 用于在 Android 6.0 及以上系统，申请一些权限
         this.clearLocAndBadge();
         // 根据实际状况设置推送是否开启
         const pushState = true;
-        //默认开启，除非明确设置为false,
+        // 默认开启，除非明确设置为false,
         if (pushState) {
           this.setAlias(alias);
         } else {
@@ -138,7 +138,7 @@ export class JPushService {
   receiveNotificationCallback(data) {
     this.receiveCallback(data);
   }
-  //应用程序处于后台时收到推送会触发该事件，可以在后台执行一段代码。
+  // 应用程序处于后台时收到推送会触发该事件，可以在后台执行一段代码。
   backgroundNotificationCallback = function(data) {
     this.receiveCallback(data);
   };
@@ -216,7 +216,7 @@ export class JPushService {
     window.plugins.NXTPlugin.setTags(tags);
   }
 
-  //设置标签和别名
+  // 设置标签和别名
   setTagsWithAlias(tags, alias) {
     window.plugins.NXTPlugin.setTagsWithAlias(tags, alias);
   }
@@ -250,7 +250,7 @@ export class JPushService {
     window.plugins.NXTPlugin.setBadge(value);
   }
 
-  //resetBadge 相当于 setBadge(0)。
+  // resetBadge 相当于 setBadge(0)。
   resetBadge() {
     window.plugins.NXTPlugin.resetBadge();
   }

@@ -54,6 +54,32 @@ export class IndexPage implements OnInit, OnDestroy {
   historyTomatoes: Array<any> = [];
   tomatoCount = 0;
 
+  mp3Source: HTMLSourceElement = document.createElement('source');
+  oggSource: HTMLSourceElement = document.createElement('source');
+  alertAudio: HTMLAudioElement = document.createElement('audio');
+  // 番茄钟长度
+  countdown = 25;
+  // 休息时间长度
+  resttime = 5;
+  mytimeout: any = null;
+  activeTomato: any = null;
+  isResting = false;
+  resttimeout: any = null;
+  resttimestart: any = null;
+  timerStatus = {
+    label: this.countdown + ':00',
+    countdown: this.countdown,
+    percentage: 0,
+    count: 0,
+    reset() {
+      this.count = 0;
+      this.percentage = 0;
+      this.label = this.countdown + ':00';
+    }
+  };
+  // 中断缘由
+  breakReason: any;
+
   constructor(
     private app: App,
     public globalservice: GlobalService,
@@ -83,18 +109,18 @@ export class IndexPage implements OnInit, OnDestroy {
       this.timerStatus.countdown = this.countdown;
       this.resttime = settings.resttime;
       this.refreshTimeUI();
-      //setTimeout(this.stopRefreshTimeUI(), 1500);
+      // setTimeout(this.stopRefreshTimeUI(), 1500);
     });
 
     this.tomatoIO.load_tomato(this._userid);
     this.tomatoIO.load_tomato_succeed().subscribe(t => {
-      if (t && t != 'null') {
+      if (t && t !== 'null') {
         this.startTask(t, false);
       }
     });
     // 其它终端开启
     this.tomatoIO.other_end_start_tomato().subscribe(t => {
-      if (t && t != 'null') {
+      if (t && t !== 'null') {
         this.startTask(t, false);
       }
     });
@@ -104,7 +130,7 @@ export class IndexPage implements OnInit, OnDestroy {
     });
     // 服务端新增
     this.tomatoIO.new_tomate_added().subscribe(t => {
-      if (t && t != 'null') {
+      if (t && t !== 'null') {
         this.historyTomatoes.unshift(t);
         this.tomatoCount += 1;
       } else {
@@ -175,32 +201,7 @@ export class IndexPage implements OnInit, OnDestroy {
     }
   }
 
-  mp3Source: HTMLSourceElement = document.createElement('source');
-  oggSource: HTMLSourceElement = document.createElement('source');
-  alertAudio: HTMLAudioElement = document.createElement('audio');
-  // 番茄钟长度
-  countdown = 25;
-  // 休息时间长度
-  resttime = 5;
-  mytimeout: any = null;
-  activeTomato: any = null;
-  isResting = false;
-  resttimeout: any = null;
-  resttimestart: any = null;
-  timerStatus = {
-    label: this.countdown + ':00',
-    countdown: this.countdown,
-    percentage: 0,
-    count: 0,
-    reset() {
-      this.count = 0;
-      this.percentage = 0;
-      this.label = this.countdown + ':00';
-    }
-  };
-  // 中断缘由
-  breakReason: any;
-  //
+
   @ViewChild(AngularRoundProgressComponent)
   child: AngularRoundProgressComponent;
   ngAfterViewInit() {
@@ -367,11 +368,11 @@ export class IndexPage implements OnInit, OnDestroy {
 
     this.timerStatus.percentage = percentage;
     this.timerStatus.label = this.secondsToMMSS(
-      this.countdown * 60 - parseInt(secondspan + '')
+      this.countdown * 60 - parseInt(secondspan + '', 10)
     );
     // 倒计时结束
     if (dataspan >= this.countdown * 60 * 1000) {
-      //this.alertAudio.play();
+      // this.alertAudio.play();
       this.startRestTimer();
       this.activeTomato = null;
       this.showWhiteNoiseIcon = false;
@@ -392,11 +393,11 @@ export class IndexPage implements OnInit, OnDestroy {
 
     this.timerStatus.percentage = percentage;
     this.timerStatus.label = this.secondsToMMSS(
-      this.resttime * 60 - parseInt(secondspan + '')
+      this.resttime * 60 - parseInt(secondspan + '', 10)
     );
 
     if (dataspan >= this.resttime * 60 * 1000) {
-      //this.alertAudio.play();
+      // this.alertAudio.play();
       this.isResting = false;
       this.timerStatus.reset();
       setTimeout(this.stopRefreshTimeUI, 3500);
@@ -437,9 +438,9 @@ export class IndexPage implements OnInit, OnDestroy {
 
   playVoiceRecord(tomato) {
     if (tomato.voiceUrl) {
-      const filename = this.getFileName(tomato.voiceUrl);
+      const fileNamePart = this.getFileName(tomato.voiceUrl);
       this.voiceService
-        .downloadVoiceFile(filename, this.globalservice.token)
+        .downloadVoiceFile(fileNamePart, this.globalservice.token)
         .then(filename => {
           this.voicePlaySrc = './assets/voice/voice_play_me.gif';
           this.voiceService.play(filename).then(() => {
@@ -466,7 +467,7 @@ export class IndexPage implements OnInit, OnDestroy {
     // 前端需对关键词做少许过滤
     console.log('keyword', keywords);
     this.tomatoservice.searchTomatos({ keywords }).subscribe(data => {
-      //console.log(data);
+      // console.log(data);
       const arr = JSON.parse(data._body);
       this.searchReturnItems = arr;
     });

@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-//import { JPushService } from '../providers/utils/jpush.service'; // 暂未启用
+// import { JPushService } from '../providers/utils/jpush.service'; // 暂未启用
 import { GlobalService } from '../providers/global.service';
 import { UpdateService } from '../providers/utils/update.service';
 import { NativeService } from '../providers/utils/native.service';
@@ -26,7 +26,7 @@ export class MyApp {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    //jPushService: JPushService,
+    // jPushService: JPushService,
     updateService: UpdateService,
     public rebirthProvider: RebirthHttpProvider,
     private backgroundMode: BackgroundMode,
@@ -41,7 +41,7 @@ export class MyApp {
       updateService.checkUpdate();
       native.initNativeService();
       // 开启后台运行
-      //backgroundMode.enable();
+      // backgroundMode.enable();
       // 初始化 jPush
       // if (global.userinfo){
       //   jPushService.init(global.userinfo.username);
