@@ -7,11 +7,11 @@ import {
   QueryList,
   TemplateRef,
   ViewEncapsulation
-} from "@angular/core";
-import { TimelineItemComponent } from "./timeline-item";
+} from '@angular/core';
+import { TimelineItemComponent } from './timeline-item';
 
 @Component({
-  selector: "timeline",
+  selector: 'timeline',
   encapsulation: ViewEncapsulation.None,
   template: `
       <ul class="tomatobang-timeline" [class.tomatobang-timeline-pending]="_isPending">
@@ -33,7 +33,7 @@ export class TimelineComponent implements OnInit, AfterContentInit {
   items: TimelineItemComponent[] = [];
   @ContentChildren(TimelineItemComponent)
   _listOfTimeline: QueryList<TimelineItemComponent>;
-  @ContentChild("pending") _pendingContent: TemplateRef<void>;
+  @ContentChild('pending') _pendingContent: TemplateRef<void>;
 
   ngOnInit(): void {
     if (this._pendingContent) {

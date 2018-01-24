@@ -1,6 +1,6 @@
 /*
- * @Author: kobepeng 
- * @Date: 2017-11-25 20:32:32 
+ * @Author: kobepeng
+ * @Date: 2017-11-25 20:32:32
  * @Last Modified by: kobepeng
  * @Last Modified time: 2017-12-02 11:17:13
  */
@@ -110,7 +110,7 @@ export class MinePage {
    * 显示二维码
    */
   showMyQRCODE() {
-    let modal = this.modalCtrl.create('QRImgModal', { userid: this.userid });
+    const modal = this.modalCtrl.create('QRImgModal', { userid: this.userid });
     modal.onDidDismiss(data => {
       return data;
     });

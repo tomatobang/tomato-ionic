@@ -12,6 +12,6 @@ import { ClosePopupComponentModule } from '@components/close-popup/close-popup.m
     IonicPageModule.forChild(QRScannerModal),
     ClosePopupComponentModule,
   ],
-  providers:[QRScanner]
+  providers: [QRScanner]
 })
 export class QRScannerModalModule {}

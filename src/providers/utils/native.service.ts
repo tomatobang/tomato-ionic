@@ -1,23 +1,23 @@
 /*
- * @Author: kobepeng 
- * @Date: 2017-11-25 09:29:39 
+ * @Author: kobepeng
+ * @Date: 2017-11-25 09:29:39
  * @Last Modified by: kobepeng
  * @Last Modified time: 2017-12-02 11:06:46
  */
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   Platform,
   AlertController,
   LoadingController,
   ToastController,
   Toast
-} from "ionic-angular";
-import { GlobalService } from "../global.service";
-import { Insomnia } from "@ionic-native/insomnia";
-import { Network } from "@ionic-native/network";
-import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer";
-import { File } from "@ionic-native/file";
-import { Helper } from "./helper";
+} from 'ionic-angular';
+import { GlobalService } from '../global.service';
+import { Insomnia } from '@ionic-native/insomnia';
+import { Network } from '@ionic-native/network';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { Helper } from './helper';
 
 declare var window;
 
@@ -57,8 +57,8 @@ export class NativeService {
       this.insomnia
         .keepAwake()
         .then(
-          () => console.log("insomnia init success"),
-          e => console.log("insomnia init error", e)
+          () => console.log('insomnia init success'),
+          e => console.log('insomnia init error', e)
         );
     }
   }
@@ -77,18 +77,18 @@ export class NativeService {
     }, 2400);
     this.network.onDisconnect().subscribe(() => {
       this.isOffline = true;
-      console.log("network was disconnected :-(");
-      offlineOnlineThrottle("网络已断开！");
+      console.log('network was disconnected :-(');
+      offlineOnlineThrottle('网络已断开！');
     });
 
     this.network.onConnect().subscribe(() => {
-      console.log("network connected!");
+      console.log('network connected!');
       this.isOffline = false;
       this.toast.dismissAll();
       // offlineOnlineThrottle('网络已连接！');
       setTimeout(() => {
-        if (this.network.type === "wifi") {
-          console.log("we got a wifi connection, woohoo!");
+        if (this.network.type === 'wifi') {
+          console.log('we got a wifi connection, woohoo!');
         }
       }, 3000);
     });
@@ -117,12 +117,12 @@ export class NativeService {
   toast: Toast;
   createToast() {
     this.toast = this.toastCtrl.create({
-      message: "",
+      message: '',
       // duration: 3000,
-      position: "top",
-      cssClass: "my-toast-style",
+      position: 'top',
+      cssClass: 'my-toast-style',
       showCloseButton: true,
-      closeButtonText: "关闭",
+      closeButtonText: '关闭',
       dismissOnPageChange: true
     });
   }
@@ -133,9 +133,9 @@ export class NativeService {
    * @param change 是否为更换头像
    */
   downloadHeadImg(filename, change): Promise<any> {
-    let targetPath = this.helper.getBasePath() + "headimg/";
-    let targetPathWithFileName =
-      this.helper.getBasePath() + "headimg/" + filename + ".png";
+    const targetPath = this.helper.getBasePath() + 'headimg/';
+    const targetPathWithFileName =
+      this.helper.getBasePath() + 'headimg/' + filename + '.png';
     if (this._headimgurl && !change) {
       return new Promise((resolve, reject) => {
         resolve(this._headimgurl);
@@ -144,11 +144,11 @@ export class NativeService {
 
     return new Promise((resolve, reject) => {
       // 检查是否已下载过
-      this.file.checkFile(targetPath, filename + ".png").then(
+      this.file.checkFile(targetPath, filename + '.png').then(
         success => {
           if (change) {
             // 先删除本地文件再下载
-            this.file.removeFile(targetPath, filename + ".png").then(() => {
+            this.file.removeFile(targetPath, filename + '.png').then(() => {
               this.filedownload(filename, targetPathWithFileName).then(
                 (file: any) => {
                   this._headimgurl = file;
@@ -187,27 +187,27 @@ export class NativeService {
    */
   filedownload(filename, targetPathWithFileName) {
     return new Promise((resolve, reject) => {
-      let options = {
+      const options = {
         headers: {
           Authorization: this.globalservice.token
         }
       };
-      let trustHosts = true;
+      const trustHosts = true;
       const fileTransfer: FileTransferObject = this.transfer.create();
       fileTransfer
         .download(
-          this.globalservice.serverAddress + "api/user/headimg/" + filename,
+          this.globalservice.serverAddress + 'api/user/headimg/' + filename,
           targetPathWithFileName,
           trustHosts,
           options
         )
         .then(result => {
-          console.log("Headmg 下载完成..");
+          console.log('Headmg 下载完成..');
           resolve(result.toURL());
         })
         .catch(err => {
-          reject("Headmg 下载出错");
-          console.log("Headmg 下载出错", err);
+          reject('Headmg 下载出错');
+          console.log('Headmg 下载出错', err);
         });
       fileTransfer.onProgress((evt: ProgressEvent) => {
         console.log(evt);

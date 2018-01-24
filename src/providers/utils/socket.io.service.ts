@@ -2,10 +2,10 @@
  * socket.io 服务
  */
 
-import { Injectable } from "@angular/core";
-import "rxjs/add/operator/map";
-import { Socket } from "ng-socket-io";
-import { Tomato } from "../models/tomato";
+import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/map';
+import { Socket } from 'ng-socket-io';
+import { Tomato } from '../models/tomato';
 
 @Injectable()
 export class TomatoIOService {
@@ -15,11 +15,11 @@ export class TomatoIOService {
    * 第一次，用于加载当前tomato
    */
   load_tomato(userid: string) {
-    this.socket.emit("load_tomato", { userid, endname: "ionic" });
+    this.socket.emit('load_tomato', { userid, endname: 'ionic' });
   }
 
   load_tomato_succeed() {
-    return this.socket.fromEvent<any>("load_tomato_succeed").map(data => data);
+    return this.socket.fromEvent<any>('load_tomato_succeed').map(data => data);
   }
 
   /**
@@ -27,16 +27,16 @@ export class TomatoIOService {
    */
   other_end_break_tomato() {
     return this.socket
-      .fromEvent<any>("other_end_break_tomato")
+      .fromEvent<any>('other_end_break_tomato')
       .map(data => data);
   }
   /**
    * 中断番茄钟
    */
   break_tomato(userid: string, tomato: Tomato) {
-    this.socket.emit("break_tomato", {
+    this.socket.emit('break_tomato', {
       userid,
-      endname: "ionic",
+      endname: 'ionic',
       tomato
     });
   }
@@ -45,7 +45,7 @@ export class TomatoIOService {
    * 中断番茄钟
    */
   break_tomato_succeed() {
-    this.socket.fromEvent<any>("break_tomato_succeed").map(data => data);
+    this.socket.fromEvent<any>('break_tomato_succeed').map(data => data);
   }
 
   /**
@@ -53,7 +53,7 @@ export class TomatoIOService {
    */
   other_end_start_tomato() {
     return this.socket
-      .fromEvent<any>("other_end_start_tomato")
+      .fromEvent<any>('other_end_start_tomato')
       .map(data => data);
   }
 
@@ -61,9 +61,9 @@ export class TomatoIOService {
    * 开启番茄钟
    */
   start_tomato(userid: string, tomato: Tomato, countdown: Number) {
-    this.socket.emit("start_tomato", {
+    this.socket.emit('start_tomato', {
       userid,
-      endname: "ionic",
+      endname: 'ionic',
       tomato,
       countdown
     });
@@ -73,13 +73,13 @@ export class TomatoIOService {
    * 开启番茄钟成功
    */
   start_tomato_succeed(tomato: Tomato) {
-    this.socket.emit("start_tomato_succeed", tomato);
+    this.socket.emit('start_tomato_succeed', tomato);
   }
 
   /**
    *
    */
   new_tomate_added() {
-    return this.socket.fromEvent<any>("new_tomate_added").map(data => data);
+    return this.socket.fromEvent<any>('new_tomate_added').map(data => data);
   }
 }

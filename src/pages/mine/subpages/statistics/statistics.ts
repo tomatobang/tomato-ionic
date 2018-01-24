@@ -1,25 +1,25 @@
 /*
- * @Author: kobepeng 
- * @Date: 2017-11-23 11:07:20 
+ * @Author: kobepeng
+ * @Date: 2017-11-23 11:07:20
  * @Last Modified by: kobepeng
  * @Last Modified time: 2017-11-30 16:35:27
  */
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ElementRef } from "@angular/core";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
-import { IonicPage } from "ionic-angular";
-import * as echarts from "echarts";
-import { debug } from "util";
-import { OnlineTomatoService } from "../../../../providers/data.service";
+import { IonicPage } from 'ionic-angular';
+import * as echarts from 'echarts';
+import { debug } from 'util';
+import { OnlineTomatoService } from '../../../../providers/data.service';
 declare var window;
 
 @IonicPage()
 @Component({
-  selector: "page-statistics",
-  templateUrl: "statistics.html"
+  selector: 'page-statistics',
+  templateUrl: 'statistics.html'
 })
 export class StatisticsPage implements OnInit {
-  @ViewChild("divContainer") divContainer;
+  @ViewChild('divContainer') divContainer;
   yearMonth: Date;
   monthlabel: Number;
   yearlabel: Number;
@@ -35,9 +35,9 @@ export class StatisticsPage implements OnInit {
   ngOnInit() {
     this.divContainer.nativeElement.style.width = window.screen.width;
     if (window.screen.width < 350) {
-      this.divContainer.nativeElement.style.height = window.screen.width + "px";
+      this.divContainer.nativeElement.style.height = window.screen.width + 'px';
     } else {
-      this.divContainer.nativeElement.style.height = "350px";
+      this.divContainer.nativeElement.style.height = '350px';
     }
     this.cellSize = [
       (window.screen.width - 10) / 7,
@@ -64,7 +64,7 @@ export class StatisticsPage implements OnInit {
     if (!this.yearMonth) {
       this.yearMonth = new Date();
     } else {
-      let month = this.yearMonth.getMonth() + offset;
+      const month = this.yearMonth.getMonth() + offset;
       this.yearMonth.setMonth(month);
     }
     this.monthlabel = this.yearMonth.getMonth() + 1;
@@ -81,7 +81,7 @@ export class StatisticsPage implements OnInit {
         .statistics({ isSuccess: 1, date: date })
         .subscribe(data => {
           data = JSON.parse(data._body);
-          let ret = [];
+          const ret = [];
           for (let i = 0; i < data.length; i += 1) {
             ret.push([data[i]._id, data[i].count]);
           }
@@ -97,13 +97,13 @@ export class StatisticsPage implements OnInit {
    * 模拟数据
    */
   getVirtulData() {
-    let date = +echarts.number.parseDate("2017-11-4");
-    let end = +echarts.number.parseDate("2017-11-22");
-    let dayTime = 3600 * 24 * 1000;
-    let data = [];
+    const date = +echarts.number.parseDate('2017-11-4');
+    const end = +echarts.number.parseDate('2017-11-22');
+    const dayTime = 3600 * 24 * 1000;
+    const data = [];
     for (let time = date; time < end; time += dayTime) {
       data.push([
-        echarts.format.formatTime("yyyy-MM-dd", time),
+        echarts.format.formatTime('yyyy-MM-dd', time),
         Math.floor(Math.random() * 1)
       ]);
     }
@@ -122,15 +122,15 @@ export class StatisticsPage implements OnInit {
         }
       }
       for (let i = 0; i < scatterData.length; i++) {
-        let t_data = scatterData[i];
-        let value = t_data[1];
+        const t_data = scatterData[i];
+        const value = t_data[1];
         if (max_count !== 0) {
           let color_tmp = value / max_count;
           if (color_tmp < 0.3) {
             color_tmp = 0.3;
           }
-          let itemStyle = {
-            normal: { color: "rgba(249,114,113," + color_tmp + ")" }
+          const itemStyle = {
+            normal: { color: 'rgba(249,114,113,' + color_tmp + ')' }
           };
           scatterData[i] = {
             value: t_data,
@@ -138,27 +138,27 @@ export class StatisticsPage implements OnInit {
           };
         }
       }
-      let range =
-        this.yearMonth.getFullYear() + "-" + (this.yearMonth.getMonth() + 1);
-      let option = {
+      const range =
+        this.yearMonth.getFullYear() + '-' + (this.yearMonth.getMonth() + 1);
+      const option = {
         tooltip: {
           formatter(dd) {
             return `${dd.value[0]}<br/>番茄钟:${dd.value[1]}`;
           }
         },
         legend: {
-          data: ["完成", "中断"],
+          data: ['完成', '中断'],
           bottom: 20
         },
         calendar: {
-          top: "middle",
+          top: 'middle',
           left: 0, //'center',
-          orient: "vertical",
+          orient: 'vertical',
           cellSize: this.cellSize,
           splitLine: {
             lineStyle: {
-              color: "#8c8c8c",
-              type: "dashed",
+              color: '#8c8c8c',
+              type: 'dashed',
               opacity: 0
             }
           },
@@ -171,44 +171,44 @@ export class StatisticsPage implements OnInit {
             show: false,
             textStyle: {
               fontSize: 30,
-              color: "#8c8c8c"
+              color: '#8c8c8c'
             }
           },
           dayLabel: {
             show: true,
             margin: 5,
             firstDay: 1,
-            color: "#8c8c8c",
-            nameMap: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
+            color: '#8c8c8c',
+            nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
           },
           monthLabel: {
             show: false,
-            nameMap: "cn"
+            nameMap: 'cn'
           },
           range: range
         },
         series: [
           {
-            id: "label",
-            type: "scatter",
-            coordinateSystem: "calendar",
-            symbol: "roundRect",
+            id: 'label',
+            type: 'scatter',
+            coordinateSystem: 'calendar',
+            symbol: 'roundRect',
             label: {
               normal: {
                 show: true,
                 formatter(params) {
-                  return echarts.format.formatTime("dd", params.value[0]);
+                  return echarts.format.formatTime('dd', params.value[0]);
                 },
                 offset: [-this.cellSize[0] / 2 + 6, -this.cellSize[1] / 2 + 5],
                 textStyle: {
-                  color: "#8c8c8c",
+                  color: '#8c8c8c',
                   fontSize: 10
                 }
               }
             },
             markLine: {},
             data: scatterData,
-            animationEasing: "bounceInOut",
+            animationEasing: 'bounceInOut',
             animationDelay: function(idx) {
               return idx * 50;
             },
@@ -219,7 +219,7 @@ export class StatisticsPage implements OnInit {
         ]
       };
 
-      if (option && typeof option === "object") {
+      if (option && typeof option === 'object') {
         this.myChart.setOption(option, true);
       }
     });

@@ -1,23 +1,23 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild } from '@angular/core';
 
 import {
   MenuController,
   NavController,
   Slides,
   IonicPage
-} from "ionic-angular";
+} from 'ionic-angular';
 
-import { Storage } from "@ionic/storage";
+import { Storage } from '@ionic/storage';
 
 @Component({
-  selector: "page-guide",
-  templateUrl: "guide.html"
+  selector: 'page-guide',
+  templateUrl: 'guide.html'
 })
 @IonicPage()
 export class GuidePage {
   showSkip = true;
 
-  @ViewChild("slides") slides: Slides;
+  @ViewChild('slides') slides: Slides;
 
   constructor(
     public navCtrl: NavController,
@@ -26,8 +26,8 @@ export class GuidePage {
   ) {}
 
   startApp() {
-    this.navCtrl.push("LoginPage").then(() => {
-      this.storage.set("hasSeenGuide", "true");
+    this.navCtrl.push('LoginPage').then(() => {
+      this.storage.set('hasSeenGuide', 'true');
     });
   }
 

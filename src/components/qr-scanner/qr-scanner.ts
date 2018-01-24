@@ -13,13 +13,13 @@ export class QRScannerComponent {
   constructor(private modalCtrl: ModalController) {}
 
   open(format: boolean = false) {
-    let modal = this.modalCtrl.create('QRScannerModal');
+    const modal = this.modalCtrl.create('QRScannerModal');
 
     modal.onDidDismiss(qrCode => {
       if (lodash.isNil(qrCode)) {
         return this.onWrong.emit();
       }
-      let response = qrCode;
+      const response = qrCode;
       // if (format) response = this.formatScheme(qrCode);
       return this.onSuccess.emit(response);
     });

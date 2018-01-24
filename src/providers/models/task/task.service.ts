@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import { Task } from "./task.model";
-import { SearchResult } from "./search-result.model";
-import { Observable } from "rxjs/Observable";
-import { Cacheable } from "rebirth-storage";
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Task } from './task.model';
+import { SearchResult } from './search-result.model';
+import { Observable } from 'rxjs/Observable';
+import { Cacheable } from 'rebirth-storage';
 import {
   RebirthHttp,
   RebirthHttpProvider,
@@ -13,8 +13,8 @@ import {
   Query,
   Path,
   Body
-} from "rebirth-http";
-import { baseUrl } from "../../../config";
+} from 'rebirth-http';
+import { baseUrl } from '../../../config';
 
 export abstract class TaskService extends RebirthHttp {
   abstract createTask(task: Task): Observable<any>;
@@ -41,33 +41,33 @@ export class OnlineTaskService extends TaskService {
     super();
   }
 
-  @POST(baseUrl + "api/task/")
+  @POST(baseUrl + 'api/task/')
   createTask(@Body task: Task): Observable<any> {
     return null;
   }
 
   // @Cacheable({ pool: 'tasks' })
-  @GET(baseUrl + "api/task")
+  @GET(baseUrl + 'api/task')
   getTasks(
-    @Query("pageIndex") pageIndex = 1,
-    @Query("pageSize") pageSize = 10,
-    @Query("keyword") keyword?: string
+    @Query('pageIndex') pageIndex = 1,
+    @Query('pageSize') pageSize = 10,
+    @Query('keyword') keyword?: string
   ): Observable<SearchResult<Task>> {
     return null;
   }
 
-  @GET(baseUrl + "api/task/:id")
-  getTaskByTitle(@Path("id") taskTitle: string): Observable<Task> {
+  @GET(baseUrl + 'api/task/:id')
+  getTaskByTitle(@Path('id') taskTitle: string): Observable<Task> {
     return null;
   }
 
-  @POST(baseUrl + "api/task/:id")
-  updateTask(@Path("id") taskUrl: string, @Body task: Task): Observable<any> {
+  @POST(baseUrl + 'api/task/:id')
+  updateTask(@Path('id') taskUrl: string, @Body task: Task): Observable<any> {
     return null;
   }
 
-  @DELETE(baseUrl + "api/task/:id")
-  deleteTask(@Path("id") taskUrl: string): Observable<any> {
+  @DELETE(baseUrl + 'api/task/:id')
+  deleteTask(@Path('id') taskUrl: string): Observable<any> {
     return null;
   }
 }

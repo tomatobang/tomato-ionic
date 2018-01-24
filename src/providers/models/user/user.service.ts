@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import { User, EmailUserName } from "./user.model";
-import { SearchResult } from "./search-result.model";
-import { Observable } from "rxjs/Observable";
-import { Cacheable } from "rebirth-storage";
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { User, EmailUserName } from './user.model';
+import { SearchResult } from './search-result.model';
+import { Observable } from 'rxjs/Observable';
+import { Cacheable } from 'rebirth-storage';
 import {
   RebirthHttp,
   RebirthHttpProvider,
@@ -13,8 +13,8 @@ import {
   Query,
   Path,
   Body
-} from "rebirth-http";
-import { baseUrl } from "../../../config";
+} from 'rebirth-http';
+import { baseUrl } from '../../../config';
 
 export abstract class UserService extends RebirthHttp {
   abstract getUsers(
@@ -71,47 +71,47 @@ export class OnlineUserService extends UserService {
     super();
   }
 
-  @Cacheable({ pool: "users" })
-  @GET(baseUrl + "api/user")
+  @Cacheable({ pool: 'users' })
+  @GET(baseUrl + 'api/user')
   getUsers(
-    @Query("pageIndex") pageIndex = 1,
-    @Query("pageSize") pageSize = 10,
-    @Query("keyword") keyword?: string
+    @Query('pageIndex') pageIndex = 1,
+    @Query('pageSize') pageSize = 10,
+    @Query('keyword') keyword?: string
   ): Observable<SearchResult<User>> {
     return null;
   }
 
-  @GET(baseUrl + "api/user/:id")
-  getUserByTitle(@Path("id") userName: string): Observable<User> {
+  @GET(baseUrl + 'api/user/:id')
+  getUserByTitle(@Path('id') userName: string): Observable<User> {
     return null;
   }
 
-  @POST(baseUrl + "api/user/:id")
-  updateUser(@Path("id") userUrl: string, @Body user: User): Observable<any> {
+  @POST(baseUrl + 'api/user/:id')
+  updateUser(@Path('id') userUrl: string, @Body user: User): Observable<any> {
     return null;
   }
 
-  @DELETE(baseUrl + "api/user/:id")
-  deleteUser(@Path("id") userUrl: string): Observable<any> {
+  @DELETE(baseUrl + 'api/user/:id')
+  deleteUser(@Path('id') userUrl: string): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + "api/user")
+  @POST(baseUrl + 'api/user')
   register(@Body user: User): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + "api/login/")
+  @POST(baseUrl + 'api/login/')
   login(@Body user: User): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + "email_username/verify")
+  @POST(baseUrl + 'email_username/verify')
   verifyUserNameEmail(@Body email_username: EmailUserName): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + "api/user/headimg")
+  @POST(baseUrl + 'api/user/headimg')
   updateUserHeadImg(@Body
   data: {
     userid: string;
@@ -120,12 +120,12 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
-  @POST(baseUrl + "api/user/sex")
+  @POST(baseUrl + 'api/user/sex')
   updateSex(@Body data: { userid: string; sex: string }): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + "api/user/displayname")
+  @POST(baseUrl + 'api/user/displayname')
   updateDisplayName(@Body
   data: {
     userid: string;
@@ -134,19 +134,19 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
-  @POST(baseUrl + "api/user/email")
+  @POST(baseUrl + 'api/user/email')
   updateEmail(@Body data: { userid: string; email: string }): Observable<any> {
     return null;
   }
 
-  @POST(baseUrl + "api/user/location")
+  @POST(baseUrl + 'api/user/location')
   updateLocation(@Body data: { userid: string; location: string }): Observable<
     any
   > {
     return null;
   }
 
-  @POST(baseUrl + "api/user/bio")
+  @POST(baseUrl + 'api/user/bio')
   updateBio(@Body data: { userid: string; bio: string }): Observable<any> {
     return null;
   }

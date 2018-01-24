@@ -5,10 +5,10 @@ import {
   OnInit,
   TemplateRef,
   ViewEncapsulation
-} from "@angular/core";
+} from '@angular/core';
 
 @Component({
-  selector: "timeline-item",
+  selector: 'timeline-item',
   encapsulation: ViewEncapsulation.None,
   template: `
       <li
@@ -28,22 +28,22 @@ import {
   styleUrls: []
 })
 export class TimelineItemComponent implements OnInit {
-  itemHeadClass = { "tomatobang-timeline-item-head-blue": true };
-  _color: string = "blue";
+  itemHeadClass = { 'tomatobang-timeline-item-head-blue': true };
+  _color = 'blue';
   _custom = false;
   _lastItem = false;
-  @ContentChild("custom") _customContent: TemplateRef<void>;
+  @ContentChild('custom') _customContent: TemplateRef<void>;
 
   @Input()
   set nzColor(color: string) {
     this._color = color;
     // TODO: There is no removal process, is the result correct?
-    if (color === "green") {
-      this.itemHeadClass["tomatobang-timeline-item-head-green"] = true;
-    } else if (color === "red") {
-      this.itemHeadClass["tomatobang-timeline-item-head-red"] = true;
+    if (color === 'green') {
+      this.itemHeadClass['tomatobang-timeline-item-head-green'] = true;
+    } else if (color === 'red') {
+      this.itemHeadClass['tomatobang-timeline-item-head-red'] = true;
     } else {
-      this.itemHeadClass["tomatobang-timeline-item-head-blue"] = true;
+      this.itemHeadClass['tomatobang-timeline-item-head-blue'] = true;
     }
   }
 

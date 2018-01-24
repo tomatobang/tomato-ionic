@@ -1,37 +1,37 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { IonicPage, ViewController, Platform } from "ionic-angular";
-import { OnlineTaskService } from "../../../providers/data.service";
-import { VoicePlayService } from "../../../providers/utils/voiceplay.service";
-import { GlobalService } from "../../../providers/global.service";
-import { VoiceRecorderComponent } from "../../../components/voice-recorder/";
-import { baseUrl } from "../../../config";
-import { transition } from "@angular/core/src/animation/dsl";
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { IonicPage, ViewController, Platform } from 'ionic-angular';
+import { OnlineTaskService } from '../../../providers/data.service';
+import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
+import { GlobalService } from '../../../providers/global.service';
+import { VoiceRecorderComponent } from '../../../components/voice-recorder/';
+import { baseUrl } from '../../../config';
+import { transition } from '@angular/core/src/animation/dsl';
 
 @IonicPage()
 @Component({
-  selector: "cmp-task",
-  templateUrl: "task.html",
+  selector: 'cmp-task',
+  templateUrl: 'task.html',
   providers: []
 })
 export class TaskPage implements OnInit {
   showDismissButton = true;
-  page_title = "任务管理";
-  taskType = "today";
+  page_title = '任务管理';
+  taskType = 'today';
   openNewTaskForm = false;
   allTasks = {
     finished: new Array(),
     unfinished: new Array()
   };
   newTask = {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     num: 1
   };
 
   voicepostParams = {};
 
   voiceUploadUrl = {
-    url: baseUrl + "upload/voicefile"
+    url: baseUrl + 'upload/voicefile'
   };
 
   constructor(
@@ -59,16 +59,16 @@ export class TaskPage implements OnInit {
       },
       err => {
         alert(JSON.stringify(err));
-        console.log("getTasks err", err);
+        console.log('getTasks err', err);
       }
     );
   }
 
   playVoiceRecord(task) {
     if (task.voiceUrl) {
-      let filename = this.getFileName(task.voiceUrl);
+      const filename = this.getFileName(task.voiceUrl);
       task.inDownloading = true;
-      task.progress = "0%";
+      task.progress = '0%';
       this.voiceService
         .downloadVoiceFile_observable(filename, this.globalservice.token)
         .subscribe(
@@ -82,8 +82,8 @@ export class TaskPage implements OnInit {
             } else {
               if (data.value) {
                 // 显示进度
-                task.progress = data.value + "%";
-                console.log("下载进度", data.value);
+                task.progress = data.value + '%';
+                console.log('下载进度', data.value);
               }
             }
           },
@@ -93,35 +93,35 @@ export class TaskPage implements OnInit {
           }
         );
     } else {
-      alert("此任务无音频记录！");
+      alert('此任务无音频记录！');
     }
   }
 
   getFileName(url) {
-    let arr = url.split("/");
-    let fileName = arr[arr.length - 1];
+    const arr = url.split('/');
+    const fileName = arr[arr.length - 1];
     return fileName;
   }
 
   addNewTaskLink() {
     this.openNewTaskForm = true;
-    this.page_title = "添加新任务";
+    this.page_title = '添加新任务';
     this.showDismissButton = false;
     this.voicepostParams = {
-      userid: "userid",
-      taskid: "taskid"
+      userid: 'userid',
+      taskid: 'taskid'
     };
   }
 
   addTask = function(isActive: any) {
-    let task = this.newTask;
+    const task = this.newTask;
     // task.num = 1;
     task.isActive = true;
-    task.voiceUrl = "";
+    task.voiceUrl = '';
     // 创建任务
     this.taskservice.createTask(task).subscribe((response: any) => {
-      let data: any = JSON.parse(response._body);
-      if (data && data.status == "fail") {
+      const data: any = JSON.parse(response._body);
+      if (data && data.status == 'fail') {
       } else {
         // voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
         this.voicepostParams = {
@@ -133,38 +133,38 @@ export class TaskPage implements OnInit {
         setTimeout(() => {
           this.voiceRecordCMP.uploadVoiceFile(this.globalservice.token).then(
             filename => {
-              let tt = this.allTasks.unfinished;
+              const tt = this.allTasks.unfinished;
               task.voiceUrl =
                 this.voicepostParams.userid +
-                "_" +
+                '_' +
                 this.voicepostParams.taskid +
-                "_" +
+                '_' +
                 filename;
               this.allTasks.unfinished = [task].concat(tt);
               this.allTasks.unfinished.slice();
               this.newTask = {
-                title: "",
-                description: "",
+                title: '',
+                description: '',
                 num: 1
               };
               this.openNewTaskForm = false;
               this.showDismissButton = true;
-              this.page_title = "任务管理";
+              this.page_title = '任务管理';
             },
             err => {
               console.error(err);
-              let tt = this.allTasks.unfinished;
-              task.voiceUrl = "";
+              const tt = this.allTasks.unfinished;
+              task.voiceUrl = '';
               this.allTasks.unfinished = [task].concat(tt);
               this.allTasks.unfinished.slice();
               this.newTask = {
-                title: "",
-                description: "",
+                title: '',
+                description: '',
                 num: 1
               };
               this.openNewTaskForm = false;
               this.showDismissButton = true;
-              this.page_title = "任务管理";
+              this.page_title = '任务管理';
             }
           );
         }, 100);
@@ -173,13 +173,13 @@ export class TaskPage implements OnInit {
   };
 
   removeTask(task: any) {
-    for (let index in this.allTasks.unfinished) {
+    for (const index in this.allTasks.unfinished) {
       if (this.allTasks.unfinished[index] === task) {
-        let ind = new Number(index);
+        const ind = new Number(index);
         // 删除任务
         this.taskservice.deleteTask(task._id).subscribe(response => {
-          let data: any = JSON.parse(response._body);
-          if (data && data.status == "fail") {
+          const data: any = JSON.parse(response._body);
+          if (data && data.status == 'fail') {
           } else {
             this.allTasks.unfinished.splice(ind.valueOf(), 1);
             this.allTasks.unfinished = this.allTasks.unfinished.slice();
@@ -193,15 +193,15 @@ export class TaskPage implements OnInit {
     task.isActive = false;
     this.taskservice.updateTask(task._id, task).subscribe(
       response => {
-        let data: any = JSON.parse(response._body);
-        if (data && data.status == "fail") {
+        const data: any = JSON.parse(response._body);
+        if (data && data.status == 'fail') {
         } else {
           this.allTasks.unfinished = this.allTasks.unfinished.slice();
         }
       },
       err => {
         alert(JSON.stringify(err));
-        console.log("updateTask err", err);
+        console.log('updateTask err', err);
       }
     );
   }
@@ -210,15 +210,15 @@ export class TaskPage implements OnInit {
     task.isActive = true;
     this.taskservice.updateTask(task._id, task).subscribe(
       response => {
-        let data: any = JSON.parse(response._body);
-        if (data && data.status == "fail") {
+        const data: any = JSON.parse(response._body);
+        if (data && data.status == 'fail') {
         } else {
           this.allTasks.unfinished = this.allTasks.unfinished.slice();
         }
       },
       err => {
         alert(JSON.stringify(err));
-        console.log("updateTask err", err);
+        console.log('updateTask err', err);
       }
     );
   }
@@ -231,13 +231,13 @@ export class TaskPage implements OnInit {
   }
 
   dismiss() {
-    let data = { foo: "bar" };
+    const data = { foo: 'bar' };
     this.viewCtrl.dismiss(data);
   }
 
   cancleAddTask() {
-    this.page_title = "任务管理";
-    this.newTask.title = "";
+    this.page_title = '任务管理';
+    this.newTask.title = '';
     this.showDismissButton = true;
     this.openNewTaskForm = false;
   }

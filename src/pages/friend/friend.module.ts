@@ -5,7 +5,7 @@ import { QRScannerComponentModule } from '../../components/qr-scanner/qr-scanner
 import { QRScanner } from '@ionic-native/qr-scanner';
 @NgModule({
   declarations: [FriendPage],
-  imports: [IonicPageModule.forChild(FriendPage),QRScannerComponentModule],
+  imports: [IonicPageModule.forChild(FriendPage), QRScannerComponentModule],
   providers: [QRScanner],
 })
 export class FriendPageModule {}

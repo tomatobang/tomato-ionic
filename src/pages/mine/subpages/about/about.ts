@@ -11,8 +11,7 @@ declare var window;
 })
 export class AboutPage implements OnInit {
   appversion: any;
-  constructor() //public globalservice: GlobalService
-  {
+  constructor() {
   }
 
   ngOnInit() {

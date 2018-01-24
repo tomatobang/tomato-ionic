@@ -1,8 +1,8 @@
 /**
  * 百度定位服务
  */
-import { Injectable } from "@angular/core";
-import { Platform } from "ionic-angular";
+import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 
 declare var window;
 
@@ -14,36 +14,36 @@ export class BaiduLocationService {
     return new Promise((resolve, reject) => {
       // 手机环境
       if (window.cordova) {
-        if (this.plf.is("android")) {
+        if (this.plf.is('android')) {
           window.baidumap_location.getCurrentPosition(
             data => {
-              console.log("android location success");
+              console.log('android location success');
               resolve({
                 code: 0,
-                message: "定位成功",
+                message: '定位成功',
                 position: this.createDetailAddr(data)
               });
             },
             err => {
-              console.log("android location error");
+              console.log('android location error');
               reject({
                 code: -1,
-                message: "手机定位功能未开启(Android)"
+                message: '手机定位功能未开启(Android)'
               });
             }
           );
         } else {
           this.ios_location(
             data => {
-              console.log("ios location success");
+              console.log('ios location success');
               resolve({
                 code: 0,
-                message: "定位成功",
+                message: '定位成功',
                 position: this.createDetailAddr(data)
               });
             },
             err => {
-              console.log("ios location error");
+              console.log('ios location error');
               reject(err);
             }
           );
@@ -57,35 +57,35 @@ export class BaiduLocationService {
       navigator.geolocation.getCurrentPosition(
         position => {
           console.log(
-            "(IOS)Latitude: " +
+            '(IOS)Latitude: ' +
               position.coords.latitude +
-              "Longitude: " +
+              'Longitude: ' +
               position.coords.longitude
           );
           //注意：在得到准确位置前，需要对原生的坐标系转化成百度的坐标系
-          var point = new window.BMap.Point(
+          const point = new window.BMap.Point(
             position.coords.longitude,
             position.coords.latitude
           );
           window.BMap.Convertor.translate(point, 0, point => {
             //调用百度的逆地址解析
-            var geoc = new window.BMap.Geocoder();
+            const geoc = new window.BMap.Geocoder();
             geoc.getLocation(
               point,
               rs => {
                 success(rs);
               },
               err => {
-                error({ code: -1, message: "定位出错(IOS)" });
+                error({ code: -1, message: '定位出错(IOS)' });
               }
             );
           });
         },
         err => {
           if (err.code === 1) {
-            error({ code: -3, message: "手机定位功能未开启(IOS)" });
+            error({ code: -3, message: '手机定位功能未开启(IOS)' });
           } else {
-            error({ code: -1, message: "定位出错(IOS)" });
+            error({ code: -1, message: '定位出错(IOS)' });
           }
         },
         {
@@ -93,15 +93,15 @@ export class BaiduLocationService {
         }
       );
     } else {
-      error({ code: -2, message: "不支持定位(IOS)" });
+      error({ code: -2, message: '不支持定位(IOS)' });
     }
   }
 
   createDetailAddr(data) {
-    var addr,
+    let addr,
       pois,
       addrDatas = [],
-      isAndroid = this.plf.is("android");
+      isAndroid = this.plf.is('android');
 
     if (isAndroid) {
       addr = data.addr.substring(2);
@@ -113,7 +113,7 @@ export class BaiduLocationService {
           if (pois.length == 0) {
             addrDatas.push(addr);
           } else {
-            for (var i = 0; i < pois.length; i++) {
+            for (let i = 0; i < pois.length; i++) {
               if (pois[i].name) {
                 addrDatas.push(addr + pois[i].name);
               }

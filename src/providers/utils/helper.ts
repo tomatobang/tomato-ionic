@@ -1,9 +1,9 @@
 /**
  * 辅助类
  */
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { Platform } from "ionic-angular";
+import { Platform } from 'ionic-angular';
 declare var window;
 
 @Injectable()
@@ -14,8 +14,8 @@ export class Helper {
 
   getBasePath() {
     let basePath;
-    if (this.platform.is("ios")) {
-      basePath = window.cordova.file.documentsDirectory + "TomatoBang/";
+    if (this.platform.is('ios')) {
+      basePath = window.cordova.file.documentsDirectory + 'TomatoBang/';
     } else {
       basePath = window.cordova.file.externalApplicationStorageDirectory;
     }
@@ -23,6 +23,6 @@ export class Helper {
   }
 
   isWeb() {
-    return !this.platform.is("ios") && !this.platform.is("andorid");
+    return !this.platform.is('ios') && !this.platform.is('andorid');
   }
 }

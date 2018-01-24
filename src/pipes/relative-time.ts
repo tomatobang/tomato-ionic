@@ -1,5 +1,5 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import * as moment from "moment";
+import { Pipe, PipeTransform } from '@angular/core';
+import * as moment from 'moment';
 /**
  * Generated class for the RelativeTime pipe.
  *
@@ -7,7 +7,7 @@ import * as moment from "moment";
  * Angular Pipes.
  */
 @Pipe({
-  name: "relativeTime"
+  name: 'relativeTime'
 })
 export class RelativeTime implements PipeTransform {
   /**

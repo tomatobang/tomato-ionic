@@ -42,7 +42,7 @@ export class QRScannerModal {
           'ion-app'
         )[0];
         if (status.authorized) {
-          let scanSub = this.qrScanner.scan().subscribe((qrCode: string) => {
+          const scanSub = this.qrScanner.scan().subscribe((qrCode: string) => {
             this.vibration.vibrate(30);
             let response;
             try {

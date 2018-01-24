@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { IonicPageModule } from "ionic-angular";
-import { EmojiPickerComponent } from "./emoji-picker";
-import { EmojiProvider } from "./emoji.service";
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+import { EmojiPickerComponent } from './emoji-picker';
+import { EmojiProvider } from './emoji.service';
 
 @NgModule({
   declarations: [EmojiPickerComponent],

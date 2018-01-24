@@ -1,6 +1,6 @@
-import { NgModule } from "@angular/core";
-import { FriendInfoPage } from "./friendinfo";
-import { IonicPageModule } from "ionic-angular";
+import { NgModule } from '@angular/core';
+import { FriendInfoPage } from './friendinfo';
+import { IonicPageModule } from 'ionic-angular';
 
 @NgModule({
   declarations: [FriendInfoPage],

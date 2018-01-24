@@ -1,9 +1,9 @@
 /**
  * 极光推送服务
  */
-import { Injectable } from "@angular/core";
-import { Platform } from "ionic-angular";
-import { GlobalService } from "../global.service";
+import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { GlobalService } from '../global.service';
 
 declare var window;
 
@@ -34,7 +34,7 @@ export class JPushService {
   setTagsWithAliasCallback(event) {
     if (event.resultCode !== 0) {
       setTimeout(() => {
-        this.setAlias("1000");
+        this.setAlias('1000');
       }, 6000);
       //myNote.myNotice("注册推送服务失败，错误码：" + event.resultCode, 3000);
     } else {
@@ -46,8 +46,8 @@ export class JPushService {
   openNotificationCallback(data) {
     //点击通知打开应用，清除badge和本地通知
     this.clearLocAndBadge();
-    let isAndroid = this.plf.is("android");
-    let type = isAndroid ? data.extras.Type : data.Type;
+    const isAndroid = this.plf.is('android');
+    const type = isAndroid ? data.extras.Type : data.Type;
     if (type == 1) {
       //涉及到页面重绘，在controller中监听实现跳转
     } else if (type == 2) {
@@ -60,7 +60,7 @@ export class JPushService {
     if (this._global.appIsActive == true) {
       this.clearLocAndBadge();
     }
-    let type = this.plf.is("android") ? data.extras.Type : data.Type;
+    const type = this.plf.is('android') ? data.extras.Type : data.Type;
     // 根据设置是否需要开启音效
     if (true) {
       //
@@ -78,7 +78,7 @@ export class JPushService {
 
   init(alias) {
     document.addEventListener(
-      "deviceready",
+      'deviceready',
       () => {
         this.getUserNotificationSettings(function(result) {
           if (result === 0) {
@@ -87,13 +87,13 @@ export class JPushService {
           }
         });
         this.resumePush(); //如果stopPush后，必须resume再init，否则无效
-        let config = {
+        const config = {
           stac: this.setTagsWithAliasCallback,
           onc: this.openNotificationCallback,
           rnc: this.receiveNotificationCallback,
           bnc: this.backgroundNotificationCallback
         };
-        if (this.plf.is("ios")) {
+        if (this.plf.is('ios')) {
           //ios不同于android，需要注册apns服务
           window.plugins.NXTPlugin.startJPushSDK();
         }
@@ -101,20 +101,20 @@ export class JPushService {
         //推送服务停止期间推送的消息，恢复推送服务后，如果推送的消息还在保留的时长范围内，则客户端是会收到离线消息。
         window.plugins.NXTPlugin.init();
         //设置tag和Alias触发事件处理
-        this.documentBindEventListener("jpush.setTagsWithAlias", config.stac);
-        this.documentBindEventListener("jpush.openNotification", config.onc);
-        this.documentBindEventListener("jpush.receiveNotification", config.rnc);
+        this.documentBindEventListener('jpush.setTagsWithAlias', config.stac);
+        this.documentBindEventListener('jpush.openNotification', config.onc);
+        this.documentBindEventListener('jpush.receiveNotification', config.rnc);
         this.documentBindEventListener(
-          "jpush.backgroundNotification",
+          'jpush.backgroundNotification',
           config.bnc
         );
         // 提交华为 Token
-        this.documentBindEventListener("jpush.onReceiveHuaWeiToken", function(
+        this.documentBindEventListener('jpush.onReceiveHuaWeiToken', function(
           token
         ) {
           // 这里需要保存到本地，这样就不需要反复获取了
           // 保存 token 至服务端，token
-          console.log("收到华为TOKEN:", token);
+          console.log('收到华为TOKEN:', token);
         });
         //开发周期建议打开debug模式，可以获得额外帮助,发布时关闭，节省性能
         window.plugins.NXTPlugin.setDebugMode(false);
@@ -123,7 +123,7 @@ export class JPushService {
         window.plugins.NXTPlugin.requestPermission(); //用于在 Android 6.0 及以上系统，申请一些权限
         this.clearLocAndBadge();
         // 根据实际状况设置推送是否开启
-        let pushState = true;
+        const pushState = true;
         //默认开启，除非明确设置为false,
         if (pushState) {
           this.setAlias(alias);
@@ -236,7 +236,7 @@ export class JPushService {
   }
 
   clearAlias() {
-    this.setAlias("");
+    this.setAlias('');
   }
 
   clearTags() {

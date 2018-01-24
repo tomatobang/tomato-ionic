@@ -1,24 +1,24 @@
 /**
  * 音频播放服务
  */
-import { Injectable } from "@angular/core";
-import { Platform } from "ionic-angular";
-import { GlobalService } from "../global.service";
+import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { GlobalService } from '../global.service';
 
-import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer";
-import { File } from "@ionic-native/file";
-import { Media, MediaObject, MEDIA_STATUS } from "@ionic-native/media";
-import { Helper } from "./helper";
-import { resolve } from "url";
-import { reject } from "q";
-import { Observable } from "rxjs/Observable";
-import { observeOn } from "rxjs/operator/observeOn";
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { Media, MediaObject, MEDIA_STATUS } from '@ionic-native/media';
+import { Helper } from './helper';
+import { resolve } from 'url';
+import { reject } from 'q';
+import { Observable } from 'rxjs/Observable';
+import { observeOn } from 'rxjs/operator/observeOn';
 declare var window;
 
 @Injectable()
 export class VoicePlayService {
   mediaRec: MediaObject;
-  isPlaying: boolean = false;
+  isPlaying = false;
 
   constructor(
     public platform: Platform,
@@ -36,9 +36,9 @@ export class VoicePlayService {
    */
   downloadVoiceFile(filename, token) {
     return new Promise((resolve, reject) => {
-      let targetPath = this.helper.getBasePath() + "voices/";
-      let targetPathWithFileName =
-        this.helper.getBasePath() + "voices/" + filename;
+      const targetPath = this.helper.getBasePath() + 'voices/';
+      const targetPathWithFileName =
+        this.helper.getBasePath() + 'voices/' + filename;
       // 检查是否已下载过
       this.file.checkFile(targetPath, filename).then(
         success => {
@@ -47,16 +47,16 @@ export class VoicePlayService {
         },
         error => {
           // 注意:此方法采用追加的方式添加
-          let options = {
+          const options = {
             headers: {
               Authorization: token
             }
           };
-          let trustHosts = true;
+          const trustHosts = true;
           const fileTransfer: FileTransferObject = this.transfer.create();
           fileTransfer
             .download(
-              this._global.serverAddress + "download/voicefile/" + filename,
+              this._global.serverAddress + 'download/voicefile/' + filename,
               targetPathWithFileName,
               trustHosts,
               options
@@ -66,12 +66,12 @@ export class VoicePlayService {
               resolve(targetPathWithFileName);
             })
             .catch(err => {
-              alert("下载音频文件出错");
-              console.log("下载音频文件出错", err);
+              alert('下载音频文件出错');
+              console.log('下载音频文件出错', err);
               reject(err);
             });
           fileTransfer.onProgress((evt: ProgressEvent) => {
-            let progress = window.parseInt(evt.loaded / evt.total * 100);
+            const progress = window.parseInt(evt.loaded / evt.total * 100);
             console.log(progress);
           });
         }
@@ -86,9 +86,9 @@ export class VoicePlayService {
    */
   downloadVoiceFile_observable(filename, token) {
     return Observable.create(observer => {
-      let targetPath = this.helper.getBasePath() + "voices/";
-      let targetPathWithFileName =
-        this.helper.getBasePath() + "voices/" + filename;
+      const targetPath = this.helper.getBasePath() + 'voices/';
+      const targetPathWithFileName =
+        this.helper.getBasePath() + 'voices/' + filename;
       // 检查是否已下载过
       this.file.checkFile(targetPath, filename).then(
         success => {
@@ -101,22 +101,22 @@ export class VoicePlayService {
         },
         error => {
           // 注意:此方法采用追加的方式添加
-          let options = {
+          const options = {
             headers: {
               Authorization: token
             }
           };
-          let trustHosts = true;
+          const trustHosts = true;
           const fileTransfer: FileTransferObject = this.transfer.create();
           fileTransfer
             .download(
-              this._global.serverAddress + "download/voicefile/" + filename,
+              this._global.serverAddress + 'download/voicefile/' + filename,
               targetPathWithFileName,
               trustHosts,
               options
             )
             .then(result => {
-              console.log("下载完成,播放..");
+              console.log('下载完成,播放..');
               observer.next({
                 data: true,
                 value: targetPathWithFileName
@@ -124,12 +124,12 @@ export class VoicePlayService {
               observer.complete();
             })
             .catch(err => {
-              alert("下载音频文件出错");
-              console.log("下载音频文件出错", err);
+              alert('下载音频文件出错');
+              console.log('下载音频文件出错', err);
               observer.error(err);
             });
           fileTransfer.onProgress((evt: ProgressEvent) => {
-            let progress = window.parseInt(evt.loaded / evt.total * 100);
+            const progress = window.parseInt(evt.loaded / evt.total * 100);
             observer.next({
               data: false,
               value: progress
@@ -146,8 +146,8 @@ export class VoicePlayService {
    * @param url
    */
   getFileName(url) {
-    let arr = url.split("/");
-    let fileName = arr[arr.length - 1];
+    const arr = url.split('/');
+    const fileName = arr[arr.length - 1];
     return fileName;
   }
 
@@ -165,20 +165,20 @@ export class VoicePlayService {
         resolve(false);
         return;
       }
-      if (this.platform.is("ios")) {
-        voiFile = voiFile.replace("file://", "");
+      if (this.platform.is('ios')) {
+        voiFile = voiFile.replace('file://', '');
       }
       this.mediaRec = this.media.create(voiFile);
 
       this.mediaRec.onSuccess.subscribe(() => {
         // 播放完成
         resolve(true);
-        console.log("play():Audio Success");
+        console.log('play():Audio Success');
       });
       this.mediaRec.onError.subscribe(error => {
         // 播放失败
         reject(error);
-        console.log("play():Audio Error: ", error);
+        console.log('play():Audio Error: ', error);
       });
 
       //开始播放录音
@@ -198,32 +198,32 @@ export class VoicePlayService {
     function getPhoneGapPath() {
       let path = window.location.pathname;
       path = path.substr(0, path.length - 9);
-      return "file://" + path;
+      return 'file://' + path;
     }
-    let applicationDirectory = "";
-    if (this.platform.is("android")) {
+    let applicationDirectory = '';
+    if (this.platform.is('android')) {
       applicationDirectory = getPhoneGapPath();
     }
-    let path = applicationDirectory + file_url;
+    const path = applicationDirectory + file_url;
     this.mediaRec = this.media.create(path);
 
     this.mediaRec.onSuccess.subscribe(() => {
-      console.log("play_local_voice():Audio Init Success");
+      console.log('play_local_voice():Audio Init Success');
     });
     this.mediaRec.onError.subscribe(error => {
-      console.log("play_local_voice():Audio Error: ", error);
+      console.log('play_local_voice():Audio Error: ', error);
       this.isPlaying = false;
     });
     this.mediaRec.onStatusUpdate.subscribe(state => {
       // 循环播放
       if (this.isPlaying && repeat && state == MEDIA_STATUS.STOPPED) {
-        console.log("play_local_voice():Audio Stoped: ", state);
+        console.log('play_local_voice():Audio Stoped: ', state);
         this.mediaRec.play();
         this.isPlaying = true;
       }
     });
 
-    if (this.platform.is("ios")) {
+    if (this.platform.is('ios')) {
       // 屏幕锁住仍然播放
       this.mediaRec.play({ playAudioWhenScreenIsLocked: true });
     } else {

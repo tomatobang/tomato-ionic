@@ -4,27 +4,27 @@
  * 3. 手机号
  */
 
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import {
   NavController,
   IonicPage,
   ToastController,
   NavParams
-} from "ionic-angular";
-import { OnlineUserService, User } from "../../providers/data.service";
-import { GlobalService } from "../../providers/global.service";
-import { RebirthHttpProvider } from "rebirth-http";
-import { JPushService } from "../../providers/utils/jpush.service";
+} from 'ionic-angular';
+import { OnlineUserService, User } from '../../providers/data.service';
+import { GlobalService } from '../../providers/global.service';
+import { RebirthHttpProvider } from 'rebirth-http';
+import { JPushService } from '../../providers/utils/jpush.service';
 
 @IonicPage()
 @Component({
-  selector: "login",
+  selector: 'login',
   providers: [OnlineUserService, GlobalService, JPushService],
-  templateUrl: "login.html"
+  templateUrl: 'login.html'
 })
 export class LoginPage {
   user = new User();
-  error = "";
+  error = '';
   remeberMe = {
     selected: false
   };
@@ -38,12 +38,12 @@ export class LoginPage {
     public jPushService: JPushService,
     public navParams: NavParams
   ) {
-    this.user.username = navParams.get("username");
-    this.user.password = navParams.get("password");
+    this.user.username = navParams.get('username');
+    this.user.password = navParams.get('password');
   }
 
   ngOnInit() {
-    console.log("hello `login` component");
+    console.log('hello `login` component');
     if (this.globalservice.userinfo) {
       this.user.username = this.globalservice.userinfo.username;
       this.user.password = this.globalservice.userinfo.password;
@@ -51,18 +51,18 @@ export class LoginPage {
   }
 
   public doLogin(): void {
-    console.log("doLogin", this.user);
+    console.log('doLogin', this.user);
 
     this.service.login(this.user).subscribe(data => {
-      let retOBJ = JSON.parse(data._body);
-      let status = retOBJ.status;
-      let token = "";
+      const retOBJ = JSON.parse(data._body);
+      const status = retOBJ.status;
+      let token = '';
       let userinfo = this.user;
-      if (status == "success") {
+      if (status == 'success') {
         token = retOBJ.token;
         userinfo = retOBJ.userinfo;
       } else {
-        this.error = "登陆出错！";
+        this.error = '登陆出错！';
         return;
       }
       console.log(data);
@@ -71,30 +71,30 @@ export class LoginPage {
       this.globalservice.userinfo = JSON.stringify(userinfo);
       this.rebirthProvider.headers({ Authorization: token });
       this.jPushService.init(this.user.username);
-      this.navCtrl.setRoot("TabsPage", {
+      this.navCtrl.setRoot('TabsPage', {
         animate: true
       });
     });
   }
 
   public doLogout(): void {
-    this.globalservice.token = "";
+    this.globalservice.token = '';
   }
 
   public navToRegister(): void {
     // 注册
-    this.navCtrl.push("RegisterPage");
+    this.navCtrl.push('RegisterPage');
   }
 
   presentToast(msg) {
-    let toast = this.toastCtrl.create({
+    const toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position: "top"
+      position: 'top'
     });
 
     toast.onDidDismiss(() => {
-      console.log("Dismissed toast");
+      console.log('Dismissed toast');
     });
 
     toast.present();

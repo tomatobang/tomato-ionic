@@ -2,11 +2,11 @@
  * 内存变量
  */
 
-import { Injectable } from "@angular/core";
-import { GlobalService } from "./global.service";
+import { Injectable } from '@angular/core';
+import { GlobalService } from './global.service';
 
-import { Observable } from "rxjs";
-import { Subject } from "rxjs/Subject";
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class CacheService {

@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import { Events } from "ionic-angular";
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Events } from 'ionic-angular';
 
-import "rxjs/add/operator/toPromise";
+import 'rxjs/add/operator/toPromise';
 
 export class ChatMessage {
   messageId: string;
@@ -28,16 +28,16 @@ export class ChatService {
   mockNewMsg(msg) {
     setTimeout(() => {
       this.events.publish(
-        "chat:received",
+        'chat:received',
         {
           messageId: Date.now().toString(),
-          userId: "210000198410281948",
-          userName: "Hancock",
-          userImgUrl: "./assets/to-user.jpg",
-          toUserId: "140000198202211138",
+          userId: '210000198410281948',
+          userName: 'Hancock',
+          userImgUrl: './assets/to-user.jpg',
+          toUserId: '140000198202211138',
           time: Date.now(),
           message: msg.message,
-          status: "success"
+          status: 'success'
         },
         Date.now()
       );
@@ -45,13 +45,13 @@ export class ChatService {
   }
 
   getMsgList(): Promise<ChatMessage[]> {
-    const msgListUrl = "./assets/mock/msg-list.json";
+    const msgListUrl = './assets/mock/msg-list.json';
 
     return this.http
       .get(msgListUrl)
       .toPromise()
       .then(response => response.json().array as ChatMessage[])
-      .catch(err => Promise.reject(err || "err"));
+      .catch(err => Promise.reject(err || 'err'));
   }
 
   sendMsg(msg: ChatMessage) {
@@ -65,10 +65,10 @@ export class ChatService {
   }
 
   getUserInfo(): Promise<UserInfo> {
-    let userInfo: UserInfo = {
-      userId: "140000198202211138",
-      userName: "Luff",
-      userImgUrl: "./assets/user.jpg"
+    const userInfo: UserInfo = {
+      userId: '140000198202211138',
+      userName: 'Luff',
+      userImgUrl: './assets/user.jpg'
     };
     return new Promise((resolve, reject) => {
       resolve(userInfo);

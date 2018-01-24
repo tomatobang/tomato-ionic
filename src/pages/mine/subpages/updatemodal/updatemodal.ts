@@ -1,17 +1,17 @@
 /*
- * @Author: kobepeng 
- * @Date: 2017-11-25 19:57:50 
+ * @Author: kobepeng
+ * @Date: 2017-11-25 19:57:50
  * @Last Modified by: kobepeng
  * @Last Modified time: 2017-11-30 12:53:54
  */
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { IonicPage, ViewController, NavParams } from "ionic-angular";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 
 declare var window;
 @IonicPage()
 @Component({
-  selector: "page-updatemodal",
-  templateUrl: "updatemodal.html"
+  selector: 'page-updatemodal',
+  templateUrl: 'updatemodal.html'
 })
 export class UpdatemodalPage implements OnInit {
   update: string;
@@ -19,30 +19,30 @@ export class UpdatemodalPage implements OnInit {
   label: string;
   value: any;
   constructor(public viewCtrl: ViewController, params: NavParams) {
-    let update = params.get("update");
-    let value = params.get("value");
+    const update = params.get('update');
+    const value = params.get('value');
     this.value = value;
     this.update = update;
     switch (update) {
-      case "sex":
-        this.page_title = "更新性别";
-        this.label = "性别";
+      case 'sex':
+        this.page_title = '更新性别';
+        this.label = '性别';
         break;
-      case "displayname":
-        this.page_title = "更新昵称";
-        this.label = "昵称";
+      case 'displayname':
+        this.page_title = '更新昵称';
+        this.label = '昵称';
         break;
-      case "email":
-        this.page_title = "更新邮箱";
-        this.label = "邮箱";
+      case 'email':
+        this.page_title = '更新邮箱';
+        this.label = '邮箱';
         break;
-      case "location":
-        this.page_title = "更新地址";
-        this.label = "地址";
+      case 'location':
+        this.page_title = '更新地址';
+        this.label = '地址';
         break;
-      case "bio":
-        this.page_title = "更新签名";
-        this.label = "签名";
+      case 'bio':
+        this.page_title = '更新签名';
+        this.label = '签名';
         break;
       default:
         break;
@@ -64,19 +64,19 @@ export class UpdatemodalPage implements OnInit {
   save() {
     let ret = {};
     switch (this.update) {
-      case "sex":
+      case 'sex':
         ret = { sex: this.value };
         break;
-      case "displayname":
+      case 'displayname':
         ret = { displayname: this.value };
         break;
-      case "email":
+      case 'email':
         ret = { email: this.value };
         break;
-      case "location":
+      case 'location':
         ret = { location: this.value };
         break;
-      case "bio":
+      case 'bio':
         ret = { location: this.value };
         break;
       default:

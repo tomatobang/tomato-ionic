@@ -9,23 +9,23 @@ import {
   OnInit,
   OnDestroy,
   Input
-} from "@angular/core";
-import { NG_VALUE_ACCESSOR } from "@angular/forms";
-import { Platform } from "ionic-angular";
-import { Gesture } from "ionic-angular/gestures/gesture";
-import { Media, MediaObject } from "@ionic-native/media";
+} from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Platform } from 'ionic-angular';
+import { Gesture } from 'ionic-angular/gestures/gesture';
+import { Media, MediaObject } from '@ionic-native/media';
 import {
   FileTransfer,
   FileUploadOptions,
   FileTransferObject
-} from "@ionic-native/file-transfer";
+} from '@ionic-native/file-transfer';
 
 declare let window;
 
 @Component({
-  selector: "voice-recorder",
+  selector: 'voice-recorder',
   providers: [Media, FileTransfer], //,File
-  templateUrl: "./voice-recorder.html"
+  templateUrl: './voice-recorder.html'
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
   @Input()
@@ -48,7 +48,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
   _postParams: any;
   uploadUrl: string;
-  isUploading: boolean = false;
+  isUploading = false;
   uploadProgress = 0;
 
   el: HTMLElement;
@@ -57,12 +57,12 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   recordWait = false;
   isStartedVoice = false;
   mediaRec: MediaObject;
-  src = "";
-  path = "";
+  src = '';
+  path = '';
   voice = {
-    ImgUrl: "./assets/voice/recog000.png",
+    ImgUrl: './assets/voice/recog000.png',
     reset() {
-      this.ImgUrl = "./assets/voice/recog000.png";
+      this.ImgUrl = './assets/voice/recog000.png';
     }
   };
 
@@ -72,14 +72,14 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     private elRef: ElementRef,
     private transfer: FileTransfer
   ) {
-    if (this.platform.is("ios")) {
-      this.path = window.cordova ? window.cordova.file.documentsDirectory : "";
-      this.src = "cordovaIMVoice.wav";
+    if (this.platform.is('ios')) {
+      this.path = window.cordova ? window.cordova.file.documentsDirectory : '';
+      this.src = 'cordovaIMVoice.wav';
     } else {
       this.path = window.cordova
         ? window.cordova.file.externalApplicationStorageDirectory
-        : "";
-      this.src = "cordovaIMVoice.amr";
+        : '';
+      this.src = 'cordovaIMVoice.amr';
     }
     this.el = elRef.nativeElement;
   }
@@ -88,13 +88,13 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.pressGesture = new Gesture(this.el, { time: 200 });
     this.pressGesture.listen();
     // 长按录音
-    this.pressGesture.on("press", e => {
-      console.log("press开始了");
+    this.pressGesture.on('press', e => {
+      console.log('press开始了');
       this.onHold();
     });
     // 释放则播放
-    this.pressGesture.on("pressup", e => {
-      console.log("press结束了");
+    this.pressGesture.on('pressup', e => {
+      console.log('press结束了');
       this.recordWait = true;
       this.voice.reset();
       this.onRelease();
@@ -129,8 +129,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       // 模拟声音大小变化
       let voicechange = setInterval(() => {
         if (!this.recordWait) {
-          let i = Math.round(Math.random() * 9);
-          this.voice.ImgUrl = "assets/voice/recog00" + i + ".png";
+          const i = Math.round(Math.random() * 9);
+          this.voice.ImgUrl = 'assets/voice/recog00' + i + '.png';
         } else {
           voicechange = undefined;
         }
@@ -140,9 +140,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       // fires when file status changes
       this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
       this.mediaRec.onSuccess.subscribe(() =>
-        console.log("audio is successful")
+        console.log('audio is successful')
       );
-      this.mediaRec.onError.subscribe(error => console.log("Error!", error));
+      this.mediaRec.onError.subscribe(error => console.log('Error!', error));
     } catch (err) {
       console.log(err);
     }
@@ -168,31 +168,31 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       this.mediaRec = this.media.create(this.getMediaURL(this.src));
       // 录音执行函数
       this.mediaRec.onSuccess.subscribe(() =>
-        console.log("touchend():Audio Success")
+        console.log('touchend():Audio Success')
       );
       // 录音失败执行函数
       this.mediaRec.onError.subscribe(error =>
-        console.log("touchend():Audio Error!", error)
+        console.log('touchend():Audio Error!', error)
       );
       this.mediaRec.play();
       this.mediaRec.stop();
 
       //在html中显示当前状态
       let counter = 0;
-      let timerDur = setInterval(() => {
+      const timerDur = setInterval(() => {
         counter = counter + 100;
         if (counter > 2000) {
           clearInterval(timerDur);
         }
-        let dur = this.mediaRec.getDuration();
+        const dur = this.mediaRec.getDuration();
         if (dur > 0) {
           clearInterval(timerDur);
           let tmpPath = this.getMediaURL(this.src); //this.mediaRec.src;
-          if (this.platform.is("ios")) {
+          if (this.platform.is('ios')) {
             tmpPath = this.path + this.src;
           }
           //alert(tmpPath);
-          this._temp_file_path = tmpPath.replace("file://", "");
+          this._temp_file_path = tmpPath.replace('file://', '');
           this.couldPlay = true;
           if (this.mediaRec) {
             this.mediaRec.release();
@@ -213,18 +213,18 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     if (!voiFile) {
       voiFile = this.getNewMediaURL(this.src);
     }
-    if (this.platform.is("ios")) {
-      voiFile = voiFile.replace("file://", "");
+    if (this.platform.is('ios')) {
+      voiFile = voiFile.replace('file://', '');
     }
     this.mediaRec = this.media.create(voiFile);
 
     this.mediaRec.onSuccess.subscribe(() => {
       // 播放完成
-      console.log("play():Audio Success");
+      console.log('play():Audio Success');
     });
     this.mediaRec.onError.subscribe(error => {
       // 播放失败
-      console.log("play():Audio Error: ", error);
+      console.log('play():Audio Error: ', error);
     });
 
     //开始播放录音
@@ -233,17 +233,17 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   }
 
   getNewMediaURL(s) {
-    if (this.platform.is("android")) {
+    if (this.platform.is('android')) {
       return this.path + s;
     }
-    return "documents://" + s;
+    return 'documents://' + s;
   }
 
   getMediaURL(s) {
-    if (this.platform.is("android")) {
+    if (this.platform.is('android')) {
       return this.path + s;
     }
-    return (this.path + s).replace("file://", "");
+    return (this.path + s).replace('file://', '');
   }
 
   /**
@@ -253,25 +253,25 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
       this.isUploading = true;
       if (!this._temp_file_path) {
-        reject("没有录音!");
+        reject('没有录音!');
       }
 
-      let tmpPath = this._temp_file_path;
+      const tmpPath = this._temp_file_path;
       if (!this.uploadUrl) {
-        reject("uploadUrl 不存在");
+        reject('uploadUrl 不存在');
         return;
       } else {
         const fileTransfer: FileTransferObject = this.transfer.create();
         if (!this._postParams) {
-          reject("_postParams 不存在");
+          reject('_postParams 不存在');
           return;
         }
 
-        let options: FileUploadOptions = {
-          httpMethod: "post",
-          fileKey: "file",
-          fileName: tmpPath.substr(tmpPath.lastIndexOf("/") + 1),
-          mimeType: "text/plain",
+        const options: FileUploadOptions = {
+          httpMethod: 'post',
+          fileKey: 'file',
+          fileName: tmpPath.substr(tmpPath.lastIndexOf('/') + 1),
+          mimeType: 'text/plain',
           headers: {
             Authorization: token
           },
@@ -280,23 +280,23 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         console.log(tmpPath, this.uploadUrl, options);
         fileTransfer.upload(tmpPath, this.uploadUrl, options, true).then(
           r => {
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
+            console.log('Code = ' + r.responseCode);
+            console.log('Response = ' + r.response);
+            console.log('Sent = ' + r.bytesSent);
             this.isUploading = false;
             resolve(options.fileName);
           },
           err => {
             reject(err);
-            alert("An error has occurred: Code = " + err.code);
-            console.log("upload error source " + err.source);
-            console.log("upload error target " + err.target);
+            alert('An error has occurred: Code = ' + err.code);
+            console.log('upload error source ' + err.source);
+            console.log('upload error target ' + err.target);
           }
         );
 
         fileTransfer.onProgress(progressEvent => {
           if (progressEvent.lengthComputable) {
-            let progress = window.parseInt(
+            const progress = window.parseInt(
               progressEvent.loaded / progressEvent.total * 100
             );
             this.uploadProgress = progress;

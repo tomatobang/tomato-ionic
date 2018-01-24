@@ -13,7 +13,8 @@
     "test-coverage": "karma start ./test-config/karma.conf.js --coverage",
     "e2e": "npm run e2e-update && npm run e2e-test",
     "e2e-test": "protractor ./test-config/protractor.conf.js",
-    "e2e-update": "webdriver-manager update --standalone false --gecko false"
+    "e2e-update": "webdriver-manager update --standalone false --gecko false",
+    "lint": "tslint  -p tsconfig.json -c tslint.json --fix"
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js",
@@ -44,6 +45,7 @@
     "@ionic-native/vibration": "^4.5.2",
     "@ionic/storage": "^2.0.1",
     "build": "^0.1.4",
+    "codelyzer": "^4.1.0",
     "com.darktalker.cordova.screenshot": "^0.1.6",
     "com.unarin.cordova.beacon": "^3.6.0",
     "cordova-android": "~6.2.3",
@@ -91,6 +93,7 @@
     "rxjs": "^5.4.2",
     "sw-toolbox": "3.6.0",
     "talkingdata": "^1.2.2",
+    "tslint-angular": "^1.1.0",
     "zone.js": "0.8.12"
   },
   "devDependencies": {
@@ -116,6 +119,7 @@
     "protractor": "^5.1.1",
     "ts-loader": "^2.0.3",
     "ts-node": "^3.0.2",
+    "tslint": "^5.9.1",
     "typescript": "^2.4.0"
   },
   "cordovaPlugins": [],

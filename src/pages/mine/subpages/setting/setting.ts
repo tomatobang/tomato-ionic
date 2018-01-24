@@ -1,28 +1,28 @@
 /*
- * @Author: kobepeng 
- * @Date: 2017-11-23 19:17:50 
+ * @Author: kobepeng
+ * @Date: 2017-11-23 19:17:50
  * @Last Modified by: kobepeng
  * @Last Modified time: 2017-11-23 19:40:17
  */
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { IonicPage } from "ionic-angular";
-import { GlobalService } from "../../../../providers/global.service";
-import { Insomnia } from "@ionic-native/insomnia";
+import { IonicPage } from 'ionic-angular';
+import { GlobalService } from '../../../../providers/global.service';
+import { Insomnia } from '@ionic-native/insomnia';
 
 declare var window;
 @IonicPage()
 @Component({
-  selector: "page-setting",
-  templateUrl: "setting.html"
+  selector: 'page-setting',
+  templateUrl: 'setting.html'
 })
 export class SettingPage implements OnInit {
   resttime: number;
   countdown: number;
-  isAlwaysLight: boolean = false;
+  isAlwaysLight = false;
 
   longbreakTomatoNum: number;
-  IsLoopMode: boolean = false;
+  IsLoopMode = false;
   whiteNoiseType: string;
   constructor(
     public globalservice: GlobalService,
@@ -52,7 +52,7 @@ export class SettingPage implements OnInit {
         () => {},
         e => {
           this.globalservice.isAlwaysLight = false;
-          console.log("error", e);
+          console.log('error', e);
         }
       );
     } else {
@@ -61,7 +61,7 @@ export class SettingPage implements OnInit {
         () => {},
         e => {
           this.globalservice.isAlwaysLight = true;
-          console.log("error", e);
+          console.log('error', e);
         }
       );
     }
