@@ -4,28 +4,29 @@
  * @Last Modified by: kobepeng
  * @Last Modified time: 2017-12-02 11:17:13
  */
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild } from '@angular/core';
 import {
   NavController,
   ActionSheetController,
   IonicPage,
   App,
-  Platform
-} from "ionic-angular";
-import { GlobalService } from "../../providers/global.service";
-import { JPushService } from "../../providers/utils/jpush.service";
-import { NativeService } from "../../providers/utils/native.service";
-import { OnlineUserService } from "../../providers/data.service";
+  Platform,
+  ModalController,
+} from 'ionic-angular';
+import { GlobalService } from '../../providers/global.service';
+import { JPushService } from '../../providers/utils/jpush.service';
+import { NativeService } from '../../providers/utils/native.service';
+import { OnlineUserService } from '../../providers/data.service';
 
 @IonicPage()
 @Component({
-  selector: "page-mine",
-  templateUrl: "mine.html"
+  selector: 'page-mine',
+  templateUrl: 'mine.html',
 })
 export class MinePage {
-  userid = "";
-  username = "";
-  headImg = "./assets/tomato-active.png";
+  userid = '';
+  username = '';
+  headImg = './assets/tomato-active.png';
   showBigHeadImg = false;
 
   constructor(
@@ -36,7 +37,8 @@ export class MinePage {
     public native: NativeService,
     public platform: Platform,
     private userservice: OnlineUserService,
-    private app: App
+    private app: App,
+    private modalCtrl: ModalController
   ) {}
 
   public ngOnInit(): void {
@@ -47,7 +49,7 @@ export class MinePage {
   ionViewDidEnter() {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
-        if (readySource == "cordova") {
+        if (readySource == 'cordova') {
           this.native.downloadHeadImg(this.userid, false).then(url => {
             this.headImg = `${url}?${new Date().getTime()}`;
           });
@@ -58,36 +60,36 @@ export class MinePage {
 
   logout() {
     this.app.getRootNav().setRoot(
-      "LoginPage",
+      'LoginPage',
       {
         username: this.globalservice.userinfo.username,
-        password: this.globalservice.userinfo.password
+        password: this.globalservice.userinfo.password,
       },
       {},
       () => {
-        this.globalservice.userinfo = "";
-        this.globalservice.token = "";
+        this.globalservice.userinfo = '';
+        this.globalservice.token = '';
         this.jPushService.clearAlias();
       }
     );
   }
 
   setting() {
-    console.log("setting!");
-    this.navCtrl.push("SettingPage", {}, {}, () => {});
+    console.log('setting!');
+    this.navCtrl.push('SettingPage', {}, {}, () => {});
   }
 
   about() {
-    console.log("about!");
-    this.navCtrl.push("AboutPage", {}, {}, () => {});
+    console.log('about!');
+    this.navCtrl.push('AboutPage', {}, {}, () => {});
   }
 
   profile() {
-    this.navCtrl.push("ProfilePage", {}, {}, () => {});
+    this.navCtrl.push('ProfilePage', {}, {}, () => {});
   }
 
   statistics() {
-    this.navCtrl.push("StatisticsPage", {}, {}, () => {});
+    this.navCtrl.push('StatisticsPage', {}, {}, () => {});
   }
 
   /**
@@ -102,5 +104,17 @@ export class MinePage {
    */
   closeBigHeadImg() {
     this.showBigHeadImg = false;
+  }
+
+  /**
+   * 显示二维码
+   */
+  showMyQRCODE() {
+    let modal = this.modalCtrl.create('QRImgModal', { userid: this.userid });
+    modal.onDidDismiss(data => {
+      return data;
+    });
+
+    modal.present();
   }
 }
