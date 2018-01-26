@@ -1,7 +1,3 @@
-/**
- * add by yipeng at 2017
- */
-
 import {
   Directive,
   ElementRef,

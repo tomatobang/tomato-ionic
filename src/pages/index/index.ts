@@ -413,6 +413,7 @@ export class IndexPage implements OnInit, OnDestroy {
     if (this._notifyID > 0) {
       this.localNotifications.cancel(this._notifyID).then(() => {});
     }
+    this.activeTomato = null;
     this.showWhiteNoiseIcon = false;
     this.stopPlayWhiteNoise();
     this.stopRefreshTimeUI();

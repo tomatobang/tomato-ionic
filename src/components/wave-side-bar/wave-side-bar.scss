@@ -30,11 +30,13 @@
     position: absolute;
     top: 50px;
     right: 40px;
-    h3 {
+    display:flex;/*Flex布局*/
+    display: -webkit-flex; /* Safari */
+    align-items:center;/*指定垂直居中*/
+    div {
       color: white;
-      position: relative;
-      top: 11px;
-      left: 18px;
+      text-align: center;
+      width: 100%;
     }
   }
 

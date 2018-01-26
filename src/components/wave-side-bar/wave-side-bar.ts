@@ -16,7 +16,8 @@ export class WaveSideBarComponent {
   @Input('wavadata') waveSideData: any;
   @Output() scrollHandler: EventEmitter<any> = new EventEmitter();
 
-  tipObj = { isShow: false };
+  tipObj = { isShow: true,content:'A' };
+
 
   constructor(private pinUtil: PinyinService) {}
 

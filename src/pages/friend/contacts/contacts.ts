@@ -13,7 +13,10 @@ export class ContactsPage implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: Scroll;
   friendlist = [
     { firstCode: 'A', id: 1, name: '安以轩' },
-    { firstCode: 'B', id: 2, name: '白百何' },
+    { firstCode: 'A', id: 1, name: '安以轩1' },
+    { firstCode: 'A', id: 1, name: '安以轩2' },
+    { firstCode: 'A', id: 1, name: '安以轩3' },
+    { firstCode: 'B', id: 2, name: '白百何4' },
     { firstCode: 'C', id: 3, name: '陈真' },
     { firstCode: 'D', id: 4, name: '斗鱼' },
     { firstCode: 'E', id: 5, name: '饿了么' },
