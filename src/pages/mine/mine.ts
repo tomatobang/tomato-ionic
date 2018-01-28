@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-11-25 20:32:32
- * @Last Modified by: kobepeng
- * @Last Modified time: 2017-12-02 11:17:13
- */
 import { Component, ViewChild } from '@angular/core';
 import {
   NavController,

@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-11-23 19:26:51
- * @Last Modified by: kobepeng
- * @Last Modified time: 2017-11-30 13:45:18
- */
 import { Subject, Observable } from 'rxjs';
 import { baseUrl } from '../config';
 

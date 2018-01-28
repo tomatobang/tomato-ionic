@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-11-23 11:07:20
- * @Last Modified by: kobepeng
- * @Last Modified time: 2017-11-30 16:35:27
- */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 

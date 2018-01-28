@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-11-25 09:29:39
- * @Last Modified by: kobepeng
- * @Last Modified time: 2017-12-02 11:06:46
- */
 import { Injectable } from '@angular/core';
 import {
   Platform,
@@ -202,12 +196,12 @@ export class NativeService {
           options
         )
         .then(result => {
-          console.log('Headmg 下载完成..');
+          console.log('filedownload： 下载完成..');
           resolve(result.toURL());
         })
         .catch(err => {
-          reject('Headmg 下载出错');
-          console.log('Headmg 下载出错', err);
+          reject('ERR:下载出错');
+          console.log('filedownload： 下载出错', err);
         });
       fileTransfer.onProgress((evt: ProgressEvent) => {
         console.log(evt);

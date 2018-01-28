@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-12-02 10:25:11
- * @Last Modified by: kobepeng
- * @Last Modified time: 2017-12-02 11:23:39
- */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   IonicPage,

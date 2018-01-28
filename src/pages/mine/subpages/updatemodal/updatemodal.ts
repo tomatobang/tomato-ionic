@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-11-25 19:57:50
- * @Last Modified by: kobepeng
- * @Last Modified time: 2017-11-30 12:53:54
- */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 

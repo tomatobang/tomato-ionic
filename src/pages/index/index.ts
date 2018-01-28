@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-12-20 14:26:19
- * @Last Modified by: kobepeng
- * @Last Modified time: 2018-01-13 18:05:42
- */
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { VoicePlayService } from '../../providers/utils/voiceplay.service';

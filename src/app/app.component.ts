@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-11-23 19:33:38
- * @Last Modified by:   kobepeng
- * @Last Modified time: 2017-11-23 19:33:38
- */
 import { Component } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';

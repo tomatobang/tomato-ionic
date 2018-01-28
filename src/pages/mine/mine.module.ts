@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-12-02 11:17:00
- * @Last Modified by:   kobepeng
- * @Last Modified time: 2017-12-02 11:17:00
- */
 import { NgModule } from '@angular/core';
 import { IonicPageModule, IonicModule } from 'ionic-angular';
 import { MinePage } from './mine';

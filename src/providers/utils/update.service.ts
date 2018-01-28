@@ -1,9 +1,3 @@
-/*
- * @Author: kobepeng
- * @Date: 2017-11-22 14:15:36
- * @Last Modified by:   kobepeng
- * @Last Modified time: 2017-11-22 14:15:36
- */
 /**
  * App 更新服务( Android )
  * (暂未启用)
