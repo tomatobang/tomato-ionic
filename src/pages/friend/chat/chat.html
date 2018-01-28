@@ -1,9 +1,3 @@
-<!--
-  Generated template for the Chat page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -17,10 +11,7 @@
 
   <div class="message-wrap">
 
-    <div *ngFor="let msg of msgList"
-         class="message"
-         [class.left]=" msg.userId === toUserId "
-         [class.right]=" msg.userId === userId ">
+    <div *ngFor="let msg of msgList" class="message" [class.left]=" msg.userId === toUserId " [class.right]=" msg.userId === userId ">
       <img class="user-img" [src]="msg.userImgUrl" alt="" src="">
       <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
       <div class="msg-detail">
@@ -44,24 +35,16 @@
     <ion-row>
 
       <ion-col col-2>
-        <button ion-button clear icon-only item-right
-                (click)="switchEmojiPicker()" >
-          <ion-icon  name="md-happy"></ion-icon>
+        <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+          <ion-icon name="md-happy"></ion-icon>
         </button>
       </ion-col>
       <ion-col col-8>
-        <ion-textarea
-                #chat_input
-                placeholder="Text Input"
-                [(ngModel)]="editorMsg"
-                (keyup.enter)="sendMsg()"
-                (focus)="_focus()"
-        ></ion-textarea>
+        <ion-textarea #chat_input placeholder="Text Input" [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" (focus)="_focus()"></ion-textarea>
       </ion-col>
       <ion-col col-2>
-        <button ion-button clear icon-only item-right
-                (click)="sendMsg()" >
-          <ion-icon  name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+        <button ion-button clear icon-only item-right (click)="sendMsg()">
+          <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
         </button>
       </ion-col>
     </ion-row>

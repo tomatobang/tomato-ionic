@@ -8,7 +8,7 @@ import {
   ElementRef,
   OnInit,
   OnDestroy,
-  Input
+  Input,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Platform } from 'ionic-angular';
@@ -17,7 +17,7 @@ import { Media, MediaObject } from '@ionic-native/media';
 import {
   FileTransfer,
   FileUploadOptions,
-  FileTransferObject
+  FileTransferObject,
 } from '@ionic-native/file-transfer';
 
 declare let window;
@@ -25,26 +25,11 @@ declare let window;
 @Component({
   selector: 'voice-recorder',
   providers: [Media, FileTransfer], // ,File
-  templateUrl: './voice-recorder.html'
+  templateUrl: './voice-recorder.html',
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
-  @Input()
-  get voiceUploadUrl(): any {
-    return this.uploadUrl;
-  }
-  set voiceUploadUrl(val) {
-    this.uploadUrl = val.url;
-  }
-
-  @Input()
-  get postParams(): any {
-    return this._postParams;
-  }
-  set postParams(val) {
-    this._postParams = val;
-  }
   couldPlay = false;
-  _temp_file_path: string;
+  temp_file_path: string;
 
   _postParams: any;
   uploadUrl: string;
@@ -63,8 +48,24 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     ImgUrl: './assets/voice/recog000.png',
     reset() {
       this.ImgUrl = './assets/voice/recog000.png';
-    }
+    },
   };
+
+  @Input()
+  get voiceUploadUrl(): any {
+    return this.uploadUrl;
+  }
+  set voiceUploadUrl(val) {
+    this.uploadUrl = val.url;
+  }
+
+  @Input()
+  get postParams(): any {
+    return this._postParams;
+  }
+  set postParams(val) {
+    this._postParams = val;
+  }
 
   constructor(
     private media: Media,
@@ -192,7 +193,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
             tmpPath = this.path + this.src;
           }
           // alert(tmpPath);
-          this._temp_file_path = tmpPath.replace('file://', '');
+          this.temp_file_path = tmpPath.replace('file://', '');
           this.couldPlay = true;
           if (this.mediaRec) {
             this.mediaRec.release();
@@ -252,11 +253,11 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   uploadVoiceFile(token) {
     return new Promise((resolve, reject) => {
       this.isUploading = true;
-      if (!this._temp_file_path) {
+      if (!this.temp_file_path) {
         reject('没有录音!');
       }
 
-      const tmpPath = this._temp_file_path;
+      const tmpPath = this.temp_file_path;
       if (!this.uploadUrl) {
         reject('uploadUrl 不存在');
         return;
@@ -273,9 +274,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
           fileName: tmpPath.substr(tmpPath.lastIndexOf('/') + 1),
           mimeType: 'text/plain',
           headers: {
-            Authorization: token
+            Authorization: token,
           },
-          params: this._postParams
+          params: this._postParams,
         };
         console.log(tmpPath, this.uploadUrl, options);
         fileTransfer.upload(tmpPath, this.uploadUrl, options, true).then(

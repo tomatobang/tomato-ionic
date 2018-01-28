@@ -7,8 +7,8 @@ import lodash from 'lodash';
   templateUrl: 'qr-scanner.html',
 })
 export class QRScannerComponent {
-  @Output('onSuccess') onSuccess: EventEmitter<any> = new EventEmitter();
-  @Output('onWrong') onWrong: EventEmitter<any> = new EventEmitter();
+  @Output('success') success: EventEmitter<any> = new EventEmitter();
+  @Output('wrong') wrong: EventEmitter<any> = new EventEmitter();
 
   constructor(private modalCtrl: ModalController) {}
 
@@ -17,11 +17,11 @@ export class QRScannerComponent {
 
     modal.onDidDismiss(qrCode => {
       if (lodash.isNil(qrCode)) {
-        return this.onWrong.emit();
+        return this.wrong.emit();
       }
       const response = qrCode;
       // if (format) response = this.formatScheme(qrCode);
-      return this.onSuccess.emit(response);
+      return this.success.emit(response);
     });
 
     modal.present();
@@ -31,7 +31,7 @@ export class QRScannerComponent {
     if (lodash.isObject(qrCode)) {
       return qrCode;
     } else {
-      this.onWrong.emit();
+      this.wrong.emit();
     }
   }
 }

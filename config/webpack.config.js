@@ -1,9 +1,10 @@
-var chalk = require('chalk');
-var fs = require('fs');
-var path = require('path');
-var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
+const chalk = require('chalk');
+const fs = require('fs');
+const path = require('path');
 
-var env = process.env.IONIC_ENV;
+let useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
+
+const env = process.env.IONIC_ENV;
 
 let baseAliases = {
   '@components': path.resolve('./src/components/'),

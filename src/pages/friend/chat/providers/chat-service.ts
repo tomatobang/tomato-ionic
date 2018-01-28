@@ -37,7 +37,7 @@ export class ChatService {
           toUserId: '140000198202211138',
           time: Date.now(),
           message: msg.message,
-          status: 'success'
+          status: 'success',
         },
         Date.now()
       );
@@ -68,7 +68,7 @@ export class ChatService {
     const userInfo: UserInfo = {
       userId: '140000198202211138',
       userName: 'Luff',
-      userImgUrl: './assets/user.jpg'
+      userImgUrl: './assets/user.jpg',
     };
     return new Promise((resolve, reject) => {
       resolve(userInfo);
