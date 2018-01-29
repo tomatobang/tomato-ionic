@@ -9,7 +9,7 @@ import {
 declare var window: any;
 let hasFixRatio = false;
 @Directive({
-  selector: 'angular-round-progress'
+  selector: '[angularRoundProgress]'
 })
 export class AngularRoundProgressDirective {
   canvas: HTMLCanvasElement;
@@ -29,7 +29,6 @@ export class AngularRoundProgressDirective {
   labelColor = '#F97271';
 
   timerStatusValue: any;
-
   /**
    * 只能发现
    */
@@ -41,8 +40,6 @@ export class AngularRoundProgressDirective {
     this.timerStatusValue = val;
     this.render();
   }
-
-  @Output() scroll = new EventEmitter();
 
   constructor(private element: ElementRef) {
     const ele = this.element.nativeElement;

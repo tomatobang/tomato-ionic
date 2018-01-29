@@ -9,8 +9,8 @@ declare var window;
 
 @IonicPage()
 @Component({
-  selector: 'page-statistics',
-  templateUrl: 'statistics.html'
+  selector: 'cmp-statistics',
+  templateUrl: 'statistics.html',
 })
 export class StatisticsPage implements OnInit {
   @ViewChild('divContainer') divContainer;
@@ -18,6 +18,11 @@ export class StatisticsPage implements OnInit {
   monthlabel: Number;
   yearlabel: Number;
   myChart: any;
+
+  /**
+   * 日期空格大小
+   */
+  cellSize = [45, 45];
 
   constructor(
     private elRef: ElementRef,
@@ -35,7 +40,7 @@ export class StatisticsPage implements OnInit {
     }
     this.cellSize = [
       (window.screen.width - 10) / 7,
-      (window.screen.width - 10) / 7
+      (window.screen.width - 10) / 7,
     ];
     setTimeout(() => {
       this.myChart = echarts.init(this.divContainer.nativeElement);
@@ -44,11 +49,6 @@ export class StatisticsPage implements OnInit {
 
     // let scatterData = this.getVirtulData();
   }
-
-  /**
-   * 日期空格大小
-   */
-  cellSize = [45, 45];
 
   /**
    * 设置日历标题
@@ -71,19 +71,19 @@ export class StatisticsPage implements OnInit {
    */
   loadData(date) {
     return new Promise((resolve, reject) => {
-      this.tomatoservice
-        .statistics({ isSuccess: 1, date: date })
-        .subscribe(data => {
+      this.tomatoservice.statistics({ isSuccess: 1, date: date }).subscribe(
+        data => {
           data = JSON.parse(data._body);
           const ret = [];
           for (let i = 0; i < data.length; i += 1) {
             ret.push([data[i]._id, data[i].count]);
           }
           resolve(ret);
-        }),
+        },
         err => {
           reject(err);
-        };
+        }
+      );
     });
   }
 
@@ -98,7 +98,7 @@ export class StatisticsPage implements OnInit {
     for (let time = date; time < end; time += dayTime) {
       data.push([
         echarts.format.formatTime('yyyy-MM-dd', time),
-        Math.floor(Math.random() * 1)
+        Math.floor(Math.random() * 1),
       ]);
     }
     return data;
@@ -124,11 +124,11 @@ export class StatisticsPage implements OnInit {
             color_tmp = 0.3;
           }
           const itemStyle = {
-            normal: { color: 'rgba(249,114,113,' + color_tmp + ')' }
+            normal: { color: 'rgba(249,114,113,' + color_tmp + ')' },
           };
           scatterData[i] = {
             value: t_data,
-            itemStyle
+            itemStyle,
           };
         }
       }
@@ -138,11 +138,11 @@ export class StatisticsPage implements OnInit {
         tooltip: {
           formatter(dd) {
             return `${dd.value[0]}<br/>番茄钟:${dd.value[1]}`;
-          }
+          },
         },
         legend: {
           data: ['完成', '中断'],
-          bottom: 20
+          bottom: 20,
         },
         calendar: {
           top: 'middle',
@@ -153,33 +153,33 @@ export class StatisticsPage implements OnInit {
             lineStyle: {
               color: '#8c8c8c',
               type: 'dashed',
-              opacity: 0
-            }
+              opacity: 0,
+            },
           },
           itemStyle: {
             normal: {
-              borderWidth: 0
-            }
+              borderWidth: 0,
+            },
           },
           yearLabel: {
             show: false,
             textStyle: {
               fontSize: 30,
-              color: '#8c8c8c'
-            }
+              color: '#8c8c8c',
+            },
           },
           dayLabel: {
             show: true,
             margin: 5,
             firstDay: 1,
             color: '#8c8c8c',
-            nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+            nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
           },
           monthLabel: {
             show: false,
-            nameMap: 'cn'
+            nameMap: 'cn',
           },
-          range: range
+          range: range,
         },
         series: [
           {
@@ -196,9 +196,9 @@ export class StatisticsPage implements OnInit {
                 offset: [-this.cellSize[0] / 2 + 6, -this.cellSize[1] / 2 + 5],
                 textStyle: {
                   color: '#8c8c8c',
-                  fontSize: 10
-                }
-              }
+                  fontSize: 10,
+                },
+              },
             },
             markLine: {},
             data: scatterData,
@@ -208,9 +208,9 @@ export class StatisticsPage implements OnInit {
             },
             symbolSize: function(val) {
               return 25;
-            }
-          }
-        ]
+            },
+          },
+        ],
       };
 
       if (option && typeof option === 'object') {

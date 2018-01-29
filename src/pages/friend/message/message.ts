@@ -4,7 +4,7 @@ import { NavController, IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-message',
+  selector: 'cmp-message',
   templateUrl: 'message.html'
 })
 export class MessagePage {

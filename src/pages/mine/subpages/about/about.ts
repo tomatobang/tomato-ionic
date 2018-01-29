@@ -6,7 +6,7 @@ import { IonicPage } from 'ionic-angular';
 declare var window;
 @IonicPage()
 @Component({
-  selector: 'page-about',
+  selector: 'cmp-about',
   templateUrl: 'about.html',
 })
 export class AboutPage implements OnInit {

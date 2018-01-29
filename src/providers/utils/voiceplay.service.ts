@@ -42,7 +42,6 @@ export class VoicePlayService {
       // 检查是否已下载过
       this.file.checkFile(targetPath, filename).then(
         success => {
-          // alert("已经下载,直接播放！");
           resolve(targetPathWithFileName);
         },
         error => {
@@ -62,12 +61,12 @@ export class VoicePlayService {
               options
             )
             .then(result => {
-              // console.log("下载完成,播放..");
+              console.log('下载完成,播放..');
               resolve(targetPathWithFileName);
             })
             .catch(err => {
-              alert('下载音频文件出错');
               console.log('下载音频文件出错', err);
+              alert('下载音频文件出错');
               reject(err);
             });
           fileTransfer.onProgress((evt: ProgressEvent) => {
@@ -196,9 +195,9 @@ export class VoicePlayService {
       this.mediaRec.release();
     }
     function getPhoneGapPath() {
-      let path = window.location.pathname;
-      path = path.substr(0, path.length - 9);
-      return 'file://' + path;
+      let loc = window.location.pathname;
+      loc = loc.substr(0, loc.length - 9);
+      return 'file://' + loc;
     }
     let applicationDirectory = '';
     if (this.platform.is('android')) {

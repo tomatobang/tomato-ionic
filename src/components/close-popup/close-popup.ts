@@ -10,13 +10,12 @@ export class ClosePopupComponent {
 
   @Input('large') large: boolean;
   @Input('color') color: string;
-  @Output('onClose') onClose: EventEmitter<any> = new EventEmitter();
+  @Output() closePopUp: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
-  }
+  constructor() {}
 
   close() {
-    this.onClose.emit();
+    this.closePopUp.emit();
   }
 
 }

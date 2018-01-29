@@ -4,7 +4,7 @@ import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 declare var window;
 @IonicPage()
 @Component({
-  selector: 'page-updatemodal',
+  selector: 'cmp-updatemodal',
   templateUrl: 'updatemodal.html'
 })
 export class UpdatemodalPage implements OnInit {

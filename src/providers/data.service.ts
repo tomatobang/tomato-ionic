@@ -75,7 +75,7 @@ export class DataService {
 
   amapHttpUtil(url: string, options: Object): Observable<any> {
     const params: RequestOptions = this.interceptor();
-    params.search = new URLSearchParams(querystring.stringify(options));
+    params.params = new URLSearchParams(querystring.stringify(options));
     return this.http.get(url, params);
   }
 }

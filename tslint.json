@@ -2,13 +2,13 @@
   "extends": ["tslint-angular"],
   "rules": {
     "directive-selector": [
-      true,
+      false,
       "attribute",
       ["dir-prefix1", "dir-prefix2"],
       "camelCase"
     ],
     "component-selector": [
-      true,
+      false,
       "element",
       ["cmp-prefix1", "cmp-prefix2"],
       "kebab-case"
@@ -23,11 +23,25 @@
     "no-input-rename": true,
     "no-output-on-prefix": true,
     "no-output-rename": true,
-    "no-forward-ref": true,
+    "no-forward-ref": false,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "no-output-named-after-standard-event": true,
-    "component-class-suffix": [true, "Component"],
-    "directive-class-suffix": [true, "Directive"]
+    "no-use-before-declare": false,
+    "component-class-suffix": [false, "Component"],
+    "directive-class-suffix": [true, "Directive"],
+    "no-shadowed-variable": [
+      true,
+      {
+        "class": true,
+        "enum": true,
+        "function": true,
+        "interface": false,
+        "namespace": false,
+        "typeAlias": true,
+        "typeParameter": true,
+        "import": false
+      }
+    ]
   }
 }

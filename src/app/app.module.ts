@@ -3,7 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 // import * as hidpiCanvas from 'hidpi-canvas/dist/hidpi-canvas.min.js'
-import { MyApp } from './app.component';
+import { MyAppComponent } from './app.component';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
@@ -28,35 +28,24 @@ import { File } from '@ionic-native/file';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Network } from '@ionic-native/network';
 
-import * as Raven from 'raven-js';
-Raven.config(
-  'https://8583117beafb40a8be2906252ee80fcc@sentry.io/240912'
-).install();
-
-export class RavenErrorHandler implements ErrorHandler {
-  handleError(err: any): void {
-    Raven.captureException(err);
-  }
-}
-
 @NgModule({
-  declarations: [MyApp],
+  declarations: [MyAppComponent],
   imports: [
     RebirthStorageModule,
     RebirthHttpModule,
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp, {
+    IonicModule.forRoot(MyAppComponent, {
       tabsHideOnSubPages: true, // 子页隐藏 TAB
       tabsLayout: 'icon-left',
       iconMode: 'ios',
-      swipeBackEnabled: false // 禁用 IOS 手势滑动返回
+      swipeBackEnabled: false, // 禁用 IOS 手势滑动返回
     }),
     SocketIoModule.forRoot({ url: `${baseUrl}tomatobang`, options: {} }),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp],
+  entryComponents: [MyAppComponent],
   providers: [
     StatusBar,
     BackgroundMode,
@@ -72,8 +61,8 @@ export class RavenErrorHandler implements ErrorHandler {
     FileOpener,
     Insomnia,
     Network,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
-  ]
+  ],
 })
 export class AppModule {}

@@ -2,12 +2,13 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
 
-import { ChatService, ChatMessage } from './providers/chat-service';
+import { ChatMessage } from './providers/chat-message.model';
+import { ChatService } from './providers/chat-service';
 
 @IonicPage()
 @Component({
-  selector: 'page-chat',
-  templateUrl: 'chat.html'
+  selector: 'cmp-chat',
+  templateUrl: 'chat.html',
 })
 export class Chat {
   @ViewChild(Content) content: Content;
@@ -48,7 +49,7 @@ export class Chat {
   }
 
   ionViewDidEnter() {
-    //get message list
+    // get message list
     this.getMsg().then(() => {
       this.scrollToBottom();
     });
@@ -94,7 +95,9 @@ export class Chat {
    * @name sendMsg
    */
   sendMsg() {
-    if (!this.editorMsg.trim()) { return; }
+    if (!this.editorMsg.trim()) {
+      return;
+    }
 
     // Mock message
     const id = Date.now().toString();
@@ -106,7 +109,7 @@ export class Chat {
       toUserId: this.toUserId,
       time: Date.now(),
       message: this.editorMsg,
-      status: 'pending'
+      status: 'pending',
     };
 
     this.pushNewMsg(newMsg);

@@ -4,12 +4,12 @@
  * 3. 手机号
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {
   NavController,
   IonicPage,
   ToastController,
-  NavParams
+  NavParams,
 } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OnlineUserService, User } from '../../providers/data.service';
@@ -21,45 +21,45 @@ import { JPushService } from '../../providers/utils/jpush.service';
 @Component({
   selector: 'register',
   providers: [OnlineUserService, GlobalService, JPushService],
-  templateUrl: 'register.html'
+  templateUrl: 'register.html',
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit {
   userForm: FormGroup;
   user = new User();
   error = '';
   remeberMe = {
-    selected: false
+    selected: false,
   };
-  public formErrors = {
+  formErrors = {
     username: '',
     displayName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    formError: ''
+    formError: '',
   };
   validationMessages = {
     username: {
       required: '用户名必须输入。', //
-      minlength: '用户名4到32个字符。'
+      minlength: '用户名4到32个字符。',
     },
     displayName: {
       required: '昵称必须输入。',
-      minlength: '昵称2到32个字符。'
+      minlength: '昵称2到32个字符。',
     },
     email: {
       required: '邮箱必须输入。',
-      pattern: '请输入正确的邮箱地址。'
+      pattern: '请输入正确的邮箱地址。',
     },
     password: {
       required: '密码必须输入。',
-      minlength: '密码至少要6位。'
+      minlength: '密码至少要6位。',
     },
     confirmPassword: {
       required: '重复密码必须输入。',
       minlength: '密码至少要6位。',
-      validateEqual: '两次输入的密码不一致。'
-    }
+      validateEqual: '两次输入的密码不一致。',
+    },
   };
 
   constructor(
@@ -94,7 +94,7 @@ export class RegisterPage {
       this.service
         .verifyUserNameEmail({
           email: this.user.email,
-          username: this.user.username
+          username: this.user.username,
         })
         .subscribe(data => {
           const ret: any = JSON.parse(data._body);
@@ -129,11 +129,19 @@ export class RegisterPage {
     this.userForm = this.fb.group({
       username: [
         this.user.username,
-        [Validators.required, Validators.minLength(4), Validators.maxLength(32)]
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(32),
+        ],
       ],
       displayName: [
         this.user.displayName,
-        [Validators.required, Validators.minLength(2), Validators.maxLength(32)]
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(32),
+        ],
       ],
       email: [
         this.user.email,
@@ -141,17 +149,17 @@ export class RegisterPage {
           Validators.required,
           Validators.pattern(
             '^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$'
-          )
-        ]
+          ),
+        ],
       ],
       password: [
         this.user.password,
-        [Validators.required, Validators.minLength(6)]
+        [Validators.required, Validators.minLength(6)],
       ],
       confirmPassword: [
         this.user.confirmPassword,
-        [Validators.required, Validators.minLength(6)]
-      ]
+        [Validators.required, Validators.minLength(6)],
+      ],
     });
     this.userForm.valueChanges.subscribe(data => this.onValueChanged(data));
     this.onValueChanged();
@@ -162,12 +170,12 @@ export class RegisterPage {
       return;
     }
     const form = this.userForm;
-    for (const field in this.formErrors) {
+    for (const field of Object.keys(this.formErrors)) {
       this.formErrors[field] = '';
       const control = form.get(field);
       if (control && control.dirty && !control.valid) {
         const messages = this.validationMessages[field];
-        for (const key in control.errors) {
+        for (const key of Object.keys(control.errors)) {
           this.formErrors[field] += messages[key] + ' ';
         }
       }
@@ -183,7 +191,7 @@ export class RegisterPage {
     const toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position: 'top'
+      position: 'top',
     });
 
     toast.onDidDismiss(() => {

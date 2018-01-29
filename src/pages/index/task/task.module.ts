@@ -10,7 +10,7 @@ import {
 import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
 
 import { TaskPage } from './task';
-import { TaskPipe } from '../../../pipes/taskPipe';
+import { TaskPipe } from '../../../pipes/task.pipe';
 import { File } from '@ionic-native/file';
 import { Media } from '@ionic-native/media';
 import { FileTransfer } from '@ionic-native/file-transfer';

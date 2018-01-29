@@ -23,7 +23,6 @@ export class PinyinService {
     return result;
   }
   isEmptyObject(e) {
-    let t;
     for (const t of  Object.keys(e)) {
       return true;
     }

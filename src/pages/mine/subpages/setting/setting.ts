@@ -7,7 +7,7 @@ import { Insomnia } from '@ionic-native/insomnia';
 declare var window;
 @IonicPage()
 @Component({
-  selector: 'page-setting',
+  selector: 'cmp-setting',
   templateUrl: 'setting.html'
 })
 export class SettingPage implements OnInit {

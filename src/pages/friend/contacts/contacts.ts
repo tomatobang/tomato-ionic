@@ -3,10 +3,12 @@ import { Http } from '@angular/http';
 
 import { IonicPage, Scroll } from 'ionic-angular';
 import { PinyinService } from '../../../providers/utils/pinyin.service';
+import { Friendinfo } from './providers/contact-friendinfo.model';
+
 
 @IonicPage()
 @Component({
-  selector: 'page-contacts',
+  selector: 'cmp-contacts',
   templateUrl: 'contacts.html',
 })
 export class ContactsPage implements OnInit {
@@ -36,7 +38,7 @@ export class ContactsPage implements OnInit {
       .catch(err => Promise.reject(err || 'err'));
   }
 
-  //初始化项目列表
+  // 初始化项目列表
   getNewFriendlist() {
     if (this.friendlist instanceof Array && this.friendlist.length > 0) {
       this.newFriendList = this.pinyinUtil.sortByFirstCode(
@@ -49,14 +51,9 @@ export class ContactsPage implements OnInit {
   ngOnInit() {}
 
   OnNavcScroll(evt) {
-    let element = <HTMLElement>this.myScrollContainer._scrollContent
+    const element = <HTMLElement>this.myScrollContainer._scrollContent
       .nativeElement;
     element.scrollTop = evt;
   }
 }
 
-export class Friendinfo {
-  firstCode: string;
-  id: string;
-  name: string;
-}

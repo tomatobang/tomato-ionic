@@ -1,16 +1,11 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
-import { FormsModule }   from '@angular/forms';
- 
- 
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [CommonModule, FormsModule],
-  declarations: [
-  ],
+  declarations: [],
   providers: [],
-  exports: [
-    CommonModule,
-    FormsModule,
-  ]
+  exports: [CommonModule, FormsModule],
 })
-export class SharedModule { }
+export class SharedModule {}

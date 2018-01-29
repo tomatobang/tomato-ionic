@@ -12,7 +12,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 @Component({
   templateUrl: 'app.html',
 })
-export class MyApp {
+export class MyAppComponent {
   rootPage: any;
   hideNav = false;
 

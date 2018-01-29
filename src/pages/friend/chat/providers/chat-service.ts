@@ -2,24 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Events } from 'ionic-angular';
 
+import { UserInfo } from './chat-userinfo.model';
+import { ChatMessage } from './chat-message.model';
+
 import 'rxjs/add/operator/toPromise';
-
-export class ChatMessage {
-  messageId: string;
-  userId: string;
-  userName: string;
-  userImgUrl: string;
-  toUserId: string;
-  time: number | string;
-  message: string;
-  status: string;
-}
-
-export class UserInfo {
-  userId: string;
-  userName: string;
-  userImgUrl: string;
-}
 
 @Injectable()
 export class ChatService {

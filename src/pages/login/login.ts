@@ -4,12 +4,12 @@
  * 3. 手机号
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   NavController,
   IonicPage,
   ToastController,
-  NavParams
+  NavParams,
 } from 'ionic-angular';
 import { OnlineUserService, User } from '../../providers/data.service';
 import { GlobalService } from '../../providers/global.service';
@@ -20,13 +20,13 @@ import { JPushService } from '../../providers/utils/jpush.service';
 @Component({
   selector: 'login',
   providers: [OnlineUserService, GlobalService, JPushService],
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   user = new User();
   error = '';
   remeberMe = {
-    selected: false
+    selected: false,
   };
 
   constructor(
@@ -72,7 +72,7 @@ export class LoginPage {
       this.rebirthProvider.headers({ Authorization: token });
       this.jPushService.init(this.user.username);
       this.navCtrl.setRoot('TabsPage', {
-        animate: true
+        animate: true,
       });
     });
   }
@@ -90,7 +90,7 @@ export class LoginPage {
     const toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position: 'top'
+      position: 'top',
     });
 
     toast.onDidDismiss(() => {

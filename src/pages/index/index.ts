@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { VoicePlayService } from '../../providers/utils/voiceplay.service';
 import {
@@ -8,13 +8,13 @@ import {
   IonicPage,
   AlertController,
   NavParams,
-  App
+  App,
 } from 'ionic-angular';
 import { AngularRoundProgressDirective } from '../../directives/angular-round-progress.directive';
 
 import {
   OnlineTomatoService,
-  OnlineTaskService
+  OnlineTaskService,
 } from '../../providers/data.service';
 import { GlobalService } from '../../providers/global.service';
 import { TomatoIOService } from '../../providers/utils/socket.io.service';
@@ -24,10 +24,10 @@ declare let window;
 
 @IonicPage()
 @Component({
-  selector: 'page-index',
-  templateUrl: 'index.html'
+  selector: 'cmp-index',
+  templateUrl: 'index.html',
 })
-export class IndexPage implements OnInit, OnDestroy {
+export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
   page_title = '首页';
   segment = 'index';
   _userid: string;
@@ -35,7 +35,7 @@ export class IndexPage implements OnInit, OnDestroy {
   _notifyID = 0;
   _rest_notifyID = 10000;
   _task = {
-    title: ''
+    title: '',
   };
   voicePlaySrc = './assets/voice/voice.png';
   showWhiteNoiseIcon = false;
@@ -69,10 +69,16 @@ export class IndexPage implements OnInit, OnDestroy {
       this.count = 0;
       this.percentage = 0;
       this.label = this.countdown + ':00';
-    }
+    },
   };
   // 中断缘由
   breakReason: any;
+
+  // 刷新时间圆圈
+  UIRefreshIntervalID: any;
+
+  @ViewChild(AngularRoundProgressDirective)
+  child: AngularRoundProgressDirective;
 
   constructor(
     private app: App,
@@ -152,7 +158,7 @@ export class IndexPage implements OnInit, OnDestroy {
           'LoginPage',
           {
             username: this.globalservice.userinfo.username,
-            password: this.globalservice.userinfo.password
+            password: this.globalservice.userinfo.password,
           },
           {},
           () => {
@@ -196,14 +202,10 @@ export class IndexPage implements OnInit, OnDestroy {
   }
 
 
-  @ViewChild(AngularRoundProgressDirective)
-  child: AngularRoundProgressDirective;
   ngAfterViewInit() {
     this.refreshTimeUI();
   }
 
-  // 刷新时间圆圈
-  UIRefreshIntervalID: any;
   refreshTimeUI() {
     clearInterval(this.UIRefreshIntervalID);
     this.UIRefreshIntervalID = setInterval(() => {
@@ -253,15 +255,15 @@ export class IndexPage implements OnInit, OnDestroy {
       inputs: [
         {
           name: 'title',
-          placeholder: '请填写中断原因...'
-        }
+          placeholder: '请填写中断原因...',
+        },
       ],
       buttons: [
         {
           text: '取消',
           handler: data => {
             console.log('Cancel clicked');
-          }
+          },
         },
         {
           text: '提交',
@@ -273,22 +275,22 @@ export class IndexPage implements OnInit, OnDestroy {
               taskid: this.activeTomato._id,
               num: this.activeTomato.num,
               breakTime: 1,
-              breakReason: data.title
+              breakReason: data.title,
             };
             const tomato: any = {
               title: this.activeTomato.title,
               startTime: this.activeTomato.startTime,
               endTime: new Date(),
               breakTime: 1,
-              breakReason: data.title
+              breakReason: data.title,
             };
             this.historyTomatoes.push(Object.assign({}, tomato));
             this.tomatoCount += 1;
             this.tomatoIO.break_tomato(this._userid, tomatoDTO);
             this.activeTomato = null;
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     prompt.present();
   }
@@ -312,7 +314,7 @@ export class IndexPage implements OnInit, OnDestroy {
       text: '休息完了，赶紧开启下一个番茄钟吧!',
       at: new Date(new Date().getTime() + 5 * 60 * 1000),
       sound: 'file://assets/audios/finish.wav',
-      led: 'FF0000'
+      led: 'FF0000',
     });
   }
 
@@ -345,7 +347,7 @@ export class IndexPage implements OnInit, OnDestroy {
       ),
       led: 'FF0000',
       sound: 'file://assets/audios/start.wav',
-      badge: 1
+      badge: 1,
     });
 
     this.showWhiteNoiseIcon = true;

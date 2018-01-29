@@ -11,16 +11,16 @@ import { SearchResult } from '../model/search-result.model';
 
 export abstract class TaskService extends RebirthHttp {
     abstract createTask(task: Task): Observable<any>;
-  
+
     abstract getTasks(
       pageIndex: any,
       pageSize: any,
       keyword?: string
     ): Observable<SearchResult<Task>>;
-  
+
     abstract getTaskByTitle(taskTitle: string): Observable<Task>;
-  
+
     abstract updateTask(taskUrl: string, task: Task): Observable<any>;
-  
+
     abstract deleteTask(taskUrl: string): Observable<any>;
   }

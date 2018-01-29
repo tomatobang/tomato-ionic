@@ -17,7 +17,7 @@ import { debug } from 'util';
 declare var window;
 @IonicPage()
 @Component({
-  selector: 'page-profile',
+  selector: 'cmp-profile',
   templateUrl: 'profile.html'
 })
 export class ProfilePage implements OnInit {
@@ -109,9 +109,9 @@ export class ProfilePage implements OnInit {
       this.bio = data.bio;
       this.userservice
         .updateBio({ userid: this.userid, bio: this.bio })
-        .subscribe(data => {
-          console.log(data);
-          this.globalservice.userinfo = JSON.parse(data._body);
+        .subscribe(userinfo => {
+          console.log(userinfo);
+          this.globalservice.userinfo = JSON.parse(userinfo._body);
         });
     });
     profileModal.present();

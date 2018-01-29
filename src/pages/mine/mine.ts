@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import {
   NavController,
   ActionSheetController,
@@ -14,10 +14,10 @@ import { OnlineUserService } from '../../providers/data.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-mine',
+  selector: 'cmp-mine',
   templateUrl: 'mine.html',
 })
-export class MinePage {
+export class MinePage implements OnInit {
   userid = '';
   username = '';
   headImg = './assets/tomato-active.png';

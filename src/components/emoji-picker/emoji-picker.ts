@@ -26,6 +26,7 @@ export class EmojiPickerComponent implements ControlValueAccessor {
   private content: string;
   private onChanged: Function;
   private onTouched: Function;
+
   constructor(emojiProvider: EmojiProvider) {
     console.log('Hello EmojiPickerComponent Component');
     this.emojiArr = emojiProvider.getEmojis();

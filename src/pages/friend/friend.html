@@ -76,4 +76,4 @@
 
 </ion-content>
 
-<qr-scanner (onSuccess)="onScanQRCode($event)" #qrScanner></qr-scanner>
+<qr-scanner (wrongScaned)="onScanQRCodeERR($event)" (successScaned)="onScanQRCode($event)" #qrScanner></qr-scanner>

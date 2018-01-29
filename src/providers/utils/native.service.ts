@@ -20,6 +20,8 @@ export class NativeService {
   headimgurl: String;
   toast: Toast;
 
+  private isOffline = false;
+
   constructor(
     public platform: Platform,
     public globalservice: GlobalService,
@@ -61,7 +63,6 @@ export class NativeService {
   /**
    * 监听网络状态
    */
-  private isOffline = false;
   listenNetworkState() {
     this.createToast();
     const offlineOnlineThrottle = this.throttle(msg => {

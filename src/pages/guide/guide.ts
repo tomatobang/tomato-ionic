@@ -10,7 +10,7 @@ import {
 import { Storage } from '@ionic/storage';
 
 @Component({
-  selector: 'page-guide',
+  selector: 'cmp-guide',
   templateUrl: 'guide.html'
 })
 @IonicPage()

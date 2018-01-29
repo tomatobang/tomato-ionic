@@ -11,7 +11,7 @@ import { transition } from '@angular/core/src/animation/dsl';
 @Component({
   selector: 'cmp-task',
   templateUrl: 'task.html',
-  providers: []
+  providers: [],
 })
 export class TaskPage implements OnInit {
   showDismissButton = true;
@@ -20,18 +20,18 @@ export class TaskPage implements OnInit {
   openNewTaskForm = false;
   allTasks = {
     finished: new Array(),
-    unfinished: new Array()
+    unfinished: new Array(),
   };
   newTask = {
     title: '',
     description: '',
-    num: 1
+    num: 1,
   };
 
   voicepostParams = {};
 
   voiceUploadUrl = {
-    url: baseUrl + 'upload/voicefile'
+    url: baseUrl + 'upload/voicefile',
   };
 
   constructor(
@@ -109,7 +109,7 @@ export class TaskPage implements OnInit {
     this.showDismissButton = false;
     this.voicepostParams = {
       userid: 'userid',
-      taskid: 'taskid'
+      taskid: 'taskid',
     };
   }
 
@@ -126,7 +126,7 @@ export class TaskPage implements OnInit {
         // voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
         this.voicepostParams = {
           taskid: data._id,
-          userid: data.userid
+          userid: data.userid,
         };
         task._id = data._id;
         // 上传音屏文件
@@ -145,7 +145,7 @@ export class TaskPage implements OnInit {
               this.newTask = {
                 title: '',
                 description: '',
-                num: 1
+                num: 1,
               };
               this.openNewTaskForm = false;
               this.showDismissButton = true;
@@ -160,7 +160,7 @@ export class TaskPage implements OnInit {
               this.newTask = {
                 title: '',
                 description: '',
-                num: 1
+                num: 1,
               };
               this.openNewTaskForm = false;
               this.showDismissButton = true;
@@ -175,13 +175,12 @@ export class TaskPage implements OnInit {
   removeTask(task: any) {
     for (const index in this.allTasks.unfinished) {
       if (this.allTasks.unfinished[index] === task) {
-        const ind = new Number(index);
         // 删除任务
         this.taskservice.deleteTask(task._id).subscribe(response => {
           const data: any = JSON.parse(response._body);
           if (data && data.status === 'fail') {
           } else {
-            this.allTasks.unfinished.splice(ind.valueOf(), 1);
+            this.allTasks.unfinished.splice(parseInt(index, 10), 1);
             this.allTasks.unfinished = this.allTasks.unfinished.slice();
           }
         });
