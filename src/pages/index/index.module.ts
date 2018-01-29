@@ -7,9 +7,9 @@ import {
   OnlineTaskService
 } from '../../providers/data.service';
 
-import { StringTruncate } from '../../pipes/stringTruncate';
-import { DateTransform } from '../../pipes/dateTransform';
-import { AngularRoundProgressComponent } from '../../directives/angular-round-progress-directive';
+import { StringTruncatemPipe } from '../../pipes/stringTruncate.pipe';
+import { DateTransformPipe } from '../../pipes/dateTransform.pipe';
+import { AngularRoundProgressDirective } from '../../directives/angular-round-progress.directive';
 import { TimelineModule } from '../../components/timeline/timeline.module';
 
 import { VoicePlayService } from '../../providers/utils/voiceplay.service';
@@ -22,9 +22,9 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 @NgModule({
   declarations: [
     IndexPage,
-    StringTruncate,
-    DateTransform,
-    AngularRoundProgressComponent
+    StringTruncatemPipe,
+    DateTransformPipe,
+    AngularRoundProgressDirective
   ],
   imports: [IonicPageModule.forChild(IndexPage), TimelineModule],
   providers: [

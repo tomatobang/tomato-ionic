@@ -11,7 +11,7 @@ let hasFixRatio = false;
 @Directive({
   selector: 'angular-round-progress'
 })
-export class AngularRoundProgressComponent {
+export class AngularRoundProgressDirective {
   canvas: HTMLCanvasElement;
 
   width: any = 270;

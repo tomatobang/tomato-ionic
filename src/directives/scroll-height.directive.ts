@@ -3,7 +3,7 @@ import { Directive, ElementRef, Renderer } from '@angular/core';
 @Directive({
   selector: '[scrollHeight]',
 })
-export class ScrollHeight {
+export class ScrollHeightDirective {
   constructor(elem: ElementRef, renderer: Renderer) {
     renderer.setElementStyle(
       elem.nativeElement,

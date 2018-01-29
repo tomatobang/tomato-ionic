@@ -10,7 +10,7 @@ import {
   NavParams,
   App
 } from 'ionic-angular';
-import { AngularRoundProgressComponent } from '../../directives/angular-round-progress-directive';
+import { AngularRoundProgressDirective } from '../../directives/angular-round-progress.directive';
 
 import {
   OnlineTomatoService,
@@ -196,8 +196,8 @@ export class IndexPage implements OnInit, OnDestroy {
   }
 
 
-  @ViewChild(AngularRoundProgressComponent)
-  child: AngularRoundProgressComponent;
+  @ViewChild(AngularRoundProgressDirective)
+  child: AngularRoundProgressDirective;
   ngAfterViewInit() {
     this.refreshTimeUI();
   }

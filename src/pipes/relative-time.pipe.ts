@@ -9,7 +9,7 @@ import * as moment from 'moment';
 @Pipe({
   name: 'relativeTime'
 })
-export class RelativeTime implements PipeTransform {
+export class RelativeTimemPipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */

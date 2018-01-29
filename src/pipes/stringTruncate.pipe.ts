@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'StringTruncate'
 })
-export class StringTruncate implements PipeTransform {
+export class StringTruncatemPipe implements PipeTransform {
   transform(value?: string, args?: any): any {
     const bitnum = args;
     if (value && value.length > bitnum) {
