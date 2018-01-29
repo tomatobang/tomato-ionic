@@ -1,9 +1,3 @@
-/**
- * TODO
- * 1. 微信
- * 3. 手机号
- */
-
 import { Component, OnInit} from '@angular/core';
 import {
   NavController,
@@ -40,7 +34,7 @@ export class RegisterPage implements OnInit {
   };
   validationMessages = {
     username: {
-      required: '用户名必须输入。', //
+      required: '用户名必须输入。',
       minlength: '用户名4到32个字符。',
     },
     displayName: {
@@ -183,7 +177,6 @@ export class RegisterPage implements OnInit {
   }
 
   public navToLogin(): void {
-    // 注册
     this.navCtrl.setRoot('LoginPage');
   }
 

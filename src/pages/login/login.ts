@@ -1,9 +1,3 @@
-/**
- * TODO
- * 1. 微信
- * 3. 手机号
- */
-
 import { Component, OnInit } from '@angular/core';
 import {
   NavController,
@@ -66,7 +60,6 @@ export class LoginPage implements OnInit {
         return;
       }
       console.log(data);
-      // 这里需要保存 token
       this.globalservice.token = token;
       this.globalservice.userinfo = JSON.stringify(userinfo);
       this.rebirthProvider.headers({ Authorization: token });
@@ -82,7 +75,6 @@ export class LoginPage implements OnInit {
   }
 
   public navToRegister(): void {
-    // 注册
     this.navCtrl.push('RegisterPage');
   }
 
