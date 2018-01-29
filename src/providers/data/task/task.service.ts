@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Task } from './task.model';
-import { SearchResult } from './search-result.model';
 import { Observable } from 'rxjs/Observable';
 import { Cacheable } from 'rebirth-storage';
 import {
@@ -16,21 +14,11 @@ import {
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';
 
-export abstract class TaskService extends RebirthHttp {
-  abstract createTask(task: Task): Observable<any>;
 
-  abstract getTasks(
-    pageIndex: any,
-    pageSize: any,
-    keyword?: string
-  ): Observable<SearchResult<Task>>;
+import { TaskService } from './abstract/task.abstract';
+import { Task } from './model/task.model';
+import { SearchResult } from './model/search-result.model';
 
-  abstract getTaskByTitle(taskTitle: string): Observable<Task>;
-
-  abstract updateTask(taskUrl: string, task: Task): Observable<any>;
-
-  abstract deleteTask(taskUrl: string): Observable<any>;
-}
 
 @Injectable()
 export class OnlineTaskService extends TaskService {

@@ -1,4 +1,5 @@
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { baseUrl } from '../config';
 
 const subject: Subject<any> = new Subject<any>();
@@ -148,7 +149,7 @@ export class GlobalService {
   openNotificationCallback(data) {
     this.notificationSubject.next({
       type: 'open',
-      data: data
+      data: data,
     });
   }
 
@@ -159,7 +160,7 @@ export class GlobalService {
   receiveNotificationCallback(data) {
     this.notificationSubject.next({
       type: 'receive',
-      data: data
+      data: data,
     });
   }
 
@@ -170,7 +171,7 @@ export class GlobalService {
   setTagsWithAliasCallback(data) {
     this.notificationSubject.next({
       type: 'setAlias',
-      data: data
+      data: data,
     });
   }
 
@@ -192,7 +193,7 @@ export class GlobalService {
     localStorage.setItem('_countdown', value + '');
     settingSubject.next({
       countdown: this._countdown,
-      resttime: this._resttime
+      resttime: this._resttime,
     });
   }
 
@@ -214,7 +215,7 @@ export class GlobalService {
     localStorage.setItem('_resttime', value + '');
     settingSubject.next({
       countdown: this._countdown,
-      resttime: this._resttime
+      resttime: this._resttime,
     });
   }
 }

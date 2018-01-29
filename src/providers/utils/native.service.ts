@@ -17,7 +17,8 @@ declare var window;
 
 @Injectable()
 export class NativeService {
-  _headimgurl: String;
+  headimgurl: String;
+  toast: Toast;
 
   constructor(
     public platform: Platform,
@@ -108,7 +109,6 @@ export class NativeService {
    * 显示消息
    * @param msg 消息
    */
-  toast: Toast;
   createToast() {
     this.toast = this.toastCtrl.create({
       message: '',
@@ -130,9 +130,9 @@ export class NativeService {
     const targetPath = this.helper.getBasePath() + 'headimg/';
     const targetPathWithFileName =
       this.helper.getBasePath() + 'headimg/' + filename + '.png';
-    if (this._headimgurl && !change) {
+    if (this.headimgurl && !change) {
       return new Promise((resolve, reject) => {
-        resolve(this._headimgurl);
+        resolve(this.headimgurl);
       });
     }
 
@@ -145,7 +145,7 @@ export class NativeService {
             this.file.removeFile(targetPath, filename + '.png').then(() => {
               this.filedownload(filename, targetPathWithFileName).then(
                 (file: any) => {
-                  this._headimgurl = file;
+                  this.headimgurl = file;
                   resolve(file);
                 },
                 err => {
@@ -155,14 +155,14 @@ export class NativeService {
             });
           } else {
             // 直接使用本地文件
-            this._headimgurl = targetPathWithFileName;
+            this.headimgurl = targetPathWithFileName;
             resolve(targetPathWithFileName);
           }
         },
         error => {
           this.filedownload(filename, targetPathWithFileName).then(
             (file: any) => {
-              this._headimgurl = file;
+              this.headimgurl = file;
               resolve(file);
             },
             err => {

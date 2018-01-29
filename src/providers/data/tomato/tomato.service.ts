@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { SearchResult } from './search-result.model';
-import { Tomato } from './tomato.model';
 import { Cacheable } from 'rebirth-storage';
 import {
   RebirthHttp,
@@ -16,31 +14,10 @@ import {
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';
 
-export abstract class TomatoService extends RebirthHttp {
-  abstract CreateTomato(tomato: Tomato): Observable<any>;
+import { TomatoService } from './abstract/tomato.abstract';
+import { Tomato } from './model/tomato.model';
+import { SearchResult } from './model/search-result.model';
 
-  abstract getTomatos(
-    pageIndex: any,
-    pageSize: any,
-    keyword?: string
-  ): Observable<SearchResult<Tomato>>;
-
-  abstract searchTomatos(
-    pageIndex: any,
-    pageSize: any,
-    keywords?: string
-  ): Observable<SearchResult<Tomato>>;
-
-  abstract getTodayTomatos(): Observable<SearchResult<Tomato>>;
-
-  abstract getTomatoByTitle(tomatoTitle: string): Observable<Tomato>;
-
-  abstract updateTomato(tomatoUrl: string, tomato: Tomato): Observable<any>;
-
-  abstract deleteTomato(tomatoUrl: string): Observable<any>;
-
-  abstract statistics(isSuccess: { isSuccess; date }): Observable<any>;
-}
 
 @Injectable()
 export class OnlineTomatoService extends TomatoService {

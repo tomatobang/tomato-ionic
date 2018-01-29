@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Socket } from 'ng-socket-io';
-import { Tomato } from '../models/tomato';
+import { Tomato } from '../data/tomato';
 
 @Injectable()
 export class TomatoIOService {

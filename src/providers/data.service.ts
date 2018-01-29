@@ -36,9 +36,9 @@ import * as querystring from 'querystring';
 import { baseUrl } from '../config';
 import { CacheService } from './cache.service';
 
-export * from './models/task';
-export * from './models/tomato';
-export * from './models/user';
+export * from './data/task';
+export * from './data/tomato';
+export * from './data/user';
 
 @Injectable()
 export class DataService {
@@ -67,9 +67,6 @@ export class DataService {
     this.tomatoesSubject.next(obj);
   }
 
-  /**
-   * 请求头处理
-   */
   interceptor(): RequestOptions {
     const opts: RequestOptions = new RequestOptions();
     opts.headers = this.headers;

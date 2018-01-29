@@ -8,7 +8,7 @@ import {
   Response,
   Headers,
   RequestOptions,
-  URLSearchParams
+  URLSearchParams,
 } from '@angular/http';
 import { Platform, AlertController, LoadingController } from 'ionic-angular';
 import { GlobalService } from '../global.service';
@@ -16,7 +16,8 @@ import { GlobalService } from '../global.service';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileOpener } from '@ionic-native/file-opener';
 
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { loadavg } from 'os';
 
 declare var window;
@@ -72,14 +73,15 @@ export class UpdateService {
    */
   compare(curV, reqV) {
     if (curV && reqV) {
-      const arr1 = curV.split('.'),
-        arr2 = reqV.split('.');
+      const arr1 = curV.split('.');
+      const arr2 = reqV.split('.');
       let minLength = Math.min(arr1.length, arr2.length),
         position = 0,
         diff = 0;
       while (
         position < minLength &&
-        (diff = parseInt(arr1[position], 10) - parseInt(arr2[position], 10)) === 0
+        (diff = parseInt(arr1[position], 10) - parseInt(arr2[position], 10)) ===
+          0
       ) {
         position++;
       }
@@ -129,15 +131,15 @@ export class UpdateService {
           text: '以后再说',
           handler: data => {
             console.log('Cancel clicked');
-          }
+          },
         },
         {
           text: '立即升级',
           handler: data => {
             this.downloadApp(this.platform.is('android'), downloadUrl);
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     prompt.present();
   }
@@ -160,11 +162,10 @@ export class UpdateService {
             'Download',
             { create: true, exclusive: false },
             dir => {
-              const targetPath: string =
-              dir.toInternalURL() + 'TomatoBang.apk';
+              const targetPath: string = dir.toInternalURL() + 'TomatoBang.apk';
               let loading = null;
               loading = this.loadingCtrl.create({
-                content: `下载中...`
+                content: `下载中...`,
               });
               loading.present();
               fileTransfer
@@ -185,7 +186,7 @@ export class UpdateService {
                     }
                     const alert = this.alertCtrl.create({
                       title: '下载失败!',
-                      buttons: ['OK']
+                      buttons: ['OK'],
                     });
                     alert.present();
                   }
@@ -193,7 +194,8 @@ export class UpdateService {
               // 下载进度
               fileTransfer.onProgress((evt: ProgressEvent) => {
                 const downloadProgress = window.parseInt(
-                  evt.loaded / evt.total * 100, 10
+                  evt.loaded / evt.total * 100,
+                  10
                 );
                 loading.data.content = `<div>已下载${downloadProgress}%</div>`;
                 if (downloadProgress >= 100) {

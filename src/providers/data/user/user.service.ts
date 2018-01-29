@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { User, EmailUserName } from './user.model';
-import { SearchResult } from './search-result.model';
 import { Observable } from 'rxjs/Observable';
+
 import { Cacheable } from 'rebirth-storage';
 import {
   RebirthHttp,
@@ -12,55 +11,14 @@ import {
   DELETE,
   Query,
   Path,
-  Body
+  Body,
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';
 
-export abstract class UserService extends RebirthHttp {
-  abstract getUsers(
-    pageIndex: any,
-    pageSize: any,
-    keyword?: string
-  ): Observable<SearchResult<User>>;
-
-  abstract getUserByTitle(userName: string): Observable<User>;
-
-  abstract updateUser(userUrl: string, user: User): Observable<any>;
-
-  abstract deleteUser(userUrl: string): Observable<any>;
-
-  abstract register(user: User): Observable<any>;
-
-  abstract login(user: User): Observable<any>;
-
-  abstract verifyUserNameEmail(email: EmailUserName): Observable<any>;
-
-  abstract updateUserHeadImg(data: {
-    userid: string;
-    imgData: string;
-  }): Observable<any>;
-
-  abstract updateSex(data: { userid: string; sex: string }): Observable<any>;
-
-  abstract updateSex(data: { userid: string; sex: string }): Observable<any>;
-
-  abstract updateDisplayName(data: {
-    userid: string;
-    displayname: string;
-  }): Observable<any>;
-
-  abstract updateEmail(data: {
-    userid: string;
-    email: string;
-  }): Observable<any>;
-
-  abstract updateLocation(data: {
-    userid: string;
-    location: string;
-  }): Observable<any>;
-
-  abstract updateBio(data: { userid: string; bio: string }): Observable<any>;
-}
+import { UserService } from './abstract/user.abstract';
+import { EmailUserName } from './model/email-username.model';
+import { User } from './model/user.model';
+import { SearchResult } from './model/search-result.model';
 
 @Injectable()
 export class OnlineUserService extends UserService {
@@ -156,6 +114,6 @@ export const USER_SERVICE_PROVIDERS: Array<any> = [
   {
     provide: UserService,
     // environment.deploy === 'github' ? GithubUserService : OnlineUserService
-    useClass: OnlineUserService
-  }
+    useClass: OnlineUserService,
+  },
 ];

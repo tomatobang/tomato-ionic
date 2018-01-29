@@ -8,7 +8,3 @@ export class User {
   bio: string;
 }
 
-export class EmailUserName {
-  email: string;
-  username: string;
-}
