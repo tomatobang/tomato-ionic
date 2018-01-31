@@ -1,3 +1,23 @@
-page-home {
-
+.message-requst-title {
+  line-height: 55px;
+}
+.message-agree {
+  width: 60px;
+  background-color: #fff;
+  margin-right: 10px;
+  border-color: #28a54c;
+  color: #28a54c;
+}
+.message-refuse {
+  width: 60px;
+  background-color: #fff;
+  margin-right: 10px;
+  border-color: red;
+  color: red;
+}
+.message-request-img {
+  width: 30px;
+}
+.message-requst-item {
+  padding: 0px 0px 0px 5px;
 }

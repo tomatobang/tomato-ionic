@@ -20,6 +20,22 @@
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'msg'">
+            <!-- 好友请求 -->
+            <ion-item message-hold-active class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
+                <ion-thumbnail item-start>
+                    <img src="{{message.portrait || '/assets/tomato-grey.png'}}" class="message-request-img">
+                </ion-thumbnail>
+                <h2 class="message-requst-title">{{ message.name }}</h2>
+                <p> {{ message.info }}</p>
+                <button ion-button outline item-end class="message-agree" (click)='responseReq(1)'>
+                    同意
+                </button>
+                <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
+                    拒绝
+                </button>
+            </ion-item>
+
+            <!-- 消息 -->
             <button ion-item navPush="Chat" [navParams]="toUser">
                 <ion-avatar item-left>
                     <img src="./assets/tomato-active.png">
@@ -30,6 +46,14 @@
         </ion-list>
 
         <ion-list *ngSwitchCase="'info'">
+            <ion-item>
+                <ion-avatar item-start>
+                    <img src="/assets/tomato-grey.png">
+                </ion-avatar>
+                <h2>赵六</h2>
+                <h3>我已同意你的好友请求!</h3>
+                <p>2018-01-31 12:20</p>
+            </ion-item>
         </ion-list>
     </div>
 
