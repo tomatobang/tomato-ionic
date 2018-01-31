@@ -5,7 +5,7 @@ import { Directive, ElementRef, Renderer2 } from '@angular/core';
 })
 export class ScrollHeightDirective {
   constructor(elem: ElementRef, renderer: Renderer2) {
-    renderer.setAttribute(
+    renderer.setStyle(
       elem.nativeElement,
       'height',
       window.innerHeight - 44 + 'px'

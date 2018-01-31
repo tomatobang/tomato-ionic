@@ -75,9 +75,8 @@ export class UpdateService {
     if (curV && reqV) {
       const arr1 = curV.split('.');
       const arr2 = reqV.split('.');
-      const minLength = Math.min(arr1.length, arr2.length),
-        position = 0,
-        diff = 0;
+      const minLength = Math.min(arr1.length, arr2.length);
+      let  diff = 0, position = 0;
       while (
         position < minLength &&
         (diff = parseInt(arr1[position], 10) - parseInt(arr2[position], 10)) ===
