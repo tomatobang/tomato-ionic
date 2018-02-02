@@ -20,7 +20,7 @@
                 <div>扫码加友</div>
             </ion-col>
 
-            <ion-col col-4  (click)="ToContactsPage()">
+            <ion-col col-4 (click)="ToContactsPage()">
                 <div>
                     <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
                 </div>
@@ -71,6 +71,23 @@
         </ion-list>
 
         <ion-list *ngSwitchCase="'rank'">
+            <ion-list>
+                <ion-item *ngFor="let item of rankList">
+                    <ion-thumbnail item-left class="item-rank">
+                        <span class="rank {{ item.class }}">
+                            <span>{{ item.rankText }}</span>
+                        </span>
+                        <img [src]="item.image">
+                    </ion-thumbnail>
+                    <div>
+                        <p>{{ item.title }}</p>
+                        <p>
+                            <span class="tomatoNum">  {{ item.tomatoNum }}</span> 番茄钟，共
+                            <span class="minute">  {{ item.minute }}</span> 分钟
+                        </p>
+                    </div>
+                </ion-item>
+            </ion-list>
         </ion-list>
     </div>
 

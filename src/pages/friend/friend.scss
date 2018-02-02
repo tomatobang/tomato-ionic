@@ -1,64 +1,164 @@
-#message-box-icon {
-  font-size: 40px;
-}
-.message-box-num {
-  position: absolute;
-  top: 0px;
-  font-size: 12px;
-  right: 0px;
-  border-radius: 50%;
-  padding: 3px;
-}
-.friend-working-on-list {
-  font-family: 'Hosted Source Han Sans Normal';
-}
+cmp-friend {
+  #message-box-icon {
+    font-size: 40px;
+  }
+  .message-box-num {
+    position: absolute;
+    top: 0px;
+    font-size: 12px;
+    right: 0px;
+    border-radius: 50%;
+    padding: 3px;
+  }
+  .friend-working-on-list {
+    font-family: 'Hosted Source Han Sans Normal';
+  }
 
-.tomato-friend-task-list {
-  margin-top:10px;
-  margin-left: 2%;
-  background: #fff;
-  width: 96%;
-  min-height: 80px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  padding: 5px;
-  border: dashed 1px #f97271;
-}
+  .tomato-friend-task-list {
+    margin-top: 10px;
+    margin-left: 2%;
+    background: #fff;
+    width: 96%;
+    min-height: 80px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: dashed 1px #f97271;
+  }
 
-.tomato-friend-task-state,.tomato-friend-task-duration {
-  color: #f97271;
-  font-size: 16px;
-}
+  .tomato-friend-task-state,
+  .tomato-friend-task-duration {
+    color: #f97271;
+    font-size: 16px;
+  }
 
-.tomato-friend-task-list .tomato-friend-task-top {
-  border-bottom: 1px dashed #d9dee2;
-  padding-bottom: 3px;
-  font-size: 14px;
-}
+  .tomato-friend-task-list .tomato-friend-task-top {
+    border-bottom: 1px dashed #d9dee2;
+    padding-bottom: 3px;
+    font-size: 14px;
+  }
 
-.tomato-friend-task-time {
-  color: #777;
-  font-size: 10px;
-}
+  .tomato-friend-task-time {
+    color: #777;
+    font-size: 10px;
+  }
 
-.tomato-friend-task-left {
-  display: inline-block;
-  padding: 5px 0;
-  font-size: 12px;
-  color: #555;
-}
+  .tomato-friend-task-left {
+    display: inline-block;
+    padding: 5px 0;
+    font-size: 12px;
+    color: #555;
+  }
 
-.tomato-friend-task-left .tomato-friend-task-describe {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
+  .tomato-friend-task-left .tomato-friend-task-describe {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 
-.friendpage-tool-grid{
+  .friendpage-tool-grid {
     text-align: center;
     background: #eee;
-    ion-icon{
-        font-size: 27px;
-        color: #f97271;
+    ion-icon {
+      font-size: 27px;
+      color: #f97271;
     }
+  }
+
+  // Creates a rank effect with the given options:
+  @mixin ribbonize ($rank-color, $text-color: white, $border-width: 3px) {
+    span {
+      color: $text-color;
+      background: $rank-color;
+      &::before {
+        border-left: $border-width solid $rank-color;
+        border-top: $border-width solid $rank-color;
+      }
+      &::after {
+        border-right: $border-width solid $rank-color;
+        border-top: $border-width solid $rank-color;
+      }
+    }
+  }
+
+  $default: #f53d3d;
+  $rank2: #387ef5;
+  $rank3: darken(#f4f4f4, 45%);
+  $gray: #aaa;
+
+  .item-rank {
+    background-color: #fff;
+    position: relative;
+    filter: none;
+    opacity: 1;
+    .rank {
+      position: absolute;
+      right: -5px;
+      top: -5px;
+      z-index: 2;
+      overflow: hidden;
+      width: 75px;
+      height: 75px;
+      text-align: right;
+      span {
+        font-size: 1rem;
+        font-weight: normal;
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 14px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        width: 100px;
+        display: block;
+        background: $default;
+        position: absolute;
+        top: 9px;
+        right: -31px;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 100%;
+          z-index: -1;
+          border-left: 3px solid $default;
+          border-right: 3px solid transparent;
+          border-bottom: 3px solid transparent;
+          border-top: 3px solid $default;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 100%;
+          z-index: -1;
+          border-left: 3px solid transparent;
+          border-right: 3px solid $default;
+          border-bottom: 3px solid transparent;
+          border-top: 3px solid $default;
+        }
+      }
+    }
+  }
+  .tomatoNum {
+    font-size: 34px;
+    padding: 5px;
+    color: tomato;
+  }
+  .minite {
+    font-size: 16px;
+    color: darkseagreen;
+  }
+
+  .rank.rank2 {
+    @include ribbonize($rank2);
+  }
+
+  .rank.rank3 {
+    @include ribbonize($rank3);
+  }
+
+  .rank.gray {
+    @include ribbonize($gray, black);
+  }
 }
