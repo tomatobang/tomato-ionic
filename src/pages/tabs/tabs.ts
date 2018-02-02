@@ -10,6 +10,7 @@ export class TabsPage {
   tab0Root: any = 'IndexPage';
   tab1Root: any = 'FriendPage';
   tab2Root: any = 'MinePage';
+  tab3Root: any = 'MessagePage';
 
   @ViewChild('myTabs') myTabs: Tabs;
 

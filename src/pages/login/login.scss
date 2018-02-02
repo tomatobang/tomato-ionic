@@ -13,7 +13,7 @@ page-login {
     height: 100%;
   }
   ion-slides {
-    height: 100vh;
+    height: 100%;
   }
   .login-container {
     background: transparent;
@@ -65,6 +65,9 @@ page-login {
 
     ion-button {
       opacity: 0.8;
+    }
+    ion-input{
+      color: tomato;
     }
   }
 }

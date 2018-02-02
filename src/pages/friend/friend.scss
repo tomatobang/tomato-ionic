@@ -139,15 +139,28 @@ cmp-friend {
         }
       }
     }
+    .user-rank-header-img{
+      width: 45px;
+      height: 45px;
+    }
   }
   .tomatoNum {
     font-size: 34px;
     padding: 5px;
     color: tomato;
   }
-  .minite {
+  .minute {
     font-size: 16px;
     color: darkseagreen;
+  }
+  .rank-statistics{
+    color: #000;
+  }
+  .rank-title{
+    padding-left: 10px;
+  }
+  ion-label.label-ios{
+    margin-bottom: 0px;
   }
 
   .rank.rank2 {

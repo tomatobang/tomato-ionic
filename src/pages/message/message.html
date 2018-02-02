@@ -11,7 +11,6 @@
                     </ion-segment-button>
                 </ion-segment>
             </div>
-
         </ion-toolbar>
     </ion-navbar>
 </ion-header>
@@ -23,7 +22,7 @@
             <!-- 好友请求 -->
             <ion-item message-hold-active class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
                 <ion-thumbnail item-start>
-                    <img src="{{message.portrait || '/assets/tomato-grey.png'}}" class="message-request-img">
+                    <img src="{{message.portrait || './assets/tomato-grey.png'}}" class="message-request-img">
                 </ion-thumbnail>
                 <h2 class="message-requst-title">{{ message.name }}</h2>
                 <p> {{ message.info }}</p>
@@ -48,7 +47,7 @@
         <ion-list *ngSwitchCase="'info'">
             <ion-item>
                 <ion-avatar item-start>
-                    <img src="/assets/tomato-grey.png">
+                    <img src="./assets/tomato-grey.png">
                 </ion-avatar>
                 <h2>赵六</h2>
                 <h3>我已同意你的好友请求!</h3>

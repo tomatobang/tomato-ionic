@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>发现</ion-title>
-        <ion-buttons right>
+        <!-- <ion-buttons right>
             <button ion-button icon-only (click)="toMessagePage()">
                 <ion-icon id="message-box-icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
                 <ion-badge item-end color="danger" class="message-box-num">23</ion-badge>
             </button>
-        </ion-buttons>
+        </ion-buttons> -->
     </ion-navbar>
 </ion-header>
 
@@ -20,18 +20,20 @@
                 <div>扫码加友</div>
             </ion-col>
 
-            <ion-col col-4 (click)="ToContactsPage()">
-                <div>
-                    <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
-                </div>
-                <div>通讯录</div>
-            </ion-col>
             <ion-col col-4>
                 <div>
                     <ion-icon ios="ios-search" md="md-search"></ion-icon>
                 </div>
                 <div> 高级搜索 </div>
             </ion-col>
+
+            <ion-col col-4 (click)="ToContactsPage()">
+                <div>
+                    <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
+                </div>
+                <div>通讯录</div>
+            </ion-col>
+         
         </ion-row>
     </ion-grid>
 
@@ -77,15 +79,13 @@
                         <span class="rank {{ item.class }}">
                             <span>{{ item.rankText }}</span>
                         </span>
-                        <img [src]="item.image">
+                        <img class="user-rank-header-img" [src]="item.image">
                     </ion-thumbnail>
-                    <div>
-                        <p>{{ item.title }}</p>
-                        <p>
-                            <span class="tomatoNum">  {{ item.tomatoNum }}</span> 番茄钟，共
-                            <span class="minute">  {{ item.minute }}</span> 分钟
-                        </p>
-                    </div>
+                    <p class="rank-statistics">
+                        <span class="tomatoNum"> {{ item.tomatoNum }}</span> 番茄钟，共
+                        <span class="minute"> {{ item.minute }}</span> 分钟
+                    </p>
+                    <p class="rank-title">{{ item.title }}</p>
                 </ion-item>
             </ion-list>
         </ion-list>
