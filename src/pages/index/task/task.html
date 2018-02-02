@@ -65,7 +65,7 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>描述/备注</ion-label>
-                <ion-input type="text" [(ngModel)]="newTask.description"></ion-input>
+                <ion-textarea autoSizeTextarea type="text" [(ngModel)]="newTask.description"></ion-textarea>
             </ion-item>
             <div style="text-align:center;padding-left:15px;padding-top:15px">
                 <voice-recorder [(voiceUploadUrl)]="voiceUploadUrl" [(postParams)]="voicepostParams"></voice-recorder>

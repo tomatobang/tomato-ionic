@@ -4,10 +4,11 @@ import { VoiceRecorderComponent } from '../../../components/voice-recorder/';
 
 import {
   OnlineTomatoService,
-  OnlineTaskService
+  OnlineTaskService,
 } from '../../../providers/data.service';
 
 import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
+import { AutosizeDirective } from '../../../directives/autosize.directive';
 
 import { TaskPage } from './task';
 import { TaskPipe } from '../../../pipes/task.pipe';
@@ -16,7 +17,7 @@ import { Media } from '@ionic-native/media';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
-  declarations: [TaskPage, TaskPipe, VoiceRecorderComponent],
+  declarations: [TaskPage, TaskPipe, VoiceRecorderComponent, AutosizeDirective],
   imports: [IonicPageModule.forChild(TaskPage)],
   providers: [
     Media,
@@ -24,8 +25,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     FileTransfer,
     OnlineTaskService,
     OnlineTomatoService,
-    VoicePlayService
-  ]
+    VoicePlayService,
+  ],
   // 打开注释会报错
   // exports: [
   //     TaskPage
