@@ -1,4 +1,4 @@
-<ion-content class="login-container">
+<ion-content class="register-container">
     <div class="register-logo">
     </div>
     <form [formGroup]="userForm" (ngSubmit)="doRegister()" c novalidate class="form-horizontal" role="form">
@@ -51,10 +51,10 @@
         <!-- 这里用来做服务端验证 -->
         <div *ngIf="error">{{error}}</div>
 
-        <div class="login-button-area">
+        <div class="register-button-area">
             <button type="submit" color="primary" ion-button>注册</button>
         </div>
-        <div class="login-button-area">
+        <div class="register-button-area">
             <button type="button" color="light" ion-button  outline (click)="navToLogin()">登陆</button>
         </div>
 

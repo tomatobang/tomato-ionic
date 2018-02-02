@@ -12,7 +12,7 @@ import { JPushService } from '../../providers/utils/jpush.service';
 
 @IonicPage()
 @Component({
-  selector: 'login',
+  selector: 'page-login',
   providers: [OnlineUserService, GlobalService, JPushService],
   templateUrl: 'login.html',
 })
@@ -22,6 +22,13 @@ export class LoginPage implements OnInit {
   remeberMe = {
     selected: false,
   };
+  backgrounds = [
+    'assets/imgs/background/background-1.jpg',
+    'assets/imgs/background/background-2.jpg',
+    'assets/imgs/background/background-3.jpg',
+    'assets/imgs/background/background-4.jpg',
+    'assets/imgs/background/background-5.jpg'
+  ];
 
   constructor(
     public service: OnlineUserService,
