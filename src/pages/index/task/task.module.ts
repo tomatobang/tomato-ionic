@@ -11,14 +11,14 @@ import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
 import { AutosizeDirective } from '../../../directives/autosize.directive';
 
 import { TaskPage } from './task';
-import { TaskPipe } from '../../../pipes/task.pipe';
+import { SharedModule } from '../../../shared/shared.module';
 import { File } from '@ionic-native/file';
 import { Media } from '@ionic-native/media';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
-  declarations: [TaskPage, TaskPipe, VoiceRecorderComponent, AutosizeDirective],
-  imports: [IonicPageModule.forChild(TaskPage)],
+  declarations: [TaskPage, VoiceRecorderComponent, AutosizeDirective],
+  imports: [IonicPageModule.forChild(TaskPage), SharedModule],
   providers: [
     Media,
     File,
