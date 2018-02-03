@@ -72,6 +72,13 @@ export class FriendPage {
   }
 
   /**
+   * 跳转至搜索页
+   */
+  ToSearchPage() {
+    this.navCtrl.push('SearchPage', {}, {}, () => {});
+  }
+
+  /**
    * 扫码加友
    */
   scanToAddFriend() {
