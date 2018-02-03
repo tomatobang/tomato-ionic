@@ -10,6 +10,10 @@
 </ion-header>
 
 <ion-content>
+    <ion-refresher [enabled]="IsInTomatoTodaySlide" (ionRefresh)="doRefreshTodayTomato($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
         <!-- 首页   &&-->
         <ion-slide>

@@ -1,4 +1,10 @@
-import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+} from '@angular/core';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { VoicePlayService } from '../../providers/utils/voiceplay.service';
 import {
@@ -80,6 +86,8 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(AngularRoundProgressDirective)
   child: AngularRoundProgressDirective;
 
+  IsInTomatoTodaySlide = false;
+
   constructor(
     private app: App,
     public globalservice: GlobalService,
@@ -145,9 +153,16 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.alertAudio.load();
   }
 
-  loadTomatoes() {
+  doRefreshTodayTomato(refresher) {
+    this.loadTomatoes(refresher);
+  }
+
+  loadTomatoes(refresher?) {
     this.tomatoservice.getTodayTomatos().subscribe(data => {
       // "{"status":"fail","description":"Token verify failed"}"
+      if (refresher) {
+        refresher.complete();
+      }
       const list = JSON.parse(data._body);
       if (Array.isArray(list)) {
         this.historyTomatoes = list;
@@ -189,18 +204,21 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     switch (currentIndex) {
       case 0:
         this.page_title = '首页';
+        this.IsInTomatoTodaySlide = false;
         break;
       case 1:
         this.page_title = '今日番茄钟(' + this.tomatoCount + ')';
+        this.IsInTomatoTodaySlide = true;
         break;
       case 2:
         this.page_title = '历史查询';
+        this.IsInTomatoTodaySlide = false;
         break;
       default:
+        this.IsInTomatoTodaySlide = false;
         break;
     }
   }
-
 
   ngAfterViewInit() {
     this.refreshTimeUI();
