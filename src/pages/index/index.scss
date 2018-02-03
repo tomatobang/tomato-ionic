@@ -25,7 +25,7 @@ img.play-icon{
 .text-breaked{
   color: #F97271 !important;
 }
-.tomato-today-slide,.tomato-history-slide{
+.tomato-today-slide{
   align-items: flex-start;
 }
 .task-manager-plus{
@@ -93,18 +93,6 @@ img.play-icon{
     margin-left:25px;
   }
  }
- .tomato-history-slide{
-   height: 100%;
-   tomato-history-slide .slide-zoom{
-    height: 100%;
-  }
- }
-
- .tomato-history-list{
-  height: 100%;
-  overflow: auto;
- }
-
  .white-noise-tag-icon{
    position: absolute;
    right: 15px;

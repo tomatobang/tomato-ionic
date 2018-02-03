@@ -9,7 +9,7 @@ import {
 
 @Component({
   selector: 'timeline-item',
-  encapsulation: ViewEncapsulation.Native,
+  encapsulation: ViewEncapsulation.Emulated,
   template: `
       <li
         class="tomatobang-timeline-item"

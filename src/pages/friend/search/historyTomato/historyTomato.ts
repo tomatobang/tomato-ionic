@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Content, IonicPage } from 'ionic-angular';
-import {
-  OnlineTomatoService,
-} from '../../../../providers/data.service';
+import { OnlineTomatoService } from '../../../../providers/data.service';
 
 @IonicPage()
 @Component({
   selector: 'page-historyTomato',
   templateUrl: 'historyTomato.html',
+  providers: [OnlineTomatoService],
 })
 export class HistoryTomatoPage {
-  
   // 番茄钟长度
   searchReturnItems = [];
 
-  constructor(public tomatoservice: OnlineTomatoService, public navParams: NavParams) {}
+  constructor(
+    public tomatoservice: OnlineTomatoService,
+    public navParams: NavParams
+  ) {}
 
   ionViewDidLoad() {}
 

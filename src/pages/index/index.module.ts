@@ -7,8 +7,7 @@ import {
   OnlineTaskService
 } from '../../providers/data.service';
 
-import { StringTruncatemPipe } from '../../pipes/stringTruncate.pipe';
-import { DateTransformPipe } from '../../pipes/dateTransform.pipe';
+import { SharedModule } from '../../shared/shared.module';
 import { AngularRoundProgressDirective } from '../../directives/angular-round-progress.directive';
 import { TimelineModule } from '../../components/timeline/timeline.module';
 
@@ -22,11 +21,9 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 @NgModule({
   declarations: [
     IndexPage,
-    StringTruncatemPipe,
-    DateTransformPipe,
     AngularRoundProgressDirective
   ],
-  imports: [IonicPageModule.forChild(IndexPage), TimelineModule],
+  imports: [IonicPageModule.forChild(IndexPage), TimelineModule, SharedModule],
   providers: [
     OnlineTaskService,
     OnlineTomatoService,
