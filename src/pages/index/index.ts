@@ -48,9 +48,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
   whiteNoiseIsplaying = false;
   @ViewChild(Slides) slides: Slides;
 
-  // 番茄钟长度
-  searchReturnItems = [];
-
   historyTomatoes: Array<any> = [];
   tomatoCount = 0;
 
@@ -209,10 +206,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
       case 1:
         this.page_title = '今日番茄钟(' + this.tomatoCount + ')';
         this.IsInTomatoTodaySlide = true;
-        break;
-      case 2:
-        this.page_title = '历史查询';
-        this.IsInTomatoTodaySlide = false;
         break;
       default:
         this.IsInTomatoTodaySlide = false;
@@ -472,20 +465,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     const arr = url.split('/');
     const fileName = arr[arr.length - 1];
     return fileName;
-  }
-
-  /**
-   * 番茄钟搜索
-   */
-  seachTomatoes(evt) {
-    const keywords = evt.target.value;
-    // 前端需对关键词做少许过滤
-    console.log('keyword', keywords);
-    this.tomatoservice.searchTomatos({ keywords }).subscribe(data => {
-      // console.log(data);
-      const arr = JSON.parse(data._body);
-      this.searchReturnItems = arr;
-    });
   }
 
   stopPlayWhiteNoise() {

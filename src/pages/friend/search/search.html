@@ -1,10 +1,18 @@
 <ion-header>
-  <ion-navbar >
+  <ion-navbar>
     <ion-title>搜索</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="content" >
- 这是搜索页！
-
+<ion-content class="content">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 (click)="toHistoryTomato()">
+        历史番茄钟
+      </ion-col>
+      <ion-col col-4>
+        好友
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
