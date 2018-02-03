@@ -7,7 +7,7 @@ import { ChatService } from './providers/chat-service';
 
 @IonicPage()
 @Component({
-  selector: 'cmp-chat',
+  selector: 'page-chat',
   templateUrl: 'chat.html',
 })
 export class Chat {
