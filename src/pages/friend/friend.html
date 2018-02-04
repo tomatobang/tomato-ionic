@@ -11,31 +11,33 @@
 </ion-header>
 
 <ion-content>
-    <ion-grid class="friendpage-tool-grid">
-        <ion-row>
-            <ion-col col-4 (click)="scanToAddFriend()">
-                <div>
-                    <ion-icon ios="ios-qr-scanner" md="md-qr-scanner"></ion-icon>
-                </div>
-                <div>扫码加友</div>
-            </ion-col>
+    <ion-card>
+        <ion-grid class="friendpage-tool-grid">
+            <ion-row>
+                <ion-col col-4 (click)="scanToAddFriend()">
+                    <div>
+                        <ion-icon ios="ios-qr-scanner" md="md-qr-scanner"></ion-icon>
+                    </div>
+                    <div>扫码加友</div>
+                </ion-col>
 
-            <ion-col col-4 (click)="ToSearchPage()">
-                <div>
-                    <ion-icon ios="ios-search" md="md-search"></ion-icon>
-                </div>
-                <div> 高级搜索 </div>
-            </ion-col>
+                <ion-col col-4 (click)="ToSearchPage()">
+                    <div>
+                        <ion-icon ios="ios-search" md="md-search"></ion-icon>
+                    </div>
+                    <div> 高级搜索 </div>
+                </ion-col>
 
-            <ion-col col-4 (click)="ToContactsPage()">
-                <div>
-                    <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
-                </div>
-                <div>通讯录</div>
-            </ion-col>
-         
-        </ion-row>
-    </ion-grid>
+                <ion-col col-4 (click)="ToContactsPage()">
+                    <div>
+                        <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
+                    </div>
+                    <div>通讯录</div>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+    </ion-card>
 
     <div padding>
         <ion-segment [(ngModel)]="showType">

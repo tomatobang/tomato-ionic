@@ -1,37 +1,22 @@
 <ion-header>
-        <ion-toolbar>
-            <div padding>
-                <ion-segment [(ngModel)]="showType">
-                    <ion-segment-button value="msg">
-                        消息
-                    </ion-segment-button>
-                    <ion-segment-button value="info">
-                        通知
-                    </ion-segment-button>
-                </ion-segment>
-            </div>
-        </ion-toolbar>
+    <ion-toolbar>
+        <div padding>
+            <ion-segment [(ngModel)]="showType">
+                <ion-segment-button value="msg">
+                    消息
+                </ion-segment-button>
+                <ion-segment-button value="info">
+                    通知
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'msg'">
-            <!-- 好友请求 -->
-            <ion-item message-hold-active class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
-                <ion-thumbnail item-start>
-                    <img src="{{message.portrait || './assets/tomato-grey.png'}}" class="message-request-img">
-                </ion-thumbnail>
-                <h2 class="message-requst-title">{{ message.name }}</h2>
-                <p> {{ message.info }}</p>
-                <button ion-button outline item-end class="message-agree" (click)='responseReq(1)'>
-                    同意
-                </button>
-                <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
-                    拒绝
-                </button>
-            </ion-item>
-
             <!-- 消息 -->
             <button ion-item navPush="Chat" [navParams]="toUser">
                 <ion-avatar item-left>
@@ -43,6 +28,20 @@
         </ion-list>
 
         <ion-list *ngSwitchCase="'info'">
+            <!-- 好友请求 -->
+            <ion-item message-hold-active class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
+                <ion-avatar item-start>
+                    <img src="{{message.portrait || './assets/tomato-grey.png'}}" class="message-request-img">
+                </ion-avatar>
+                <h2 class="message-requst-title">{{ message.name }}</h2>
+                <p> {{ message.info }}</p>
+                <button ion-button outline item-end class="message-agree" (click)='responseReq(1)'>
+                    添加
+                </button>
+                <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
+                    拒绝
+                </button>
+            </ion-item>
             <ion-item>
                 <ion-avatar item-start>
                     <img src="./assets/tomato-grey.png">
