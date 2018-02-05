@@ -158,7 +158,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.tomatoservice.getTodayTomatos().subscribe(data => {
       // "{"status":"fail","description":"Token verify failed"}"
       if (refresher) {
-        refresher.complete();
+        // refresher.complete();
       }
       const list = JSON.parse(data._body);
       if (Array.isArray(list)) {

@@ -11,7 +11,10 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
+    <pull-to-show (ionToshow)="showNavButtons($event)" (ionCancel)="hideNavButtons()">
+    </pull-to-show>
+
+    <ion-card *ngIf="isPullToShow">
         <ion-grid class="friendpage-tool-grid">
             <ion-row>
                 <ion-col col-4 (click)="scanToAddFriend()">
