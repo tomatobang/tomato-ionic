@@ -59,24 +59,11 @@ export class FriendPage {
   ];
 
   showType = 'hot';
-  isPullToShow= false;
+  isPullToShow = false;
   ionApp: HTMLElement;
   @ViewChild('qrScanner') qrScanner: QRScannerComponent;
 
-  constructor(
-    public navCtrl: NavController,
-    private events: Events
-  ) {}
-
-  /**
-   * 显示导航菜单
-   */
-  showNavButtons() {
-    this.isPullToShow = true;
-  }
-  hideNavButtons(){
-    this.isPullToShow = false;
-  }
+  constructor(public navCtrl: NavController, private events: Events) {}
 
   /**
    * 跳转至消息页

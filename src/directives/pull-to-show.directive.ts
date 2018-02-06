@@ -12,6 +12,7 @@ import {
   Output,
   OnDestroy,
   OnInit,
+  ElementRef,
 } from '@angular/core';
 
 import {
@@ -87,7 +88,8 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     private _plt: Platform,
     @Host() private _content: Content,
     private _zone: NgZone,
-    gestureCtrl: GestureController
+    gestureCtrl: GestureController,
+    public element: ElementRef
   ) {
     this._events = new UIEventManager(_plt);
     _content._hasRefresher = true;
@@ -119,7 +121,6 @@ export class PullToShowDirective implements OnInit, OnDestroy {
 
     const coord = pointerCoord(ev);
     console.log('Pull-to-refresh, onStart', ev.type, 'y:', coord.y);
-
     if (this._content.contentTop > 0) {
       const newTop = this._content.contentTop + 'px';
       if (this._top !== newTop) {
@@ -202,7 +203,8 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     if (this.state === STATE_INACTIVE) {
       // this refresh is not already actively pulling down
       // get the content's scrollTop
-      const scrollHostScrollTop = this._content.getContentDimensions().scrollTop;
+      const scrollHostScrollTop = this._content.getContentDimensions()
+        .scrollTop;
 
       // if the scrollTop is greater than zero then it's
       // not possible to pull the content down yet
@@ -285,13 +287,13 @@ export class PullToShowDirective implements OnInit, OnDestroy {
         // set that the refresh is actively cancelling
         this.cancel();
       });
-    }else if (this.state === STATE_INACTIVE) {
+    } else if (this.state === STATE_INACTIVE) {
       this._zone.run(() => {
         // they were pulling down, but didn't pull down far enough
         // set the content back to it's original location
         // and close the refresher
         // set that the refresh is actively cancelling
-        this.ionCancel.emit(this)
+        this.ionCancel.emit(this);
       });
     }
 
@@ -305,8 +307,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     this.state = STATE_TOSHOW;
 
     // place the content in a hangout position while it thinks
-    this._setCss(this.pullMin, this.snapbackDuration + 'ms', true, '');
-
+    this._setCss(this.pullMin + 30, this.snapbackDuration + 'ms', true, '');
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin toshow
     this.ionToshow.emit(this);
@@ -403,6 +404,8 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     // bind event listeners
     // save the unregister listener functions to use onDestroy
     this._setListeners(this._isEnabled);
+    const ref: HTMLDivElement = this._content.getElementRef().nativeElement;
+    ref.appendChild(this.element.nativeElement);
   }
 
   /**
