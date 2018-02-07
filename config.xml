@@ -128,5 +128,6 @@
     <plugin name="com.unarin.cordova.beacon" spec="^3.4.0" />
     <plugin name="phonegap-nfc" spec="^0.6.6" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.5.0" />
+    <hook src="hooks/after_build/after_build_custom_action.js" type="after_build" />
     <engine name="android" spec="~6.2.3" />
 </widget>
