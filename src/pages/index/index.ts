@@ -158,7 +158,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.tomatoservice.getTodayTomatos().subscribe(data => {
       // "{"status":"fail","description":"Token verify failed"}"
       if (refresher) {
-        // refresher.complete();
+         refresher.complete();
       }
       const list = JSON.parse(data._body);
       if (Array.isArray(list)) {
@@ -279,8 +279,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
         {
           text: '提交',
           handler: data => {
-            this.stopTimer();
-            this.startRestTimer();
             // 创建tomato
             const tomatoDTO: any = {
               taskid: this.activeTomato._id,
@@ -298,7 +296,8 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
             this.historyTomatoes.push(Object.assign({}, tomato));
             this.tomatoCount += 1;
             this.tomatoIO.break_tomato(this._userid, tomatoDTO);
-            this.activeTomato = null;
+            this.stopTimer();
+            this.startRestTimer();
           },
         },
       ],
