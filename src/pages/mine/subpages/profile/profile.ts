@@ -4,7 +4,7 @@ import {
   ModalController,
   ViewController,
   ActionSheetController,
-  Platform
+  Platform,
 } from 'ionic-angular';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -18,7 +18,7 @@ declare var window;
 @IonicPage()
 @Component({
   selector: 'cmp-profile',
-  templateUrl: 'profile.html'
+  templateUrl: 'profile.html',
 })
 export class ProfilePage implements OnInit {
   userid = '';
@@ -77,7 +77,7 @@ export class ProfilePage implements OnInit {
   changeSex() {
     const profileModal = this.modalCtrl.create('UpdatemodalPage', {
       update: 'sex',
-      value: this.sex
+      value: this.sex,
     });
     profileModal.onDidDismiss(data => {
       if (!data) {
@@ -87,8 +87,9 @@ export class ProfilePage implements OnInit {
       this.userservice
         .updateSex({ userid: this.userid, sex: this.sex })
         .subscribe(userdata => {
-          console.log(userdata);
-          this.globalservice.userinfo = JSON.parse(userdata._body);
+          if (this.verifyResponse(userdata)) {
+            this.globalservice.userinfo = JSON.parse(userdata._body);
+          }
         });
     });
     profileModal.present();
@@ -100,7 +101,7 @@ export class ProfilePage implements OnInit {
   changeBio() {
     const profileModal = this.modalCtrl.create('UpdatemodalPage', {
       update: 'bio',
-      value: this.bio
+      value: this.bio,
     });
     profileModal.onDidDismiss(data => {
       if (!data) {
@@ -109,10 +110,11 @@ export class ProfilePage implements OnInit {
       this.bio = data.bio;
       this.userservice
         .updateBio({ userid: this.userid, bio: this.bio })
-        .subscribe(userinfo => {
-          console.log(userinfo);
-          this.globalservice.userinfo = JSON.parse(userinfo._body);
-          this.globalservice.bioUpdate(this.globalservice.userinfo.bio);
+        .subscribe(userdata => {
+          if (this.verifyResponse(userdata)) {
+            this.globalservice.userinfo = JSON.parse(userdata._body);
+            this.globalservice.bioUpdate(this.globalservice.userinfo.bio);
+          }
         });
     });
     profileModal.present();
@@ -124,7 +126,7 @@ export class ProfilePage implements OnInit {
   changeDisplayName() {
     const profileModal = this.modalCtrl.create('UpdatemodalPage', {
       update: 'displayname',
-      value: this.displayName
+      value: this.displayName,
     });
     profileModal.onDidDismiss(data => {
       if (!data) {
@@ -134,10 +136,12 @@ export class ProfilePage implements OnInit {
       this.userservice
         .updateDisplayName({
           userid: this.userid,
-          displayname: this.displayName
+          displayname: this.displayName,
         })
-        .subscribe(userinfo => {
-          this.globalservice.userinfo = JSON.parse(userinfo._body);
+        .subscribe(userdata => {
+          if (this.verifyResponse(userdata)) {
+            this.globalservice.userinfo = JSON.parse(userdata._body);
+          }
         });
     });
     profileModal.present();
@@ -149,7 +153,7 @@ export class ProfilePage implements OnInit {
   changeEmail() {
     const profileModal = this.modalCtrl.create('UpdatemodalPage', {
       update: 'email',
-      value: this.email
+      value: this.email,
     });
     profileModal.onDidDismiss(data => {
       if (!data) {
@@ -159,8 +163,9 @@ export class ProfilePage implements OnInit {
       this.userservice
         .updateEmail({ userid: this.userid, email: this.email })
         .subscribe(userdata => {
-          console.log(JSON.parse(userdata._body));
-          this.globalservice.userinfo = JSON.parse(data._body);
+          if (this.verifyResponse(userdata)) {
+            this.globalservice.userinfo = JSON.parse(userdata._body);
+          }
         });
     });
     profileModal.present();
@@ -172,7 +177,7 @@ export class ProfilePage implements OnInit {
   changeLocation() {
     const profileModal = this.modalCtrl.create('UpdatemodalPage', {
       update: 'location',
-      value: this.location
+      value: this.location,
     });
     profileModal.onDidDismiss(data => {
       if (!data) {
@@ -182,11 +187,25 @@ export class ProfilePage implements OnInit {
       this.userservice
         .updateLocation({ userid: this.userid, location: this.location })
         .subscribe(userdata => {
-          console.log(userdata);
-          this.globalservice.userinfo = JSON.parse(userdata._body);
+          if (this.verifyResponse(userdata)) {
+            this.globalservice.userinfo = JSON.parse(userdata._body);
+          }
         });
     });
     profileModal.present();
+  }
+
+  /**
+   * 验证请求是否成功！
+   * @param data res data
+   */
+  verifyResponse(data) {
+    const _body = JSON.parse(data._body);
+    if (_body.status === 'fail') {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   /**
@@ -207,18 +226,16 @@ export class ProfilePage implements OnInit {
               encodingType: this.camera.EncodingType.PNG,
               mediaType: this.camera.MediaType.PICTURE,
               targetWidth: 180,
-              targetHeight: 180
+              targetHeight: 180,
             };
 
             this.camera.getPicture(options).then(
               imageData => {
-                // imageData is either a base64 encoded string or a file URI
-                // If it's base64:
                 const base64Image = 'data:image/jpeg;base64,' + imageData;
                 this.userservice
                   .updateUserHeadImg({
                     userid: this.userid,
-                    imgData: base64Image
+                    imgData: base64Image,
                   })
                   .subscribe(ret => {
                     this.native.downloadHeadImg(this.userid, true).then(url => {
@@ -227,11 +244,10 @@ export class ProfilePage implements OnInit {
                   });
               },
               err => {
-                // Handle error
                 console.log('从相册上传头像失败：', err);
               }
             );
-          }
+          },
         },
         {
           text: '拍摄照片',
@@ -244,18 +260,16 @@ export class ProfilePage implements OnInit {
               encodingType: this.camera.EncodingType.PNG,
               mediaType: this.camera.MediaType.PICTURE,
               targetWidth: 180,
-              targetHeight: 180
+              targetHeight: 180,
             };
 
             this.camera.getPicture(options).then(
               imageData => {
-                // imageData is either a base64 encoded string or a file URI
-                // If it's base64:
                 const base64Image = 'data:image/jpeg;base64,' + imageData;
                 this.userservice
                   .updateUserHeadImg({
                     userid: this.userid,
-                    imgData: base64Image
+                    imgData: base64Image,
                   })
                   .subscribe(ret => {
                     this.native.downloadHeadImg(this.userid, true).then(url => {
@@ -264,20 +278,19 @@ export class ProfilePage implements OnInit {
                   });
               },
               err => {
-                // Handle error
                 console.log('拍照上传头像失败：', err);
               }
             );
-          }
+          },
         },
         {
           text: '取消',
           role: 'cancel',
           handler: () => {
             console.log('Cancel 修改头像');
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     actionSheet.present();
   }

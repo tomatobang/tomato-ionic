@@ -7,7 +7,7 @@ import { GlobalService } from "../providers/global.service";
 import { RebirthHttpProvider } from "rebirth-http";
 import { BackgroundMode } from "@ionic-native/background-mode";
 
-import { MyApp } from "./app.component";
+import { MyAppComponent } from "./app.component";
 import {
   PlatformMock,
   StatusBarMock,
@@ -21,8 +21,8 @@ describe("MyApp Component", () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [MyApp],
-        imports: [IonicModule.forRoot(MyApp)],
+        declarations: [MyAppComponent],
+        imports: [IonicModule.forRoot(MyAppComponent)],
         providers: [
           GlobalService,
           RebirthHttpProvider,
@@ -36,12 +36,12 @@ describe("MyApp Component", () => {
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MyApp);
+    fixture = TestBed.createComponent(MyAppComponent);
     component = fixture.componentInstance;
   });
 
   it("should be created", () => {
-    expect(component instanceof MyApp).toBe(true);
+    expect(component instanceof MyAppComponent).toBe(true);
   });
 
   it("should rootPage equals to GuidePage", () => {

@@ -49,6 +49,19 @@ export class MyAppComponent {
     } else {
       if (global.userinfo) {
         this.rebirthProvider.headers({ Authorization: global.token });
+        this.rebirthProvider.addResponseErrorInterceptor(err => {
+          console.error('请求错误！', err);
+        });
+        this.rebirthProvider.addInterceptor({
+          response: response => {
+            response.subscribe(data => {
+              const _body = JSON.parse(data._body);
+              if (_body.status === 'fail') {
+                console.error('请求参数错误:', _body.description);
+              }
+            });
+          },
+        });
         this.rootPage = 'TabsPage';
       } else {
         this.rootPage = 'LoginPage';
