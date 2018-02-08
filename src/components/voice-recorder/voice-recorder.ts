@@ -1,5 +1,5 @@
 /**
- * 这块设计到业务，应该算不上纯组件
+ * 这块涉及到业务，算不上纯组件
  */
 
 import {
@@ -138,7 +138,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       }, 400);
       // 实例化录音类
       this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
-      // fires when file status changes
       this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
       this.mediaRec.onSuccess.subscribe(() =>
         console.log('audio is successful')
@@ -188,11 +187,10 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         const dur = this.mediaRec.getDuration();
         if (dur > 0) {
           clearInterval(timerDur);
-          let tmpPath = this.getMediaURL(this.src); // this.mediaRec.src;
+          let tmpPath = this.getMediaURL(this.src);
           if (this.platform.is('ios')) {
             tmpPath = this.path + this.src;
           }
-          // alert(tmpPath);
           this.temp_file_path = tmpPath.replace('file://', '');
           this.couldPlay = true;
           if (this.mediaRec) {

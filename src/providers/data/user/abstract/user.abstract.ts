@@ -19,8 +19,6 @@ export abstract class UserService extends RebirthHttp {
 
   abstract updateUser(userUrl: string, user: User): Observable<any>;
 
-  abstract deleteUser(userUrl: string): Observable<any>;
-
   abstract register(user: User): Observable<any>;
 
   abstract login(user: User): Observable<any>;

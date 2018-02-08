@@ -49,11 +49,6 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
-  @DELETE(baseUrl + 'api/user/:id')
-  deleteUser(@Path('id') userUrl: string): Observable<any> {
-    return null;
-  }
-
   @POST(baseUrl + 'api/user')
   register(@Body user: User): Observable<any> {
     return null;

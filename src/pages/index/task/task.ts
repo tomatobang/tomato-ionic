@@ -123,7 +123,7 @@ export class TaskPage implements OnInit {
       const data: any = JSON.parse(response._body);
       if (data && data.status === 'fail') {
       } else {
-        // voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
+        // 链接示例: voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
         this.voicepostParams = {
           taskid: data._id,
           userid: data.userid,
