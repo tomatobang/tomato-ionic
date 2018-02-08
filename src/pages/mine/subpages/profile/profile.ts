@@ -112,6 +112,7 @@ export class ProfilePage implements OnInit {
         .subscribe(userinfo => {
           console.log(userinfo);
           this.globalservice.userinfo = JSON.parse(userinfo._body);
+          this.globalservice.bioUpdate(this.globalservice.userinfo.bio);
         });
     });
     profileModal.present();

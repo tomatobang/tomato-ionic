@@ -15,6 +15,7 @@ import {
   AlertController,
   NavParams,
   App,
+  Events,
 } from 'ionic-angular';
 import { AngularRoundProgressDirective } from '../../directives/angular-round-progress.directive';
 
@@ -87,6 +88,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private app: App,
+    public events: Events,
     public globalservice: GlobalService,
     public tomatoservice: OnlineTomatoService,
     public navCtrl: NavController,
@@ -103,6 +105,9 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     // 加载正在进行的番茄钟
     this._userid = this.globalservice.userinfo.username;
     this._user_bio = this.globalservice.userinfo.bio;
+    this.events.subscribe('bio:update', bio => {
+      this._user_bio = bio;
+    });
     this.countdown = this.globalservice.countdown;
     this.timerStatus.countdown = this.countdown;
     this.timerStatus.label = this.countdown + ':00';
@@ -158,7 +163,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.tomatoservice.getTodayTomatos().subscribe(data => {
       // "{"status":"fail","description":"Token verify failed"}"
       if (refresher) {
-         refresher.complete();
+        refresher.complete();
       }
       const list = JSON.parse(data._body);
       if (Array.isArray(list)) {

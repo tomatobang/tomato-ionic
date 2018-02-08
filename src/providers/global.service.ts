@@ -1,11 +1,15 @@
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+
+import { Injectable } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { baseUrl } from '../config';
 
 const subject: Subject<any> = new Subject<any>();
 const tokenSubject: Subject<any> = new Subject<any>();
 const settingSubject: Subject<any> = new Subject<any>();
 
+@Injectable()
 export class GlobalService {
   public notificationSubject: Subject<any> = new Subject<any>();
   private _isActive = false;
@@ -17,6 +21,12 @@ export class GlobalService {
   private _isAlwaysLight = false;
 
   serverAddress = baseUrl;
+
+  constructor(public events: Events) {}
+
+  public bioUpdate(bio: String) {
+    this.events.publish('bio:update', bio);
+  }
 
   public get projectChangeMonitor(): Observable<any> {
     return this.notificationSubject.asObservable();

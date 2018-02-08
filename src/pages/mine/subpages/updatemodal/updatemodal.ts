@@ -71,7 +71,7 @@ export class UpdatemodalPage implements OnInit {
         ret = { location: this.value };
         break;
       case 'bio':
-        ret = { location: this.value };
+        ret = { bio: this.value };
         break;
       default:
         break;
