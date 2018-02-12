@@ -71,7 +71,6 @@ export class GlobalService {
   set token(value) {
     this._token = value;
     localStorage.setItem('token', value);
-    // this.rebirthHttpProvider.headers({ Authorization: appstate.token });
     tokenSubject.next(value);
   }
 

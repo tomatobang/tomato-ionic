@@ -11,6 +11,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { OnlineUserService } from '../../../../providers/data.service';
 
 import { NativeService } from '../../../../providers/utils/native.service';
+import { QiniuUploadService } from '../../../../providers/qiniu.upload.service';
 import { GlobalService } from '../../../../providers/global.service';
 import { debug } from 'util';
 
@@ -19,6 +20,7 @@ declare var window;
 @Component({
   selector: 'cmp-profile',
   templateUrl: 'profile.html',
+  providers:[QiniuUploadService]
 })
 export class ProfilePage implements OnInit {
   userid = '';
@@ -37,7 +39,8 @@ export class ProfilePage implements OnInit {
     private camera: Camera,
     public native: NativeService,
     public platform: Platform,
-    private userservice: OnlineUserService
+    private userservice: OnlineUserService,
+    private qn: QiniuUploadService
   ) {}
 
   ngOnInit() {
@@ -222,7 +225,7 @@ export class ProfilePage implements OnInit {
             const options: CameraOptions = {
               quality: 100,
               sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-              destinationType: this.camera.DestinationType.DATA_URL,
+              destinationType: this.camera.DestinationType.NATIVE_URI,
               encodingType: this.camera.EncodingType.PNG,
               mediaType: this.camera.MediaType.PICTURE,
               targetWidth: 180,
@@ -230,18 +233,21 @@ export class ProfilePage implements OnInit {
             };
 
             this.camera.getPicture(options).then(
-              imageData => {
-                const base64Image = 'data:image/jpeg;base64,' + imageData;
-                this.userservice
-                  .updateUserHeadImg({
-                    userid: this.userid,
-                    imgData: base64Image,
-                  })
-                  .subscribe(ret => {
-                    this.native.downloadHeadImg(this.userid, true).then(url => {
-                      this.headImg = url + '?' + new Date().getTime();
-                    });
-                  });
+              FILE_URI => {
+                const indexOfQ = FILE_URI.indexOf('?');
+                FILE_URI = FILE_URI.substr(0,indexOfQ);
+                this.qn.uploadHeadImg(FILE_URI, this.globalservice.userinfo.username);
+                // const base64Image = 'data:image/jpeg;base64,' + imageData;
+                // this.userservice
+                //   .updateUserHeadImg({
+                //     userid: this.userid,
+                //     imgData: base64Image,
+                //   })
+                //   .subscribe(ret => {
+                //     this.native.downloadHeadImg(this.userid, true).then(url => {
+                //       this.headImg = url + '?' + new Date().getTime();
+                //     });
+                //   });
               },
               err => {
                 console.log('从相册上传头像失败：', err);

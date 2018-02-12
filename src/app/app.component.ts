@@ -57,7 +57,7 @@ export class MyAppComponent {
             response.subscribe(data => {
               const _body = JSON.parse(data._body);
               if (_body.status === 'fail') {
-                console.error('请求参数错误:', _body.description);
+                console.error('请求错误:', _body.description);
               }
             });
           },
