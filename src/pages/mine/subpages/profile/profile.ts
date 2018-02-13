@@ -20,7 +20,7 @@ declare var window;
 @Component({
   selector: 'cmp-profile',
   templateUrl: 'profile.html',
-  providers:[QiniuUploadService]
+  providers: [QiniuUploadService]
 })
 export class ProfilePage implements OnInit {
   userid = '';
@@ -41,7 +41,7 @@ export class ProfilePage implements OnInit {
     public platform: Platform,
     private userservice: OnlineUserService,
     private qn: QiniuUploadService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.username = this.globalservice.userinfo.username;
@@ -225,7 +225,7 @@ export class ProfilePage implements OnInit {
             const options: CameraOptions = {
               quality: 100,
               sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-              destinationType: this.camera.DestinationType.NATIVE_URI,
+              destinationType: this.camera.DestinationType.FILE_URI,
               encodingType: this.camera.EncodingType.PNG,
               mediaType: this.camera.MediaType.PICTURE,
               targetWidth: 180,
@@ -235,7 +235,9 @@ export class ProfilePage implements OnInit {
             this.camera.getPicture(options).then(
               FILE_URI => {
                 const indexOfQ = FILE_URI.indexOf('?');
-                FILE_URI = FILE_URI.substr(0,indexOfQ);
+                if (indexOfQ !== -1) {
+                  FILE_URI = FILE_URI.substr(0, indexOfQ);
+                }
                 this.qn.uploadHeadImg(FILE_URI, this.globalservice.userinfo.username);
                 // const base64Image = 'data:image/jpeg;base64,' + imageData;
                 // this.userservice
