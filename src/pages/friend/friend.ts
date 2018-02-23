@@ -18,7 +18,7 @@ export class FriendPage {
   }[] = [
     {
       title: '加油就有收获！',
-      tomatoNum: 9,
+      tomatoNum: 11,
       minute: 223,
       image: 'assets/imgs/logo.png',
       rankText: 'No. 1',

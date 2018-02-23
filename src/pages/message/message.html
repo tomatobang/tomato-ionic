@@ -41,8 +41,9 @@
                     <img src="{{message.portrait || './assets/tomato-grey.png'}}" class="message-request-img">
                 </ion-avatar>
                 <h2 class="message-requst-title">{{ message.name }}</h2>
-                <p> {{ message.info }}</p>
-                <button ion-button outline item-end class="message-agree" (click)='responseReq(1)'>
+                <h3> {{ message.info }}</h3>
+                <p>2018-01-31 12:20</p>
+                <button class="message-agree" ion-button outline item-end  (click)='responseReq(1)'>
                     添加
                 </button>
                 <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
@@ -54,8 +55,11 @@
                     <img src="./assets/tomato-grey.png">
                 </ion-avatar>
                 <h2>赵六</h2>
-                <h3>我已同意你的好友请求!</h3>
+                <h3>请求添加您为好友!</h3>
                 <p>2018-01-31 12:20</p>
+                <button ion-button  class="message-agree" outline item-end (click)='responseReq(-1)' disabled>
+                    已添加
+                </button>
             </ion-item>
         </ion-list>
     </div>

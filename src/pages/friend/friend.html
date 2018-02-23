@@ -1,18 +1,21 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>发现</ion-title>
-        <!-- <ion-buttons right>
-            <button ion-button icon-only (click)="toMessagePage()">
-                <ion-icon id="message-box-icon" ios="ios-notifications-outline" md="ios-notifications-outline"></ion-icon>
-                <ion-badge item-end color="danger" class="message-box-num">23</ion-badge>
-            </button>
-        </ion-buttons> -->
-    </ion-navbar>
+    <ion-toolbar>
+        <div padding>
+            <ion-segment [(ngModel)]="showType">
+                <ion-segment-button value="hot">
+                    动态
+                </ion-segment-button>
+                <ion-segment-button value="rank">
+                    排名
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <pull-to-show>
-        <ion-card >
+        <ion-card>
             <ion-grid class="friendpage-tool-grid">
                 <ion-row>
                     <ion-col col-4 (click)="scanToAddFriend()">
@@ -39,17 +42,6 @@
             </ion-grid>
         </ion-card>
     </pull-to-show>
-
-    <div padding>
-        <ion-segment [(ngModel)]="showType">
-            <ion-segment-button value="hot">
-                动态
-            </ion-segment-button>
-            <ion-segment-button value="rank">
-                排名
-            </ion-segment-button>
-        </ion-segment>
-    </div>
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'hot'" class="friend-working-on-list">
@@ -78,17 +70,18 @@
         <ion-list *ngSwitchCase="'rank'">
             <ion-list>
                 <ion-item *ngFor="let item of rankList">
-                    <ion-thumbnail item-left class="item-rank">
+                    <ion-avatar item-left class="item-rank">
                         <span class="rank {{ item.class }}">
                             <span>{{ item.rankText }}</span>
                         </span>
                         <img class="user-rank-header-img" [src]="item.image">
-                    </ion-thumbnail>
+                    </ion-avatar>
                     <p class="rank-statistics">
-                        <span class="tomatoNum"> {{ item.tomatoNum }}</span> 番茄钟，共
+                        <span class="tomatoNum"> {{ item.tomatoNum }}</span> 番茄钟，专注
                         <span class="minute"> {{ item.minute }}</span> 分钟
                     </p>
                     <p class="rank-title">{{ item.title }}</p>
+                    <p class="rank-title"><ion-icon name="pin"></ion-icon>  深圳市南山区</p>
                 </ion-item>
             </ion-list>
         </ion-list>
