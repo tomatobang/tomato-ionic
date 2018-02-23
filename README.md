@@ -44,5 +44,9 @@ $ ionic cordova build android
 ```
 
 
+### Related Repo
+* [tomato-server](https://github.com/tomatobang/tomato-server)
+* [tomato-web](https://github.com/tomatobang/tomato-web)
+
 ### License
 MIT@[yipeng.info](https://yipeng.info)
