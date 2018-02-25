@@ -8,6 +8,8 @@ import { QRScannerComponent } from '../../components/qr-scanner/qr-scanner';
   templateUrl: 'friend.html',
 })
 export class FriendPage {
+  pullingIcon = false;
+  isShowMenuCard = false;
   public rankList: {
     title: string;
     image: string;
@@ -108,5 +110,19 @@ export class FriendPage {
    */
   onScanQRCodeERR(evt) {
     console.log(evt);
+  }
+
+  showRefresher() {
+    this.pullingIcon = true;
+  }
+
+  showMenuCard() {
+    this.isShowMenuCard = true;
+    this.pullingIcon = false;
+  }
+
+  hideMenuCard() {
+    this.isShowMenuCard = false;
+    this.pullingIcon = false;
   }
 }

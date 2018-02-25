@@ -14,8 +14,11 @@
 </ion-header>
 
 <ion-content>
-    <pull-to-show>
-        <ion-card>
+    <pull-to-show (ionPull)="showRefresher()" (ionToshow)="showMenuCard()" (ionCancel)="hideMenuCard()">
+        <div class="pulling-tips" *ngIf="pullingIcon"><ion-icon name="arrow-down"></ion-icon>下拉加载菜单 
+        </div>
+
+        <ion-card *ngIf="isShowMenuCard">
             <ion-grid class="friendpage-tool-grid">
                 <ion-row>
                     <ion-col col-4 (click)="scanToAddFriend()">
@@ -81,7 +84,8 @@
                         <span class="minute"> {{ item.minute }}</span> 分钟
                     </p>
                     <p class="rank-title">{{ item.title }}</p>
-                    <p class="rank-title"><ion-icon name="pin"></ion-icon>  深圳市南山区</p>
+                    <p class="rank-title">
+                        <ion-icon name="pin"></ion-icon> 深圳市南山区</p>
                 </ion-item>
             </ion-list>
         </ion-list>
