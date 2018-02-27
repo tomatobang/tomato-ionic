@@ -13,12 +13,12 @@
                <img src="./assets/tomato.png">
            </ion-avatar>
            <h2>
-               <span [ngClass]="{'text-breaked':item.succeed==0}">{{item.title | StringTruncate: 20}}</span>
+               <span [ngClass]="{'text-breaked':item.succeed==0}">{{ item.title | StringTruncate: 20 }}</span>
                <img src="./assets/voice/voice.png" *ngIf="item.voiceUrl" class="play-icon" (click)="playVoiceRecord(item)">
            </h2>
            <h3>
-               <span class="tomato-start-end-time">{{item.startTime | date:'short'}} - {{item.endTime | date:'shortTime'}}</span>
-               <div *ngIf="item.breakReason" class="tomato-break-reason">(中断原因:{{item.breakReason}})</div>
+               <span class="tomato-start-end-time">{{ item.startTime | date:'short' }} - {{ item.endTime | date:'shortTime' }}</span>
+               <div *ngIf="item.breakReason" class="tomato-break-reason">(中断原因:{{ item.breakReason }})</div>
            </h3>
        </ion-item>
    </ion-list>

@@ -9,7 +9,7 @@
         <ion-item>
             <h2>用户名</h2>
             <ion-note item-end>
-                {{username}}
+               {{ username }}
             </ion-note>
         </ion-item>
         <button ion-item (click)="changeHeadImg()">
@@ -21,24 +21,24 @@
         <button ion-item (click)="changeBio()">
             <h2>签名</h2>
             <ion-note item-end>
-                {{bio}} 
+               {{ bio }} 
             </ion-note>
         </button>
         <button ion-item (click)="changeSex()">
             <h2>性别</h2>
-            <ion-note item-end> {{sex=="sec"? "保密":sex}} </ion-note>
+            <ion-note item-end> {{ sex=="sec"? "保密":sex }} </ion-note>
         </button>
         <button ion-item (click)="changeDisplayName()">
             <h2>昵称</h2>
-            <ion-note item-end> {{displayName}} </ion-note>
+            <ion-note item-end> {{ displayName }} </ion-note>
         </button>
         <button ion-item (click)="changeEmail()">
             <h2>邮箱</h2>
-            <ion-note item-end> {{email}} </ion-note>
+            <ion-note item-end> {{ email }} </ion-note>
         </button>
         <button ion-item (click)="changeLocation()">
             <h2>所在地</h2>
-            <ion-note item-end> {{location}} </ion-note>
+            <ion-note item-end> {{ location }} </ion-note>
         </button>
     </ion-list>
 

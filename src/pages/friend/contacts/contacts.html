@@ -9,9 +9,9 @@
 
   <ion-scroll scrollHeight #scrollMe scrollX="true" scrollY="true">
     <div *ngFor="let friendgroup of newFriendList">
-      <a href="javascript:void(0)" id="{{friendgroup.id}}">{{friendgroup.firstCode}}</a>
+      <a href="javascript:void(0)" id="{{friendgroup.id}}">{{ friendgroup.firstCode }}</a>
       <ion-item *ngFor="let friend of friendgroup.data">
-        <span>{{friend.name}}</span>
+        <span>{{ friend.name }}</span>
       </ion-item>
     </div>
   </ion-scroll>

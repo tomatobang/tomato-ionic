@@ -53,7 +53,7 @@ export class QiniuUploadService {
         console.log('qiniu,uploadHeadImg ret suncceed:', data);
         // debugger;
       },
-      progress =>{
+      progress => {
         console.log('qiniu,uploadHeadImg ret progress:', progress);
         // debugger;
       },

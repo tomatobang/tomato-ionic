@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
   ],
-  exports: [, ],
-  declarations: [, ],
+  exports: [],
+  declarations: [],
   providers: [], // LoggerService
 })
 export class CoreModule {}
