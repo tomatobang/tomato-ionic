@@ -50,11 +50,15 @@ export class QiniuUploadService {
         name: name,
       },
       data => {
-        console.log('qiniu,init ret suncceed:', data);
-        debugger;
+        console.log('qiniu,uploadHeadImg ret suncceed:', data);
+        // debugger;
+      },
+      progress =>{
+        console.log('qiniu,uploadHeadImg ret progress:', progress);
+        // debugger;
       },
       err => {
-        console.log('qiniu,init ret err:', err);
+        console.log('qiniu,uploadHeadImg ret err:', err);
         debugger;
       }
     );
