@@ -48,5 +48,9 @@ $ ionic cordova build android
 * [tomato-server](https://github.com/tomatobang/tomato-server)
 * [tomato-web](https://github.com/tomatobang/tomato-web)
 
+### Collaborator
+* [pengkobe](https://github.com/pengkobe)
+* [CShame](https://github.com/CShame)
+
 ### License
 MIT@[yipeng.info](https://yipeng.info)
