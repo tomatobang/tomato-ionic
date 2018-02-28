@@ -5,7 +5,6 @@ import { IonicPage, Scroll } from 'ionic-angular';
 import { PinyinService } from '../../../providers/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
 
-
 @IonicPage()
 @Component({
   selector: 'cmp-contacts',
@@ -35,7 +34,7 @@ export class ContactsPage implements OnInit {
       .get(msgListUrl)
       .toPromise()
       .then(response => {
-        const res:any = response;
+        const res: any = response;
         return res.data as Friendinfo[];
       })
       .catch(err => Promise.reject(err || 'err'));
@@ -59,4 +58,3 @@ export class ContactsPage implements OnInit {
     element.scrollTop = evt;
   }
 }
-

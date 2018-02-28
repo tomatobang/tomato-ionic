@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators/map';
-import { HttpClient } from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 import { Events } from 'ionic-angular';
 
 import { UserInfo } from './chat-userinfo.model';
@@ -35,9 +35,7 @@ export class ChatService {
   getMsgList(): Observable<ChatMessage[]> {
     const msgListUrl = './assets/mock/msg-list.json';
 
-    return this.http
-      .get<any>(msgListUrl)
-      .pipe(map(response => response.array));
+    return this.http.get<any>(msgListUrl).pipe(map(response => response.array));
   }
 
   sendMsg(msg: ChatMessage) {
