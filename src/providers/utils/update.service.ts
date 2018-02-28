@@ -3,16 +3,9 @@
  * (暂未启用)
  */
 import { Injectable } from '@angular/core';
-import {
-  Http,
-  Response,
-  Headers,
-  RequestOptions,
-  URLSearchParams,
-} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Platform, AlertController, LoadingController } from 'ionic-angular';
 import { GlobalService } from '../global.service';
-// import {  FileOpener } from 'ionic-native';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileOpener } from '@ionic-native/file-opener';
 
@@ -30,7 +23,7 @@ export class UpdateService {
     public _global: GlobalService,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    public http: Http,
+    public http: HttpClient,
     public transfer: FileTransfer,
     private fileOpener: FileOpener
   ) {
@@ -101,19 +94,10 @@ export class UpdateService {
       this.http
         .get(this._global.serverAddress + 'api/version', {})
         .subscribe(res => {
-          responseObserver.next(res.json());
+          responseObserver.next(res);
           responseObserver.complete();
         });
     });
-  }
-
-  /**
-   * 请求头处理
-   */
-  interceptor(): RequestOptions {
-    const opts: RequestOptions = new RequestOptions();
-    opts.headers = this.headers;
-    return opts;
   }
 
   /**

@@ -22,13 +22,8 @@
  *
  */
 import { Injectable, Inject } from '@angular/core';
-import {
-  Http,
-  Response,
-  Headers,
-  RequestOptions,
-  URLSearchParams
-} from '@angular/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
@@ -43,9 +38,9 @@ export * from './data/user';
 @Injectable()
 export class DataService {
   baseUrl: string = baseUrl;
-  headers: Headers = new Headers();
+  headers: HttpHeaders = new HttpHeaders();
 
-  constructor(public http: Http, public cacheService: CacheService) {
+  constructor(public http: HttpClient, public cacheService: CacheService) {
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
   }
 
@@ -67,15 +62,13 @@ export class DataService {
     this.tomatoesSubject.next(obj);
   }
 
-  interceptor(): RequestOptions {
-    const opts: RequestOptions = new RequestOptions();
-    opts.headers = this.headers;
-    return opts;
-  }
-
   amapHttpUtil(url: string, options: Object): Observable<any> {
-    const params: RequestOptions = this.interceptor();
-    params.params = new URLSearchParams(querystring.stringify(options));
-    return this.http.get(url, params);
+    const params = new HttpParams({
+      fromString: querystring.stringify(options),
+    });
+    return this.http.get(url, {
+      headers: this.headers,
+      params: params,
+    });
   }
 }

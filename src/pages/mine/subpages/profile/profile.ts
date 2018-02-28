@@ -91,7 +91,7 @@ export class ProfilePage implements OnInit {
         .updateSex({ userid: this.userid, sex: this.sex })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
-            this.globalservice.userinfo = JSON.parse(userdata._body);
+            this.globalservice.userinfo = userdata;
           }
         });
     });
@@ -115,7 +115,7 @@ export class ProfilePage implements OnInit {
         .updateBio({ userid: this.userid, bio: this.bio })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
-            this.globalservice.userinfo = JSON.parse(userdata._body);
+            this.globalservice.userinfo = userdata;
             this.globalservice.bioUpdate(this.globalservice.userinfo.bio);
           }
         });
@@ -143,7 +143,7 @@ export class ProfilePage implements OnInit {
         })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
-            this.globalservice.userinfo = JSON.parse(userdata._body);
+            this.globalservice.userinfo = userdata;
           }
         });
     });
@@ -167,7 +167,7 @@ export class ProfilePage implements OnInit {
         .updateEmail({ userid: this.userid, email: this.email })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
-            this.globalservice.userinfo = JSON.parse(userdata._body);
+            this.globalservice.userinfo = userdata;
           }
         });
     });
@@ -191,7 +191,7 @@ export class ProfilePage implements OnInit {
         .updateLocation({ userid: this.userid, location: this.location })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
-            this.globalservice.userinfo = JSON.parse(userdata._body);
+            this.globalservice.userinfo = userdata;
           }
         });
     });
@@ -202,9 +202,8 @@ export class ProfilePage implements OnInit {
    * 验证请求是否成功！
    * @param data res data
    */
-  verifyResponse(data) {
-    const _body = JSON.parse(data._body);
-    if (_body.status === 'fail') {
+  verifyResponse(body) {
+    if (body.status === 'fail') {
       return false;
     } else {
       return true;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
@@ -12,18 +12,18 @@ declare var window;
 
 @Injectable()
 export class QiniuUploadService {
-  constructor(public http: Http, public _g: GlobalService) {}
+  constructor(public http: HttpClient, public _g: GlobalService) {}
 
   public getUploadToken(): Observable<any> {
     const httpOptions = {
-      headers: new Headers({
+      headers: new HttpHeaders({
         Authorization: this._g.token,
       }),
     };
 
     return this.http
       .get(baseUrl + 'qiu/uploadtoken', httpOptions)
-      .map((res: Response) => {
+      .map((res: HttpResponse<any>) => {
         return res;
       })
       .catch((error: any) => Observable.throw(error || 'Server error'));

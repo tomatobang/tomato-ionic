@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Cacheable } from 'rebirth-storage';
@@ -23,10 +23,10 @@ import { SearchResult } from './model/search-result.model';
 @Injectable()
 export class OnlineUserService extends UserService {
   constructor(
-    protected http: Http,
+    protected http: HttpClient,
     protected rebirthHttpProvider: RebirthHttpProvider
   ) {
-    super();
+    super(http);
   }
 
   @Cacheable({ pool: 'users' })

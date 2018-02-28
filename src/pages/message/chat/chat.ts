@@ -50,9 +50,7 @@ export class Chat {
 
   ionViewDidEnter() {
     // get message list
-    this.getMsg().then(() => {
-      this.scrollToBottom();
-    });
+    this.getMsg();
 
     // Subscribe to received  new message events
     this.events.subscribe('chat:received', (msg, time) => {
@@ -83,11 +81,9 @@ export class Chat {
     // Get mock message list
     return this.chatService
       .getMsgList()
-      .then(res => {
+      .subscribe(res => {
         this.msgList = res;
-      })
-      .catch(err => {
-        console.log(err);
+        this.scrollToBottom();
       });
   }
 

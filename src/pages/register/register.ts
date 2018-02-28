@@ -91,7 +91,7 @@ export class RegisterPage implements OnInit {
           username: this.user.username,
         })
         .subscribe(data => {
-          const ret: any = JSON.parse(data._body);
+          const ret: any = data;
           // 邮箱可用
           if (ret.success) {
             this.service.register(this.user).subscribe(

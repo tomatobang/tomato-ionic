@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { IonicPage, Scroll } from 'ionic-angular';
 import { PinyinService } from '../../../providers/utils/pinyin.service';
@@ -17,7 +17,7 @@ export class ContactsPage implements OnInit {
   friendlist = [];
   newFriendList = [];
 
-  constructor(private pinyinUtil: PinyinService, private http: Http) {
+  constructor(private pinyinUtil: PinyinService, private http: HttpClient) {
     this.getFriendlist()
       .then(res => {
         this.friendlist = res;
@@ -34,7 +34,10 @@ export class ContactsPage implements OnInit {
     return this.http
       .get(msgListUrl)
       .toPromise()
-      .then(response => response.json().data as Friendinfo[])
+      .then(response => {
+        const res:any = response;
+        return res.data as Friendinfo[];
+      })
       .catch(err => Promise.reject(err || 'err'));
   }
 
