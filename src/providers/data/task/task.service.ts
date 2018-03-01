@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Cacheable } from 'rebirth-storage';
 import {
@@ -23,10 +23,10 @@ import { SearchResult } from './model/search-result.model';
 @Injectable()
 export class OnlineTaskService extends TaskService {
   constructor(
-    protected http: Http,
+    protected http: HttpClient,
     protected rebirthHttpProvider: RebirthHttpProvider
   ) {
-    super();
+    super(http);
   }
 
   @POST(baseUrl + 'api/task/')
@@ -40,7 +40,7 @@ export class OnlineTaskService extends TaskService {
     @Query('pageIndex') pageIndex = 1,
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string
-  ): Observable<SearchResult<Task>> {
+  ): Observable<Array<Task>> {
     return null;
   }
 

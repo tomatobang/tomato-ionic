@@ -72,7 +72,6 @@ export class StatisticsPage implements OnInit {
     return new Promise((resolve, reject) => {
       this.tomatoservice.statistics({ isSuccess: 1, date: date }).subscribe(
         data => {
-          data = JSON.parse(data._body);
           const ret = [];
           for (let i = 0; i < data.length; i += 1) {
             ret.push([data[i]._id, data[i].count]);

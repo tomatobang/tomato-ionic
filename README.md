@@ -14,7 +14,7 @@ $ npm i
 To serve in the browser
 
 ```sh
-$ npm run dev
+$ ionic serve
 ```
 now you can see tomatobang running at your browser
 

@@ -47,8 +47,7 @@ export class TaskPage implements OnInit {
   ngOnInit() {
     this.taskservice.getTasks().subscribe(
       data => {
-        const retStr = data && data._body;
-        const dataArr = JSON.parse(retStr);
+        const dataArr = data;
         this.allTasks.unfinished = dataArr;
         if (dataArr.length > 0 && this.allTasks.unfinished) {
           this.allTasks.unfinished = this.allTasks.unfinished.slice();
@@ -120,7 +119,7 @@ export class TaskPage implements OnInit {
     task.voiceUrl = '';
     // 创建任务
     this.taskservice.createTask(task).subscribe((response: any) => {
-      const data: any = JSON.parse(response._body);
+      const data: any = response;
       if (data && data.status === 'fail') {
       } else {
         // 链接示例: voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
@@ -177,7 +176,7 @@ export class TaskPage implements OnInit {
       if (this.allTasks.unfinished[index] === task) {
         // 删除任务
         this.taskservice.deleteTask(task._id).subscribe(response => {
-          const data: any = JSON.parse(response._body);
+          const data: any = response;
           if (data && data.status === 'fail') {
           } else {
             this.allTasks.unfinished.splice(parseInt(index, 10), 1);
@@ -192,7 +191,7 @@ export class TaskPage implements OnInit {
     task.isActive = false;
     this.taskservice.updateTask(task._id, task).subscribe(
       response => {
-        const data: any = JSON.parse(response._body);
+        const data: any = response;
         if (data && data.status === 'fail') {
         } else {
           this.allTasks.unfinished = this.allTasks.unfinished.slice();
@@ -209,7 +208,7 @@ export class TaskPage implements OnInit {
     task.isActive = true;
     this.taskservice.updateTask(task._id, task).subscribe(
       response => {
-        const data: any = JSON.parse(response._body);
+        const data: any = response;
         if (data && data.status === 'fail') {
         } else {
           this.allTasks.unfinished = this.allTasks.unfinished.slice();

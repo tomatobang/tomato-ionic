@@ -165,7 +165,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
       if (refresher) {
         refresher.complete();
       }
-      const list = JSON.parse(data._body);
+      const list = data;
       if (Array.isArray(list)) {
         this.historyTomatoes = list;
         this.tomatoCount = list.length;

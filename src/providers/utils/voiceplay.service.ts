@@ -166,6 +166,7 @@ export class VoicePlayService {
       }
       if (this.platform.is('ios')) {
         voiFile = voiFile.replace('file://', '');
+        voiFile = voiFile.replace('.aac', '.m4a');
       }
       this.mediaRec = this.media.create(voiFile);
 

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Cacheable } from 'rebirth-storage';
 import {
@@ -16,15 +15,15 @@ export abstract class TomatoService extends RebirthHttp {
       pageIndex: any,
       pageSize: any,
       keyword?: string
-    ): Observable<SearchResult<Tomato>>;
+    ): Observable<Array<Tomato>>;
 
     abstract searchTomatos(
       pageIndex: any,
       pageSize: any,
       keywords?: string
-    ): Observable<SearchResult<Tomato>>;
+    ): Observable<Array<Tomato>>;
 
-    abstract getTodayTomatos(): Observable<SearchResult<Tomato>>;
+    abstract getTodayTomatos(): Observable<Array<Tomato>>;
 
     abstract getTomatoByTitle(tomatoTitle: string): Observable<Tomato>;
 

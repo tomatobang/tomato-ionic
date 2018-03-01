@@ -28,7 +28,7 @@ export class HistoryTomatoPage {
     console.log('keyword', keywords);
     this.tomatoservice.searchTomatos({ keywords }).subscribe(data => {
       // console.log(data);
-      const arr = JSON.parse(data._body);
+      const arr = data;
       this.searchReturnItems = arr;
     });
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Cacheable } from 'rebirth-storage';
 import {
@@ -22,10 +22,10 @@ import { SearchResult } from './model/search-result.model';
 @Injectable()
 export class OnlineTomatoService extends TomatoService {
   constructor(
-    protected http: Http,
+    protected http: HttpClient,
     protected rebirthHttpProvider: RebirthHttpProvider
   ) {
-    super();
+    super(http);
   }
 
   @POST(baseUrl + 'api/tomato')
@@ -39,7 +39,7 @@ export class OnlineTomatoService extends TomatoService {
     @Query('pageIndex') pageIndex = 1,
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string
-  ): Observable<SearchResult<Tomato>> {
+  ): Observable<Array<Tomato>> {
     return null;
   }
 
@@ -49,13 +49,13 @@ export class OnlineTomatoService extends TomatoService {
     keywords;
     pageSize?: 10;
     pageIndex?: 1;
-  }): Observable<SearchResult<Tomato>> {
+  }): Observable<Array<Tomato>> {
     return null;
   }
 
   // @Cacheable({ pool: 'tomatos' })
   @GET(baseUrl + 'filter/tomatotoday')
-  getTodayTomatos(): Observable<SearchResult<Tomato>> {
+  getTodayTomatos(): Observable<Array<Tomato>> {
     return null;
   }
 

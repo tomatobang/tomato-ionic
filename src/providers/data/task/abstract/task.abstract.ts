@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Cacheable } from 'rebirth-storage';
 import {
@@ -16,7 +15,7 @@ export abstract class TaskService extends RebirthHttp {
       pageIndex: any,
       pageSize: any,
       keyword?: string
-    ): Observable<SearchResult<Task>>;
+    ): Observable<Array<Task>>;
 
     abstract getTaskByTitle(taskTitle: string): Observable<Task>;
 

@@ -55,7 +55,7 @@ export class LoginPage implements OnInit {
     console.log('doLogin', this.user);
 
     this.service.login(this.user).subscribe(data => {
-      const retOBJ = JSON.parse(data._body);
+      const retOBJ = data;
       const status = retOBJ.status;
       let token = '';
       let userinfo = this.user;

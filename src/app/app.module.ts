@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule  } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,7 +33,7 @@ import { baseUrl } from '../config';
     RebirthStorageModule,
     RebirthHttpModule,
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyAppComponent, {
       tabsHideOnSubPages: true,
       tabsLayout: 'icon-left',

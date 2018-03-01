@@ -43,9 +43,9 @@ export class MessagePage {
   getQiniuUploadToken() {
     this.qiniu.getUploadToken().subscribe(
       data => {
-        console.log('qiniutoken:', data._body);
+        console.log('qiniutoken:', data);
         debugger;
-        this.qiniu.init(data._body);
+        this.qiniu.init(data);
       },
       err => {
         debugger;
