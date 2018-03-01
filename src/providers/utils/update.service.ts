@@ -3,7 +3,7 @@
  * (暂未启用)
  */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Platform, AlertController, LoadingController } from 'ionic-angular';
 import { GlobalService } from '../global.service';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
@@ -17,7 +17,7 @@ declare var window;
 
 @Injectable()
 export class UpdateService {
-  headers: Headers = new Headers();
+  headers: HttpHeaders = new HttpHeaders();
   constructor(
     public platform: Platform,
     public _global: GlobalService,

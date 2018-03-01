@@ -93,13 +93,25 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       console.log('press开始了');
       this.onHold();
     });
-    // 释放则播放
-    this.pressGesture.on('pressup', e => {
-      console.log('press结束了');
-      this.recordWait = true;
-      this.voice.reset();
-      this.onRelease();
-    });
+    this.el.onpointerleave = () => {
+      console.log('onpointerleave');
+      this.onRecordEnd();
+    };
+
+    this.el.ontouchend = () => {
+      console.log('ontouchend');
+      this.onRecordEnd();
+    };
+    this.el.ontouchcancel = () => {
+      console.log('ontouchcancel');
+      this.onRecordEnd();
+    };
+  }
+
+  onRecordEnd() {
+    this.recordWait = true;
+    this.voice.reset();
+    this.onRelease();
   }
 
   ngOnDestroy() {
@@ -128,12 +140,12 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         this.mediaRec.release();
       }
       // 模拟声音大小变化
-      let voicechange = setInterval(() => {
+      const voicechange = setInterval(() => {
         if (!this.recordWait) {
           const i = Math.round(Math.random() * 9);
           this.voice.ImgUrl = 'assets/voice/recog00' + i + '.png';
         } else {
-          voicechange = undefined;
+          clearInterval(voicechange);
         }
       }, 400);
       // 实例化录音类
@@ -296,7 +308,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         fileTransfer.onProgress(progressEvent => {
           if (progressEvent.lengthComputable) {
             const progress = window.parseInt(
-              progressEvent.loaded / progressEvent.total * 100, 10
+              progressEvent.loaded / progressEvent.total * 100,
+              10
             );
             this.uploadProgress = progress;
           } else {
