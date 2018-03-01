@@ -75,12 +75,12 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   ) {
     if (this.platform.is('ios')) {
       this.path = window.cordova ? window.cordova.file.documentsDirectory : '';
-      this.src = 'cordovaIMVoice.wav';
+      this.src = 'cordovaIMVoice.m4a';
     } else {
       this.path = window.cordova
         ? window.cordova.file.externalApplicationStorageDirectory
         : '';
-      this.src = 'cordovaIMVoice.amr';
+      this.src = 'cordovaIMVoice.mp3';
     }
     this.el = elRef.nativeElement;
   }
