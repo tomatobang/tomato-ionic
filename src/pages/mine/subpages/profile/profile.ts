@@ -20,7 +20,7 @@ declare var window;
 @Component({
   selector: 'cmp-profile',
   templateUrl: 'profile.html',
-  providers: [QiniuUploadService]
+  providers: [QiniuUploadService],
 })
 export class ProfilePage implements OnInit {
   userid = '';
@@ -31,6 +31,7 @@ export class ProfilePage implements OnInit {
   location: string;
   bio: string;
   headImg = './assets/tomato-active.png';
+  headImgQiniu: string;
 
   constructor(
     public globalservice: GlobalService,
@@ -41,7 +42,7 @@ export class ProfilePage implements OnInit {
     public platform: Platform,
     private userservice: OnlineUserService,
     private qn: QiniuUploadService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.username = this.globalservice.userinfo.username;
@@ -59,14 +60,21 @@ export class ProfilePage implements OnInit {
     this.location = this.location ? this.location : '未知';
 
     this.username = this.globalservice.userinfo.username;
+    this.headImgQiniu = this.globalservice.userinfo.img;
     this.userid = this.globalservice.userinfo._id;
 
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
         if (readySource === 'cordova') {
-          this.native.downloadHeadImg(this.userid, false).then(url => {
-            this.headImg = `${url}?${new Date().getTime()}`;
-          });
+          this.native
+            .downloadHeadImg(
+              this.userid,
+              false,
+              this.globalservice.qiniuDomain + this.headImgQiniu
+            )
+            .then(url => {
+              this.headImg = `${url}?${new Date().getTime()}`;
+            });
         } else {
           // this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
         }
@@ -237,18 +245,34 @@ export class ProfilePage implements OnInit {
                 if (indexOfQ !== -1) {
                   FILE_URI = FILE_URI.substr(0, indexOfQ);
                 }
-                this.qn.uploadHeadImg(FILE_URI, this.globalservice.userinfo.username);
-                // const base64Image = 'data:image/jpeg;base64,' + imageData;
-                // this.userservice
-                //   .updateUserHeadImg({
-                //     userid: this.userid,
-                //     imgData: base64Image,
-                //   })
-                //   .subscribe(ret => {
-                //     this.native.downloadHeadImg(this.userid, true).then(url => {
-                //       this.headImg = url + '?' + new Date().getTime();
-                //     });
-                //   });
+                const filename =
+                  'head_img_' +
+                  this.globalservice.userinfo.username +
+                  '_' +
+                  new Date().valueOf();
+                this.qn.uploadHeadImg(FILE_URI, filename).subscribe(data => {
+                  this.userservice
+                    .updateUserHeadImg({
+                      userid: this.userid,
+                      filename: filename,
+                    })
+                    .subscribe(ret => {
+                      // 这里需要更新缓存的用户信息
+                      this.globalservice.userinfo.img = filename;
+                      this.globalservice.userinfo = JSON.stringify(
+                        this.globalservice.userinfo
+                      );
+                      this.native
+                        .downloadHeadImg(
+                          this.userid,
+                          true,
+                          this.globalservice.qiniuDomain + filename
+                        )
+                        .then(url => {
+                          this.headImg = url + '?' + new Date().getTime();
+                        });
+                    });
+                });
               },
               err => {
                 console.log('从相册上传头像失败：', err);
@@ -263,7 +287,7 @@ export class ProfilePage implements OnInit {
             const options: CameraOptions = {
               quality: 100,
               sourceType: this.camera.PictureSourceType.CAMERA,
-              destinationType: this.camera.DestinationType.DATA_URL,
+              destinationType: this.camera.DestinationType.FILE_URI,
               encodingType: this.camera.EncodingType.PNG,
               mediaType: this.camera.MediaType.PICTURE,
               targetWidth: 180,
@@ -271,18 +295,38 @@ export class ProfilePage implements OnInit {
             };
 
             this.camera.getPicture(options).then(
-              imageData => {
-                const base64Image = 'data:image/jpeg;base64,' + imageData;
-                this.userservice
-                  .updateUserHeadImg({
-                    userid: this.userid,
-                    imgData: base64Image,
-                  })
-                  .subscribe(ret => {
-                    this.native.downloadHeadImg(this.userid, true).then(url => {
-                      this.headImg = url + '?' + new Date().getTime();
+              FILE_URI => {
+                const indexOfQ = FILE_URI.indexOf('?');
+                if (indexOfQ !== -1) {
+                  FILE_URI = FILE_URI.substr(0, indexOfQ);
+                }
+                const filename =
+                  'head_img_' +
+                  this.globalservice.userinfo.username +
+                  '_' +
+                  new Date().valueOf();
+                this.qn.uploadHeadImg(FILE_URI, filename).subscribe(data => {
+                  this.userservice
+                    .updateUserHeadImg({
+                      userid: this.userid,
+                      filename: filename,
+                    })
+                    .subscribe(ret => {
+                      this.globalservice.userinfo.img = filename;
+                      this.globalservice.userinfo = JSON.stringify(
+                        this.globalservice.userinfo
+                      );
+                      this.native
+                        .downloadHeadImg(
+                          this.userid,
+                          true,
+                          this.globalservice.qiniuDomain + filename
+                        )
+                        .then(url => {
+                          this.headImg = url + '?' + new Date().getTime();
+                        });
                     });
-                  });
+                });
               },
               err => {
                 console.log('拍照上传头像失败：', err);

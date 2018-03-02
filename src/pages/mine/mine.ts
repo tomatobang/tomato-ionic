@@ -44,9 +44,15 @@ export class MinePage implements OnInit {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
         if (readySource === 'cordova') {
-          this.native.downloadHeadImg(this.userid, false).then(url => {
-            this.headImg = `${url}?${new Date().getTime()}`;
-          });
+          this.native
+            .downloadHeadImg(
+              this.userid,
+              false,
+              this.globalservice.qiniuDomain + this.globalservice.userinfo.img
+            )
+            .then(url => {
+              this.headImg = `${url}?${new Date().getTime()}`;
+            });
         }
       });
     }
