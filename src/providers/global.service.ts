@@ -21,6 +21,7 @@ export class GlobalService {
   private _isAlwaysLight = false;
 
   serverAddress = baseUrl;
+  qiniuDomain = 'http://osv2a938x.bkt.clouddn.com/';
 
   constructor(public events: Events) {}
 

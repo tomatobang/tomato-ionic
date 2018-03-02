@@ -68,7 +68,7 @@ export class OnlineUserService extends UserService {
   updateUserHeadImg(@Body
   data: {
     userid: string;
-    imgData: string;
+    filename: string;
   }): Observable<any> {
     return null;
   }

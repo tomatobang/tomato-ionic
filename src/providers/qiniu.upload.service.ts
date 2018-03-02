@@ -43,24 +43,36 @@ export class QiniuUploadService {
   }
 
   public uploadHeadImg(filePath, name) {
-    window.plugins.QiNiuUploadPlugin.simpleUploadFile(
-      {
-        filePath: filePath,
-        name: name,
-      },
-      data => {
-        console.log('qiniu,uploadHeadImg ret suncceed:', data);
-        // debugger;
-      },
-      progress => {
-        console.log('qiniu,uploadHeadImg ret progress:', progress);
-        // debugger;
-      },
-      err => {
-        console.log('qiniu,uploadHeadImg ret err:', err);
-        debugger;
-      }
-    );
+    return Observable.create(observer => {
+      window.plugins.QiNiuUploadPlugin.simpleUploadFile(
+        {
+          filePath: filePath,
+          name: name,
+        },
+        data => {
+          console.log('qiniu,uploadHeadImg ret suncceed:', data);
+          observer.next({
+            data: true,
+            value: data,
+          });
+          observer.complete();
+          // debugger;
+        },
+        progress => {
+          console.log('qiniu,uploadHeadImg ret progress:', progress);
+          observer.next({
+            data: false,
+            value: progress,
+          });
+          // debugger;
+        },
+        err => {
+          console.log('qiniu,uploadHeadImg ret err:', err);
+          observer.error(err);
+          debugger;
+        }
+      );
+    });
   }
 
   public uploadVoiceFile() {}
