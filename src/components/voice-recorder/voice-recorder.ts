@@ -19,6 +19,7 @@ import {
   FileUploadOptions,
   FileTransferObject,
 } from '@ionic-native/file-transfer';
+import { QiniuUploadService } from '../../providers/qiniu.upload.service';
 
 declare let window;
 
@@ -71,7 +72,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     private media: Media,
     public platform: Platform,
     private elRef: ElementRef,
-    private transfer: FileTransfer
+    private transfer: FileTransfer,
+    private qiniu: QiniuUploadService
   ) {
     if (this.platform.is('ios')) {
       this.path = window.cordova ? window.cordova.file.documentsDirectory : '';
@@ -257,66 +259,32 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     return (this.path + s).replace('file://', '');
   }
 
-  /**
-   * 上传音频文件
-   */
-  uploadVoiceFile(token) {
+  uploadVoiceFile() {
     return new Promise((resolve, reject) => {
       this.isUploading = true;
       if (!this.temp_file_path) {
         reject('没有录音!');
       }
-
-      const tmpPath = this.temp_file_path;
-      if (!this.uploadUrl) {
-        reject('uploadUrl 不存在');
-        return;
-      } else {
-        const fileTransfer: FileTransferObject = this.transfer.create();
-        if (!this._postParams) {
-          reject('_postParams 不存在');
-          return;
-        }
-
-        const options: FileUploadOptions = {
-          httpMethod: 'post',
-          fileKey: 'file',
-          fileName: tmpPath.substr(tmpPath.lastIndexOf('/') + 1),
-          mimeType: 'text/plain',
-          headers: {
-            Authorization: token,
-          },
-          params: this._postParams,
-        };
-        console.log(tmpPath, this.uploadUrl, options);
-        fileTransfer.upload(tmpPath, this.uploadUrl, options, true).then(
-          r => {
-            console.log('Code = ' + r.responseCode);
-            console.log('Response = ' + r.response);
-            console.log('Sent = ' + r.bytesSent);
+      const fileName = this.temp_file_path.substr(
+        this.temp_file_path.lastIndexOf('/') + 1
+      );
+      this.qiniu
+        .uploadLocFile(
+          this.temp_file_path,
+          this._postParams.userid +
+            '_' +
+            this._postParams.taskid +
+            '_' +
+            fileName
+        )
+        .subscribe(data => {
+          if (data.data) {
             this.isUploading = false;
-            resolve(options.fileName);
-          },
-          err => {
-            reject(err);
-            alert('An error has occurred: Code = ' + err.code);
-            console.log('upload error source ' + err.source);
-            console.log('upload error target ' + err.target);
-          }
-        );
-
-        fileTransfer.onProgress(progressEvent => {
-          if (progressEvent.lengthComputable) {
-            const progress = window.parseInt(
-              progressEvent.loaded / progressEvent.total * 100,
-              10
-            );
-            this.uploadProgress = progress;
+            resolve(fileName);
           } else {
-            this.uploadProgress += 14;
+            this.uploadProgress = data.value;
           }
         });
-      }
     });
   }
 }

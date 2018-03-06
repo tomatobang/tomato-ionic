@@ -452,7 +452,10 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     if (tomato.voiceUrl) {
       const fileNamePart = this.getFileName(tomato.voiceUrl);
       this.voiceService
-        .downloadVoiceFile(fileNamePart, this.globalservice.token)
+        .downloadVoiceFile(
+          fileNamePart,
+          this.globalservice.qiniuDomain + fileNamePart
+        )
         .then(filename => {
           this.voicePlaySrc = './assets/voice/voice_play_me.gif';
           this.voiceService.play(filename).then(() => {

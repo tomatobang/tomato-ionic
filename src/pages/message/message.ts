@@ -44,11 +44,11 @@ export class MessagePage {
     this.qiniu.getUploadToken().subscribe(
       data => {
         console.log('qiniutoken:', data);
-        debugger;
+        // debugger;
         this.qiniu.init(data);
       },
       err => {
-        debugger;
+        // debugger;
       }
     );
   }

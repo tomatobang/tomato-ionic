@@ -34,31 +34,21 @@ export class VoicePlayService {
    * @param filename
    * @param token
    */
-  downloadVoiceFile(filename, token) {
+  downloadVoiceFile(filename, remotepath) {
     return new Promise((resolve, reject) => {
       const targetPath = this.helper.getBasePath() + 'voices/';
       const targetPathWithFileName =
         this.helper.getBasePath() + 'voices/' + filename;
-      // 检查是否已下载过
       this.file.checkFile(targetPath, filename).then(
         success => {
           resolve(targetPathWithFileName);
         },
         error => {
-          // 注意:此方法采用追加的方式添加
-          const options = {
-            headers: {
-              Authorization: token
-            }
-          };
-          const trustHosts = true;
           const fileTransfer: FileTransferObject = this.transfer.create();
           fileTransfer
             .download(
-              this._global.serverAddress + 'download/voicefile/' + filename,
+              remotepath,
               targetPathWithFileName,
-              trustHosts,
-              options
             )
             .then(result => {
               console.log('下载完成,播放..');
@@ -81,9 +71,9 @@ export class VoicePlayService {
   /**
    * 下载音频接口 observable 版本
    * @param filename
-   * @param token
+   * @param remotepath
    */
-  downloadVoiceFile_observable(filename, token) {
+  downloadVoiceFile_observable(filename, remotepath) {
     return Observable.create(observer => {
       const targetPath = this.helper.getBasePath() + 'voices/';
       const targetPathWithFileName =
@@ -99,20 +89,13 @@ export class VoicePlayService {
           observer.complete();
         },
         error => {
-          // 注意:此方法采用追加的方式添加
-          const options = {
-            headers: {
-              Authorization: token
-            }
-          };
           const trustHosts = true;
           const fileTransfer: FileTransferObject = this.transfer.create();
           fileTransfer
             .download(
-              this._global.serverAddress + 'download/voicefile/' + filename,
+              remotepath,
               targetPathWithFileName,
-              trustHosts,
-              options
+              trustHosts
             )
             .then(result => {
               console.log('下载完成,播放..');

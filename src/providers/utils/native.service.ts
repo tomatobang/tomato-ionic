@@ -191,7 +191,7 @@ export class NativeService {
       const fileTransfer: FileTransferObject = this.transfer.create();
       fileTransfer
         .download(
-          remotepath, 
+          remotepath,
           targetPathWithFileName,
           trustHosts,
           options

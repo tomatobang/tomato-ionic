@@ -10,15 +10,13 @@ import {
   DELETE,
   Query,
   Path,
-  Body
+  Body,
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';
-
 
 import { TaskService } from './abstract/task.abstract';
 import { Task } from './model/task.model';
 import { SearchResult } from './model/search-result.model';
-
 
 @Injectable()
 export class OnlineTaskService extends TaskService {
@@ -58,12 +56,16 @@ export class OnlineTaskService extends TaskService {
   deleteTask(@Path('id') taskUrl: string): Observable<any> {
     return null;
   }
+
+  @POST(baseUrl + 'api/task/updateVoiceUrl')
+  updateVoiceUrl(@Body data: { taskid: string; relateUrl: string }): Observable<any> {
+    return null;
+  }
 }
 
 export const TASK_SERVICE_PROVIDERS: Array<any> = [
   {
     provide: TaskService,
-    // environment.deploy === 'github' ? GithubTaskService : OnlineTaskService
-    useClass: OnlineTaskService
-  }
+    useClass: OnlineTaskService,
+  },
 ];

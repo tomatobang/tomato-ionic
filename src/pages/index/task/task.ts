@@ -68,8 +68,9 @@ export class TaskPage implements OnInit {
       const filename = this.getFileName(task.voiceUrl);
       task.inDownloading = true;
       task.progress = '0%';
+      const remotepath = this.globalservice.qiniuDomain + filename;
       this.voiceService
-        .downloadVoiceFile_observable(filename, this.globalservice.token)
+        .downloadVoiceFile_observable(filename, remotepath)
         .subscribe(
           data => {
             if (data.data) {
@@ -130,7 +131,7 @@ export class TaskPage implements OnInit {
         task._id = data._id;
         // 上传音屏文件
         setTimeout(() => {
-          this.voiceRecordCMP.uploadVoiceFile(this.globalservice.token).then(
+          this.voiceRecordCMP.uploadVoiceFile().then(
             filename => {
               const tt = this.allTasks.unfinished;
               task.voiceUrl =
@@ -139,6 +140,15 @@ export class TaskPage implements OnInit {
                 this.voicepostParams.taskid +
                 '_' +
                 filename;
+              // 更新 voice url
+              this.taskservice
+                .updateVoiceUrl({
+                  taskid: this.voicepostParams.taskid,
+                  relateUrl: task.voiceUrl,
+                })
+                .subscribe(ret => {
+                  console.log('更新 task url', ret);
+                });
               this.allTasks.unfinished = [task].concat(tt);
               this.allTasks.unfinished.slice();
               this.newTask = {

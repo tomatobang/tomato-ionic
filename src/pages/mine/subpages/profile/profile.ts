@@ -250,7 +250,7 @@ export class ProfilePage implements OnInit {
                   this.globalservice.userinfo.username +
                   '_' +
                   new Date().valueOf();
-                this.qn.uploadHeadImg(FILE_URI, filename).subscribe(data => {
+                this.qn.uploadLocFile(FILE_URI, filename).subscribe(data => {
                   this.userservice
                     .updateUserHeadImg({
                       userid: this.userid,
@@ -305,7 +305,7 @@ export class ProfilePage implements OnInit {
                   this.globalservice.userinfo.username +
                   '_' +
                   new Date().valueOf();
-                this.qn.uploadHeadImg(FILE_URI, filename).subscribe(data => {
+                this.qn.uploadLocFile(FILE_URI, filename).subscribe(data => {
                   this.userservice
                     .updateUserHeadImg({
                       userid: this.userid,

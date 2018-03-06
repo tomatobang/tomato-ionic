@@ -33,16 +33,16 @@ export class QiniuUploadService {
       uploadToken,
       data => {
         console.log('qiniu,init ret suncceed:', data);
-        debugger;
+        // debugger;
       },
       err => {
         console.log('qiniu,init ret err:', err);
-        debugger;
+        // debugger;
       }
     );
   }
 
-  public uploadHeadImg(filePath, name) {
+  public uploadLocFile(filePath, name) {
     return Observable.create(observer => {
       window.plugins.QiNiuUploadPlugin.simpleUploadFile(
         {
@@ -50,7 +50,7 @@ export class QiniuUploadService {
           name: name,
         },
         data => {
-          console.log('qiniu,uploadHeadImg ret suncceed:', data);
+          console.log('qiniu,uploadLocFile ret suncceed:', data);
           observer.next({
             data: true,
             value: data,
@@ -59,7 +59,7 @@ export class QiniuUploadService {
           // debugger;
         },
         progress => {
-          console.log('qiniu,uploadHeadImg ret progress:', progress);
+          console.log('qiniu,uploadLocFile ret progress:', progress);
           observer.next({
             data: false,
             value: progress,
@@ -67,13 +67,12 @@ export class QiniuUploadService {
           // debugger;
         },
         err => {
-          console.log('qiniu,uploadHeadImg ret err:', err);
+          console.log('qiniu,uploadLocFile ret err:', err);
           observer.error(err);
-          debugger;
+          // debugger;
         }
       );
     });
   }
 
-  public uploadVoiceFile() {}
 }
