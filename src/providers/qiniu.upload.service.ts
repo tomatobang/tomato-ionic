@@ -50,7 +50,7 @@ export class QiniuUploadService {
           name: name,
         },
         data => {
-          console.log('qiniu,uploadLocFile ret suncceed:', data);
+          console.log('qiniu,uploadLocFile ret succeed:', data);
           observer.next({
             data: true,
             value: data,
@@ -59,7 +59,7 @@ export class QiniuUploadService {
           // debugger;
         },
         progress => {
-          console.log('qiniu,uploadLocFile ret progress:', progress);
+          // console.log('qiniu,uploadLocFile ret progress:', progress);
           observer.next({
             data: false,
             value: progress,

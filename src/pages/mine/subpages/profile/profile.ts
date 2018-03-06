@@ -75,8 +75,6 @@ export class ProfilePage implements OnInit {
             .then(url => {
               this.headImg = `${url}?${new Date().getTime()}`;
             });
-        } else {
-          // this.headImg =this.globalservice.serverAddress + "api/user/headimg/" +this.userid;
         }
       });
     }

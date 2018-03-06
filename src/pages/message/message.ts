@@ -45,7 +45,7 @@ export class MessagePage {
       data => {
         console.log('qiniutoken:', data);
         // debugger;
-        this.qiniu.init(data);
+        this.qiniu.init(data.uploadToken);
       },
       err => {
         // debugger;

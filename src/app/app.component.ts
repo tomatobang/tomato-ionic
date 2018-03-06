@@ -29,7 +29,7 @@ export class MyAppComponent {
     private events: Events
   ) {
     platform.ready().then(() => {
-      statusBar.styleDefault();
+      statusBar.styleBlackOpaque();
       splashScreen.hide();
       // 检查更新
       updateService.checkUpdate();
@@ -48,7 +48,7 @@ export class MyAppComponent {
       this.rootPage = 'GuidePage';
     } else {
       if (global.userinfo) {
-        this.rebirthProvider.headers({ Authorization: global.token });
+        this.rebirthProvider.headers({ Authorization: global.token }, true);
         this.rebirthProvider.addResponseErrorInterceptor(err => {
           console.error('请求错误！', err);
         });

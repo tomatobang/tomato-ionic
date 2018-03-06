@@ -179,6 +179,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
           },
           {},
           () => {
+            debugger
             this.globalservice.userinfo = '';
             this.globalservice.token = '';
           }
