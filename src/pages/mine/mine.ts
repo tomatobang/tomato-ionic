@@ -110,7 +110,10 @@ export class MinePage implements OnInit {
    * 显示二维码
    */
   showMyQRCODE() {
-    const modal = this.modalCtrl.create('QRImgModal', { userid: this.userid });
+    const modal = this.modalCtrl.create('QRImgModal', {
+      userid: this.userid,
+      username: this.username,
+    });
     modal.onDidDismiss(data => {
       return data;
     });

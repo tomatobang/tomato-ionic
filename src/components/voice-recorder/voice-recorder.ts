@@ -1,7 +1,3 @@
-/**
- * 这块涉及到业务，算不上纯组件
- */
-
 import {
   Component,
   forwardRef,
@@ -150,7 +146,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
           clearInterval(voicechange);
         }
       }, 400);
-      // 实例化录音类
       this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
       this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
       this.mediaRec.onSuccess.subscribe(() =>
@@ -164,11 +159,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
   onRelease() {
     try {
-      // 如果没有开始直接返回
       if (!this.isStartedVoice) {
         return;
       }
-      // 还原标识
       this.isStartedVoice = false;
       this.recordWait = true;
       setTimeout(() => {
@@ -178,20 +171,17 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         this.mediaRec.stopRecord();
         this.mediaRec.release();
       }
-      // 实例化录音类, src:需要播放的录音的路径
+      // 实例化录音类
       this.mediaRec = this.media.create(this.getMediaURL(this.src));
-      // 录音执行函数
       this.mediaRec.onSuccess.subscribe(() =>
         console.log('touchend():Audio Success')
       );
-      // 录音失败执行函数
       this.mediaRec.onError.subscribe(error =>
         console.log('touchend():Audio Error!', error)
       );
       this.mediaRec.play();
       this.mediaRec.stop();
 
-      // 在html中显示当前状态
       let counter = 0;
       const timerDur = setInterval(() => {
         counter = counter + 100;
@@ -232,11 +222,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.mediaRec = this.media.create(voiFile);
 
     this.mediaRec.onSuccess.subscribe(() => {
-      // 播放完成
       console.log('play():Audio Success');
     });
     this.mediaRec.onError.subscribe(error => {
-      // 播放失败
       console.log('play():Audio Error: ', error);
     });
 

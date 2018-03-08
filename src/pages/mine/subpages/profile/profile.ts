@@ -209,7 +209,8 @@ export class ProfilePage implements OnInit {
    * @param data res data
    */
   verifyResponse(body) {
-    if (body.status === 'fail') {
+    if (!body || body.status === 'fail') {
+      console.log('verifyResponse: 请求异常!');
       return false;
     } else {
       return true;
