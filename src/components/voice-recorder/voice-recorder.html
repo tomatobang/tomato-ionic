@@ -1,16 +1,20 @@
 <div class="voice-recorder-container">
-    <button #holdToVoice class="hold-tips" [ngClass]="{'active': isStartRecord}">
+    <button #holdToVoice [ngClass]="{'active': isStartRecord}" class="hold-tips">
         <div class="voice-mock-img">
-            <img [(src)]="voice.ImgUrl" *ngIf="isStartRecord">
+            <img *ngIf="isStartRecord" [(src)]="voice.ImgUrl">
         </div>
-        <div>
-            <ion-icon name="mic" class="voicerecord-mic" item-start *ngIf="!isStartRecord"></ion-icon>
+        <div *ngIf="!isStartRecord">
+            <ion-icon name="mic" class="voicerecord-mic" item-start></ion-icon>
         </div>
         <span *ngIf="!isStartRecord" class="voicerecord-mic-label">按住我说话</span>
     </button>
+    
     <div id="play_block" #play_block>
-        <button ion-button color="secondary" round (click)="play()" *ngIf="couldPlay"> 播放 </button>
+        <button *ngIf="couldPlay" ion-button round color="secondary" (click)="play()">
+            播放({{voiceDuration}}")
+        </button>
     </div>
+
     <ion-list *ngIf="isUploading" class="voice-uploading-range">
         <ion-item>
             <ion-range min="0" max="100" [(ngModel)]="uploadProgress" color="secondary">
@@ -18,7 +22,6 @@
                 <ion-label range-right>100%</ion-label>
             </ion-range>
         </ion-item>
-
     </ion-list>
 
 </div>

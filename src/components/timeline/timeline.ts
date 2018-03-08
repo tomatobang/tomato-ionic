@@ -6,7 +6,7 @@ import {
   OnInit,
   QueryList,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import { TimelineItemComponent } from './timeline-item';
 
@@ -16,17 +16,11 @@ import { TimelineItemComponent } from './timeline-item';
   template: `
       <ul class="tomatobang-timeline" [class.tomatobang-timeline-pending]="_isPending">
         <ng-content></ng-content>
-        <li *ngIf="_isPending" class="tomatobang-timeline-item tomatobang-timeline-item-pending">
-          <div class="tomatobang-timeline-item-tail"></div>
-          <div class="tomatobang-timeline-item-head tomatobang-timeline-item-head-blue"></div>
-          <div class="tomatobang-timeline-item-content">
+        <div *ngIf="_isPending" class="tomatobang-timeline-pending" >
             <ng-template [ngTemplateOutlet]="_pendingContent">
             </ng-template>
-          </div>
-        </li>
-      </ul>`
-
-  // styleUrls    : [ './timeline.scss' ]
+        </div>
+      </ul>`,
 })
 export class TimelineComponent implements OnInit, AfterContentInit {
   _isPending = false;

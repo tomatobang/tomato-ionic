@@ -13,12 +13,12 @@
     <ion-refresher [enabled]="IsInTomatoTodaySlide" (ionRefresh)="doRefreshTodayTomato($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    
+
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
         <!-- 首页   &&-->
         <ion-slide>
             <div class="tomato-user-bio">
-               {{ _user_bio? _user_bio: '暂无签名！' }}
+                {{ _user_bio? _user_bio: '暂无签名！' }}
             </div>
             <div class="start-old-task" *ngIf="_task.title && !activeTomato && !isResting">
                 <label>继续上次任务:</label>
@@ -76,7 +76,7 @@
                             <img src="assets/tomato.png">
                         </ion-avatar>
                     </ng-template>
-                    <div style="text-align:left">
+                    <div class="tomato-start-end-time-block">
                         <span class="tomato-start-end-time">{{ tomato.startTime | date:'shortTime' }} - {{ tomato.endTime | date:'shortTime' }}</span>
                     </div>
                     <h3>
@@ -85,6 +85,10 @@
                     </h3>
                     <div *ngIf="tomato.breakReason" class="tomato-break-reason">(中断原因:{{ tomato.breakReason }})</div>
                 </timeline-item>
+
+                <ng-template #pending>
+                    <ion-icon ios="ios-bookmark" md="md-bookmark"></ion-icon>
+                </ng-template>
             </timeline>
         </ion-slide>
     </ion-slides>

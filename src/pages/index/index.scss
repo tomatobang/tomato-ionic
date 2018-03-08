@@ -90,7 +90,8 @@ img.play-icon{
   }
   .tomatobang-timeline{
     margin-top:25px;
-    margin-left:25px;
+    margin-left:10px;
+    margin-right:10px;
   }
  }
  .white-noise-tag-icon{
@@ -121,4 +122,8 @@ img.play-icon{
  .tomato-replay-icon{
    font-size: 50px;
    color: #F97271;
+ }
+ .tomato-start-end-time-block{
+   text-align: center;
+   background: #eee;
  }

@@ -6,6 +6,15 @@ $timeline-color: $primary_tb;
   margin: 0;
   padding: 0;
 
+  &-pending{
+    text-align: left;
+    ion-icon{
+      color: #F97271;
+      width: 30px;
+      text-align: center;
+    }
+  }
+
   &-item {
     position: relative;
     padding: 0 0 12px;
@@ -48,7 +57,7 @@ $timeline-color: $primary_tb;
     &-head-custom {
       position: absolute;
       text-align: center;
-      width: 40px;
+      width: 30px;
       line-height: 1;
       margin-top: 6px;
       border: 0;

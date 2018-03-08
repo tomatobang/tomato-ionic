@@ -41,6 +41,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   mediaRec: MediaObject;
   src = '';
   path = '';
+  voiceDuration = 0 ;
   voice = {
     ImgUrl: './assets/voice/recog000.png',
     reset() {
@@ -197,6 +198,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
           }
           this.temp_file_path = tmpPath.replace('file://', '');
           this.couldPlay = true;
+          this.voiceDuration = dur;
           if (this.mediaRec) {
             this.mediaRec.release();
           }
