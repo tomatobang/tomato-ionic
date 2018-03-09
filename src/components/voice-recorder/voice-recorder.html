@@ -8,10 +8,10 @@
         </div>
         <span *ngIf="!isStartRecord" class="voicerecord-mic-label">按住我说话</span>
     </button>
-    
+
     <div id="play_block" #play_block>
         <button *ngIf="couldPlay" ion-button round color="secondary" (click)="play()">
-            播放({{voiceDuration}}")
+            播放( {{ voiceDuration }} ")
         </button>
     </div>
 

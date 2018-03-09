@@ -27,7 +27,10 @@ export class QRImgModal {
     const userid = params.get('userid');
     const username = params.get('username');
     this.qrcodeUrl =
-      'http://qr.liantu.com/api.php?&bg=ffffff&fg=cc0000&text=' + userid + "_" + username;
+      'http://qr.liantu.com/api.php?&bg=ffffff&fg=cc0000&text=' +
+      userid +
+      '_' +
+      username;
   }
 
   private dismiss() {

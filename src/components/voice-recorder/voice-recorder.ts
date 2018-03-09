@@ -41,7 +41,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   mediaRec: MediaObject;
   src = '';
   path = '';
-  voiceDuration = 0 ;
+  voiceDuration = 0;
   voice = {
     ImgUrl: './assets/voice/recog000.png',
     reset() {
@@ -87,7 +87,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pressGesture = new Gesture(this.el, { time: 200 });
     this.pressGesture.listen();
-    // 长按录音
+
     this.pressGesture.on('press', e => {
       console.log('press开始了');
       this.onHold();
@@ -121,11 +121,11 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.isStartRecord = true;
     this.recordWait = false;
     try {
-      // 实例化录音类
+      // 初始化录音
       this.startRec();
       // 开始录音
       this.mediaRec.startRecord();
-      // 已经开始
+      // 开始标识置 true
       this.isStartedVoice = true;
       return false;
     } catch (err) {
@@ -172,7 +172,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         this.mediaRec.stopRecord();
         this.mediaRec.release();
       }
-      // 实例化录音类
       this.mediaRec = this.media.create(this.getMediaURL(this.src));
       this.mediaRec.onSuccess.subscribe(() =>
         console.log('touchend():Audio Success')
@@ -258,23 +257,28 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       const fileName = this.temp_file_path.substr(
         this.temp_file_path.lastIndexOf('/') + 1
       );
-      this.qiniu
-        .uploadLocFile(
-          this.temp_file_path,
-          this._postParams.userid +
-            '_' +
-            this._postParams.taskid +
-            '_' +
-            fileName
-        )
-        .subscribe(data => {
-          if (data.data) {
-            this.isUploading = false;
-            resolve(fileName);
-          } else {
-            this.uploadProgress = data.value;
-          }
-        });
+
+      this.qiniu.initQiniu().subscribe(data => {
+        if (data) {
+          this.qiniu
+            .uploadLocFile(
+              this.temp_file_path,
+              this._postParams.userid +
+                '_' +
+                this._postParams.taskid +
+                '_' +
+                fileName
+            )
+            .subscribe(data => {
+              if (data.data) {
+                this.isUploading = false;
+                resolve(fileName);
+              } else {
+                this.uploadProgress = data.value;
+              }
+            });
+        }
+      });
     });
   }
 }

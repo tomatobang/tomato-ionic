@@ -8,8 +8,6 @@ import {
 } from '../../../providers/data.service';
 
 import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
-import { QiniuUploadService } from '../../../providers/qiniu.upload.service';
-
 import { AutosizeDirective } from '../../../directives/autosize.directive';
 
 import { TaskPage } from './task';
@@ -32,7 +30,6 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     OnlineTaskService,
     OnlineTomatoService,
     VoicePlayService,
-    QiniuUploadService,
   ],
   // 打开注释会报错
   // exports: [

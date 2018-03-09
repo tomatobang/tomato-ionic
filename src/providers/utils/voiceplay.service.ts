@@ -46,10 +46,7 @@ export class VoicePlayService {
         error => {
           const fileTransfer: FileTransferObject = this.transfer.create();
           fileTransfer
-            .download(
-              remotepath,
-              targetPathWithFileName,
-            )
+            .download(remotepath, targetPathWithFileName)
             .then(result => {
               console.log('下载完成,播放..');
               resolve(targetPathWithFileName);
@@ -73,7 +70,7 @@ export class VoicePlayService {
    * @param filename
    * @param remotepath
    */
-  downloadVoiceFile_observable(filename, remotepath) {
+  downloadVoiceFile_observable(filename, remotepath): Observable<any> {
     return Observable.create(observer => {
       const targetPath = this.helper.getBasePath() + 'voices/';
       const targetPathWithFileName =
@@ -84,7 +81,7 @@ export class VoicePlayService {
           // alert("已经下载,直接播放！");
           observer.next({
             data: true,
-            value: targetPathWithFileName
+            value: targetPathWithFileName,
           });
           observer.complete();
         },
@@ -92,16 +89,12 @@ export class VoicePlayService {
           const trustHosts = true;
           const fileTransfer: FileTransferObject = this.transfer.create();
           fileTransfer
-            .download(
-              remotepath,
-              targetPathWithFileName,
-              trustHosts
-            )
+            .download(remotepath, targetPathWithFileName, trustHosts)
             .then(result => {
               console.log('下载完成,播放..');
               observer.next({
                 data: true,
-                value: targetPathWithFileName
+                value: targetPathWithFileName,
               });
               observer.complete();
             })
@@ -114,7 +107,7 @@ export class VoicePlayService {
             const progress = window.parseInt(evt.loaded / evt.total * 100, 10);
             observer.next({
               data: false,
-              value: progress
+              value: progress,
             });
             console.log(progress);
           });
