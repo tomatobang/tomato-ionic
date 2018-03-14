@@ -51,6 +51,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
 
   historyTomatoes: Array<any> = [];
   tomatoCount = 0;
+  tomatoCount_time = 0;
 
   mp3Source: HTMLSourceElement = document.createElement('source');
   oggSource: HTMLSourceElement = document.createElement('source');
@@ -143,6 +144,8 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
       if (t && t !== 'null') {
         this.historyTomatoes.unshift(t);
         this.tomatoCount += 1;
+        const minutes = this.minuteSpan(t.startTime, t.endTime);
+        this.tomatoCount_time += minutes;
       } else {
         this.loadTomatoes();
       }
@@ -169,6 +172,13 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
       if (Array.isArray(list)) {
         this.historyTomatoes = list;
         this.tomatoCount = list.length;
+        this.tomatoCount_time = 0;
+        for (let i = 0; i < list.length; i++) {
+          if (list[i].startTime && list[i].endTime) {
+            const minutes = this.minuteSpan(list[i].startTime, list[i].endTime);
+            this.tomatoCount_time += minutes;
+          }
+        }
       } else {
         // token 过期( TODO )
         this.app.getRootNav().setRoot(
@@ -188,6 +198,13 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {}
+
+  minuteSpan(startTime, endTime) {
+    const timeSpan =
+      new Date(endTime).getTime() - new Date(startTime).getTime();
+    const minutes = Math.floor((timeSpan % (3600 * 1000)) / (60 * 1000));
+    return minutes;
+  }
 
   addTask() {
     const profileModal = this.modalCtrl.create('TaskPage');
@@ -300,6 +317,8 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
             };
             this.historyTomatoes.push(Object.assign({}, tomato));
             this.tomatoCount += 1;
+            const minutes = this.minuteSpan(tomato.startTime, new Date());
+            this.tomatoCount_time += minutes;
             this.tomatoIO.break_tomato(this._userid, tomatoDTO);
             this.stopTimer();
             this.startRestTimer();
