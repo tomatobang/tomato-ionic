@@ -269,12 +269,12 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
                 '_' +
                 fileName
             )
-            .subscribe(data => {
-              if (data.data) {
+            .subscribe(ret => {
+              if (ret.data) {
                 this.isUploading = false;
                 resolve(fileName);
               } else {
-                this.uploadProgress = data.value;
+                this.uploadProgress = ret.value;
               }
             });
         }
