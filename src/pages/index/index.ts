@@ -25,6 +25,7 @@ import {
 } from '../../providers/data.service';
 import { GlobalService } from '../../providers/global.service';
 import { TomatoIOService } from '../../providers/utils/socket.io.service';
+import { Helper } from '../../providers/utils/helper';
 
 import { Slides } from 'ionic-angular';
 declare let window;
@@ -53,9 +54,10 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
   tomatoCount = 0;
   tomatoCount_time = 0;
 
-  mp3Source: HTMLSourceElement = document.createElement('source');
-  oggSource: HTMLSourceElement = document.createElement('source');
-  alertAudio: HTMLAudioElement = document.createElement('audio');
+  mp3Source: HTMLSourceElement;
+  oggSource: HTMLSourceElement;
+  alertAudio: HTMLAudioElement;
+
   // 番茄钟长度
   countdown = 25;
   // 休息时间长度
@@ -78,7 +80,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
   };
   // 中断缘由
   breakReason: any;
-
   // 刷新时间圆圈
   UIRefreshIntervalID: any;
 
@@ -97,13 +98,13 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     public tomatoIO: TomatoIOService,
     public alertCtrl: AlertController,
     public voiceService: VoicePlayService,
-    private localNotifications: LocalNotifications
+    private localNotifications: LocalNotifications,
+    private helper: Helper
   ) {}
 
   ngOnInit() {
-    // 加载今日番茄钟列表
+    // 加载今日番茄钟
     this.loadTomatoes();
-    // 加载正在进行的番茄钟
     this._userid = this.globalservice.userinfo.username;
     this._user_bio = this.globalservice.userinfo.bio;
     this.events.subscribe('bio:update', bio => {
@@ -114,15 +115,18 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.timerStatus.label = this.countdown + ':00';
     this.resttime = this.globalservice.resttime;
     this.globalservice.settingState.subscribe(settings => {
-      // 不适用于开启番茄钟时进行设置
       this.countdown = settings.countdown;
       this.timerStatus.label = this.countdown + ':00';
       this.timerStatus.countdown = this.countdown;
       this.resttime = settings.resttime;
       this.refreshTimeUI();
-      // setTimeout(this.stopRefreshTimeUI(), 1500);
     });
 
+    this.initTomatoIO();
+    this.initAudio();
+  }
+
+  initTomatoIO() {
     this.tomatoIO.load_tomato(this._userid);
     this.tomatoIO.load_tomato_succeed().subscribe(t => {
       if (t && t !== 'null') {
@@ -144,13 +148,18 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
       if (t && t !== 'null') {
         this.historyTomatoes.unshift(t);
         this.tomatoCount += 1;
-        const minutes = this.minuteSpan(t.startTime, t.endTime);
+        const minutes = this.helper.minuteSpan(t.startTime, t.endTime);
         this.tomatoCount_time += minutes;
       } else {
         this.loadTomatoes();
       }
     });
+  }
 
+  initAudio() {
+    this.mp3Source = document.createElement('source');
+    this.oggSource = document.createElement('source');
+    this.alertAudio = document.createElement('audio');
     this.mp3Source.setAttribute('src', './assets/audios/alert.mp3');
     this.oggSource.setAttribute('src', './assets/audios/alert.ogg');
     this.alertAudio.appendChild(this.mp3Source);
@@ -158,13 +167,16 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.alertAudio.load();
   }
 
+  /**
+   * 刷新今日番茄
+   * @param refresher
+   */
   doRefreshTodayTomato(refresher) {
     this.loadTomatoes(refresher);
   }
 
   loadTomatoes(refresher?) {
     this.tomatoservice.getTodayTomatos().subscribe(data => {
-      // "{"status":"fail","description":"Token verify failed"}"
       if (refresher) {
         refresher.complete();
       }
@@ -175,12 +187,15 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
         this.tomatoCount_time = 0;
         for (let i = 0; i < list.length; i++) {
           if (list[i].startTime && list[i].endTime) {
-            const minutes = this.minuteSpan(list[i].startTime, list[i].endTime);
+            const minutes = this.helper.minuteSpan(
+              list[i].startTime,
+              list[i].endTime
+            );
             this.tomatoCount_time += minutes;
           }
         }
       } else {
-        // token 过期( TODO )
+        // token 过期
         this.app.getRootNav().setRoot(
           'LoginPage',
           {
@@ -197,25 +212,10 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.refreshTimeUI();
+  }
   ngOnDestroy() {}
-
-  minuteSpan(startTime, endTime) {
-    const timeSpan =
-      new Date(endTime).getTime() - new Date(startTime).getTime();
-    const minutes = Math.floor((timeSpan % (3600 * 1000)) / (60 * 1000));
-    return minutes;
-  }
-
-  addTask() {
-    const profileModal = this.modalCtrl.create('TaskPage');
-    profileModal.onDidDismiss(data => {
-      if (data.task) {
-        console.log(data.task);
-        this.startTask(data.task, true);
-      }
-    });
-    profileModal.present();
-  }
 
   slideChanged() {
     const currentIndex = this.slides.getActiveIndex();
@@ -235,8 +235,15 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
-    this.refreshTimeUI();
+  addTask() {
+    const profileModal = this.modalCtrl.create('TaskPage');
+    profileModal.onDidDismiss(data => {
+      if (data.task) {
+        console.log(data.task);
+        this.startTask(data.task, true);
+      }
+    });
+    profileModal.present();
   }
 
   refreshTimeUI() {
@@ -274,7 +281,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
       this.showPrompt();
     } else {
       this.stopTimer();
-      this.startRestTimer();
+      this.startRestTimer(new Date());
     }
   }
 
@@ -301,7 +308,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
         {
           text: '提交',
           handler: data => {
-            // 创建tomato
             const tomatoDTO: any = {
               taskid: this.activeTomato._id,
               num: this.activeTomato.num,
@@ -317,11 +323,14 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
             };
             this.historyTomatoes.push(Object.assign({}, tomato));
             this.tomatoCount += 1;
-            const minutes = this.minuteSpan(tomato.startTime, new Date());
+            const minutes = this.helper.minuteSpan(
+              tomato.startTime,
+              new Date()
+            );
             this.tomatoCount_time += minutes;
             this.tomatoIO.break_tomato(this._userid, tomatoDTO);
             this.stopTimer();
-            this.startRestTimer();
+            this.startRestTimer(new Date());
           },
         },
       ],
@@ -330,30 +339,7 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * 开启休息时钟
-   */
-  startRestTimer() {
-    this.refreshTimeUI();
-    this.resttimestart = new Date();
-    if (typeof this.resttimeout !== 'undefined') {
-      clearTimeout(this.resttimeout);
-      this.timerStatus.reset();
-    }
-    this.isResting = true;
-    this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
-    // 休息任务提醒
-    this._rest_notifyID += 1;
-    this.localNotifications.schedule({
-      id: this._rest_notifyID,
-      text: '休息完了，赶紧开启下一个番茄钟吧!',
-      at: new Date(new Date().getTime() + 5 * 60 * 1000),
-      sound: 'file://assets/audios/finish.wav',
-      led: 'FF0000',
-    });
-  }
-
-  /**
-   * 开启番茄钟
+   * 开启番茄计时
    */
   startTimer() {
     this.refreshTimeUI();
@@ -387,7 +373,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.showWhiteNoiseIcon = true;
     this.startPlayWhiteNoise();
   }
-
   onTimeout() {
     const datenow: number = new Date().getTime();
     const startTime: number = this.activeTomato.startTime.getTime();
@@ -397,13 +382,12 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     const percentage = dataspan / (this.countdown * 60 * 1000);
 
     this.timerStatus.percentage = percentage;
-    this.timerStatus.label = this.secondsToMMSS(
+    this.timerStatus.label = this.helper.secondsToMMSS(
       this.countdown * 60 - parseInt(secondspan + '', 10)
     );
-    // 倒计时结束
     if (dataspan >= this.countdown * 60 * 1000) {
       // this.alertAudio.play();
-      this.startRestTimer();
+      this.startRestTimer(new Date(startTime + this.countdown * 60 * 1000));
       this.activeTomato = null;
       this.showWhiteNoiseIcon = false;
       this.stopPlayWhiteNoise();
@@ -411,6 +395,29 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.mytimeout = setTimeout(this.onTimeout.bind(this), 1000);
     }
+  }
+
+  /**
+   * 开启休息计时
+   */
+  startRestTimer(resttimestart) {
+    this.refreshTimeUI();
+    this.resttimestart = resttimestart;
+    if (typeof this.resttimeout !== 'undefined') {
+      clearTimeout(this.resttimeout);
+      this.timerStatus.reset();
+    }
+    this.isResting = true;
+    this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
+    // 休息任务提醒
+    this._rest_notifyID += 1;
+    this.localNotifications.schedule({
+      id: this._rest_notifyID,
+      text: '休息完了，赶紧开启下一个番茄钟吧!',
+      at: new Date(new Date().getTime() + 5 * 60 * 1000),
+      sound: 'file://assets/audios/finish.wav',
+      led: 'FF0000',
+    });
   }
 
   onRestTimeout() {
@@ -422,12 +429,11 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     const percentage = dataspan / (this.resttime * 60 * 1000);
 
     this.timerStatus.percentage = percentage;
-    this.timerStatus.label = this.secondsToMMSS(
+    this.timerStatus.label = this.helper.secondsToMMSS(
       this.resttime * 60 - parseInt(secondspan + '', 10)
     );
 
     if (dataspan >= this.resttime * 60 * 1000) {
-      // this.alertAudio.play();
       this.isResting = false;
       this.timerStatus.reset();
       setTimeout(this.stopRefreshTimeUI, 3500);
@@ -447,24 +453,6 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     this.showWhiteNoiseIcon = false;
     this.stopPlayWhiteNoise();
     this.stopRefreshTimeUI();
-  }
-
-  secondsToMMSS(timeInSeconds: number) {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = timeInSeconds - minutes * 60;
-    let retStr = '';
-    if (minutes < 10) {
-      retStr += '0' + minutes;
-    } else {
-      retStr += minutes;
-    }
-    retStr += ':';
-    if (seconds < 10) {
-      retStr += '0' + seconds;
-    } else {
-      retStr += seconds;
-    }
-    return retStr;
   }
 
   playVoiceRecord(tomato) {
@@ -487,17 +475,27 @@ export class IndexPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  /**
+   * 获取文件名称
+   * @param url
+   */
   getFileName(url) {
     const arr = url.split('/');
     const fileName = arr[arr.length - 1];
     return fileName;
   }
 
+  /**
+   * 停止播放白噪音
+   */
   stopPlayWhiteNoise() {
     this.whiteNoiseIsplaying = false;
     this.voiceService.stop_local_voice();
   }
 
+  /**
+   * 播放白噪音
+   */
   startPlayWhiteNoise() {
     this.whiteNoiseIsplaying = true;
     this.voiceService.play_local_voice('assets/audios/white_noise.mp3', true);
