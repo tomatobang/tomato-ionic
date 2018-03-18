@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IndexPage } from './index';
+import { IndexIndexPage } from './index/index';
+import { TodaylistComponent } from './todaylist/todaylist';
 import { IonicPageModule } from 'ionic-angular';
 
 import {
@@ -15,12 +17,13 @@ import { VoicePlayService } from '../../providers/utils/voiceplay.service';
 import { File } from '@ionic-native/file';
 import { Media } from '@ionic-native/media';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
   declarations: [
     IndexPage,
+    IndexIndexPage,
+    TodaylistComponent,
     AngularRoundProgressDirective
   ],
   imports: [IonicPageModule.forChild(IndexPage), TimelineModule, SharedModule],

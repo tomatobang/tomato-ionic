@@ -17,79 +17,12 @@
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
         <!-- 首页   &&-->
         <ion-slide>
-            <div class="tomato-user-bio">
-                {{ _user_bio? _user_bio: '暂无签名！' }}
-            </div>
-            <div class="start-old-task" *ngIf="_task.title && !activeTomato && !isResting">
-                <label>继续上次任务:</label>
-                <span>{{ _task.title }}</span>
-                <div>
-                    <ion-icon class="tomato-replay-icon" ios="ios-play" md="md-play" (click)="startTask(_task,true)"></ion-icon>
-                </div>
-            </div>
-            <div>
-                <div angularRoundProgress [(timerStatus)]="timerStatus"></div>
-            </div>
-            <div class="active-task">
-                <div class="bs-callout bs-callout-info" *ngIf="activeTomato">
-                    <h4 class="active-task-title">{{ activeTomato.title }}</h4>
-                    <p class="active-task-desc">{{ activeTomato.description }}</p>
-                </div>
-                <div class="bs-callout bs-callout-info" *ngIf="isResting">
-                    <h4 class="rest-title">休息中....</h4>
-                </div>
-                <button ion-button block outline color="danger" class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</button>
-            </div>
-            <div class="white-noise-tag-icon">
-                <ion-icon ios="ios-volume-up" md="md-volume-up" (click)="stopPlayWhiteNoise()" *ngIf="showWhiteNoiseIcon && whiteNoiseIsplaying">
-                    <span class="white-noise-icon-label">白噪音</span>
-                </ion-icon>
-                <ion-icon ios="ios-volume-off" md="md-volume-off" (click)="startPlayWhiteNoise()" *ngIf="showWhiteNoiseIcon && !whiteNoiseIsplaying">
-                    <span class="white-noise-icon-label">白噪音</span>
-                </ion-icon>
-
-            </div>
+         <cmp-index-index></cmp-index-index>
         </ion-slide>
 
         <!-- 今日番茄钟 -->
         <ion-slide class="tomato-today-slide">
-            <ion-card>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6>
-                            <div>番茄钟数目</div>
-                            <div class="today-tomatoCount">{{ tomatoCount }}</div>
-                        </ion-col>
-                        <ion-col col-6>
-                            <div>番茄钟时长(min)</div>
-                            <div class="today-tomatoCount">{{ tomatoCount_time }}</div>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-card>
-
-            <!-- 这里可以按照时间进度进行分组，再进行展示-->
-            <timeline>
-                <timeline-item [nzColor]="'red'" *ngFor="let tomato of historyTomatoes" class="tomato-today-list" track="tooling">
-                    <ng-template #custom>
-                        <ion-avatar item-start>
-                            <img src="assets/tomato.png">
-                        </ion-avatar>
-                    </ng-template>
-                    <div class="tomato-start-end-time-block">
-                        <span class="tomato-start-end-time">{{ tomato.startTime | date:'shortTime' }} - {{ tomato.endTime | date:'shortTime' }}</span>
-                    </div>
-                    <h3>
-                        <span [ngClass]="{'text-breaked':tomato.succeed==0}">{{ tomato.title | StringTruncate: 20 }}</span>
-                        <img [src]="voicePlaySrc" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
-                    </h3>
-                    <div *ngIf="tomato.breakReason" class="tomato-break-reason">(中断原因:{{ tomato.breakReason }})</div>
-                </timeline-item>
-
-                <ng-template #pending>
-                    <ion-icon ios="ios-bookmark" md="md-bookmark"></ion-icon>
-                </ng-template>
-            </timeline>
+            <todaylist></todaylist>
         </ion-slide>
     </ion-slides>
 

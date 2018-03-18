@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, ViewController, Platform } from 'ionic-angular';
 import { OnlineTaskService } from '../../../providers/data.service';
 import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
+import { Helper } from '../../../providers/utils/helper';
 import { GlobalService } from '../../../providers/global.service';
 import { VoiceRecorderComponent } from '../../../components/voice-recorder/';
 import { baseUrl } from '../../../config';
@@ -39,7 +40,8 @@ export class TaskPage implements OnInit {
     public viewCtrl: ViewController,
     public voiceService: VoicePlayService,
     public globalservice: GlobalService,
-    public platform: Platform
+    public platform: Platform,
+    public helper: Helper
   ) {}
 
   @ViewChild(VoiceRecorderComponent) voiceRecordCMP: VoiceRecorderComponent;
@@ -65,7 +67,7 @@ export class TaskPage implements OnInit {
 
   playVoiceRecord(task) {
     if (task.voiceUrl) {
-      const filename = this.getFileName(task.voiceUrl);
+      const filename = this.helper.getFileName(task.voiceUrl);
       task.inDownloading = true;
       task.progress = '0%';
       const remotepath = this.globalservice.qiniuDomain + filename;
@@ -95,12 +97,6 @@ export class TaskPage implements OnInit {
     } else {
       alert('此任务无音频记录！');
     }
-  }
-
-  getFileName(url) {
-    const arr = url.split('/');
-    const fileName = arr[arr.length - 1];
-    return fileName;
   }
 
   addNewTaskLink() {

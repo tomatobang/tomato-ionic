@@ -50,4 +50,14 @@ export class Helper {
     }
     return retStr;
   }
+
+  /**
+   * 获取文件名称
+   * @param url
+   */
+  getFileName(url) {
+    const arr = url.split('/');
+    const fileName = arr[arr.length - 1];
+    return fileName;
+  }
 }
