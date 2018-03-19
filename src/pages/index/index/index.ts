@@ -19,12 +19,8 @@ import { Helper } from '../../../providers/utils/helper';
   templateUrl: 'index.html',
 })
 export class IndexIndexPage implements OnInit, AfterViewInit {
-  mp3Source: HTMLSourceElement;
-  oggSource: HTMLSourceElement;
-  alertAudio: HTMLAudioElement;
-
   userid: string;
-  user_bio: string;
+  userBio: string;
   notifyID = 0;
   restnotifyID = 10000;
   currentTask = {
@@ -52,7 +48,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     },
   };
   breakReason: any;
-  // 刷新时间圆圈
   UIRefreshIntervalID: any;
 
   @ViewChild(AngularRoundProgressDirective)
@@ -71,9 +66,9 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.userid = this.globalservice.userinfo.username;
-    this.user_bio = this.globalservice.userinfo.bio;
+    this.userBio = this.globalservice.userinfo.bio;
     this.events.subscribe('bio:update', bio => {
-      this.user_bio = bio;
+      this.userBio = bio;
     });
     this.countdown = this.globalservice.countdown;
     this.timerStatus.countdown = this.countdown;
@@ -87,7 +82,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
       this.refreshTimeUI();
     });
 
-    this.initAudio();
     this.initTomatoIO();
 
     this.events.subscribe('tomato:startTask', task => {
@@ -97,17 +91,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.refreshTimeUI();
-  }
-
-  initAudio() {
-    this.mp3Source = document.createElement('source');
-    this.oggSource = document.createElement('source');
-    this.alertAudio = document.createElement('audio');
-    this.mp3Source.setAttribute('src', './assets/audios/alert.mp3');
-    this.oggSource.setAttribute('src', './assets/audios/alert.ogg');
-    this.alertAudio.appendChild(this.mp3Source);
-    this.alertAudio.appendChild(this.oggSource);
-    this.alertAudio.load();
   }
 
   initTomatoIO() {
@@ -129,18 +112,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     });
   }
 
-  refreshTimeUI() {
-    clearInterval(this.UIRefreshIntervalID);
-    this.UIRefreshIntervalID = setInterval(() => {
-      this.child.timerStatusValue = this.timerStatus;
-      this.child.render();
-    }, 1000);
-  }
-
-  stopRefreshTimeUI() {
-    clearInterval(this.UIRefreshIntervalID);
-  }
-
   startTask(task: any, raw: Boolean) {
     this.activeTomato = task;
     this.currentTask = JSON.parse(JSON.stringify(task));
@@ -152,66 +123,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     }
     this.startTimer();
     const that = this;
-  }
-
-  /**
-   * 中断
-   * @param isLocal 是否本地中断
-   */
-  breakActiveTask(isLocal) {
-    if (isLocal) {
-      this.showPrompt();
-    } else {
-      this.stopTimer();
-      this.startRestTimer(new Date());
-    }
-  }
-
-  /**
-   * 中断番茄钟弹出框
-   */
-  showPrompt() {
-    const prompt = this.alertCtrl.create({
-      title: '中断当前番茄钟',
-      message: '(可以为空)',
-      inputs: [
-        {
-          name: 'title',
-          placeholder: '请填写中断原因...',
-        },
-      ],
-      buttons: [
-        {
-          text: '取消',
-          handler: data => {
-            console.log('Cancel clicked');
-          },
-        },
-        {
-          text: '提交',
-          handler: data => {
-            const tomatoDTO: any = {
-              taskid: this.activeTomato._id,
-              num: this.activeTomato.num,
-              breakTime: 1,
-              breakReason: data.title,
-            };
-            const tomato: any = {
-              title: this.activeTomato.title,
-              startTime: this.activeTomato.startTime,
-              endTime: new Date(),
-              breakTime: 1,
-              breakReason: data.title,
-            };
-            this.events.publish('tomato:added', Object.assign({}, tomato));
-            this.tomatoIO.break_tomato(this.userid, tomatoDTO);
-            this.stopTimer();
-            this.startRestTimer(new Date());
-          },
-        },
-      ],
-    });
-    prompt.present();
   }
 
   /**
@@ -232,7 +143,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     if (this.restnotifyID > 10000) {
       this.localNotifications.cancel(this.restnotifyID).then(() => {});
     }
-    // 本地通知任务 cancel
     this.notifyID += 1;
     this.localNotifications.schedule({
       id: this.notifyID,
@@ -263,7 +173,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
       this.countdown * 60 - parseInt(secondspan + '', 10)
     );
     if (dataspan >= this.countdown * 60 * 1000) {
-      // this.alertAudio.play();
       this.startRestTimer(new Date(startTime + this.countdown * 60 * 1000));
       this.activeTomato = null;
       this.showWhiteNoiseIcon = false;
@@ -346,5 +255,77 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
   startPlayWhiteNoise() {
     this.whiteNoiseIsplaying = true;
     this.voiceService.play_local_voice('assets/audios/white_noise.mp3', true);
+  }
+
+  /**
+   * 中断
+   * @param isLocal 是否本地中断
+   */
+  breakActiveTask(isLocal) {
+    if (isLocal) {
+      this.showPrompt();
+    } else {
+      this.stopTimer();
+      this.startRestTimer(new Date());
+    }
+  }
+
+  /**
+   * 中断番茄钟弹出框
+   */
+  showPrompt() {
+    const prompt = this.alertCtrl.create({
+      title: '中断当前番茄钟',
+      message: '(可以为空)',
+      inputs: [
+        {
+          name: 'title',
+          placeholder: '请填写中断原因...',
+        },
+      ],
+      buttons: [
+        {
+          text: '取消',
+          handler: data => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: '提交',
+          handler: data => {
+            const tomatoDTO: any = {
+              taskid: this.activeTomato._id,
+              num: this.activeTomato.num,
+              breakTime: 1,
+              breakReason: data.title,
+            };
+            const tomato: any = {
+              title: this.activeTomato.title,
+              startTime: this.activeTomato.startTime,
+              endTime: new Date(),
+              breakTime: 1,
+              breakReason: data.title,
+            };
+            this.events.publish('tomato:added', Object.assign({}, tomato));
+            this.tomatoIO.break_tomato(this.userid, tomatoDTO);
+            this.stopTimer();
+            this.startRestTimer(new Date());
+          },
+        },
+      ],
+    });
+    prompt.present();
+  }
+
+  refreshTimeUI() {
+    clearInterval(this.UIRefreshIntervalID);
+    this.UIRefreshIntervalID = setInterval(() => {
+      this.child.timerStatusValue = this.timerStatus;
+      this.child.render();
+    }, 1000);
+  }
+
+  stopRefreshTimeUI() {
+    clearInterval(this.UIRefreshIntervalID);
   }
 }
