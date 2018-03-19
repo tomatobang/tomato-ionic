@@ -20,6 +20,7 @@ import { OnlineUserService } from '../../providers/data.service';
 export class MinePage implements OnInit {
   userid = '';
   username = '';
+  bio = '';
   headImg = './assets/tomato-active.png';
   showBigHeadImg = false;
 
@@ -37,6 +38,7 @@ export class MinePage implements OnInit {
 
   public ngOnInit(): void {
     this.username = this.globalservice.userinfo.username;
+    this.bio = this.globalservice.userinfo.bio;
     this.userid = this.globalservice.userinfo._id;
   }
 
@@ -113,6 +115,8 @@ export class MinePage implements OnInit {
     const modal = this.modalCtrl.create('QRImgModal', {
       userid: this.userid,
       username: this.username,
+      bio: this.bio,
+      headImg: this.headImg,
     });
     modal.onDidDismiss(data => {
       return data;

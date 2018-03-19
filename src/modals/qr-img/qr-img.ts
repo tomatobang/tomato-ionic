@@ -15,8 +15,10 @@ import lodash from 'lodash';
   templateUrl: 'qr-img.html',
 })
 export class QRImgModal {
-  private ionApp: HTMLElement;
   private qrcodeUrl: String;
+  private username: String;
+  private bio: String;
+  private headImg: String;
 
   constructor(
     private app: App,
@@ -26,6 +28,10 @@ export class QRImgModal {
   ) {
     const userid = params.get('userid');
     const username = params.get('username');
+    this.bio = params.get('bio');
+    this.headImg = params.get('headImg');
+
+    this.username = username;
     this.qrcodeUrl =
       'http://qr.liantu.com/api.php?&bg=ffffff&fg=cc0000&text=' +
       userid +
