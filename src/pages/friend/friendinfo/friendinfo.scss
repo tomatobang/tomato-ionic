@@ -11,6 +11,10 @@ page-friendinfo{
         color: #fff;
       }
     }
+
+    .req-add-friend-but{
+      text-align: center;
+    }
   
     .header-md::after{
       background-image: none;
@@ -73,7 +77,7 @@ page-friendinfo{
       .tomato-item{
         margin-bottom: 10px;
         padding: 10px;
-        height: 80px;
+        height: 60px;
         img{
           float: left;
           display: block;

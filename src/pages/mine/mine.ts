@@ -20,6 +20,7 @@ import { OnlineUserService } from '../../providers/data.service';
 export class MinePage implements OnInit {
   userid = '';
   username = '';
+  bio = '';
   headImg = './assets/tomato-active.png';
   showBigHeadImg = false;
 
@@ -37,6 +38,7 @@ export class MinePage implements OnInit {
 
   public ngOnInit(): void {
     this.username = this.globalservice.userinfo.username;
+    this.bio = this.globalservice.userinfo.bio;
     this.userid = this.globalservice.userinfo._id;
   }
 
@@ -44,9 +46,15 @@ export class MinePage implements OnInit {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
         if (readySource === 'cordova') {
-          this.native.downloadHeadImg(this.userid, false).then(url => {
-            this.headImg = `${url}?${new Date().getTime()}`;
-          });
+          this.native
+            .downloadHeadImg(
+              this.userid,
+              false,
+              this.globalservice.qiniuDomain + this.globalservice.userinfo.img
+            )
+            .then(url => {
+              this.headImg = `${url}?${new Date().getTime()}`;
+            });
         }
       });
     }
@@ -104,7 +112,12 @@ export class MinePage implements OnInit {
    * 显示二维码
    */
   showMyQRCODE() {
-    const modal = this.modalCtrl.create('QRImgModal', { userid: this.userid });
+    const modal = this.modalCtrl.create('QRImgModal', {
+      userid: this.userid,
+      username: this.username,
+      bio: this.bio,
+      headImg: this.headImg,
+    });
     modal.onDidDismiss(data => {
       return data;
     });

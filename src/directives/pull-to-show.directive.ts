@@ -6,6 +6,7 @@
 import {
   Directive,
   EventEmitter,
+  HostBinding,
   Host,
   Input,
   NgZone,
@@ -30,12 +31,9 @@ import { UIEventManager } from 'ionic-angular/gestures/ui-event-manager';
 
 @Directive({
   selector: 'pull-to-show',
-  host: {
-    '[class.refresher-active]': 'state !== "inactive"',
-    '[style.top]': '_top',
-  },
 })
 export class PullToShowDirective implements OnInit, OnDestroy {
+  @HostBinding('style.top') _top = '';
   // 私有属性
   _appliedStyles = false;
   _didStart: boolean;
@@ -44,9 +42,10 @@ export class PullToShowDirective implements OnInit, OnDestroy {
   _gesture: GestureDelegate;
   _events: UIEventManager;
   _pointerEvents: PointerEvents;
-  _top = '';
 
   state: string = STATE_INACTIVE;
+  @HostBinding('class.refresher-active')
+  _isInactive = this.state !== 'inactive';
   startY: number = null;
   currentY: number = null;
   deltaY: number = null;
@@ -131,6 +130,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     this.startY = this.currentY = coord.y;
     this.progress = 0;
     this.state = STATE_INACTIVE;
+    this._isInactive = false;
     return true;
   }
 
@@ -188,6 +188,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
       if (this.state !== STATE_INACTIVE) {
         this._zone.run(() => {
           this.state = STATE_INACTIVE;
+          this._isInactive = false;
         });
       }
 
@@ -216,6 +217,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
 
       // content scrolled all the way to the top, and dragging down
       this.state = STATE_PULLING;
+      this._isInactive = true;
     }
 
     // prevent native scroll events
@@ -254,6 +256,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     if (this.deltaY < this.pullMin) {
       // ensure it stays in the pulling state, cuz its not ready yet
       this.state = STATE_PULLING;
+      this._isInactive = true;
       return 2;
     }
 
@@ -267,7 +270,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     // it is now in the `ready` state!!
     // if they let go then it'll refresh, kerpow!!
     this.state = STATE_READY;
-
+    this._isInactive = true;
     return 4;
   }
 
@@ -305,6 +308,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     // assumes we're already back in a zone
     // they pulled down far enough, so it's ready to refresh
     this.state = STATE_TOSHOW;
+    this._isInactive = true;
 
     // place the content in a hangout position while it thinks
     this._setCss(this.pullMin + 30, this.snapbackDuration + 'ms', true, '');
@@ -343,6 +347,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
       }
 
       this.state = STATE_INACTIVE;
+      this._isInactive = false;
       this.progress = 0;
       this._didStart = this.startY = this.currentY = this.deltaY = null;
       this._setCss(0, '0ms', false, '');
@@ -357,6 +362,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
     // reset set the styles on the scroll element
     // set that the refresh is actively cancelling/completing
     this.state = state;
+    this._isInactive = state !== 'inactive';
     this._setCss(0, '', true, delay);
 
     if (this._pointerEvents) {

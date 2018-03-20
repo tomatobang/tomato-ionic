@@ -26,7 +26,7 @@ export abstract class UserService extends RebirthHttp {
 
   abstract updateUserHeadImg(data: {
     userid: string;
-    imgData: string;
+    filename: string;
   }): Observable<any>;
 
   abstract updateSex(data: { userid: string; sex: string }): Observable<any>;

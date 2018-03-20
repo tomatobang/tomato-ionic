@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { HttpClientModule  } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,8 +16,8 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
+import { CoreModule } from '../core/core.module';
 
-import { GlobalService } from '../providers/global.service';
 import { JPushService } from '../providers/utils/jpush.service';
 import { UpdateService } from '../providers/utils/update.service';
 import { TomatoIOService } from '../providers/utils/socket.io.service';
@@ -34,6 +34,7 @@ import { baseUrl } from '../config';
     RebirthHttpModule,
     BrowserModule,
     HttpClientModule,
+    CoreModule,
     IonicModule.forRoot(MyAppComponent, {
       tabsHideOnSubPages: true,
       tabsLayout: 'icon-left',
@@ -49,7 +50,6 @@ import { baseUrl } from '../config';
     StatusBar,
     BackgroundMode,
     SplashScreen,
-    GlobalService,
     JPushService,
     NativeService,
     TomatoIOService,

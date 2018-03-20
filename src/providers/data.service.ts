@@ -34,6 +34,7 @@ import { CacheService } from './cache.service';
 export * from './data/task';
 export * from './data/tomato';
 export * from './data/user';
+export * from './data/user_friend';
 
 @Injectable()
 export class DataService {

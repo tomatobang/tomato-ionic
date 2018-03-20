@@ -1,7 +1,3 @@
-/**
- * 这块涉及到业务，算不上纯组件
- */
-
 import {
   Component,
   forwardRef,
@@ -19,6 +15,7 @@ import {
   FileUploadOptions,
   FileTransferObject,
 } from '@ionic-native/file-transfer';
+import { QiniuUploadService } from '../../providers/qiniu.upload.service';
 
 declare let window;
 
@@ -44,6 +41,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   mediaRec: MediaObject;
   src = '';
   path = '';
+  voiceDuration = 0;
   voice = {
     ImgUrl: './assets/voice/recog000.png',
     reset() {
@@ -71,7 +69,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     private media: Media,
     public platform: Platform,
     private elRef: ElementRef,
-    private transfer: FileTransfer
+    private transfer: FileTransfer,
+    private qiniu: QiniuUploadService
   ) {
     if (this.platform.is('ios')) {
       this.path = window.cordova ? window.cordova.file.documentsDirectory : '';
@@ -88,7 +87,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pressGesture = new Gesture(this.el, { time: 200 });
     this.pressGesture.listen();
-    // 长按录音
+
     this.pressGesture.on('press', e => {
       console.log('press开始了');
       this.onHold();
@@ -122,11 +121,11 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.isStartRecord = true;
     this.recordWait = false;
     try {
-      // 实例化录音类
+      // 初始化录音
       this.startRec();
       // 开始录音
       this.mediaRec.startRecord();
-      // 已经开始
+      // 开始标识置 true
       this.isStartedVoice = true;
       return false;
     } catch (err) {
@@ -148,7 +147,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
           clearInterval(voicechange);
         }
       }, 400);
-      // 实例化录音类
       this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
       this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
       this.mediaRec.onSuccess.subscribe(() =>
@@ -162,11 +160,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
 
   onRelease() {
     try {
-      // 如果没有开始直接返回
       if (!this.isStartedVoice) {
         return;
       }
-      // 还原标识
       this.isStartedVoice = false;
       this.recordWait = true;
       setTimeout(() => {
@@ -176,20 +172,16 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         this.mediaRec.stopRecord();
         this.mediaRec.release();
       }
-      // 实例化录音类, src:需要播放的录音的路径
       this.mediaRec = this.media.create(this.getMediaURL(this.src));
-      // 录音执行函数
       this.mediaRec.onSuccess.subscribe(() =>
         console.log('touchend():Audio Success')
       );
-      // 录音失败执行函数
       this.mediaRec.onError.subscribe(error =>
         console.log('touchend():Audio Error!', error)
       );
       this.mediaRec.play();
       this.mediaRec.stop();
 
-      // 在html中显示当前状态
       let counter = 0;
       const timerDur = setInterval(() => {
         counter = counter + 100;
@@ -205,6 +197,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
           }
           this.temp_file_path = tmpPath.replace('file://', '');
           this.couldPlay = true;
+          this.voiceDuration = dur;
           if (this.mediaRec) {
             this.mediaRec.release();
           }
@@ -230,11 +223,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.mediaRec = this.media.create(voiFile);
 
     this.mediaRec.onSuccess.subscribe(() => {
-      // 播放完成
       console.log('play():Audio Success');
     });
     this.mediaRec.onError.subscribe(error => {
-      // 播放失败
       console.log('play():Audio Error: ', error);
     });
 
@@ -257,66 +248,37 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     return (this.path + s).replace('file://', '');
   }
 
-  /**
-   * 上传音频文件
-   */
-  uploadVoiceFile(token) {
+  uploadVoiceFile() {
     return new Promise((resolve, reject) => {
       this.isUploading = true;
       if (!this.temp_file_path) {
         reject('没有录音!');
       }
+      const fileName = this.temp_file_path.substr(
+        this.temp_file_path.lastIndexOf('/') + 1
+      );
 
-      const tmpPath = this.temp_file_path;
-      if (!this.uploadUrl) {
-        reject('uploadUrl 不存在');
-        return;
-      } else {
-        const fileTransfer: FileTransferObject = this.transfer.create();
-        if (!this._postParams) {
-          reject('_postParams 不存在');
-          return;
+      this.qiniu.initQiniu().subscribe(data => {
+        if (data) {
+          this.qiniu
+            .uploadLocFile(
+              this.temp_file_path,
+              this._postParams.userid +
+                '_' +
+                this._postParams.taskid +
+                '_' +
+                fileName
+            )
+            .subscribe(ret => {
+              if (ret.data) {
+                this.isUploading = false;
+                resolve(fileName);
+              } else {
+                this.uploadProgress = ret.value;
+              }
+            });
         }
-
-        const options: FileUploadOptions = {
-          httpMethod: 'post',
-          fileKey: 'file',
-          fileName: tmpPath.substr(tmpPath.lastIndexOf('/') + 1),
-          mimeType: 'text/plain',
-          headers: {
-            Authorization: token,
-          },
-          params: this._postParams,
-        };
-        console.log(tmpPath, this.uploadUrl, options);
-        fileTransfer.upload(tmpPath, this.uploadUrl, options, true).then(
-          r => {
-            console.log('Code = ' + r.responseCode);
-            console.log('Response = ' + r.response);
-            console.log('Sent = ' + r.bytesSent);
-            this.isUploading = false;
-            resolve(options.fileName);
-          },
-          err => {
-            reject(err);
-            alert('An error has occurred: Code = ' + err.code);
-            console.log('upload error source ' + err.source);
-            console.log('upload error target ' + err.target);
-          }
-        );
-
-        fileTransfer.onProgress(progressEvent => {
-          if (progressEvent.lengthComputable) {
-            const progress = window.parseInt(
-              progressEvent.loaded / progressEvent.total * 100,
-              10
-            );
-            this.uploadProgress = progress;
-          } else {
-            this.uploadProgress += 14;
-          }
-        });
-      }
+      });
     });
   }
 }

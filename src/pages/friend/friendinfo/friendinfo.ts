@@ -4,7 +4,7 @@ import { NavController, NavParams, Content, IonicPage } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-friendinfo',
-  templateUrl: 'friendinfo.html'
+  templateUrl: 'friendinfo.html',
 })
 export class FriendInfoPage {
   friendName = '张三';
@@ -39,4 +39,6 @@ export class FriendInfoPage {
     }
     this.ref.detectChanges();
   }
+
+  reqAddFriend() {}
 }

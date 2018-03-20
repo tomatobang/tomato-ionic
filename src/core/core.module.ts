@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// import { LoggerService } from './logger.service';
+import { GlobalService } from '../providers/global.service';
+import { QiniuUploadService } from '../providers/qiniu.upload.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
   exports: [],
   declarations: [],
-  providers: [], // LoggerService
+  providers: [GlobalService, QiniuUploadService],
 })
 export class CoreModule {}

@@ -1,10 +1,18 @@
 <ion-content no-bounce padding>
   <close-popup color="dark" large="true" (closePopUp)="dismiss()"></close-popup>
-  <ion-grid>
-    <ion-row>
-      <ion-col text-center>
-        <img class="qr-placeholder" [src]="qrcodeUrl">
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+        <img [src]="headImg">
+      </ion-avatar>
+      <h2>{{ username }}</h2>
+      <p>{{ bio }}</p>
+    </ion-item>
+
+    <img class="qr-placeholder" [src]="qrcodeUrl">
+
+    <ion-item>
+      <p>扫一扫上面的二维码图案，加我好友</p>
+    </ion-item>
+  </ion-card>
 </ion-content>

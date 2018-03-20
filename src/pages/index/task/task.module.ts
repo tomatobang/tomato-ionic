@@ -17,7 +17,11 @@ import { Media } from '@ionic-native/media';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
-  declarations: [TaskPage, VoiceRecorderComponent, AutosizeDirective],
+  declarations: [
+    TaskPage,
+    VoiceRecorderComponent,
+    AutosizeDirective,
+  ],
   imports: [IonicPageModule.forChild(TaskPage), SharedModule],
   providers: [
     Media,

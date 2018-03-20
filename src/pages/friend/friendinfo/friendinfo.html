@@ -11,7 +11,9 @@
     <h4>张三</h4>
     <p>work hard and you can find your path!</p>
   </div>
-
+  <p class="req-add-friend-but">
+    <button ion-button color="secondary" (click)="reqAddFriend()">保存到通讯录</button>
+  </p>
   <div class="tomatoes">
     <div class="tomato-item" *ngFor=" let i of tomatoes">
       <img src="assets/tomato-active.png" alt="">

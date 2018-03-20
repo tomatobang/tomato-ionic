@@ -4,7 +4,7 @@ import {
   AlertController,
   LoadingController,
   ToastController,
-  Toast
+  Toast,
 } from 'ionic-angular';
 import { GlobalService } from '../global.service';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -118,7 +118,7 @@ export class NativeService {
       cssClass: 'my-toast-style',
       showCloseButton: true,
       closeButtonText: '关闭',
-      dismissOnPageChange: true
+      dismissOnPageChange: true,
     });
   }
 
@@ -127,7 +127,7 @@ export class NativeService {
    * @param filename 文件名称
    * @param change 是否为更换头像
    */
-  downloadHeadImg(filename, change): Promise<any> {
+  downloadHeadImg(filename, change, remotepath): Promise<any> {
     const targetPath = this.helper.getBasePath() + 'headimg/';
     const targetPathWithFileName =
       this.helper.getBasePath() + 'headimg/' + filename + '.png';
@@ -144,7 +144,7 @@ export class NativeService {
           if (change) {
             // 先删除本地文件再下载
             this.file.removeFile(targetPath, filename + '.png').then(() => {
-              this.filedownload(filename, targetPathWithFileName).then(
+              this.filedownload(remotepath, targetPathWithFileName).then(
                 (file: any) => {
                   this.headimgurl = file;
                   resolve(file);
@@ -161,7 +161,7 @@ export class NativeService {
           }
         },
         error => {
-          this.filedownload(filename, targetPathWithFileName).then(
+          this.filedownload(remotepath, targetPathWithFileName).then(
             (file: any) => {
               this.headimgurl = file;
               resolve(file);
@@ -177,21 +177,21 @@ export class NativeService {
 
   /**
    * 文件下载
-   * @param filename
+   * @param remotepath
    * @param targetPathWithFileName 带文件名的下载地址
    */
-  filedownload(filename, targetPathWithFileName) {
+  filedownload(remotepath, targetPathWithFileName) {
     return new Promise((resolve, reject) => {
       const options = {
         headers: {
-          Authorization: this.globalservice.token
-        }
+          Authorization: this.globalservice.token,
+        },
       };
       const trustHosts = true;
       const fileTransfer: FileTransferObject = this.transfer.create();
       fileTransfer
         .download(
-          this.globalservice.serverAddress + 'api/user/headimg/' + filename,
+          remotepath,
           targetPathWithFileName,
           trustHosts,
           options

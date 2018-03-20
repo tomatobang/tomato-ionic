@@ -69,7 +69,7 @@ export class LoginPage implements OnInit {
       console.log(data);
       this.globalservice.token = token;
       this.globalservice.userinfo = JSON.stringify(userinfo);
-      this.rebirthProvider.headers({ Authorization: token });
+      this.rebirthProvider.headers({ Authorization: token }, true);
       this.jPushService.init(this.user.username);
       this.navCtrl.setRoot('TabsPage', {
         animate: true,

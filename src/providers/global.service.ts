@@ -21,6 +21,7 @@ export class GlobalService {
   private _isAlwaysLight = false;
 
   serverAddress = baseUrl;
+  qiniuDomain = 'http://osv2a938x.bkt.clouddn.com/';
 
   constructor(public events: Events) {}
 
@@ -44,10 +45,6 @@ export class GlobalService {
 
   set appIsActive(value) {
     this._isActive = value;
-  }
-
-  get RongyunAppKey() {
-    return 'lmxuhwagxgt9d';
   }
 
   public get userinfostate(): Observable<any> {
@@ -94,8 +91,13 @@ export class GlobalService {
 
   set userinfo(value: any) {
     if (typeof value === 'string') {
-      this._userinfo = JSON.parse(value);
-      localStorage.setItem('userinfo', value);
+      if (value === '') {
+        this._userinfo = null;
+        localStorage.removeItem('userinfo');
+      } else {
+        this._userinfo = JSON.parse(value);
+        localStorage.setItem('userinfo', value);
+      }
     } else if (typeof value === 'object') {
       this._userinfo = value;
       localStorage.setItem('userinfo', JSON.stringify(value));
