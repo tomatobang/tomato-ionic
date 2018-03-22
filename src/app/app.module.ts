@@ -36,10 +36,21 @@ import { baseUrl } from '../config';
     HttpClientModule,
     CoreModule,
     IonicModule.forRoot(MyAppComponent, {
-      tabsHideOnSubPages: true,
-      tabsLayout: 'icon-left',
-      iconMode: 'ios',
-      swipeBackEnabled: false, // 禁用 IOS 手势滑动返回
+      platforms: {
+        android: {
+          backButtonText: '',
+          tabsHideOnSubPages: true,
+          iconMode: 'md',
+          tabsLayout: 'icon-top',
+        },
+        ios: {
+          backButtonText: '返回',
+          tabsHideOnSubPages: true,
+          iconMode: 'ios',
+          swipeBackEnabled: false, // 禁用 IOS 手势滑动返回
+          tabsLayout: 'icon-top',
+        },
+      },
     }),
     SocketIoModule.forRoot({ url: `${baseUrl}tomatobang`, options: {} }),
     IonicStorageModule.forRoot(),
