@@ -1,6 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,6 +16,7 @@ import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
 import { CoreModule } from '../core/core.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { JPushService } from '../providers/utils/jpush.service';
 import { UpdateService } from '../providers/utils/update.service';
@@ -33,8 +33,8 @@ import { baseUrl } from '../config';
     RebirthStorageModule,
     RebirthHttpModule,
     BrowserModule,
-    HttpClientModule,
     CoreModule,
+    SharedModule,
     IonicModule.forRoot(MyAppComponent, {
       platforms: {
         android: {
