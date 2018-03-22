@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PipesModule } from '../pipes/pipes.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -12,7 +12,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 @NgModule({
   imports: [
     PipesModule,
-    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -23,6 +22,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   declarations: [],
   providers: [],
-  exports: [PipesModule, TranslateModule, HttpClientModule],
+  exports: [PipesModule, TranslateModule],
 })
 export class SharedModule {}

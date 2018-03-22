@@ -23,7 +23,7 @@ export abstract class TomatoService extends RebirthHttp {
       keywords?: string
     ): Observable<Array<Tomato>>;
 
-    abstract getTodayTomatos(): Observable<Array<Tomato>>;
+    abstract getTodayTomatos(Authorization: string): Observable<Array<Tomato>>;
 
     abstract getTomatoByTitle(tomatoTitle: string): Observable<Tomato>;
 

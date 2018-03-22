@@ -69,7 +69,7 @@ export class TodaylistComponent implements OnInit {
   }
 
   loadTomatoes(refresher?) {
-    this.tomatoservice.getTodayTomatos().subscribe(data => {
+    this.tomatoservice.getTodayTomatos(this.globalservice.token).subscribe(data => {
       if (refresher) {
         refresher.complete();
       }

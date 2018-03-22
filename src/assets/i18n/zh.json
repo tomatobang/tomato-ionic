@@ -1,5 +1,9 @@
 {
   "HOME": {
-    "IndexPage": "首页"
+    "IndexPage": "首页",
+    "Tomatobang": "番茄帮",
+    "Message": "消息",
+    "Discover": "发现",
+    "Me": "我"
   }
 }

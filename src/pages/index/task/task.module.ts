@@ -17,11 +17,7 @@ import { Media } from '@ionic-native/media';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
-  declarations: [
-    TaskPage,
-    VoiceRecorderComponent,
-    AutosizeDirective,
-  ],
+  declarations: [TaskPage, VoiceRecorderComponent, AutosizeDirective],
   imports: [IonicPageModule.forChild(TaskPage), SharedModule],
   providers: [
     Media,
@@ -31,9 +27,5 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     OnlineTomatoService,
     VoicePlayService,
   ],
-  // 打开注释会报错
-  // exports: [
-  //     TaskPage
-  // ]
 })
 export class TaskPageModule {}

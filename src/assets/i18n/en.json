@@ -1,5 +1,9 @@
 {
   "HOME": {
-    "IndexPage": "index"
+    "IndexPage": "index",
+    "Tomatobang": "Tomatobang",
+    "Message": "Message",
+    "Discover": "Discover",
+    "Me": "Me"
   }
 }

@@ -53,7 +53,6 @@ export class LoginPage implements OnInit {
 
   public doLogin(): void {
     console.log('doLogin', this.user);
-
     this.service.login(this.user).subscribe(data => {
       const retOBJ = data;
       const status = retOBJ.status;

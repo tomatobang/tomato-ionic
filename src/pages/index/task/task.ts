@@ -12,7 +12,6 @@ import { transition } from '@angular/core/src/animation/dsl';
 @Component({
   selector: 'cmp-task',
   templateUrl: 'task.html',
-  providers: [],
 })
 export class TaskPage implements OnInit {
   showDismissButton = true;

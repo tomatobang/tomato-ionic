@@ -10,7 +10,8 @@ import {
   DELETE,
   Query,
   Path,
-  Body
+  Body,
+  Header
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';
 
@@ -53,9 +54,8 @@ export class OnlineTomatoService extends TomatoService {
     return null;
   }
 
-  // @Cacheable({ pool: 'tomatos' })
   @GET(baseUrl + 'filter/tomatotoday')
-  getTodayTomatos(): Observable<Array<Tomato>> {
+  getTodayTomatos(@Header('Authorization')  Authorization: string): Observable<Array<Tomato>> {
     return null;
   }
 

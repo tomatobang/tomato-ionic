@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { GlobalService } from '../providers/global.service';
 import { QiniuUploadService } from '../providers/qiniu.upload.service';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   imports: [CommonModule],
