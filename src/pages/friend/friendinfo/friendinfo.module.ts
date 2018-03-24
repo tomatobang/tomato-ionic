@@ -4,6 +4,6 @@ import { IonicPageModule } from 'ionic-angular';
 
 @NgModule({
   declarations: [FriendInfoPage],
-  imports: [IonicPageModule.forChild(FriendInfoPage)]
+  imports: [IonicPageModule.forChild(FriendInfoPage)],
 })
 export class FriendInfoPageModule {}

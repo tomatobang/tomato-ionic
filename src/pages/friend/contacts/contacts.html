@@ -10,7 +10,7 @@
   <ion-scroll scrollHeight #scrollMe scrollX="true" scrollY="true">
     <div *ngFor="let friendgroup of newFriendList">
       <a class="contact-nav-char" href="javascript:void(0)" id="{{friendgroup.id}}">{{ friendgroup.firstCode }}</a>
-      <ion-item class="contact-friend-item" *ngFor="let friend of friendgroup.data">
+      <ion-item class="contact-friend-item" *ngFor="let friend of friendgroup.data" (click)="toFriendInfo()">
         <img [src]="friend.headImg?friend.headImg:'./assets/tomato-active.png'" class="contact-headImg" />
         <span class="contact-friend-name" >{{ friend.name }}</span>
       </ion-item>

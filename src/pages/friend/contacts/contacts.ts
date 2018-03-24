@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { IonicPage, Scroll } from 'ionic-angular';
+import { IonicPage, Scroll, NavController } from 'ionic-angular';
 import { PinyinService } from '../../../providers/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
 
@@ -16,7 +16,11 @@ export class ContactsPage implements OnInit {
   friendlist = [];
   newFriendList = [];
 
-  constructor(private pinyinUtil: PinyinService, private http: HttpClient) {
+  constructor(
+    private pinyinUtil: PinyinService,
+    private http: HttpClient,
+    public navCtrl: NavController
+  ) {
     this.getFriendlist()
       .then(res => {
         this.friendlist = res;
@@ -56,5 +60,9 @@ export class ContactsPage implements OnInit {
     const element = <HTMLElement>this.myScrollContainer._scrollContent
       .nativeElement;
     element.scrollTop = evt;
+  }
+
+  toFriendInfo() {
+    this.navCtrl.push('FriendInfoPage');
   }
 }

@@ -1,0 +1,19 @@
+friend-tomatoes {
+  .tomatoes {
+    background-color: #fff;
+    padding-top: 20px;
+    .tomato-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      height: 60px;
+      img {
+        float: left;
+        display: block;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, 0.8);
+      }
+    }
+  }
+}
