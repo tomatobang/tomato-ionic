@@ -1,26 +1,29 @@
-import { ElementRef, HostListener, Directive, OnInit } from '@angular/core';
+import {
+  ElementRef,
+  HostListener,
+  Directive,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 
 @Directive({
-  selector: '[autoSizeTextarea]'
+  selector: '[autoSizeTextarea]',
 })
-
 export class AutosizeDirective implements OnInit {
   @HostListener('input', ['$event.target'])
   onInput(textArea: HTMLTextAreaElement): void {
-    this.adjust();
+    this.adjust(textArea);
   }
 
-  constructor(public element: ElementRef) {
-  }
+  constructor(public element: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit(): void {
-    setTimeout(() => this.adjust(), 0);
+    setTimeout(() => this.adjust(this.element.nativeElement), 0);
   }
 
-  adjust(): void {
-    const textArea = this.element.nativeElement.getElementsByTagName('textarea')[0];
-    textArea.style.overflow = 'hidden';
-    textArea.style.height = 'auto';
-    textArea.style.height = textArea.scrollHeight + 'px';
+  adjust(textArea): void {
+    this.renderer.setStyle(textArea, 'overflow', 'hidden');
+    this.renderer.setStyle(textArea, 'height', 'auto');
+    this.renderer.setStyle(textArea, 'height', textArea.scrollHeight + 'px');
   }
 }
