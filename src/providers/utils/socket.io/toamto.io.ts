@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Socket } from 'ng-socket-io';
+import { TomatoSocket } from './config/tomato';
 import { Tomato } from '../../data/tomato';
 
 @Injectable()
 export class TomatoIOService {
-  constructor(private socket: Socket) {}
+  constructor(private socket: TomatoSocket) {}
 
   /**
    * 第一次，用于加载当前tomato

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Socket } from 'ng-socket-io';
+import { ChatSocket } from './config/chat';
 import { Message } from '../../data/message/message.model';
-
 
 @Injectable()
 export class ChatIOService {
-  constructor(private socket: Socket) {}
+  constructor(private socket: ChatSocket) {}
 
   /**
    * 登录

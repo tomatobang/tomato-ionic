@@ -12,7 +12,6 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { Network } from '@ionic-native/network';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
-import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
 import { CoreModule } from '../core/core.module';
@@ -20,12 +19,18 @@ import { SharedModule } from '../shared/shared.module';
 
 import { JPushService } from '../providers/utils/jpush.service';
 import { UpdateService } from '../providers/utils/update.service';
-import { TomatoIOService } from '../providers/utils/socket.io.service';
+// see:https://www.npmjs.com/package/ng-socket-io
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import {
+  TomatoIOService,
+  ChatIOService,
+  ChatSocket,
+  TomatoSocket,
+} from '../providers/utils/socket.io.service';
 import { Helper } from '../providers/utils/helper';
 import { NativeService } from '../providers/utils/native.service';
 
 import { MyAppComponent } from './app.component';
-import { baseUrl } from '../config';
 
 @NgModule({
   declarations: [MyAppComponent],
@@ -52,7 +57,7 @@ import { baseUrl } from '../config';
         },
       },
     }),
-    SocketIoModule.forRoot({ url: `${baseUrl}tomatobang`, options: {} }),
+    SocketIoModule,
     IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
@@ -64,6 +69,9 @@ import { baseUrl } from '../config';
     JPushService,
     NativeService,
     TomatoIOService,
+    ChatIOService,
+    ChatSocket,
+    TomatoSocket,
     Helper,
     UpdateService,
     File,

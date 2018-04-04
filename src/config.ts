@@ -8,3 +8,6 @@ console.log('ENV:', ENV.mode);
 //     serverUrl = 'http://192.168.3.223:7001/';
 // }
 export const baseUrl = serverUrl;
+
+export const chatSocketUrl = serverUrl + 'chat';
+export const tomatoSocketUrl = serverUrl + 'tomatobang';
