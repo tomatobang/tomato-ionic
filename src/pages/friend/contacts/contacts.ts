@@ -1,4 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+} from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 import { HttpClient } from '@angular/common/http';
 
 import { IonicPage, Scroll, NavController } from 'ionic-angular';
@@ -13,13 +24,17 @@ import { Friendinfo } from './providers/contact-friendinfo.model';
 export class ContactsPage implements OnInit {
   // 滚动条
   @ViewChild('scrollMe') private myScrollContainer: Scroll;
+  private navChars: QueryList<HTMLLinkElement>;
   friendlist = [];
   newFriendList = [];
+
+  stickerChar = '123';
 
   constructor(
     private pinyinUtil: PinyinService,
     private http: HttpClient,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private el: ElementRef
   ) {
     this.getFriendlist()
       .then(res => {
@@ -50,10 +65,46 @@ export class ContactsPage implements OnInit {
         this.friendlist,
         'name'
       );
+
+      setTimeout(() => {
+        this.navChars = this.el.nativeElement.querySelectorAll(
+          '.contact-nav-char'
+        );
+      });
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // this.myScrollContainer.addScrollEventListener((event: MouseEvent) => {
+    //   if (this.navChars) {
+    //     this.navChars.forEach(element => {
+    //       console.log(element.textContent, element.offsetTop);
+    //     });
+    //   }
+    // });
+
+    const event$ = Observable.fromEvent(
+      this.myScrollContainer._scrollContent.nativeElement,
+      'scroll'
+    )
+      .debounceTime(100)
+      .distinctUntilChanged();
+    event$.subscribe(event => {
+      if (this.navChars) {
+        let ctSrollTop = this.myScrollContainer._scrollContent.nativeElement
+          .scrollTop;
+        let target =  this.navChars[0];
+        this.navChars.forEach(element => {
+          if (element.offsetTop - ctSrollTop >= 10) {
+          } else {
+            target = element;
+          }
+          this.stickerChar = target.textContent;
+          console.log(element.textContent, element.offsetTop);
+        });
+      }
+    });
+  }
 
   OnNavcScroll(evt) {
     const element = <HTMLElement>this.myScrollContainer._scrollContent

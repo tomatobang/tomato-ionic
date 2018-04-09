@@ -5,6 +5,8 @@
 </ion-header>
 
 <ion-content padding>
+  <div class="contact-sticker contact-nav-char">{{ stickerChar }}</div>
+
   <wave-side-bar (scrollHandler)="OnNavcScroll($event)" [wavadata]="newFriendList"></wave-side-bar>
 
   <ion-scroll scrollHeight #scrollMe scrollX="true" scrollY="true" class="contact-scroll">
