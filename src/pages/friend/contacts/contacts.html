@@ -7,12 +7,12 @@
 <ion-content padding>
   <wave-side-bar (scrollHandler)="OnNavcScroll($event)" [wavadata]="newFriendList"></wave-side-bar>
 
-  <ion-scroll scrollHeight #scrollMe scrollX="true" scrollY="true">
-    <div *ngFor="let friendgroup of newFriendList">
+  <ion-scroll scrollHeight #scrollMe scrollX="true" scrollY="true" class="contact-scroll">
+    <div *ngFor="let friendgroup of newFriendList" class="contact-list">
       <a class="contact-nav-char" href="javascript:void(0)" id="{{friendgroup.id}}">{{ friendgroup.firstCode }}</a>
       <ion-item class="contact-friend-item" *ngFor="let friend of friendgroup.data" (click)="toFriendInfo()">
         <img [src]="friend.headImg?friend.headImg:'./assets/tomato-active.png'" class="contact-headImg" />
-        <span class="contact-friend-name" >{{ friend.name }}</span>
+        <span class="contact-friend-name">{{ friend.name }}</span>
       </ion-item>
     </div>
   </ion-scroll>

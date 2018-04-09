@@ -11,7 +11,7 @@
     position: relative;
 
     li {
-      color: #d3d3d3;
+      color: #333;
       text-align: center;
       margin-bottom: 0;
       cursor: pointer;
@@ -30,9 +30,8 @@
     position: absolute;
     top: 50px;
     right: 40px;
-    display:flex;/*Flex布局*/
-    display: -webkit-flex; /* Safari */
-    align-items:center;/*指定垂直居中*/
+    display:flex;
+    align-items:center;
     div {
       color: white;
       text-align: center;

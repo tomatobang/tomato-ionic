@@ -44,7 +44,6 @@ export class ContactsPage implements OnInit {
       .catch(err => Promise.reject(err || 'err'));
   }
 
-  // 初始化项目列表
   getNewFriendlist() {
     if (this.friendlist instanceof Array && this.friendlist.length > 0) {
       this.newFriendList = this.pinyinUtil.sortByFirstCode(
