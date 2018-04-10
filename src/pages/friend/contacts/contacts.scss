@@ -5,6 +5,10 @@ cmp-contacts {
   .contact-sticker{
       background: #F97271;
       color:#fff;
+      position: absolute;
+      top:0px;
+      z-index: 10;
+      width: 100%;
   }
 }
 

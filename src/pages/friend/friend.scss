@@ -58,6 +58,8 @@ cmp-friend {
   }
 
   .tomato-friend-task-state,
+  .tomato-friend-task-target,
+  .tomato-friend-task-notes,
   .tomato-friend-task-duration {
     color: #f97271;
     font-size: 16px;
@@ -112,9 +114,9 @@ cmp-friend {
     }
   }
 
-  $default: #f53d3d;
-  $rank2: #387ef5;
-  $rank3: darken(#f4f4f4, 45%);
+  $default: #f97271;
+  $rank2: #aaa;
+  $rank3: darken(#eee, 15%);
   $gray: #aaa;
 
   .item-rank {
@@ -179,13 +181,13 @@ cmp-friend {
   .tomatoNum {
     font-size: 20px;
     padding: 5px;
-    background: tomato;
+    background: #f97271;
     color: white;
     border-radius: 10px;
   }
   .minute {
     font-size: 16px;
-    color: tomato;
+    color: #f97271;
   }
   .rank-statistics {
     color: #000;
@@ -193,7 +195,7 @@ cmp-friend {
   .rank-title {
     padding-left: 0px;
     ion-icon {
-      color: tomato;
+      color: #f97271;
     }
   }
   ion-label.label-ios {
@@ -210,5 +212,9 @@ cmp-friend {
 
   .rank.gray {
     @include ribbonize($gray, black);
+  }
+
+  .rank-list ion-item:last-child{
+    border-bottom: none !important;
   }
 }
