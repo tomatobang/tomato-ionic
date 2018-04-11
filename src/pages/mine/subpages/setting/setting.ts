@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { IonicPage } from 'ionic-angular';
-import { GlobalService } from '../../../../providers/global.service';
+import { GlobalService } from '@providers/global.service';
 import { Insomnia } from '@ionic-native/insomnia';
 
 declare var window;

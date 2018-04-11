@@ -6,10 +6,10 @@ import {
   NavParams,
 } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { OnlineUserService, User } from '../../providers/data.service';
-import { GlobalService } from '../../providers/global.service';
+import { OnlineUserService, User } from '@providers/data.service';
+import { GlobalService } from '@providers/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { JPushService } from '../../providers/utils/jpush.service';
+import { JPushService } from '@providers/utils/jpush.service';
 
 @IonicPage()
 @Component({

@@ -4,7 +4,7 @@ import { ElementRef } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import * as echarts from 'echarts';
 import { debug } from 'util';
-import { OnlineTomatoService } from '../../../../providers/data.service';
+import { OnlineTomatoService } from '@providers/data.service';
 declare var window;
 
 @IonicPage()

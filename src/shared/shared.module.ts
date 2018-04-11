@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PipesModule } from '../pipes/pipes.module';
+import { PipesModule } from '@pipes/pipes.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';

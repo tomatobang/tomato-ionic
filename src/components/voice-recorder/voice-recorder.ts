@@ -15,7 +15,7 @@ import {
   FileUploadOptions,
   FileTransferObject,
 } from '@ionic-native/file-transfer';
-import { QiniuUploadService } from '../../providers/qiniu.upload.service';
+import { QiniuUploadService } from '@providers/qiniu.upload.service';
 
 declare let window;
 

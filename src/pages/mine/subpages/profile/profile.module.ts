@@ -5,9 +5,9 @@ import { Camera } from '@ionic-native/camera';
 
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
-import { Helper } from '../../../../providers/utils/helper';
-import { NativeService } from '../../../../providers/utils/native.service';
-import { OnlineUserService } from '../../../../providers/data.service';
+import { Helper } from '@providers/utils/helper';
+import { NativeService } from '@providers/utils/native.service';
+import { OnlineUserService } from '@providers/data.service';
 
 @NgModule({
   declarations: [ProfilePage],

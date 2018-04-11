@@ -13,7 +13,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { HttpClient } from '@angular/common/http';
 
 import { IonicPage, Scroll, NavController } from 'ionic-angular';
-import { PinyinService } from '../../../providers/utils/pinyin.service';
+import { PinyinService } from '@providers/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
 
 @IonicPage()

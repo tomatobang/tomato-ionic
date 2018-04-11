@@ -9,10 +9,10 @@ import {
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-import { OnlineUserService } from '../../../../providers/data.service';
-import { NativeService } from '../../../../providers/utils/native.service';
-import { QiniuUploadService } from '../../../../providers/qiniu.upload.service';
-import { GlobalService } from '../../../../providers/global.service';
+import { OnlineUserService } from '@providers/data.service';
+import { NativeService } from '@providers/utils/native.service';
+import { QiniuUploadService } from '@providers/qiniu.upload.service';
+import { GlobalService } from '@providers/global.service';
 
 declare var window;
 @IonicPage()

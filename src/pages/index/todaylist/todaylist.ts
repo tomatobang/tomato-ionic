@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { App, Events } from 'ionic-angular';
-import { OnlineTomatoService } from '../../../providers/data.service';
-import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
-import { GlobalService } from '../../../providers/global.service';
-import { TomatoIOService } from '../../../providers/utils/socket.io.service';
-import { Helper } from '../../../providers/utils/helper';
+import { OnlineTomatoService } from '@providers/data.service';
+import { VoicePlayService } from '@providers/utils/voiceplay.service';
+import { GlobalService } from '@providers/global.service';
+import { TomatoIOService } from '@providers/utils/socket.io.service';
+import { Helper } from '@providers/utils/helper';
 
 @Component({
   selector: 'todaylist',

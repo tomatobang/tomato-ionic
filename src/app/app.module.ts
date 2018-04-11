@@ -17,8 +17,8 @@ import { RebirthHttpModule } from 'rebirth-http';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 
-import { JPushService } from '../providers/utils/jpush.service';
-import { UpdateService } from '../providers/utils/update.service';
+import { JPushService } from '@providers/utils/jpush.service';
+import { UpdateService } from '@providers/utils/update.service';
 // see:https://www.npmjs.com/package/ng-socket-io
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import {
@@ -26,9 +26,9 @@ import {
   ChatIOService,
   ChatSocket,
   TomatoSocket,
-} from '../providers/utils/socket.io.service';
-import { Helper } from '../providers/utils/helper';
-import { NativeService } from '../providers/utils/native.service';
+} from '@providers/utils/socket.io.service';
+import { Helper } from '@providers/utils/helper';
+import { NativeService } from '@providers/utils/native.service';
 
 import { MyAppComponent } from './app.component';
 

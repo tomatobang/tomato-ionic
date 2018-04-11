@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Content, IonicPage } from 'ionic-angular';
-import { OnlineTomatoService } from '../../../../providers/data.service';
+import { OnlineTomatoService } from '@providers/data.service';
 
 @IonicPage()
 @Component({

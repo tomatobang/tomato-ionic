@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-// import { JPushService } from '../providers/utils/jpush.service'; // 暂未启用
-import { GlobalService } from '../providers/global.service';
-import { UpdateService } from '../providers/utils/update.service';
-import { NativeService } from '../providers/utils/native.service';
+// import { JPushService } from '@providers/utils/jpush.service'; // 暂未启用
+import { GlobalService } from '@providers/global.service';
+import { UpdateService } from '@providers/utils/update.service';
+import { NativeService } from '@providers/utils/native.service';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
