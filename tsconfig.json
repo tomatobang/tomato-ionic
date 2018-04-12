@@ -14,7 +14,7 @@
       "@app/env": ["environments/environment"],
       "@components/*": ["src/components/*"],
       "@providers/*": ["src/providers/*"],
-      "@models/*": ["src/models/*"],
+      "@modals/*": ["src/modals/*"],
       "@directives/*": ["src/directives/*"],
       "@pipes/*": ["src/pipes/*"],
       "@app/*": ["src/app/*"],
