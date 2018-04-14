@@ -1,19 +1,15 @@
 <ion-content class="register-container">
     <div class="register-logo">
     </div>
-    <form [formGroup]="userForm" (ngSubmit)="doRegister()" c novalidate class="form-horizontal" role="form">
+    <form [formGroup]="userForm" (ngSubmit)="doRegister()" novalidate class="form-horizontal" role="form">
+
+        <!-- 表单项 -->
         <ion-list>
             <ion-item>
                 <ion-label color="primary">用户名</ion-label>
                 <ion-input required placeholder="用户名" [ngClass]="{' is-danger': formErrors.username }" formControlName="username" [(ngModel)]="user.username"
                     type="text"></ion-input>
             </ion-item>
-
-            <!-- <ion-item>
-                <ion-label color="primary">昵称</ion-label>
-                <ion-input required placeholder="昵称..." [ngClass]="{' is-danger': formErrors.displayName }" formControlName="displayName"
-                    [(ngModel)]="user.displayName" type="text"></ion-input>
-            </ion-item> -->
 
             <ion-item>
                 <ion-label color="primary">邮箱</ion-label>
@@ -33,12 +29,11 @@
             </ion-item>
 
         </ion-list>
+
+        <!-- 本地验证 -->
         <div *ngIf="formErrors.username" class="text-danger">
             {{ formErrors.username }}
         </div>
-        <!-- <div *ngIf="formErrors.displayName" class="text-danger">
-            {{ formErrors.displayName }}
-        </div> -->
         <div *ngIf="formErrors.email" class="text-danger">
             {{ formErrors.email }}
         </div>
@@ -49,11 +44,11 @@
             {{ formErrors.confirmPassword }}
         </div>
 
-        <!-- 这里用来做服务端验证 -->
+        <!-- 服务端错误信息显示 -->
         <div *ngIf="error">{{ error }}</div>
 
         <div class="register-button-area">
-            <button type="submit" color="primary" ion-button>注册</button>
+            <button [disabled]="userForm.invalid" type="submit" color="primary" ion-button>注册</button>
         </div>
         <div class="register-button-area">
             <button type="button" color="light" ion-button outline (click)="navToLogin()">登陆</button>
