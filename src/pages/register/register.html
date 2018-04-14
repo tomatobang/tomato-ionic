@@ -17,18 +17,19 @@
 
             <ion-item>
                 <ion-label color="primary">邮箱</ion-label>
-                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }" 
-                placeholder="邮箱"></ion-input>
+                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }" placeholder="邮箱"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">密码</ion-label>
-                <ion-input [ngClass]="{' is-danger': formErrors.password }" formControlName="password" type="password" placeholder="密码"></ion-input>
+                <ion-input formControlName="password" validateEqual="confirmPassword" reverse="true" [ngClass]="{' is-danger': formErrors.password }"
+                    formControlName="password" type="password" placeholder="密码"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">确认密码</ion-label>
-                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" formControlName="confirmPassword" type="password" placeholder="确认密码"></ion-input>
+                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" validateEqual="password" formControlName="confirmPassword"
+                    type="password" placeholder="确认密码"></ion-input>
             </ion-item>
 
         </ion-list>
@@ -55,7 +56,7 @@
             <button type="submit" color="primary" ion-button>注册</button>
         </div>
         <div class="register-button-area">
-            <button type="button" color="light" ion-button  outline (click)="navToLogin()">登陆</button>
+            <button type="button" color="light" ion-button outline (click)="navToLogin()">登陆</button>
         </div>
 
     </form>
