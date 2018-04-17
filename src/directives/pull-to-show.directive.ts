@@ -1,6 +1,8 @@
 /**
  * PullToShowDirective
- * 改自: https://github.com/ionic-team/ionic/blob/master/src/components/refresher/refresher.ts
+ * from: https://github.com/ionic-team/ionic/blob/master/src/components/refresher/refresher.ts
+ * update at 18-04-02: now it change to:
+ * https://github.com/ionic-team/ionic/blob/master/core/src/components/refresher/refresher.tsx
  */
 
 import {
