@@ -33,10 +33,10 @@ export class Tile implements ITile {
 
   updateValue?(newVal: number) {
     this.value = newVal;
-  };
+  }
 
   updatePosition?(newPosition: IPosition) {
     this.x = newPosition.x;
     this.y = newPosition.y;
-  };
+  }
 }

@@ -1,13 +1,23 @@
 export class UniqueIdService {
   generate(): string {
-    let d = new Date().getTime();
-    let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      let r = (d + Math.random()*16)%16 | 0;
-      d = Math.floor(d/16);
-      return (c === 'x' ? r : (r&0x7|0x8)).toString(16);
-    });
-    return uuid;
+    function S4() {
+      return (((1 + Math.random()) * 0x10000)).toString(16).substring(1); //  | 0
+    }
+    return (
+      S4() +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      '-' +
+      S4() +
+      S4() +
+      S4()
+    );
   }
 }
 
-export const uniqueIdService:UniqueIdService = new UniqueIdService();
+export const uniqueIdService: UniqueIdService = new UniqueIdService();

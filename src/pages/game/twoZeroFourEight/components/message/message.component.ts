@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { GameService }  from '../../services/game.service';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'message',
-  templateUrl: 'components/message/message.component.html'
+  templateUrl: './message.component.html'
 })
 
 export class MessageComponent {

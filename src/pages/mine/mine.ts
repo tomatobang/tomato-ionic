@@ -94,6 +94,10 @@ export class MinePage implements OnInit {
     this.navCtrl.push('StatisticsPage', {}, {}, () => {});
   }
 
+  toGameBoard() {
+    this.navCtrl.push('TwoZeroFourEightPage', {}, {}, () => {});
+  }
+
   /**
    * 显示头像大图
    */

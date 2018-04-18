@@ -1,4 +1,4 @@
 export interface IGridPositions {
-  x: number[],
-  y: number[]
+  x: number[];
+  y: number[];
 }

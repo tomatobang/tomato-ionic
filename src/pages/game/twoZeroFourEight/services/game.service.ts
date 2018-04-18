@@ -2,28 +2,34 @@ import { Injectable, Inject } from '@angular/core';
 import { GridService } from './grid.service';
 import { Tile } from '../models/index';
 import { Store, Action, select } from '@ngrx/store';
-import { IGame } from './game.reducer';
+import { take } from 'rxjs/operators';
 import { GameAction } from './game.action';
 import { Observable } from 'rxjs/Observable';
 
 import { IPosition } from '../interfaces/position';
 import 'rxjs/add/operator/map';
 
+import * as fromGame from './game.reducer';
+
 @Injectable()
 export class GameService {
-  public currentScore: Observable<number>;
-  public highScore: Observable<number>;
-  public tiles: Observable<Tile[]>;
-  public gameOver: Observable<boolean>;
-  public won: Observable<boolean>;
+  public currentScore;
+  public highScore;
+  public tiles;
+  public gameOver;
+  public won;
+  public game;
 
-  constructor(private gridService: GridService, private store: Store<any>) {
-    const store$ = store.select('game');
-    this.currentScore = store$.map(({ currentScore }: IGame) => currentScore);
-    this.highScore = store$.map(({ highScore }: IGame) => highScore);
-    this.tiles = store$.map(({ tiles }: IGame) => tiles);
-    this.gameOver = store$.map(({ gameOver }: IGame) => gameOver);
-    this.won = store$.map(({ won }: IGame) => won);
+  constructor(private gridService: GridService, private store: Store<fromGame.GameState>) {
+    // const store$ = store.select('game');
+    this.currentScore = store.pipe(select(fromGame.getCurrentScore));
+    this.highScore = store.pipe(select(fromGame.getHighcore));
+    this.tiles = store.pipe(select(fromGame.getTitles));
+    this.gameOver = store.pipe(select(fromGame.getGameoverState));
+    this.won = store.pipe(select(fromGame.getWonState));
+
+   this.game = store.pipe(select('game'));
+    // this.currentScore = store$.map(({ currentScore }: IGame) => currentScore);
   }
 
   newGame(): void {
@@ -36,26 +42,26 @@ export class GameService {
   }
 
   move(key: string): boolean {
-    if (this.store._value.game.won && !this.store._value.game.keepPlaying) {
+    if (this.won && !this.store.pipe(select('keepPlaying'))) {
       return false;
     }
-    let positions = this.gridService.traversalDirections(key);
+    const positions = this.gridService.traversalDirections(key);
     let hasMoved = false;
 
     this.gridService.prepareTiles();
 
     positions.x.forEach((x: number) => {
       positions.y.forEach((y: number) => {
-        let originalPosition: IPosition = { x: x, y: y };
-        let tile: Tile = this.gridService.getCellAt(originalPosition);
+        const originalPosition: IPosition = { x: x, y: y };
+        const tile: Tile = this.gridService.getCellAt(originalPosition);
 
         if (tile) {
-          let cell = this.gridService.calculateNextPosition(tile, key);
-          let next = cell.next;
+          const cell = this.gridService.calculateNextPosition(tile, key);
+          const next = cell.next;
 
           if (next && next.value === tile.value && !next.merged) {
-            let newValue = tile.value * 2;
-            let merged = new Tile(tile, newValue);
+            const newValue = tile.value * 2;
+            const merged = new Tile(tile, newValue);
             merged.merged = true;
 
             this.gridService.insertTile(merged);

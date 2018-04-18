@@ -9,6 +9,10 @@ import { TileComponent } from './components/tile/tile.component';
 import { StoreModule } from '@ngrx/store';
 import { GameReducer } from './services/index';
 
+import { UniqueIdService } from './services/uniqueId.service';
+import { GameService } from './services/game.service';
+import { GridService } from './services/grid.service';
+
 @NgModule({
   declarations: [
     TwoZeroFourEightPage,
@@ -18,8 +22,8 @@ import { GameReducer } from './services/index';
   ],
   imports: [
     IonicPageModule.forChild(TwoZeroFourEightPage),
-    StoreModule.forRoot(GameReducer),
+    StoreModule.forRoot({ game: GameReducer }),
   ],
-  exports: [TwoZeroFourEightPage],
+  providers: [UniqueIdService, GameService, GridService],
 })
 export class TwoZeroFourEightPageModule {}

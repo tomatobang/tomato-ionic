@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ITile }  from '../../interfaces/index';
+import { ITile } from '../../interfaces/index';
 
 @Component({
   selector: 'grid',
-  templateUrl: 'components/grid/grid.component.html'
+  templateUrl: './grid.component.html'
 })
 
 export class GridComponent {

@@ -91,6 +91,7 @@
     "nxtpush-cordova-plugin": "^1.0.4",
     "phonegap-nfc": "^0.6.6",
     "raven-js": "^3.19.1",
+    "rc-scroll-anim": "^2.4.1",
     "rebirth-http": "5.0.3",
     "rebirth-storage": "5.0.1",
     "rxjs": "^5.4.2",
