@@ -121,6 +121,7 @@ export class AngularRoundProgressDirective {
       Math.PI * 2 * this.timerStatusValue.percentage - Math.PI / 2;
     const anticlockwise = false;
     ctx.beginPath();
+    ctx.lineCap = 'round';
     ctx.arc(x, y, this.outerCircleRadius, startAngle, endAngle, anticlockwise);
     ctx.lineWidth = this.outerCircleWidth;
     ctx.strokeStyle = this.outerCircleForegroundColor;
