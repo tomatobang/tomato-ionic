@@ -11,6 +11,8 @@ import {
 
 import { SharedModule } from '../../shared/shared.module';
 import { AngularRoundProgressDirective } from '@directives/angular-round-progress.directive';
+import { TextScrollDirective } from '@directives/text-scroll.directive';
+import { AutosizeDirective } from '@directives/autosize.directive';
 import { TimelineModule } from '@components/timeline/timeline.module';
 
 import { VoicePlayService } from '@providers/utils/voiceplay.service';
@@ -24,7 +26,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     IndexPage,
     IndexIndexPage,
     TodaylistComponent,
-    AngularRoundProgressDirective
+    AngularRoundProgressDirective,
+    TextScrollDirective
   ],
   imports: [IonicPageModule.forChild(IndexPage), TimelineModule, SharedModule],
   providers: [

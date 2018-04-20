@@ -1,5 +1,5 @@
-<div class="tomato-user-bio">
-    {{ userBio? userBio: '暂无签名！' }}
+<div class="tomato-user-bio" TextScroll speed="30">
+    {{ userBio? userBio: '暂无签名！' }} 
 </div>
 <div class="start-old-task" *ngIf="currentTask.title && !activeTomato && !isResting">
     <label>继续上次任务:</label>
