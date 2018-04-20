@@ -29,8 +29,9 @@ export class MyAppComponent {
     private events: Events
   ) {
     platform.ready().then(() => {
-      statusBar.styleBlackOpaque();
-      splashScreen.hide();
+      statusBar.overlaysWebView(false);
+      statusBar.styleDefault();
+      statusBar.backgroundColorByHexString('#f8f8f8');
       // 检查更新
       updateService.checkUpdate();
       native.initNativeService();
