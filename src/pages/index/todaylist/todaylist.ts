@@ -35,7 +35,7 @@ export class TodaylistComponent implements OnInit {
     this.initTomatoIO();
 
     this.events.subscribe('tomato:added', tomato => {
-      this.historyTomatoes.push(tomato);
+      this.historyTomatoes.unshift(tomato);
       this.tomatoCount += 1;
       const minutes = this.helper.minuteSpan(tomato.startTime, new Date());
       this.tomatoCount_time += minutes;
