@@ -13,7 +13,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content no-bounce>
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'msg'">
@@ -36,22 +36,33 @@
                 <h2 class="message-requst-title">{{ message.name }}</h2>
                 <h3> {{ message.info }}</h3>
                 <p>2018-01-31 12:20</p>
-                <button class="message-agree" ion-button outline item-end  (click)='responseReq(1)'>
+                <button class="message-agree" ion-button outline item-end (click)='responseReq(1)'>
                     添加
                 </button>
-                <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
+                <!-- <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
                     拒绝
-                </button>
+                </button> -->
             </ion-item>
-            <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item" >
+            <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item">
                 <ion-avatar item-start>
                     <img src="./assets/tomato-grey.png">
                 </ion-avatar>
                 <h2>赵六</h2>
                 <h3>请求添加您为好友!</h3>
                 <p>2018-01-31 12:20</p>
-                <button ion-button  class="message-agree" outline item-end (click)='responseReq(-1)' disabled>
+                <button ion-button class="message-agree" outline item-end disabled>
                     已添加
+                </button>
+            </ion-item>
+            <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item">
+                <ion-avatar item-start>
+                    <img src="./assets/tomato-grey.png">
+                </ion-avatar>
+                <h2>孙谦</h2>
+                <h3>请求添加您为好友!</h3>
+                <p>2018-01-31 12:20</p>
+                <button ion-button class="message-overtime" color="light" outline item-end disabled>
+                    已过期
                 </button>
             </ion-item>
         </ion-list>

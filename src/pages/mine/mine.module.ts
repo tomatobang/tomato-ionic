@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule, IonicModule } from 'ionic-angular';
 import { MinePage } from './mine';
 
-import { JPushService } from '../../providers/utils/jpush.service';
-import { NativeService } from '../../providers/utils/native.service';
-import { OnlineUserService } from '../../providers/data.service';
+import { JPushService } from '@providers/utils/jpush.service';
+import { NativeService } from '@providers/utils/native.service';
+import { OnlineUserService } from '@providers/data.service';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
-import { Helper } from '../../providers/utils/helper';
+import { Helper } from '@providers/utils/helper';
 
 @NgModule({
   declarations: [MinePage],

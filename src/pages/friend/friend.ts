@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, IonicPage, Events } from 'ionic-angular';
-import { QRScannerComponent } from '../../components/qr-scanner/qr-scanner';
+import { QRScannerComponent } from '@components/qr-scanner/qr-scanner';
 
 @IonicPage()
 @Component({

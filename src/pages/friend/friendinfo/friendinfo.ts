@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content, IonicPage } from 'ionic-angular';
+import { NavController, Content, IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,13 +14,8 @@ export class FriendInfoPage {
   headerImgSize = '100%';
   headerImgUrl = '';
   transition = false;
-  tomatoes: Array<any> = new Array(10).fill('');
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public ref: ChangeDetectorRef
-  ) {}
+  constructor(public navCtrl: NavController, public ref: ChangeDetectorRef) {}
 
   ionViewDidLoad() {
     this.headerImgUrl = 'assets/tomatobang.jpg';
@@ -39,6 +34,12 @@ export class FriendInfoPage {
     }
     this.ref.detectChanges();
   }
-
+  toFriendTomatoes() {
+    this.navCtrl.push('FriendTomatoesPage', {
+      friendName: this.friendName,
+    });
+  }
   reqAddFriend() {}
+
+  toMore() {}
 }

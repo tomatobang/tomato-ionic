@@ -22,3 +22,8 @@ button.add-task-button[icon-only]{
 .newtask-form-container{
   margin: 0px 5px;
 }
+
+.task-note-ion-textarea{
+  height: auto !important;
+  min-height: 40px !important;
+}

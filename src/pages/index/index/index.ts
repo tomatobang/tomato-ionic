@@ -6,13 +6,13 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
+import { VoicePlayService } from '@providers/utils/voiceplay.service';
 import { AlertController, App, Events } from 'ionic-angular';
-import { AngularRoundProgressDirective } from '../../../directives/angular-round-progress.directive';
+import { AngularRoundProgressDirective } from '@directives/angular-round-progress.directive';
 
-import { GlobalService } from '../../../providers/global.service';
-import { TomatoIOService } from '../../../providers/utils/socket.io.service';
-import { Helper } from '../../../providers/utils/helper';
+import { GlobalService } from '@providers/global.service';
+import { TomatoIOService } from '@providers/utils/socket.io.service';
+import { Helper } from '@providers/utils/helper';
 
 @Component({
   selector: 'cmp-index-index',

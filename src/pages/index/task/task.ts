@@ -1,10 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, ViewController, Platform } from 'ionic-angular';
-import { OnlineTaskService } from '../../../providers/data.service';
-import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
-import { Helper } from '../../../providers/utils/helper';
-import { GlobalService } from '../../../providers/global.service';
-import { VoiceRecorderComponent } from '../../../components/voice-recorder/';
+import { OnlineTaskService } from '@providers/data.service';
+import { VoicePlayService } from '@providers/utils/voiceplay.service';
+import { Helper } from '@providers/utils/helper';
+import { GlobalService } from '@providers/global.service';
+import { VoiceRecorderComponent } from '@components/voice-recorder/';
 import { baseUrl } from '../../../config';
 import { transition } from '@angular/core/src/animation/dsl';
 

@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { PinyinService } from '../../providers/utils/pinyin.service';
+import { PinyinService } from '@providers/utils/pinyin.service';
 
 @Component({
   selector: 'wave-side-bar',

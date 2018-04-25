@@ -7,10 +7,10 @@ import {
   Platform,
   ModalController,
 } from 'ionic-angular';
-import { GlobalService } from '../../providers/global.service';
-import { JPushService } from '../../providers/utils/jpush.service';
-import { NativeService } from '../../providers/utils/native.service';
-import { OnlineUserService } from '../../providers/data.service';
+import { GlobalService } from '@providers/global.service';
+import { JPushService } from '@providers/utils/jpush.service';
+import { NativeService } from '@providers/utils/native.service';
+import { OnlineUserService } from '@providers/data.service';
 
 @IonicPage()
 @Component({
@@ -92,6 +92,10 @@ export class MinePage implements OnInit {
 
   statistics() {
     this.navCtrl.push('StatisticsPage', {}, {}, () => {});
+  }
+
+  toGameBoard() {
+    this.navCtrl.push('TwoZeroFourEightPage', {}, {}, () => {});
   }
 
   /**

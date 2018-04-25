@@ -14,13 +14,22 @@
   <p class="req-add-friend-but">
     <button ion-button color="secondary" (click)="reqAddFriend()">保存到通讯录</button>
   </p>
-  <div class="tomatoes">
-    <div class="tomato-item" *ngFor=" let i of tomatoes">
-      <img src="assets/tomato-active.png" alt="">
-      <div class="friend-info-tomato-title">
-        常规任务
-      </div>
-    </div>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="locate" item-start class="setting-icon"></ion-icon>
+      深圳南山区
+    </ion-item>
 
-  </div>
+    <button ion-item (click)="toFriendTomatoes()">
+      <ion-icon name="alarm" item-start class="setting-icon"></ion-icon>
+      Ta 的番茄钟
+    </button>
+
+    <button ion-item (click)="toMore()">
+      <ion-icon name="more" item-start class="setting-icon"></ion-icon>
+      更多资料
+    </button>
+
+  </ion-list>
+
 </ion-content>

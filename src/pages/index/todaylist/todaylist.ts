@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { App, Events } from 'ionic-angular';
-import { OnlineTomatoService } from '../../../providers/data.service';
-import { VoicePlayService } from '../../../providers/utils/voiceplay.service';
-import { GlobalService } from '../../../providers/global.service';
-import { TomatoIOService } from '../../../providers/utils/socket.io.service';
-import { Helper } from '../../../providers/utils/helper';
+import { OnlineTomatoService } from '@providers/data.service';
+import { VoicePlayService } from '@providers/utils/voiceplay.service';
+import { GlobalService } from '@providers/global.service';
+import { TomatoIOService } from '@providers/utils/socket.io.service';
+import { Helper } from '@providers/utils/helper';
 
 @Component({
   selector: 'todaylist',
@@ -35,7 +35,7 @@ export class TodaylistComponent implements OnInit {
     this.initTomatoIO();
 
     this.events.subscribe('tomato:added', tomato => {
-      this.historyTomatoes.push(tomato);
+      this.historyTomatoes.unshift(tomato);
       this.tomatoCount += 1;
       const minutes = this.helper.minuteSpan(tomato.startTime, new Date());
       this.tomatoCount_time += minutes;

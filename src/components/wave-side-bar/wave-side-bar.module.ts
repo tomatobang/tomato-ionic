@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { WaveSideBarComponent } from './wave-side-bar';
-import { PinyinService } from '../../providers/utils/pinyin.service';
+import { PinyinService } from '@providers/utils/pinyin.service';
 
 @NgModule({
   declarations: [WaveSideBarComponent],

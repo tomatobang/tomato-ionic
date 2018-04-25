@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   NavController,
   IonicPage,
@@ -6,10 +6,10 @@ import {
   NavParams,
 } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { OnlineUserService, User } from '../../providers/data.service';
-import { GlobalService } from '../../providers/global.service';
+import { OnlineUserService, User } from '@providers/data.service';
+import { GlobalService } from '@providers/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { JPushService } from '../../providers/utils/jpush.service';
+import { JPushService } from '@providers/utils/jpush.service';
 
 @IonicPage()
 @Component({
@@ -26,7 +26,6 @@ export class RegisterPage implements OnInit {
   };
   formErrors = {
     username: '',
-    displayName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -36,10 +35,6 @@ export class RegisterPage implements OnInit {
     username: {
       required: '用户名必须输入。',
       minlength: '用户名4到32个字符。',
-    },
-    displayName: {
-      required: '昵称必须输入。',
-      minlength: '昵称2到32个字符。',
     },
     email: {
       required: '邮箱必须输入。',
@@ -69,7 +64,6 @@ export class RegisterPage implements OnInit {
     this.user.username = '';
     this.user.password = '';
     this.user.email = '';
-    this.user.displayName = '';
     this.user.confirmPassword = '';
   }
 
@@ -81,10 +75,10 @@ export class RegisterPage implements OnInit {
   }
 
   public doRegister(): void {
-    console.log('doRegister', this.user);
+    console.log('userForm.valid:', this.userForm.valid);
     if (this.userForm.valid) {
-      console.log(this.user);
       this.user = this.userForm.value;
+      console.log(this.user);
       this.service
         .verifyUserNameEmail({
           email: this.user.email,
@@ -126,14 +120,6 @@ export class RegisterPage implements OnInit {
         [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(32),
-        ],
-      ],
-      displayName: [
-        this.user.displayName,
-        [
-          Validators.required,
-          Validators.minLength(2),
           Validators.maxLength(32),
         ],
       ],

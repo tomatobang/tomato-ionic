@@ -9,7 +9,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content no-bounce>
     <ion-refresher [enabled]="IsInTomatoTodaySlide" (ionRefresh)="doRefreshTodayTomato($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -17,7 +17,7 @@
     <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
         <!-- 首页 -->
         <ion-slide>
-         <cmp-index-index></cmp-index-index>
+            <cmp-index-index></cmp-index-index>
         </ion-slide>
 
         <!-- 今日番茄钟 -->

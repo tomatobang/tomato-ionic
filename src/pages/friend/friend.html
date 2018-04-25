@@ -15,7 +15,8 @@
 
 <ion-content>
     <pull-to-show (ionPull)="showRefresher()" (ionToshow)="showMenuCard()" (ionCancel)="hideMenuCard()">
-        <div class="pulling-tips" *ngIf="pullingIcon"><ion-icon name="arrow-down"></ion-icon>下拉加载菜单 
+        <div class="pulling-tips" *ngIf="pullingIcon">
+            <ion-icon name="arrow-down"></ion-icon>下拉加载菜单
         </div>
 
         <ion-card *ngIf="isShowMenuCard">
@@ -62,16 +63,20 @@
                             <span class="tomato-friend-task-duration"> 5 </span>分钟
                         </span>
                         <br>
-                        <span class="tomato-friend-task-target">目标:</span>
+                        <span>目标:
+                            <span class="tomato-friend-task-target">俯卧撑 10 组</span>
+                        </span>
                         <br>
-                        <span class="tomato-friend-task-notes">备注:</span>
+                        <span>备注:
+                            <span class="tomato-friend-task-notes">室内</span>
+                        </span>
                     </div>
                 </div>
             </div>
         </ion-list>
 
         <ion-list *ngSwitchCase="'rank'">
-            <ion-list>
+            <ion-list class="rank-list">
                 <ion-item *ngFor="let item of rankList">
                     <ion-avatar item-left class="item-rank">
                         <span class="rank {{ item.class }}">

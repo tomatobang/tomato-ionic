@@ -3,13 +3,14 @@ import {
   ElementRef,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  Renderer2,
 } from '@angular/core';
 
 declare var window: any;
 let hasFixRatio = false;
 @Directive({
-  selector: '[angularRoundProgress]'
+  selector: '[angularRoundProgress]',
 })
 export class AngularRoundProgressDirective {
   canvas: HTMLCanvasElement;
@@ -41,18 +42,15 @@ export class AngularRoundProgressDirective {
     this.render();
   }
 
-  constructor(private element: ElementRef) {
+  constructor(private element: ElementRef, private renderer: Renderer2) {
     const ele = this.element.nativeElement;
-    this.canvas = document.createElement('canvas');
-    // 下述方法无效
-    // this.canvas.style.width = this.width;
-    // this.canvas.style.height = this.height;
+    this.canvas = this.renderer.createElement('canvas');
     ele.parentNode.replaceChild(this.canvas, ele);
     const ctx = this.canvas.getContext('2d');
     this.fixPixelRatio(ctx);
-    this.canvas.setAttribute('width', this.width);
-    this.canvas.setAttribute('height', this.height);
-    this.canvas.setAttribute('class', 'tomato-canvas-style');
+    this.renderer.setAttribute(this.canvas, 'width', this.width);
+    this.renderer.setAttribute(this.canvas, 'height', this.height);
+    this.renderer.setAttribute(this.canvas, 'class', 'tomato-canvas-style');
   }
 
   fixPixelRatio(context) {
@@ -119,9 +117,11 @@ export class AngularRoundProgressDirective {
     // The "foreground" circle
     const startAngle = -(Math.PI / 2);
 
-    const endAngle = Math.PI * 2 * this.timerStatusValue.percentage - Math.PI / 2;
+    const endAngle =
+      Math.PI * 2 * this.timerStatusValue.percentage - Math.PI / 2;
     const anticlockwise = false;
     ctx.beginPath();
+    ctx.lineCap = 'round';
     ctx.arc(x, y, this.outerCircleRadius, startAngle, endAngle, anticlockwise);
     ctx.lineWidth = this.outerCircleWidth;
     ctx.strokeStyle = this.outerCircleForegroundColor;
