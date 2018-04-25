@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-// import { JPushService } from '@providers/utils/jpush.service'; // 暂未启用
+// TODO:启用极光推送
+// import { JPushService } from '@providers/utils/jpush.service';
 import { GlobalService } from '@providers/global.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { NativeService } from '@providers/utils/native.service';
@@ -32,12 +33,18 @@ export class MyAppComponent {
       statusBar.overlaysWebView(false);
       statusBar.styleDefault();
       statusBar.backgroundColorByHexString('#f8f8f8');
+
+      // 手动隐藏 splash screen
+      splashScreen.hide();
+
       // 检查更新
       updateService.checkUpdate();
       native.initNativeService();
+
       // 开启后台运行
       // backgroundMode.enable();
-      // 初始化 jPush
+
+      // 极光推送初始化
       // if (global.userinfo){
       //   jPushService.init(global.userinfo.username);
       // }
