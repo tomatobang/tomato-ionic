@@ -51,7 +51,8 @@
     "codelyzer": "^4.1.0",
     "com.darktalker.cordova.screenshot": "^0.1.6",
     "com.unarin.cordova.beacon": "^3.6.0",
-    "cordova-android": "~6.2.3",
+    "cordova-android": "6.2.3",
+    "cordova-hot-code-push-plugin": "^1.5.3",
     "cordova-plugin-app-event": "^1.2.1",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-background-mode": "^0.7.2",
@@ -178,7 +179,8 @@
       "com.unarin.cordova.beacon": {},
       "phonegap-nfc": {},
       "cordova-plugin-qrscanner": {},
-      "TalkingData": {}
+      "TalkingData": {},
+      "cordova-hot-code-push-plugin": {}
     },
     "platforms": [
       "android"
