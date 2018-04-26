@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "ionic:build": "ionic-app-scripts build",
+    "build:android": "ionic-app-scripts build --prod --platform android --target cordova",
+    "build:ios": "ionic-app-scripts build --prod --platform ios --target cordova",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "karma start ./test-config/karma.conf.js",
     "test-ci": "karma start ./test-config/karma.conf.js --single-run",
