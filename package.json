@@ -86,6 +86,7 @@
     "es6-promise-plugin": "^4.2.2",
     "hidpi-canvas": "^1.0.10",
     "ionic-angular": "^3.9.2",
+    "ionic-marquee": "^0.1.0",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
     "moment": "^2.18.1",
@@ -126,7 +127,7 @@
     "ts-loader": "^2.0.3",
     "ts-node": "^3.0.2",
     "tslint": "^5.9.1",
-    "typescript": "^2.4.0"
+    "typescript": "^2.4.2"
   },
   "cordovaPlugins": [],
   "cordovaPlatforms": [],
