@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
-import { VoiceRecorderComponent } from './voice-recorder/';
-import { FriendTomatoesComponent } from './friend-tomatoes/friend-tomatoes';
 
 @NgModule({
-  declarations: [VoiceRecorderComponent,
-    FriendTomatoesComponent],
+  declarations: [],
   imports: [],
-  exports: [VoiceRecorderComponent,
-    FriendTomatoesComponent],
+  exports: [],
 })
 export class ComponentsModule {}

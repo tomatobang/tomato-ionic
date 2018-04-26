@@ -8,7 +8,7 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 @IonicPage()
 export class GamePage {
-  constructor(public navCtrl: NavController, public storage: Storage) {}
+  constructor() {}
 
   ionViewWillEnter() {}
 

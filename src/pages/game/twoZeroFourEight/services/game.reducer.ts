@@ -1,4 +1,9 @@
-import { Action, ActionReducer, createSelector, createFeatureSelector } from '@ngrx/store';
+import {
+  Action,
+  ActionReducer,
+  createSelector,
+  createFeatureSelector,
+} from '@ngrx/store';
 import { GameAction } from './game.action';
 import { ITile } from '../interfaces/index';
 import { Tile } from '../models/index';
@@ -27,10 +32,11 @@ const initialState: GameState = {
   tiles: [],
 };
 
-export const gameReducer: ActionReducer<any> = (
+// ActionReducer<any>
+export function gameReducer(
   state = initialState,
   action: ActionWithPayload<any>
-) => {
+) {
   switch (action.type) {
     case GameAction.START:
       return Object.assign({}, state, {
@@ -70,26 +76,17 @@ export const gameReducer: ActionReducer<any> = (
     default:
       return state;
   }
-};
-
+}
 
 export const getGameState = createFeatureSelector<GameState>('game');
 
-export const getState = createSelector(
-  getGameState,
-  (state: GameState) => {
-    return state;
-  }
-);
+export const getState = createSelector(getGameState, (state: GameState) => {
+  return state;
+});
 
-
-export const getCurrentScore = createSelector(
-  getState,
-  (state: GameState) => {
-    return state.currentScore;
-  }
-);
-
+export const getCurrentScore = createSelector(getState, (state: GameState) => {
+  return state.currentScore;
+});
 
 export const getHighcore = createSelector(
   getState,
@@ -98,15 +95,15 @@ export const getHighcore = createSelector(
 
 export const getTitles = createSelector(
   getState,
-  (state: GameState) => state.tiles,
+  (state: GameState) => state.tiles
 );
 
 export const getWonState = createSelector(
   getState,
-  (state: GameState) => state.won,
+  (state: GameState) => state.won
 );
 
 export const getGameoverState = createSelector(
   getState,
-  (state: GameState) => state.gameOver,
+  (state: GameState) => state.gameOver
 );
