@@ -1,6 +1,6 @@
 module.exports = {
   copyAssets: {
-    src: ["{{SRC}}/assets/**/*"],
+    src: ["{{SRC}}/assets/**/*","!{{SRC}}/assets/fonts/SourceHanSans*"],
     dest: "{{WWW}}/assets"
   },
   copyIndexContent: {

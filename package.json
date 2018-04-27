@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "ionic:build": "ionic-app-scripts build",
+    "build:android": "ionic-app-scripts build --prod --platform android --target cordova",
+    "build:ios": "ionic-app-scripts build --prod --platform ios --target cordova",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "karma start ./test-config/karma.conf.js",
     "test-ci": "karma start ./test-config/karma.conf.js --single-run",
@@ -51,7 +52,8 @@
     "codelyzer": "^4.1.0",
     "com.darktalker.cordova.screenshot": "^0.1.6",
     "com.unarin.cordova.beacon": "^3.6.0",
-    "cordova-android": "~6.2.3",
+    "cordova-android": "6.2.3",
+    "cordova-hot-code-push-plugin": "^1.5.3",
     "cordova-plugin-app-event": "^1.2.1",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-background-mode": "^0.7.2",
@@ -84,6 +86,7 @@
     "es6-promise-plugin": "^4.2.2",
     "hidpi-canvas": "^1.0.10",
     "ionic-angular": "^3.9.2",
+    "ionic-marquee": "^0.1.0",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
     "moment": "^2.18.1",
@@ -124,7 +127,7 @@
     "ts-loader": "^2.0.3",
     "ts-node": "^3.0.2",
     "tslint": "^5.9.1",
-    "typescript": "^2.4.0"
+    "typescript": "^2.4.2"
   },
   "cordovaPlugins": [],
   "cordovaPlatforms": [],
@@ -178,7 +181,8 @@
       "com.unarin.cordova.beacon": {},
       "phonegap-nfc": {},
       "cordova-plugin-qrscanner": {},
-      "TalkingData": {}
+      "TalkingData": {},
+      "cordova-hot-code-push-plugin": {}
     },
     "platforms": [
       "android"
