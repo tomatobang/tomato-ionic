@@ -17,7 +17,9 @@ declare var window;
 
 @Injectable()
 export class UpdateService {
-  headers: HttpHeaders = new HttpHeaders();
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/x-www-form-urlencoded',
+  });
   constructor(
     public platform: Platform,
     public _global: GlobalService,
@@ -26,9 +28,7 @@ export class UpdateService {
     public http: HttpClient,
     public transfer: FileTransfer,
     private fileOpener: FileOpener
-  ) {
-    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-  }
+  ) {}
 
   /**
    * 初始化
@@ -69,7 +69,8 @@ export class UpdateService {
       const arr1 = curV.split('.');
       const arr2 = reqV.split('.');
       const minLength = Math.min(arr1.length, arr2.length);
-      let  diff = 0, position = 0;
+      let diff = 0,
+        position = 0;
       while (
         position < minLength &&
         (diff = parseInt(arr1[position], 10) - parseInt(arr2[position], 10)) ===
