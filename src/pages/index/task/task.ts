@@ -24,6 +24,7 @@ export class TaskPage implements OnInit {
   };
   newTask = {
     title: '',
+    target:'',
     description: '',
     num: 1,
   };
@@ -96,6 +97,14 @@ export class TaskPage implements OnInit {
     } else {
       alert('此任务无音频记录！');
     }
+  }
+
+  /**
+   * TODO:
+   * 考虑是否有必要: 点击正在播放的音频时可以暂停与继续
+   */
+  stopPlayVoiceRecord(){
+    this.voiceService.stop_local_voice();
   }
 
   addNewTaskLink() {

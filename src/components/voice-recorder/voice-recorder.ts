@@ -21,7 +21,7 @@ declare let window;
 
 @Component({
   selector: 'voice-recorder',
-  providers: [Media, FileTransfer], // ,File
+  providers: [Media, FileTransfer],
   templateUrl: './voice-recorder.html',
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
@@ -41,7 +41,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   mediaRec: MediaObject;
   src = '';
   path = '';
-  voiceDuration = 0;
+  voiceDuration = '0';
   voice = {
     ImgUrl: './assets/voice/recog000.png',
     reset() {
@@ -89,7 +89,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.pressGesture.listen();
 
     this.pressGesture.on('press', e => {
-      console.log('press开始了');
+      console.log('press');
       this.onHold();
     });
     this.el.onpointerleave = () => {
@@ -177,7 +177,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
         console.log('touchend():Audio Success')
       );
       this.mediaRec.onError.subscribe(error =>
-        console.log('touchend():Audio Error!', error)
+        console.log('touchend():Audio Error:', error)
       );
       this.mediaRec.play();
       this.mediaRec.stop();
@@ -197,7 +197,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
           }
           this.temp_file_path = tmpPath.replace('file://', '');
           this.couldPlay = true;
-          this.voiceDuration = dur;
+          this.voiceDuration = dur.toFixed(1);
           if (this.mediaRec) {
             this.mediaRec.release();
           }
@@ -229,7 +229,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       console.log('play():Audio Error: ', error);
     });
 
-    // 开始播放录音
     this.mediaRec.play();
     return false;
   }

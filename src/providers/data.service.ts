@@ -39,10 +39,11 @@ export * from './data/user_friend';
 @Injectable()
 export class DataService {
   baseUrl: string = baseUrl;
-  headers: HttpHeaders = new HttpHeaders();
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/x-www-form-urlencoded'
+  });
 
   constructor(public http: HttpClient, public cacheService: CacheService) {
-    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
   }
 
   public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
