@@ -16,11 +16,13 @@ export class MessagePage {
       id: 1,
       name: '李四',
       info: '请求添加您为好友',
+      portrait: '',
     },
     {
       id: 1,
       name: '王五',
       info: '请求添加您为好友',
+      portrait: '',
     },
   ];
 

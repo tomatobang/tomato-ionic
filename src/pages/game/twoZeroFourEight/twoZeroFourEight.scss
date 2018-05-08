@@ -2,7 +2,7 @@ TwoZeroFourEight {
   @import 'helpers';
   @import 'clear-sans';
 
-  $field-width: 500px;
+  $field-width: 320px;
   $grid-spacing: 15px;
   $grid-row-cells: 4;
   $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) /
@@ -23,10 +23,6 @@ TwoZeroFourEight {
 
   $transition-speed: 100ms;
 
-  .heading {
-    @include clearfix;
-  }
-
   @include keyframes(move-up) {
     0% {
       top: 25px;
@@ -41,12 +37,12 @@ TwoZeroFourEight {
 
   .score-container,
   .best-container {
-    $height: 55px;
+    $height: 75px;
     position: relative;
     display: inline-block;
     background: $game-container-background;
     padding: 15px 25px;
-    font-size: 25px;
+    font-size: 35px;
     height: $height;
     line-height: $height - 12px;
     font-weight: bold;
@@ -399,12 +395,12 @@ TwoZeroFourEight {
   }
 
   .above-game {
+    margin-top:20px;
     @include clearfix;
   }
 
   .restart-button {
     @include button;
-    display: block;
     text-align: center;
   }
 
@@ -426,12 +422,8 @@ TwoZeroFourEight {
       min-width: 40px;
     }
 
-    .heading {
-      margin-bottom: 10px;
-    }
 
     .restart-button {
-      display: block;
       box-sizing: border-box;
       margin-top: 2px;
     }
@@ -460,7 +452,7 @@ TwoZeroFourEight {
   @import 'helpers';
   @import 'clear-sans';
 
-  $field-width: 500px;
+  $field-width: 320px;
   $grid-spacing: 15px;
   $grid-row-cells: 4;
   $tile-size: ($field-width - $grid-spacing * ($grid-row-cells + 1)) /
@@ -481,9 +473,6 @@ TwoZeroFourEight {
 
   $transition-speed: 100ms;
 
-  .heading {
-    @include clearfix;
-  }
 
   @include keyframes(move-up) {
     0% {
@@ -513,6 +502,7 @@ TwoZeroFourEight {
   }
 
   .container {
+    text-align: center;
     width: $field-width;
     margin: 0 auto;
   }
@@ -824,13 +814,12 @@ TwoZeroFourEight {
   }
 
   .above-game {
+    margin-top:20px;
     @include clearfix;
   }
 
   .restart-button {
     @include button;
-    display: block;
-    text-align: center;
   }
 
   .game-explanation {
@@ -851,14 +840,10 @@ TwoZeroFourEight {
       min-width: 40px;
     }
 
-    .heading {
-      margin-bottom: 10px;
-    }
 
     // Show intro and restart button side by side
 
     .restart-button {
-      display: block;
       box-sizing: border-box;
       margin-top: 2px;
     }

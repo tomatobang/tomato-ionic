@@ -31,7 +31,7 @@
             <!-- 好友请求 -->
             <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
                 <ion-avatar item-start>
-                    <img src="{{message.portrait || './assets/tomato-grey.png'}}" class="message-request-img">
+                    <img src="{{ message.portrait || './assets/tomato-grey.png' }}" class="message-request-img">
                 </ion-avatar>
                 <h2 class="message-requst-title">{{ message.name }}</h2>
                 <h3> {{ message.info }}</h3>

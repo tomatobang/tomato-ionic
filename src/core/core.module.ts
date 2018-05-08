@@ -1,5 +1,5 @@
 /** TODO:
- * 统一管理系统中通用的服务
+ * 统一管理系统中通用服务
  */
 
 import {NgModule} from '@angular/core';
