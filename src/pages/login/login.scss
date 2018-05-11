@@ -1,4 +1,13 @@
 page-login {
+  .tb-userform{
+    ion-item{
+      border-top: none !important;
+      border-bottom: none !important;
+      .item-inner{
+        border-bottom: 1px solid tomato !important;
+      }
+    }
+  }
   .scroll-content {
     margin-top: 0 !important;
   }
@@ -60,7 +69,8 @@ page-login {
       width: 80%;
     }
     .login-button-area .button-outline {
-      color: #aaa;
+      color: #bbb;
+      border-color:tomato;
     }
 
     ion-button {

@@ -183,9 +183,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * 开启休息计时
-   */
   startRestTimer(resttimestart) {
     this.refreshTimeUI();
     this.resttimestart = resttimestart;
@@ -241,17 +238,11 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     this.stopRefreshTimeUI();
   }
 
-  /**
-   * 停止播放白噪音
-   */
   stopPlayWhiteNoise() {
     this.whiteNoiseIsplaying = false;
     this.voiceService.stop_local_voice();
   }
 
-  /**
-   * 播放白噪音
-   */
   startPlayWhiteNoise() {
     this.whiteNoiseIsplaying = true;
     this.voiceService.play_local_voice('assets/audios/white_noise.mp3', true);
@@ -263,17 +254,14 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
    */
   breakActiveTask(isLocal) {
     if (isLocal) {
-      this.showPrompt();
+      this.showBreakPrompt();
     } else {
       this.stopTimer();
       this.startRestTimer(new Date());
     }
   }
 
-  /**
-   * 中断番茄钟弹出框
-   */
-  showPrompt() {
+  showBreakPrompt() {
     const prompt = this.alertCtrl.create({
       title: '中断当前番茄钟',
       message: '(可以为空)',
