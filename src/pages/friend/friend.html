@@ -78,18 +78,22 @@
         <ion-list *ngSwitchCase="'rank'">
             <ion-list class="rank-list">
                 <ion-item *ngFor="let item of rankList">
-                    <ion-avatar item-left class="item-rank">
-                        <span class="rank {{ item.class }}">
-                            <span>{{ item.rankText }}</span>
-                        </span>
-                        <img class="user-rank-header-img" [src]="item.image">
-                    </ion-avatar>
-                    <p class="rank-statistics">
-                        <span class="tomatoNum"> {{ item.tomatoNum }}</span> 番茄钟，专注
-                        <span class="minute"> {{ item.minute }}</span> 分钟
-                    </p>
-                    <p class="rank-title">{{ item.title }}</p>
-                    <p class="rank-title">
+                    <div class="rank-statistics">
+                        <ion-avatar item-left class="item-rank">
+                            <span class="rank {{ item.class }}">
+                                <span>{{ item.rankText }}</span>
+                            </span>
+                            <img class="user-rank-header-img" [src]="item.image">
+                        </ion-avatar>
+                        <div class="item-desc">
+                            <span class="tomatoNum"> {{ item.tomatoNum }}</span> 番茄钟，专注
+                            <span class="minute"> {{ item.minute }}</span> 分钟
+                            <p class="rank-title">
+                                <ion-icon ios="ios-microphone" md="ios-microphone-outline"></ion-icon>
+                                {{ item.title }}</p>
+                        </div>
+                    </div>
+                    <p class="rank-location">
                         <ion-icon name="pin"></ion-icon> 深圳市南山区</p>
                 </ion-item>
             </ion-list>
