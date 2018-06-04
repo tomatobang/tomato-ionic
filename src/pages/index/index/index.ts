@@ -148,9 +148,11 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
       id: this.notifyID,
       title: this.activeTomato.title,
       text: '你又完成了一个番茄钟!',
-      at: new Date(
-        this.activeTomato.startTime.getTime() + this.countdown * 60 * 1000
-      ),
+      trigger: {
+        at: new Date(
+          this.activeTomato.startTime.getTime() + this.countdown * 60 * 1000
+        ),
+      },
       led: 'FF0000',
       sound: 'file://assets/audios/start.wav',
       badge: 1,
@@ -197,7 +199,9 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     this.localNotifications.schedule({
       id: this.restnotifyID,
       text: '休息完了，赶紧开启下一个番茄钟吧!',
-      at: new Date(new Date().getTime() + 5 * 60 * 1000),
+      trigger: {
+        at: new Date(new Date().getTime() + 5 * 60 * 1000),
+      },
       sound: 'file://assets/audios/finish.wav',
       led: 'FF0000',
     });

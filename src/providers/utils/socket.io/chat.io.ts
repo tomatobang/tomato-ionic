@@ -55,4 +55,25 @@ export class ChatIOService {
       endname: 'ionic',
     });
   }
+
+  /**
+   * 好友在线
+   */
+  friend_online() {
+    return this.socket.fromEvent<any>('friend_online').map(data => data);
+  }
+
+  /**
+   * 好友离线
+   */
+  friend_offline() {
+    return this.socket.fromEvent<any>('friend_offline').map(data => data);
+  }
+
+  /**
+   * 服务端错误消息
+   */
+  fail() {
+    return this.socket.fromEvent<any>('fail').map(data => data);
+  }
 }

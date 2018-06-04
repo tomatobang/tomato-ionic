@@ -24,7 +24,7 @@ export class TaskPage implements OnInit {
   };
   newTask = {
     title: '',
-    target:'',
+    target: '',
     description: '',
     num: 1,
   };
@@ -103,7 +103,7 @@ export class TaskPage implements OnInit {
    * TODO:
    * 考虑是否有必要: 点击正在播放的音频时可以暂停与继续
    */
-  stopPlayVoiceRecord(){
+  stopPlayVoiceRecord() {
     this.voiceService.stop_local_voice();
   }
 
@@ -188,7 +188,6 @@ export class TaskPage implements OnInit {
   removeTask(task: any) {
     for (const index in this.allTasks.unfinished) {
       if (this.allTasks.unfinished[index] === task) {
-        // 删除任务
         this.taskservice.deleteTask(task._id).subscribe(response => {
           const data: any = response;
           if (data && data.status === 'fail') {

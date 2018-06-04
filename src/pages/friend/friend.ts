@@ -23,7 +23,7 @@ export class FriendPage {
       tomatoNum: 11,
       minute: 223,
       image: 'assets/imgs/logo.png',
-      rankText: 'No. 1',
+      rankText: '1st',
       class: 'rank1',
     },
     {
@@ -31,7 +31,7 @@ export class FriendPage {
       tomatoNum: 8,
       minute: 193,
       image: 'assets/tomato-active.png',
-      rankText: 'No. 2',
+      rankText: '2nd',
       class: 'rank2',
     },
     {
@@ -39,7 +39,7 @@ export class FriendPage {
       tomatoNum: 5,
       minute: 123,
       image: 'assets/tomato-active.png',
-      rankText: 'No. 3',
+      rankText: '3rd',
       class: 'rank3',
     },
     {
