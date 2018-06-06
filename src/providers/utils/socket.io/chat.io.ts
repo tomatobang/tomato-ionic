@@ -41,19 +41,57 @@ export class ChatIOService {
   }
   load_online_friend_list_succeed() {
     return this.socket
-      .fromEvent<any>('load_online_friend_list_succeed')
+      .fromEvent<any>('online_friendlist_received')
       .map(data => data);
   }
 
   /**
    * 好友请求
    */
-  send_friend_request(userid: string, state) {
-    this.socket.emit('send_friend_request', {
-      userid,
+  send_friend_request(from: string, to: string) {
+    this.socket.emit('request_add_request', {
+      from,
+      to,
+      endname: 'ionic',
+    });
+  }
+
+  /**
+   * 好友请求发送成功
+   */
+  requestAddFriendSuccess() {
+    return this.socket
+      .fromEvent<any>('requestAddFriend_success')
+      .map(data => data);
+  }
+
+  /**
+   * 回复好友请求
+   */
+  response_friend_request(recordId: string, from: string, to: string, state) {
+    this.socket.emit('response_friend_request', {
+      recordId,
+      from,
+      to,
       state,
       endname: 'ionic',
     });
+  }
+
+  /**
+   * 回复好友请求发送成功
+   */
+  responseAddFriendSuccess() {
+    return this.socket
+      .fromEvent<any>('responseAddFriend_success')
+      .map(data => data);
+  }
+
+  /**
+   * 添加新好友
+   */
+  new_added_friend() {
+    return this.socket.fromEvent<any>('new_added_friend').map(data => data);
   }
 
   /**
