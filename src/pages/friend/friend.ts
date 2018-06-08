@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { QRScannerComponent } from '@components/qr-scanner/qr-scanner';
 import { ChatIOService } from '@providers/utils/socket.io.service';
+import { UserFriendService } from '@providers/data/user_friend';
 import { GlobalService } from '@providers/global.service';
 
 @IonicPage()
@@ -70,6 +71,7 @@ export class FriendPage {
   constructor(
     public navCtrl: NavController,
     public chatIO: ChatIOService,
+    public userFriendService: UserFriendService,
     public globalservice: GlobalService
   ) {
     const userid = this.globalservice.userinfo.userid;
@@ -93,6 +95,21 @@ export class FriendPage {
     this.chatIO.send_friend_request(lisi, zhangs);
     this.chatIO.requestAddFriendSuccess().subscribe(data => {
       console.log('requestAddFriendSuccess', data);
+    });
+
+    this.userFriendService.getFriends().subscribe(data => {
+      console.log(data);
+      this.chatIO.response_friend_request(
+        data[0]._id,
+        data[0].from._id,
+        data[0].to._id,
+        2
+      );
+
+      this.chatIO.responseAddFriendSuccess().subscribe(data => {
+        console.log('responseAddFriendSuccess', data);
+      });
+
     });
   }
 
