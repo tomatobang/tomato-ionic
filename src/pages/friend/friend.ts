@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, IonicPage, Events } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { QRScannerComponent } from '@components/qr-scanner/qr-scanner';
+import { ChatIOService } from '@providers/utils/socket.io.service';
+import { GlobalService } from '@providers/global.service';
 
 @IonicPage()
 @Component({
@@ -65,7 +67,34 @@ export class FriendPage {
   ionApp: HTMLElement;
   @ViewChild('qrScanner') qrScanner: QRScannerComponent;
 
-  constructor(public navCtrl: NavController, private events: Events) {}
+  constructor(
+    public navCtrl: NavController,
+    public chatIO: ChatIOService,
+    public globalservice: GlobalService
+  ) {
+    const userid = this.globalservice.userinfo.userid;
+    this.chatIO.login(userid);
+    this.chatIO.load_online_friend_list(userid);
+
+    this.chatIO.load_online_friend_list_succeed().subscribe(data => {
+      console.log('load_online_friend_list_succeed', data);
+    });
+
+    this.chatIO.fail().subscribe(err => {
+      console.error(err);
+    });
+
+    this.testChatIO();
+  }
+
+  testChatIO() {
+    const zhangs = '5b0f712e24b71d2cc029bf11';
+    const lisi = '5b0f714924b71d2cc029bf12';
+    this.chatIO.send_friend_request(lisi, zhangs);
+    this.chatIO.requestAddFriendSuccess().subscribe(data => {
+      console.log('requestAddFriendSuccess', data);
+    });
+  }
 
   /**
    * 跳转至消息页

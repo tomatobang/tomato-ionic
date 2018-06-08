@@ -1,14 +1,11 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import {
-  NavController,
-  ViewController,
   ModalController,
   IonicPage,
   Events,
 } from 'ionic-angular';
 
 import { Slides } from 'ionic-angular';
-declare let window;
 
 @IonicPage()
 @Component({

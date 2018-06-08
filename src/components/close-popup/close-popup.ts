@@ -8,8 +8,8 @@ export class ClosePopupComponent {
 
   @HostBinding('style.z-index') style = 1000;
 
-  @Input('large') large: boolean;
-  @Input('color') color: string;
+  @Input() large: boolean;
+  @Input() color: string;
   @Output() closePopUp: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
