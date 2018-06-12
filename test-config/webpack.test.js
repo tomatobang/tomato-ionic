@@ -5,7 +5,16 @@ module.exports = {
   devtool: "inline-source-map",
 
   resolve: {
-    extensions: [".ts", ".js"]
+    extensions: [".ts", ".js"],
+    // alias:{
+    //   "@app/env": path.resolve('./src/environments/environment/'),
+    //   '@components': path.resolve('./src/components/'),
+    //   '@providers': path.resolve('./src/providers/'),
+    //   '@modals': path.resolve('./src/modals/'),
+    //   '@directives': path.resolve('../src/directives/'),
+    //   '@pipes': path.resolve('./src/pipes/'),
+    //   '@root': path.resolve('./'),
+    // }
   },
 
   module: {
@@ -43,7 +52,7 @@ module.exports = {
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /(ionic-angular)|(angular(\\|\/)core(\\|\/)@angular)/,
-      root("./src"), // location of your src
+      root("../src"), // location of your src
       {} // a map of your routes
     )
   ]
