@@ -6,15 +6,15 @@ module.exports = {
 
   resolve: {
     extensions: [".ts", ".js"],
-    // alias:{
-    //   "@app/env": path.resolve('./src/environments/environment/'),
-    //   '@components': path.resolve('./src/components/'),
-    //   '@providers': path.resolve('./src/providers/'),
-    //   '@modals': path.resolve('./src/modals/'),
-    //   '@directives': path.resolve('../src/directives/'),
-    //   '@pipes': path.resolve('./src/pipes/'),
-    //   '@root': path.resolve('./'),
-    // }
+    alias:{
+      "@app/env": path.resolve('./src/environments/environment/'),
+      '@components': path.resolve('./src/components/'),
+      '@providers': path.resolve('./src/providers/'),
+      '@modals': path.resolve('./src/modals/'),
+      '@directives': path.resolve('../src/directives/'),
+      '@pipes': path.resolve('./src/pipes/'),
+      '@root': path.resolve('./'),
+    }
   },
 
   module: {
