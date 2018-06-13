@@ -15,4 +15,9 @@ export class SearchPage {
     console.log('toHistoryTomato!');
     this.navCtrl.push('HistoryTomatoPage', {}, {}, () => {});
   }
+
+  toSearchUser() {
+    console.log('toSearchUser!');
+    this.navCtrl.push('SearchUserPage', {}, {}, () => {});
+  }
 }

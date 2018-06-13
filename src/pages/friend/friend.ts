@@ -96,21 +96,6 @@ export class FriendPage {
     this.chatIO.requestAddFriendSuccess().subscribe(data => {
       console.log('requestAddFriendSuccess', data);
     });
-
-    this.userFriendService.getFriends().subscribe(data => {
-      console.log(data);
-      this.chatIO.response_friend_request(
-        data[0]._id,
-        data[0].from._id,
-        data[0].to._id,
-        2
-      );
-
-      this.chatIO.responseAddFriendSuccess().subscribe(data => {
-        console.log('responseAddFriendSuccess', data);
-      });
-
-    });
   }
 
   /**
