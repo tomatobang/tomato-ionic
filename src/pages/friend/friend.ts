@@ -86,7 +86,7 @@ export class FriendPage {
       console.error(err);
     });
 
-    this.testChatIO();
+    // this.testChatIO();
   }
 
   testChatIO() {

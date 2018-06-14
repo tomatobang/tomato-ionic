@@ -36,8 +36,11 @@
                 <h2 class="message-requst-title">{{ message.name }}</h2>
                 <h3> {{ message.info }}</h3>
                 <p>2018-01-31 12:20</p>
-                <button class="message-agree" ion-button outline item-end (click)='responseReq(message.id, message.friendid)'>
+                <button class="message-agree" *ngIf="message.state===1" ion-button outline item-end (click)='responseReq(message.id, message.friendid)'>
                     添加
+                </button>
+                <button *ngIf="message.state===2" ion-button class="message-overtime" color="light" outline item-end disabled>
+                    已添加
                 </button>
                 <!-- <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
                     拒绝

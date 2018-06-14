@@ -6,6 +6,7 @@ export class UserFriend {
   to: User;
   request_time: Date;
   response_time: Date;
-  state: Number;
-  permission_level: Number;
+  state: number;
+  info: string;
+  permission_level: number;
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NavController, IonicPage } from 'ionic-angular';
-import { UserFriendService } from '@providers/data/user_friend';
+import { UserFriendState } from '@providers/data/user_friend/model/state.enum';
 import { GlobalService } from '@providers/global.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
+import { UserFriendService } from '@providers/data/user_friend';
 
 @IonicPage()
 @Component({
@@ -19,15 +20,17 @@ export class MessagePage implements OnInit {
       id: '1',
       name: '李四',
       friendid: '',
-      info: '请求添加您为好友',
+      info: '我是李四',
       portrait: '',
+      state: 1,
     },
     {
       id: '1',
       name: '王五',
       friendid: '',
-      info: '请求添加您为好友',
+      info: '我是王五',
       portrait: '',
+      state: 1,
     },
   ];
 
@@ -55,34 +58,26 @@ export class MessagePage implements OnInit {
   }
 
   getReqFriendList() {
-    this.userFriendService.getFriends().subscribe(data => {
-      for (let index = 0; index < data.length; index++) {
-        const element = data[index];
-        if (element.to._id === this.userid) {
-          this.messageList.push({
-            id: element._id,
-            name: element.from.displayName
-              ? element.from.displayName
-              : element.from.username,
-            friendid: element.from._id,
-            info: '请求添加您为好友',
-            portrait: '',
-          });
+    this.userFriendService
+      .getFriends(UserFriendState.SendRequest)
+      .subscribe(data => {
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          if (element.to._id === this.userid) {
+            this.messageList.push({
+              id: element._id,
+              state: element.state,
+              name: element.from.displayName
+                ? element.from.displayName
+                : element.from.username,
+              friendid: element.from._id,
+              info: element.info ? element.info : '',
+              portrait: '',
+            });
+          }
         }
-        // if (element.from._id === this.userid) {
-        //   this.messageList.push({
-        //     id: element._id,
-        //     name: element.to.displayName
-        //       ? element.to.displayName
-        //       : element.to.username,
-        //     friendid: element.to._id,
-        //     info: '正在等待对方回复',
-        //     portrait: '',
-        //   });
-        // }
-      }
-      console.log(data);
-    });
+        console.log(data);
+      });
   }
 
   responseReq(id, friendid) {

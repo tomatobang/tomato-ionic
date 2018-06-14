@@ -15,6 +15,9 @@ import { HttpClient } from '@angular/common/http';
 import { IonicPage, Scroll, NavController } from 'ionic-angular';
 import { PinyinService } from '@providers/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
+import { UserFriendService } from '@providers/data/user_friend';
+import { UserFriendState } from '@providers/data/user_friend/model/state.enum';
+import { GlobalService } from '@providers/global.service';
 
 @IonicPage()
 @Component({
@@ -24,6 +27,7 @@ import { Friendinfo } from './providers/contact-friendinfo.model';
 export class ContactsPage implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: Scroll;
   private navChars: QueryList<HTMLLinkElement>;
+  userid;
   friendlist = [];
   newFriendList = [];
 
@@ -34,12 +38,44 @@ export class ContactsPage implements OnInit {
     private http: HttpClient,
     public navCtrl: NavController,
     private el: ElementRef,
-    private render: Renderer2
+    private render: Renderer2,
+    public userFriendService: UserFriendService,
+    public globalService: GlobalService
   ) {
+    this.userid = globalService.userinfo.userid;
+    this.getAgreedUserFriend();
+    // this.mock();
+  }
+
+  /**
+   * 获取好友列表
+   */
+  getAgreedUserFriend() {
+    this.userFriendService
+      .getFriends(UserFriendState.Agreed)
+      .subscribe(data => {
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          if (element.to._id === this.userid) {
+            this.friendlist.push({
+              id: element.from._id,
+              name: element.from.displayName
+                ? element.from.displayName
+                : element.from.username,
+              headImg: './assets/tomato-active.png',
+            });
+            this.getSortedFriendlist();
+          } else {
+          }
+        }
+      });
+  }
+
+  mock() {
     this.getFriendlist()
       .then(res => {
         this.friendlist = res;
-        this.getNewFriendlist();
+        this.getSortedFriendlist();
       })
       .catch(err => {
         console.log(err);
@@ -59,7 +95,7 @@ export class ContactsPage implements OnInit {
       .catch(err => Promise.reject(err || 'err'));
   }
 
-  getNewFriendlist() {
+  getSortedFriendlist() {
     if (this.friendlist instanceof Array && this.friendlist.length > 0) {
       this.newFriendList = this.pinyinUtil.sortByFirstCode(
         this.friendlist,
@@ -101,8 +137,9 @@ export class ContactsPage implements OnInit {
   }
 
   OnNavcScroll(evt) {
-    const element = <HTMLElement>this.myScrollContainer._scrollContent
-      .nativeElement;
+    const element = <HTMLElement>(
+      this.myScrollContainer._scrollContent.nativeElement
+    );
     element.scrollTop = evt;
   }
 
