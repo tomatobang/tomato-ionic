@@ -39,6 +39,15 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
+  @GET(baseUrl + 'api/user/searchUsers')
+  searchUsers(
+    @Query('keyword') keyword?: string,
+    @Query('pageIndex') pageIndex = 1,
+    @Query('pageSize') pageSize = 10
+  ): Observable<Array<User>> {
+    return null;
+  }
+
   @GET(baseUrl + 'api/user/:id')
   getUserByTitle(@Path('id') userName: string): Observable<User> {
     return null;

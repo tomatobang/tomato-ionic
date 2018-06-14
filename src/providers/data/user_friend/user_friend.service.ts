@@ -29,11 +29,11 @@ export class UserFriendService extends RebirthHttp {
 
   @Cacheable({ pool: 'user_friend' })
   @GET(baseUrl + 'api/user_friend')
-  getFriendReq(
+  getFriends(
     @Query('pageIndex') pageIndex = 1,
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string
-  ): Observable<UserFriend> {
+  ): Observable<UserFriend[]> {
     return null;
   }
 

@@ -15,7 +15,9 @@
     "e2e": "npm run e2e-update && npm run e2e-test",
     "e2e-test": "protractor ./test-config/protractor.conf.js",
     "e2e-update": "webdriver-manager update --standalone false --gecko false",
-    "lint": "tslint  -p tsconfig.json -c tslint.json --fix"
+    "e2e-update-local": "./node_modules/protractor/bin/webdriver-manager update",
+    "lint": "tslint  -p tsconfig.json -c tslint.json --fix",
+    "scss-lint": "scss-lint"
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js",
@@ -52,7 +54,8 @@
     "codelyzer": "^4.1.0",
     "com.darktalker.cordova.screenshot": "^0.1.6",
     "com.unarin.cordova.beacon": "^3.6.0",
-    "cordova-android": "6.2.3",
+    "cordova-android": "6.3.0",
+    "cordova-android-support-gradle-release": "^1.4.2",
     "cordova-hot-code-push-plugin": "^1.5.3",
     "cordova-plugin-app-event": "^1.2.1",
     "cordova-plugin-app-version": "^0.1.9",
@@ -129,8 +132,6 @@
     "tslint": "^5.9.1",
     "typescript": "^2.4.2"
   },
-  "cordovaPlugins": [],
-  "cordovaPlatforms": [],
   "description": "chat: An Ionic project",
   "cordova": {
     "plugins": {
@@ -176,13 +177,13 @@
       "es6-promise-plugin": {},
       "talkingdata": {},
       "cordova-plugin-logtofile": {},
-      "cordova-plugin-compat": {},
       "cordova-plugin-insomnia": {},
       "com.unarin.cordova.beacon": {},
       "phonegap-nfc": {},
       "cordova-plugin-qrscanner": {},
       "TalkingData": {},
-      "cordova-hot-code-push-plugin": {}
+      "cordova-hot-code-push-plugin": {},
+      "cordova-android-support-gradle-release": {}
     },
     "platforms": [
       "android"

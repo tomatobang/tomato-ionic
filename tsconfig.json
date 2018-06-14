@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": false,
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["dom", "es2015"],
@@ -11,7 +12,7 @@
     "target": "es5",
     "baseUrl": "./",
     "paths": {
-      "@app/env": ["environments/environment"],
+      "@app/env": ["src/environments/environment"],
       "@components/*": ["src/components/*"],
       "@providers/*": ["src/providers/*"],
       "@modals/*": ["src/modals/*"],

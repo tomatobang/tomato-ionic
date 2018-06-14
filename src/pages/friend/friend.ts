@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, IonicPage, Events } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { QRScannerComponent } from '@components/qr-scanner/qr-scanner';
+import { ChatIOService } from '@providers/utils/socket.io.service';
+import { UserFriendService } from '@providers/data/user_friend';
+import { GlobalService } from '@providers/global.service';
 
 @IonicPage()
 @Component({
@@ -23,7 +26,7 @@ export class FriendPage {
       tomatoNum: 11,
       minute: 223,
       image: 'assets/imgs/logo.png',
-      rankText: 'No. 1',
+      rankText: '1st',
       class: 'rank1',
     },
     {
@@ -31,7 +34,7 @@ export class FriendPage {
       tomatoNum: 8,
       minute: 193,
       image: 'assets/tomato-active.png',
-      rankText: 'No. 2',
+      rankText: '2nd',
       class: 'rank2',
     },
     {
@@ -39,7 +42,7 @@ export class FriendPage {
       tomatoNum: 5,
       minute: 123,
       image: 'assets/tomato-active.png',
-      rankText: 'No. 3',
+      rankText: '3rd',
       class: 'rank3',
     },
     {
@@ -65,7 +68,35 @@ export class FriendPage {
   ionApp: HTMLElement;
   @ViewChild('qrScanner') qrScanner: QRScannerComponent;
 
-  constructor(public navCtrl: NavController, private events: Events) {}
+  constructor(
+    public navCtrl: NavController,
+    public chatIO: ChatIOService,
+    public userFriendService: UserFriendService,
+    public globalservice: GlobalService
+  ) {
+    const userid = this.globalservice.userinfo.userid;
+    this.chatIO.login(userid);
+    this.chatIO.load_online_friend_list(userid);
+
+    this.chatIO.load_online_friend_list_succeed().subscribe(data => {
+      console.log('load_online_friend_list_succeed', data);
+    });
+
+    this.chatIO.fail().subscribe(err => {
+      console.error(err);
+    });
+
+    this.testChatIO();
+  }
+
+  testChatIO() {
+    const zhangs = '5b0f712e24b71d2cc029bf11';
+    const lisi = '5b0f714924b71d2cc029bf12';
+    this.chatIO.send_friend_request(lisi, zhangs);
+    this.chatIO.requestAddFriendSuccess().subscribe(data => {
+      console.log('requestAddFriendSuccess', data);
+    });
+  }
 
   /**
    * 跳转至消息页

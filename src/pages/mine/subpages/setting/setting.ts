@@ -16,6 +16,7 @@ export class SettingPage implements OnInit {
   isAlwaysLight = false;
 
   longbreakTomatoNum: number;
+  longresttime: number;
   IsLoopMode = false;
   whiteNoiseType: string;
   constructor(
@@ -37,7 +38,9 @@ export class SettingPage implements OnInit {
     this.globalservice.resttime = value;
   }
 
-  setLongResttimev(value: number) {}
+  setLongResttime(value: number) {
+    this.longresttime = value;
+  }
 
   changeLightState() {
     if (this.isAlwaysLight) {

@@ -32,4 +32,6 @@ export class HistoryTomatoPage {
       this.searchReturnItems = arr;
     });
   }
+
+  playVoiceRecord() {}
 }
