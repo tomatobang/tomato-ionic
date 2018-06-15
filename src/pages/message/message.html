@@ -25,6 +25,13 @@
                 <h2>张三</h2>
                 <p>这是演示消息</p>
             </button>
+            <button ion-item navPush="Chat" [navParams]="toUser" *ngFor="let m of newMessages">
+                <ion-avatar item-left>
+                    <img src="./assets/tomato-active.png">
+                </ion-avatar>
+                <h2>{{ m.name }}</h2>
+                <p>{{ m.content }}</p>
+            </button>
         </ion-list>
 
         <ion-list *ngSwitchCase="'info'">

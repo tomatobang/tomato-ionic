@@ -5,6 +5,7 @@ import { UserFriendState } from '@providers/data/user_friend/model/state.enum';
 import { GlobalService } from '@providers/global.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
 import { UserFriendService } from '@providers/data/user_friend';
+import { InfoService } from '@providers/info.service';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,9 @@ export class MessagePage implements OnInit {
   toUser: Object;
   showType = 'msg';
   userid;
+
+  newMessages = [];
+
   messageList = [
     {
       id: '1',
@@ -38,7 +42,8 @@ export class MessagePage implements OnInit {
     public navCtrl: NavController,
     public userFriendService: UserFriendService,
     public globalservice: GlobalService,
-    public chatIO: ChatIOService
+    public chatIO: ChatIOService,
+    public info: InfoService
   ) {
     this.toUser = {
       toUserId: '210000198410281948',
@@ -55,6 +60,16 @@ export class MessagePage implements OnInit {
 
   ngOnInit(): void {
     this.getReqFriendList();
+    this.info.newMessagesMonitor.subscribe(data => {
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        this.newMessages.push({
+          name: element._id,
+          content: element.messages[0].content,
+          count: element.count,
+        });
+      }
+    });
   }
 
   toChatPage() {

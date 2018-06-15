@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // TODO:启用极光推送
 // import { JPushService } from '@providers/utils/jpush.service';
 import { GlobalService } from '@providers/global.service';
+import { InfoService } from '@providers/info.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { NativeService } from '@providers/utils/native.service';
 import { RebirthHttpProvider } from 'rebirth-http';
@@ -27,6 +28,7 @@ export class MyAppComponent {
     private backgroundMode: BackgroundMode,
     global: GlobalService,
     native: NativeService,
+    info: InfoService,
     private events: Events
   ) {
     platform.ready().then(() => {
@@ -60,6 +62,8 @@ export class MyAppComponent {
         this.rebirthProvider.addResponseErrorInterceptor(err => {
           console.error('请求错误！', err);
         });
+        // 消息服务初始化
+        info.init();
         this.rootPage = 'TabsPage';
       } else {
         this.rootPage = 'LoginPage';
