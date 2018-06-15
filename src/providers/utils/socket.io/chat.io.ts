@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { ChatSocket } from './config/chat';
-import { Message } from '../../data/message/message.model';
+// import { Message } from '../../data/message/message.model';
 
 @Injectable()
 export class ChatIOService {
@@ -18,13 +18,13 @@ export class ChatIOService {
    * 接收消息
    */
   receive_message() {
-    return this.socket.fromEvent<any>('receive_message').map(data => data);
+    return this.socket.fromEvent<any>('message_received').map(data => data);
   }
 
   /**
    * 发送消息
    */
-  send_message(from: string, to: string, message: Message) {
+  send_message(from: string, to: string, message: string) {
     this.socket.emit('send_message', {
       from,
       to,

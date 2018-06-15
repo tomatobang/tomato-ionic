@@ -9,9 +9,29 @@ import { ChatMessage } from './chat-message.model';
 
 import 'rxjs/add/operator/toPromise';
 
+import { ChatIOService } from '@providers/utils/socket.io.service';
+
 @Injectable()
 export class ChatService {
-  constructor(public http: HttpClient, public events: Events) {}
+  constructor(
+    public http: HttpClient,
+    public events: Events,
+    public chatIO: ChatIOService
+  ) {}
+
+  /**
+   * 发送消息
+   * @param from 自己
+   * @param to 好友
+   * @param message 消息
+   */
+  sendMessage(from: string, to: string, message: string) {
+    this.chatIO.send_message(from, to, message);
+  }
+
+  receiveMessage() {
+    return this.chatIO.receive_message();
+  }
 
   mockNewMsg(msg) {
     setTimeout(() => {

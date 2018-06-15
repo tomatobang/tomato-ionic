@@ -46,6 +46,11 @@ export class MessagePage implements OnInit {
     };
 
     this.userid = globalservice.userinfo.userid;
+
+    // 注册收到消息服务
+    this.chatIO.receive_message().subscribe(data => {
+      console.log('receiveMessage', data);
+    });
   }
 
   ngOnInit(): void {

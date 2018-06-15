@@ -143,7 +143,11 @@ export class ContactsPage implements OnInit {
     element.scrollTop = evt;
   }
 
-  toFriendInfo() {
-    this.navCtrl.push('FriendInfoPage');
+  toFriendInfo(userid, friendname) {
+    debugger;
+    this.navCtrl.push('FriendInfoPage', {
+      userid: userid,
+      friendname: friendname,
+    });
   }
 }
