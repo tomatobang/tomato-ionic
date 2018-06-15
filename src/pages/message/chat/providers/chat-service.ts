@@ -29,10 +29,6 @@ export class ChatService {
     this.chatIO.send_message(from, to, message);
   }
 
-  receiveMessage() {
-    return this.chatIO.receive_message();
-  }
-
   mockNewMsg(msg) {
     setTimeout(() => {
       this.events.publish(

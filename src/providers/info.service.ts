@@ -8,15 +8,20 @@ import * as querystring from 'querystring';
 import { baseUrl } from '../config';
 
 import { MessageService } from './data/message/message.service';
+import { ChatIOService } from '@providers/utils/socket.io.service';
 
 @Injectable()
 export class InfoService {
-  baseUrl: string = baseUrl;
+  chatingNow;
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
   });
 
-  constructor(public http: HttpClient, public messageService: MessageService) {}
+  constructor(
+    public http: HttpClient,
+    public messageService: MessageService,
+    public chatIO: ChatIOService
+  ) {}
 
   public messageSubject: Subject<any> = new BehaviorSubject<any>(null);
   public get newMessagesMonitor(): Observable<any> {
@@ -28,14 +33,15 @@ export class InfoService {
     return this.messagCountSubject.asObservable();
   }
 
+  public realtimeMsgSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public get realtimeMsgMonitor(): Observable<any> {
+    return this.realtimeMsgSubject.asObservable();
+  }
+
   /**
    * 初始化消息服务
    */
   public init() {
-    // 加载所有未读消息（先从本地加载 --> 从服务端加载 ）
-    // 对消息进行分组( 按照好友 )
-    // 不断接收新消息
-    // 可以对消息是否已读的状态进行设置
     this.messageService.getUnreadMessages().subscribe(data => {
       if (data) {
         let count = 0;
@@ -48,5 +54,15 @@ export class InfoService {
         this.messageSubject.next(data);
       }
     });
+
+    this.chatIO.receive_message().subscribe(data => {
+      if (this.chatingNow) {
+        this.realtimeMsgSubject.next(data);
+      }
+    });
+  }
+
+  registerChatMsg(userid) {
+    this.chatingNow = userid;
   }
 }

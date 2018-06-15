@@ -5,6 +5,7 @@ import { Events, Content, TextInput } from 'ionic-angular';
 import { ChatMessage } from './providers/chat-message.model';
 import { ChatService } from './providers/chat-service';
 import { GlobalService } from '@providers/global.service';
+import { InfoService } from '@providers/info.service';
 
 @IonicPage()
 @Component({
@@ -28,13 +29,32 @@ export class Chat {
     public chatService: ChatService,
     public events: Events,
     public ref: ChangeDetectorRef,
-    public globalService: GlobalService
+    public globalService: GlobalService,
+    public info: InfoService
   ) {
     // Get the navParams toUserId parameter
     this.toUserId = navParams.get('toUserId');
     this.toUserName = navParams.get('toUserName');
     this.userId = this.globalService.userinfo.userid;
     this.userName = this.globalService.userinfo.username;
+
+    this.info.realtimeMsgMonitor.subscribe(data => {
+      // debugger;
+      if (data) {
+        const id = Date.now().toString();
+        const newMsg: ChatMessage = {
+          messageId: data.create_at,
+          userId: data.from,
+          userName: data.from,
+          userImgUrl: '',
+          toUserId: this.userId,
+          time: data.create_at,
+          message: data.message ? data.message : data.content,
+          status: '',
+        };
+        this.pushNewMsg(newMsg);
+      }
+    });
     // Get mock user information
     // this.chatService.getUserInfo().then(res => {
     //   this.userId = res.userId;
@@ -59,6 +79,7 @@ export class Chat {
     // this.events.subscribe('chat:received', (msg, time) => {
     //   this.pushNewMsg(msg);
     // });
+    this.info.registerChatMsg(this.toUserId);
   }
 
   _focus() {

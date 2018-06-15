@@ -64,10 +64,17 @@ export class ContactsPage implements OnInit {
                 : element.from.username,
               headImg: './assets/tomato-active.png',
             });
-            this.getSortedFriendlist();
           } else {
+            this.friendlist.push({
+              id: element.to._id,
+              name: element.to.displayName
+                ? element.to.displayName
+                : element.to.username,
+              headImg: './assets/tomato-active.png',
+            });
           }
         }
+        this.getSortedFriendlist();
       });
   }
 
@@ -144,7 +151,6 @@ export class ContactsPage implements OnInit {
   }
 
   toFriendInfo(userid, friendname) {
-    debugger;
     this.navCtrl.push('FriendInfoPage', {
       userid: userid,
       friendname: friendname,
