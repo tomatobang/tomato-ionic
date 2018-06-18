@@ -8,6 +8,7 @@ import { GlobalService } from '@providers/global.service';
 import { InfoService } from '@providers/info.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { NativeService } from '@providers/utils/native.service';
+import { ChatIOService } from '@providers/utils/socket.io.service';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
@@ -29,6 +30,7 @@ export class MyAppComponent {
     global: GlobalService,
     native: NativeService,
     info: InfoService,
+    public chatIO: ChatIOService,
     private events: Events
   ) {
     platform.ready().then(() => {
@@ -63,6 +65,7 @@ export class MyAppComponent {
           console.error('请求错误！', err);
         });
         // 消息服务初始化
+        chatIO.login(global.userinfo.userid);
         info.init();
         this.rootPage = 'TabsPage';
       } else {

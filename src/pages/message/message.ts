@@ -6,6 +6,7 @@ import { GlobalService } from '@providers/global.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
 import { UserFriendService } from '@providers/data/user_friend';
 import { InfoService } from '@providers/info.service';
+import { CacheService } from '@providers/cache.service';
 
 @IonicPage()
 @Component({
@@ -18,16 +19,9 @@ export class MessagePage implements OnInit {
   userid;
 
   newMessages = [];
+  userSet = new Map();
 
   messageList = [
-    {
-      id: '1',
-      name: '李四',
-      friendid: '',
-      info: '我是李四',
-      portrait: '',
-      state: 1,
-    },
     {
       id: '1',
       name: '王五',
@@ -43,7 +37,8 @@ export class MessagePage implements OnInit {
     public userFriendService: UserFriendService,
     public globalservice: GlobalService,
     public chatIO: ChatIOService,
-    public info: InfoService
+    public info: InfoService,
+    public cache: CacheService
   ) {
     this.toUser = {
       toUserId: '210000198410281948',
@@ -59,22 +54,58 @@ export class MessagePage implements OnInit {
   }
 
   ngOnInit(): void {
+    // 获取通知列表
     this.getReqFriendList();
+    // 监听新消息
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
-        this.newMessages.push({
-          name: element._id,
-          content: element.messages[0].content,
-          count: element.count,
-        });
+        if (this.userSet.has(element._id)) {
+          const i = this.userSet.get(element._id);
+          this.newMessages[i].content = element.messages[0].content;
+          this.newMessages[i].count += 1;
+        } else {
+          this.getFriendName(element._id).then(name => {
+            this.newMessages.push({
+              fid: element._id,
+              name: name,
+              content: element.messages[0].content,
+              count: element.count,
+            });
+            this.userSet.set(element._id, index);
+          });
+        }
       }
     });
   }
 
-  toChatPage() {
-    console.log('setting!');
-    this.navCtrl.push('Chat', this.toUser, {}, () => {});
+  getFriendName(id): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.cache.getFriendList().subscribe(friendList => {
+        if (friendList) {
+          for (let index = 0; index < friendList.length; index++) {
+            const element = friendList[index];
+            if (element.id === id) {
+              resolve(element.name);
+            }
+          }
+        }
+        resolve('unknown');
+      });
+    });
+  }
+
+  /**
+   * 跳转至聊天页
+   * @param fid 好友编号
+   * @param fname 好友名称
+   */
+  toChatPage(fid, fname) {
+    console.log('toChatPage!');
+    this.navCtrl.push('Chat', {
+      toUserId: fid,
+      toUserName: fname,
+    });
   }
 
   getReqFriendList() {

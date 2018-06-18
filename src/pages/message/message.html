@@ -1,84 +1,85 @@
 <ion-header>
-    <ion-toolbar>
-        <div padding>
-            <ion-segment [(ngModel)]="showType">
-                <ion-segment-button value="msg">
-                    消息
-                </ion-segment-button>
-                <ion-segment-button value="info">
-                    通知
-                </ion-segment-button>
-            </ion-segment>
-        </div>
-    </ion-toolbar>
+  <ion-toolbar>
+    <div padding>
+      <ion-segment [(ngModel)]="showType">
+        <ion-segment-button value="msg">
+          消息
+        </ion-segment-button>
+        <ion-segment-button value="info">
+          通知
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content no-bounce>
 
-    <div [ngSwitch]="showType">
-        <ion-list *ngSwitchCase="'msg'">
-            <!-- 消息 -->
-            <button ion-item navPush="Chat" [navParams]="toUser">
-                <ion-avatar item-left>
-                    <img src="./assets/tomato-active.png">
-                </ion-avatar>
-                <h2>张三</h2>
-                <p>这是演示消息</p>
-            </button>
-            <button ion-item navPush="Chat" [navParams]="toUser" *ngFor="let m of newMessages">
-                <ion-avatar item-left>
-                    <img src="./assets/tomato-active.png">
-                </ion-avatar>
-                <h2>{{ m.name }}</h2>
-                <p>{{ m.content }}</p>
-            </button>
-        </ion-list>
+  <div [ngSwitch]="showType">
+    <ion-list *ngSwitchCase="'msg'">
+      <!-- 消息 -->
+      <button ion-item navPush="Chat" [navParams]="toUser">
+        <ion-avatar item-left>
+          <img src="./assets/tomato-active.png">
+        </ion-avatar>
+        <h2>张三</h2>
+        <p>这是演示消息</p>
+      </button>
+      <button ion-item *ngFor="let m of newMessages" (click)="toChatPage(m.fid,m.name)">
+        <ion-avatar item-left>
+          <img src="./assets/tomato-active.png">
+        </ion-avatar>
+        <h2>{{ m.name }}</h2>
+        <p>{{ m.content }}</p>
+        <ion-badge item-end color="danger">{{ m.count }}</ion-badge>
+      </button>
+    </ion-list>
 
-        <ion-list *ngSwitchCase="'info'">
-            <!-- 好友请求 -->
-            <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
-                <ion-avatar item-start>
-                    <img src="{{ message.portrait || './assets/tomato-grey.png' }}" class="message-request-img">
-                </ion-avatar>
-                <h2 class="message-requst-title">{{ message.name }}</h2>
-                <h3> {{ message.info }}</h3>
-                <p>2018-01-31 12:20</p>
-                <button class="message-agree" *ngIf="message.state===1" ion-button outline item-end (click)='responseReq(message.id, message.friendid)'>
-                    添加
-                </button>
-                <button *ngIf="message.state===2" ion-button class="message-overtime" color="light" outline item-end disabled>
-                    已添加
-                </button>
-                <!-- <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
+    <ion-list *ngSwitchCase="'info'">
+      <!-- 好友请求 -->
+      <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
+        <ion-avatar item-start>
+          <img src="{{ message.portrait || './assets/tomato-grey.png' }}" class="message-request-img">
+        </ion-avatar>
+        <h2 class="message-requst-title">{{ message.name }}</h2>
+        <h3> {{ message.info }}</h3>
+        <p>2018-01-31 12:20</p>
+        <button class="message-agree" *ngIf="message.state===1" ion-button outline item-end (click)='responseReq(message.id, message.friendid)'>
+          添加
+        </button>
+        <button *ngIf="message.state===2" ion-button class="message-overtime" color="light" outline item-end disabled>
+          已添加
+        </button>
+        <!-- <button ion-button outline item-end class="message-refuse" (click)='responseReq(-1)'>
                     拒绝
                 </button> -->
-            </ion-item>
-            <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item">
-                <ion-avatar item-start>
-                    <img src="./assets/tomato-grey.png">
-                </ion-avatar>
-                <h2>赵六</h2>
-                <h3>请求添加您为好友!</h3>
-                <p>2018-01-31 12:20</p>
-                <button ion-button class="message-agree" outline item-end disabled>
-                    已添加
-                </button>
-            </ion-item>
-            <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item">
-                <ion-avatar item-start>
-                    <img src="./assets/tomato-grey.png">
-                </ion-avatar>
-                <h2>孙谦</h2>
-                <h3>请求添加您为好友!</h3>
-                <p>2018-01-31 12:20</p>
-                <button ion-button class="message-overtime" color="light" outline item-end disabled>
-                    已过期
-                </button>
-            </ion-item>
-        </ion-list>
-    </div>
-
-    <ion-list>
-
+      </ion-item>
+      <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item">
+        <ion-avatar item-start>
+          <img src="./assets/tomato-grey.png">
+        </ion-avatar>
+        <h2>赵六</h2>
+        <h3>请求添加您为好友!</h3>
+        <p>2018-01-31 12:20</p>
+        <button ion-button class="message-agree" outline item-end disabled>
+          已添加
+        </button>
+      </ion-item>
+      <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item">
+        <ion-avatar item-start>
+          <img src="./assets/tomato-grey.png">
+        </ion-avatar>
+        <h2>孙谦</h2>
+        <h3>请求添加您为好友!</h3>
+        <p>2018-01-31 12:20</p>
+        <button ion-button class="message-overtime" color="light" outline item-end disabled>
+          已过期
+        </button>
+      </ion-item>
     </ion-list>
+  </div>
+
+  <ion-list>
+
+  </ion-list>
 </ion-content>

@@ -15,9 +15,8 @@ import { HttpClient } from '@angular/common/http';
 import { IonicPage, Scroll, NavController } from 'ionic-angular';
 import { PinyinService } from '@providers/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
-import { UserFriendService } from '@providers/data/user_friend';
-import { UserFriendState } from '@providers/data/user_friend/model/state.enum';
 import { GlobalService } from '@providers/global.service';
+import { CacheService } from '@providers/cache.service';
 
 @IonicPage()
 @Component({
@@ -39,8 +38,8 @@ export class ContactsPage implements OnInit {
     public navCtrl: NavController,
     private el: ElementRef,
     private render: Renderer2,
-    public userFriendService: UserFriendService,
-    public globalService: GlobalService
+    public globalService: GlobalService,
+    public cache: CacheService
   ) {
     this.userid = globalService.userinfo.userid;
     this.getAgreedUserFriend();
@@ -51,31 +50,10 @@ export class ContactsPage implements OnInit {
    * 获取好友列表
    */
   getAgreedUserFriend() {
-    this.userFriendService
-      .getFriends(UserFriendState.Agreed)
-      .subscribe(data => {
-        for (let index = 0; index < data.length; index++) {
-          const element = data[index];
-          if (element.to._id === this.userid) {
-            this.friendlist.push({
-              id: element.from._id,
-              name: element.from.displayName
-                ? element.from.displayName
-                : element.from.username,
-              headImg: './assets/tomato-active.png',
-            });
-          } else {
-            this.friendlist.push({
-              id: element.to._id,
-              name: element.to.displayName
-                ? element.to.displayName
-                : element.to.username,
-              headImg: './assets/tomato-active.png',
-            });
-          }
-        }
-        this.getSortedFriendlist();
-      });
+    this.cache.getFriendList().subscribe(data => {
+      this.friendlist = data;
+      this.getSortedFriendlist();
+    });
   }
 
   mock() {
