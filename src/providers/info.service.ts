@@ -12,6 +12,7 @@ import { ChatIOService } from '@providers/utils/socket.io.service';
 
 @Injectable()
 export class InfoService {
+  unreadMsgCount = 0;
   chatingNow;
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -38,6 +39,11 @@ export class InfoService {
     return this.realtimeMsgSubject.asObservable();
   }
 
+  public realtimeMsgListSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public get realtimeMsgListMonitor(): Observable<any> {
+    return this.realtimeMsgListSubject.asObservable();
+  }
+
   /**
    * 初始化消息服务
    */
@@ -50,7 +56,8 @@ export class InfoService {
           count += data[index].count;
         }
         // 发布总数
-        this.messagCountSubject.next(count);
+        this.unreadMsgCount = count;
+        this.messagCountSubject.next(this.unreadMsgCount);
         this.messageSubject.next(data);
       }
     });
@@ -59,6 +66,9 @@ export class InfoService {
       if (this.chatingNow) {
         this.realtimeMsgSubject.next(data);
       }
+      this.realtimeMsgListSubject.next(data);
+      this.unreadMsgCount += 1;
+      this.messagCountSubject.next(this.unreadMsgCount);
     });
   }
 

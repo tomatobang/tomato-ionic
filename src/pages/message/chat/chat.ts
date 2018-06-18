@@ -43,6 +43,9 @@ export class Chat {
 
     this.info.realtimeMsgMonitor.subscribe(data => {
       if (data) {
+        if (this.toUserId !== data.from) {
+          return;
+        }
         const id = Date.now().toString();
         this.getFriendName(data.from).then(name => {
           const newMsg: ChatMessage = {

@@ -77,6 +77,29 @@ export class MessagePage implements OnInit {
         }
       }
     });
+
+    // 监听实时消息
+    this.info.realtimeMsgListMonitor.subscribe(data => {
+      if (data) {
+        if (this.userSet.has(data.from)) {
+          const i = this.userSet.get(data.from);
+          this.newMessages[i].content = data.message
+            ? data.message
+            : data.content;
+          this.newMessages[i].count += 1;
+        } else {
+          this.getFriendName(data.from).then(name => {
+            this.newMessages.push({
+              fid: data.from,
+              name: name,
+              content: data.message,
+              count: 1,
+            });
+            this.userSet.set(data.from, this.newMessages.length - 1);
+          });
+        }
+      }
+    });
   }
 
   getFriendName(id): Promise<any> {
