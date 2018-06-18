@@ -39,7 +39,7 @@
     "@ionic-native/file-opener": "^4.4.2",
     "@ionic-native/file-transfer": "^4.1.0",
     "@ionic-native/insomnia": "^4.3.3",
-    "@ionic-native/local-notifications": "^4.3.1",
+    "@ionic-native/local-notifications": "^4.7.0",
     "@ionic-native/media": "^4.0.1",
     "@ionic-native/network": "^4.4.2",
     "@ionic-native/qr-scanner": "^4.5.2",
