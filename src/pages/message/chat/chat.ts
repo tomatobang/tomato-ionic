@@ -4,6 +4,10 @@ import { Events, Content, TextInput } from 'ionic-angular';
 
 import { ChatMessage } from './providers/chat-message.model';
 import { ChatService } from './providers/chat-service';
+import { GlobalService } from '@providers/global.service';
+import { CacheService } from '@providers/cache.service';
+import { InfoService } from '@providers/info.service';
+import { setTimeout } from 'timers';
 
 @IonicPage()
 @Component({
@@ -26,16 +30,59 @@ export class Chat {
     public navParams: NavParams,
     public chatService: ChatService,
     public events: Events,
-    public ref: ChangeDetectorRef
+    public ref: ChangeDetectorRef,
+    public globalService: GlobalService,
+    public info: InfoService,
+    public cache: CacheService
   ) {
     // Get the navParams toUserId parameter
     this.toUserId = navParams.get('toUserId');
     this.toUserName = navParams.get('toUserName');
+    this.userId = this.globalService.userinfo.userid;
+    this.userName = this.globalService.userinfo.username;
+
+    this.info.realtimeMsgMonitor.subscribe(data => {
+      if (data) {
+        if (this.toUserId !== data.from) {
+          return;
+        }
+        const id = Date.now().toString();
+        this.getFriendName(data.from).then(name => {
+          const newMsg: ChatMessage = {
+            messageId: data.create_at,
+            userId: data.from,
+            userName: name,
+            userImgUrl: './assets/tomato-active.png',
+            toUserId: this.userId,
+            time: data.create_at,
+            message: data.message ? data.message : data.content,
+            status: 'success',
+          };
+          this.pushNewMsg(newMsg);
+        });
+      }
+    });
     // Get mock user information
-    this.chatService.getUserInfo().then(res => {
-      this.userId = res.userId;
-      this.userName = res.userName;
-      this.userImgUrl = res.userImgUrl;
+    // this.chatService.getUserInfo().then(res => {
+    //   this.userId = res.userId;
+    //   this.userName = res.userName;
+    //   this.userImgUrl = res.userImgUrl;
+    // });
+  }
+
+  getFriendName(id): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.cache.getFriendList().subscribe(friendList => {
+        if (friendList) {
+          for (let index = 0; index < friendList.length; index++) {
+            const element = friendList[index];
+            if (element.id === id) {
+              resolve(element.name);
+            }
+          }
+        }
+        resolve('unknown');
+      });
     });
   }
 
@@ -50,12 +97,12 @@ export class Chat {
 
   ionViewDidEnter() {
     // get message list
-    this.getMsg();
-
-    // Subscribe to received  new message events
-    this.events.subscribe('chat:received', (msg, time) => {
-      this.pushNewMsg(msg);
-    });
+    // this.getMsg();
+    // // Subscribe to received  new message events
+    // this.events.subscribe('chat:received', (msg, time) => {
+    //   this.pushNewMsg(msg);
+    // });
+    this.info.registerChatMsg(this.toUserId);
   }
 
   _focus() {
@@ -79,12 +126,10 @@ export class Chat {
    */
   getMsg() {
     // Get mock message list
-    return this.chatService
-      .getMsgList()
-      .subscribe(res => {
-        this.msgList = res;
-        this.scrollToBottom();
-      });
+    return this.chatService.getMsgList().subscribe(res => {
+      this.msgList = res;
+      this.scrollToBottom();
+    });
   }
 
   /**
@@ -95,13 +140,15 @@ export class Chat {
       return;
     }
 
-    // Mock message
+    this.chatService.sendMessage(this.userId, this.toUserId, this.editorMsg);
+
+    // Display message
     const id = Date.now().toString();
     const newMsg: ChatMessage = {
       messageId: Date.now().toString(),
       userId: this.userId,
       userName: this.userName,
-      userImgUrl: this.userImgUrl,
+      userImgUrl: './assets/tomato-grey.png',
       toUserId: this.toUserId,
       time: Date.now(),
       message: this.editorMsg,
@@ -115,12 +162,20 @@ export class Chat {
       this.messageInput.setFocus();
     }
 
-    this.chatService.sendMsg(newMsg).then(() => {
+    // 模拟发送成功
+    setTimeout(() => {
       const index = this.getMsgIndexById(id);
       if (index !== -1) {
         this.msgList[index].status = 'success';
       }
-    });
+    }, 600);
+
+    // this.chatService.sendMsg(newMsg).then(() => {
+    //   const index = this.getMsgIndexById(id);
+    //   if (index !== -1) {
+    //     this.msgList[index].status = 'success';
+    //   }
+    // });
   }
 
   /**
@@ -143,7 +198,7 @@ export class Chat {
 
   scrollToBottom() {
     setTimeout(() => {
-      if (this.content.scrollToBottom) {
+      if (this.content._scroll) {
         this.content.scrollToBottom();
       }
     }, 400);

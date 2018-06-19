@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { NavController, Content, IonicPage } from 'ionic-angular';
+import { NavController, Content, IonicPage, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,6 +8,7 @@ import { NavController, Content, IonicPage } from 'ionic-angular';
 })
 export class FriendInfoPage {
   friendName = '张三';
+  userid;
 
   @ViewChild(Content) content: Content;
   showToolbar = false;
@@ -15,7 +16,14 @@ export class FriendInfoPage {
   headerImgUrl = '';
   transition = false;
 
-  constructor(public navCtrl: NavController, public ref: ChangeDetectorRef) {}
+  constructor(
+    public navCtrl: NavController,
+    public ref: ChangeDetectorRef,
+    public navParams: NavParams
+  ) {
+    this.userid = navParams.get('userid');
+    this.friendName = navParams.get('friendname');
+  }
 
   ionViewDidLoad() {
     this.headerImgUrl = 'assets/tomatobang.jpg';
@@ -40,6 +48,13 @@ export class FriendInfoPage {
     });
   }
   reqAddFriend() {}
+
+  toChatPage() {
+    this.navCtrl.push('Chat', {
+      toUserId: this.userid,
+      toUserName: this.friendName,
+    });
+  }
 
   toMore() {}
 }

@@ -15,6 +15,8 @@ import { HttpClient } from '@angular/common/http';
 import { IonicPage, Scroll, NavController } from 'ionic-angular';
 import { PinyinService } from '@providers/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
+import { GlobalService } from '@providers/global.service';
+import { CacheService } from '@providers/cache.service';
 
 @IonicPage()
 @Component({
@@ -24,6 +26,7 @@ import { Friendinfo } from './providers/contact-friendinfo.model';
 export class ContactsPage implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: Scroll;
   private navChars: QueryList<HTMLLinkElement>;
+  userid;
   friendlist = [];
   newFriendList = [];
 
@@ -34,12 +37,30 @@ export class ContactsPage implements OnInit {
     private http: HttpClient,
     public navCtrl: NavController,
     private el: ElementRef,
-    private render: Renderer2
+    private render: Renderer2,
+    public globalService: GlobalService,
+    public cache: CacheService
   ) {
+    this.userid = globalService.userinfo.userid;
+    this.getAgreedUserFriend();
+    // this.mock();
+  }
+
+  /**
+   * 获取好友列表
+   */
+  getAgreedUserFriend() {
+    this.cache.getFriendList().subscribe(data => {
+      this.friendlist = data;
+      this.getSortedFriendlist();
+    });
+  }
+
+  mock() {
     this.getFriendlist()
       .then(res => {
         this.friendlist = res;
-        this.getNewFriendlist();
+        this.getSortedFriendlist();
       })
       .catch(err => {
         console.log(err);
@@ -59,7 +80,7 @@ export class ContactsPage implements OnInit {
       .catch(err => Promise.reject(err || 'err'));
   }
 
-  getNewFriendlist() {
+  getSortedFriendlist() {
     if (this.friendlist instanceof Array && this.friendlist.length > 0) {
       this.newFriendList = this.pinyinUtil.sortByFirstCode(
         this.friendlist,
@@ -101,12 +122,16 @@ export class ContactsPage implements OnInit {
   }
 
   OnNavcScroll(evt) {
-    const element = <HTMLElement>this.myScrollContainer._scrollContent
-      .nativeElement;
+    const element = <HTMLElement>(
+      this.myScrollContainer._scrollContent.nativeElement
+    );
     element.scrollTop = evt;
   }
 
-  toFriendInfo() {
-    this.navCtrl.push('FriendInfoPage');
+  toFriendInfo(userid, friendname) {
+    this.navCtrl.push('FriendInfoPage', {
+      userid: userid,
+      friendname: friendname,
+    });
   }
 }

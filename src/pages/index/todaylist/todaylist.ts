@@ -69,40 +69,49 @@ export class TodaylistComponent implements OnInit {
   }
 
   loadTomatoes(refresher?) {
-    this.tomatoservice.getTodayTomatos(this.globalservice.token).subscribe(data => {
-      if (refresher) {
-        refresher.complete();
-      }
-      const list = data;
-      if (Array.isArray(list)) {
-        this.historyTomatoes = list;
-        this.tomatoCount = list.length;
-        this.tomatoCount_time = 0;
-        for (let i = 0; i < list.length; i++) {
-          if (list[i].startTime && list[i].endTime) {
-            const minutes = this.helper.minuteSpan(
-              list[i].startTime,
-              list[i].endTime
-            );
-            this.tomatoCount_time += minutes;
-          }
+    this.tomatoservice.getTodayTomatos(this.globalservice.token).subscribe(
+      data => {
+        if (refresher) {
+          refresher.complete();
         }
-      } else {
-        // token 过期
-        this.app.getRootNav().setRoot(
-          'LoginPage',
-          {
-            username: this.globalservice.userinfo.username,
-            password: this.globalservice.userinfo.password,
-          },
-          {},
-          () => {
-            this.globalservice.userinfo = '';
-            this.globalservice.token = '';
+        const list = data;
+        if (Array.isArray(list)) {
+          this.historyTomatoes = list;
+          this.tomatoCount = list.length;
+          this.tomatoCount_time = 0;
+          for (let i = 0; i < list.length; i++) {
+            if (list[i].startTime && list[i].endTime) {
+              const minutes = this.helper.minuteSpan(
+                list[i].startTime,
+                list[i].endTime
+              );
+              this.tomatoCount_time += minutes;
+            }
           }
-        );
+        } else {
+          // token 过期
+          this.app.getRootNav().setRoot(
+            'LoginPage',
+            {
+              username: this.globalservice.userinfo.username,
+              password: this.globalservice.userinfo.password,
+            },
+            {},
+            () => {
+              this.globalservice.userinfo = '';
+              this.globalservice.token = '';
+            }
+          );
+        }
+      },
+      err => {
+        console.error(err);
+        if (refresher) {
+          alert(err);
+          refresher.complete();
+        }
       }
-    });
+    );
   }
 
   playVoiceRecord(tomato) {

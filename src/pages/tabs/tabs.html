@@ -1,7 +1,7 @@
 <ion-tabs #myTabs selectedIndex="0">
-    <!-- {{ 'HOME.IndexPage' | translate }} -->
-  <ion-tab [root]="tab0Root" tabTitle="{{'HOME.Tomatobang' | translate}}&zwnj;" tabIcon="home" ></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="{{'HOME.Message' | translate}}&zwnj;"  tabBadge="9+" tabIcon="notifications" ></ion-tab>
-  <ion-tab [root]="tab1Root" tabTitle="{{'HOME.Discover' | translate}}&zwnj;" tabIcon="people" ></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="{{'HOME.Me' | translate}}&zwnj;" tabIcon="person" ></ion-tab>
+  <!-- {{ 'HOME.IndexPage' | translate }} -->
+  <ion-tab [root]="tab0Root" tabTitle="{{'HOME.Tomatobang' | translate}}&zwnj;" tabIcon="home"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="{{'HOME.Message' | translate}}&zwnj;" tabBadge="{{ messsageBadge }}" tabIcon="notifications"></ion-tab>
+  <ion-tab [root]="tab1Root" tabTitle="{{'HOME.Discover' | translate}}&zwnj;" tabIcon="people"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="{{'HOME.Me' | translate}}&zwnj;" tabIcon="person"></ion-tab>
 </ion-tabs>
