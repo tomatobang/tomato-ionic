@@ -325,15 +325,16 @@ TwoZeroFourEight {
         }
 
         // Adjust font size for bigger numbers
-        @if $power >= 100 and $power < 1000 {
-          font-size: 45px;
-
+        @if $power >= 10 and $power < 100{
+          font-size: 48px;
+        }@else if $power >= 100 and $power < 1000 {
+          font-size: 32px;
           // Media queries placed here to avoid carrying over the rest of the logic
           @include smaller($mobile-threshold) {
             font-size: 25px;
           }
         } @else if $power >= 1000 {
-          font-size: 35px;
+          font-size: 24px;
 
           @include smaller($mobile-threshold) {
             font-size: 15px;
@@ -744,15 +745,16 @@ TwoZeroFourEight {
         }
 
         // Adjust font size for bigger numbers
-        @if $power >= 100 and $power < 1000 {
-          font-size: 45px;
-
+        @if $power >= 10 and $power < 100{
+          font-size: 48px;
+        }@else if $power >= 100 and $power < 1000 {
+          font-size: 32px;
           // Media queries placed here to avoid carrying over the rest of the logic
           @include smaller($mobile-threshold) {
             font-size: 25px;
           }
         } @else if $power >= 1000 {
-          font-size: 35px;
+          font-size: 24px;
 
           @include smaller($mobile-threshold) {
             font-size: 15px;
