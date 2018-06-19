@@ -25,7 +25,7 @@ export class InfoService {
     public chatIO: ChatIOService
   ) {}
 
-  public messageSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public messageSubject: Subject<any> = new Subject<any>();
   public get newMessagesMonitor(): Observable<any> {
     return this.messageSubject.asObservable();
   }
@@ -40,7 +40,7 @@ export class InfoService {
     return this.realtimeMsgSubject.asObservable();
   }
 
-  public realtimeMsgListSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public realtimeMsgListSubject: Subject<any> = new Subject<any>();
   public get realtimeMsgListMonitor(): Observable<any> {
     return this.realtimeMsgListSubject.asObservable();
   }
@@ -49,12 +49,26 @@ export class InfoService {
    * 初始化消息服务
    */
   public init() {
+    this.loadUnreadMsg();
+    this.chatIO.receive_message().subscribe(data => {
+      if (this.chatingNow) {
+        this.realtimeMsgSubject.next(data);
+      }
+      this.realtimeMsgListSubject.next(data);
+      this.unreadMsgCount += 1;
+      this.messagCountSubject.next(this.unreadMsgCount);
+    });
+  }
+
+  /**
+   * 加载未读消息
+   */
+  loadUnreadMsg() {
     this.messageService.getUnreadMessages().subscribe(data => {
       if (data) {
         let count = 0;
         for (let index = 0; index < data.length; index++) {
           const element = data[index];
-          debugger;
           count += data[index].count;
         }
         // 发布总数
@@ -63,15 +77,6 @@ export class InfoService {
         this.messageSubject.next(data);
         this.unreadMessage = data;
       }
-    });
-
-    this.chatIO.receive_message().subscribe(data => {
-      if (this.chatingNow) {
-        this.realtimeMsgSubject.next(data);
-      }
-      this.realtimeMsgListSubject.next(data);
-      this.unreadMsgCount += 1;
-      this.messagCountSubject.next(this.unreadMsgCount);
     });
   }
 
@@ -91,7 +96,7 @@ export class InfoService {
     if (this.unreadMessage) {
       for (let index = 0; index < this.unreadMessage.length; index++) {
         const element = this.unreadMessage[index];
-        if (element._id == userid) {
+        if (element._id === userid) {
           return element.messages;
         }
       }

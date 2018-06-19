@@ -28,11 +28,12 @@ export class CacheService {
         responseObserver.complete();
       });
     } else {
-      this.friendlist = [];
+      
       return new Observable(responseObserver => {
         this.userFriendService
           .getFriends(UserFriendState.Agreed)
           .subscribe(data => {
+            this.friendlist = [];
             for (let index = 0; index < data.length; index++) {
               const element = data[index];
               if (element.to._id === this.userid) {

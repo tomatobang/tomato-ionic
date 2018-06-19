@@ -57,6 +57,7 @@ export class MessagePage implements OnInit {
     // 获取通知列表
     this.getReqFriendList();
     // 监听未读消息
+    this.info.loadUnreadMsg();
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
