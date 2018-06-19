@@ -24,7 +24,7 @@ export class Chat {
   toUserId: string;
   toUserName: string;
   editorMsg = '';
-  _isOpenEmojiPicker = false;
+  isOpenEmojiPicker = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -41,12 +41,12 @@ export class Chat {
     this.userId = this.globalService.userinfo.userid;
     this.userName = this.globalService.userinfo.username;
 
+    // 监听实时消息
     this.info.realtimeMsgMonitor.subscribe(data => {
       if (data) {
         if (this.toUserId !== data.from) {
           return;
         }
-        const id = Date.now().toString();
         this.getFriendName(data.from).then(name => {
           const newMsg: ChatMessage = {
             messageId: data.create_at,
@@ -62,6 +62,22 @@ export class Chat {
         });
       }
     });
+
+    // 显示历史未读消息
+    const messages = this.info.getUnreadHistoryMsg(this.toUserId);
+    for (let index = 0; index < messages.length; index++) {
+      const newMsg: ChatMessage = {
+        messageId: messages[index].create_at,
+        userId: this.toUserId,
+        userName: this.toUserName,
+        userImgUrl: './assets/tomato-active.png',
+        toUserId: this.userId,
+        time: messages[index].create_at,
+        message: messages[index].content,
+        status: 'success',
+      };
+      this.pushNewMsg(newMsg);
+    }
     // Get mock user information
     // this.chatService.getUserInfo().then(res => {
     //   this.userId = res.userId;
@@ -106,14 +122,14 @@ export class Chat {
   }
 
   _focus() {
-    this._isOpenEmojiPicker = false;
+    this.isOpenEmojiPicker = false;
     this.content.resize();
     this.scrollToBottom();
   }
 
   switchEmojiPicker() {
-    this._isOpenEmojiPicker = !this._isOpenEmojiPicker;
-    if (!this._isOpenEmojiPicker) {
+    this.isOpenEmojiPicker = !this.isOpenEmojiPicker;
+    if (!this.isOpenEmojiPicker) {
       this.messageInput.setFocus();
     }
     this.content.resize();
@@ -158,7 +174,7 @@ export class Chat {
     this.pushNewMsg(newMsg);
     this.editorMsg = '';
 
-    if (!this._isOpenEmojiPicker) {
+    if (!this.isOpenEmojiPicker) {
       this.messageInput.setFocus();
     }
 

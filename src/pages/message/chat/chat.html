@@ -30,7 +30,7 @@
 
 </ion-content>
 
-<ion-footer no-border [style.height]="_isOpenEmojiPicker ? '255px' : '55px'">
+<ion-footer no-border [style.height]="isOpenEmojiPicker ? '255px' : '55px'">
   <ion-grid class="input-wrap">
     <ion-row>
 
@@ -49,5 +49,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <emoji-picker *ngIf="_isOpenEmojiPicker" [(ngModel)]="editorMsg"></emoji-picker>
+  <emoji-picker *ngIf="isOpenEmojiPicker" [(ngModel)]="editorMsg"></emoji-picker>
 </ion-footer>

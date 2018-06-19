@@ -14,6 +14,7 @@ import { ChatIOService } from '@providers/utils/socket.io.service';
 export class InfoService {
   unreadMsgCount = 0;
   chatingNow;
+  unreadMessage;
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
   });
@@ -53,12 +54,14 @@ export class InfoService {
         let count = 0;
         for (let index = 0; index < data.length; index++) {
           const element = data[index];
+          debugger;
           count += data[index].count;
         }
         // 发布总数
         this.unreadMsgCount = count;
         this.messagCountSubject.next(this.unreadMsgCount);
         this.messageSubject.next(data);
+        this.unreadMessage = data;
       }
     });
 
@@ -72,7 +75,27 @@ export class InfoService {
     });
   }
 
+  /**
+   * 设置正在聊天的用户
+   * @param userid 用户编号
+   */
   registerChatMsg(userid) {
     this.chatingNow = userid;
+  }
+
+  /**
+   * 获取用户未读消息列表
+   * @param userid 用户编号
+   */
+  getUnreadHistoryMsg(userid) {
+    if (this.unreadMessage) {
+      for (let index = 0; index < this.unreadMessage.length; index++) {
+        const element = this.unreadMessage[index];
+        if (element._id == userid) {
+          return element.messages;
+        }
+      }
+    }
+    return [];
   }
 }
