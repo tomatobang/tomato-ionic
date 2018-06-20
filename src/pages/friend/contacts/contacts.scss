@@ -1,57 +1,71 @@
 cmp-contacts {
-  ion-content > .scroll-content {
-    padding: 0px 2px !important;
-  }
-  .contact-sticker{
-      background: #F97271;
-      color:#fff;
-      position: absolute;
-      top:0px;
-      z-index: 10;
-      width: 100%;
-  }
+    ion-content>.scroll-content {
+        padding: 0px 2px !important;
+    }
+    .contact-sticker {
+        background: #F97271;
+        color: #fff;
+        position: absolute;
+        top: 0px;
+        z-index: 10;
+        width: 100%;
+    }
 }
 
 .contact-list {
-  ion-item {
-    .item-inner {
-      border-bottom: 0.55px solid #eee !important;
+    ion-item {
+        .item-inner {
+            border-bottom: 0.55px solid #eee !important;
+        }
     }
-  }
-  ion-item:last-child {
-    .item-inner {
-      border: none;
+    ion-item:last-child {
+        .item-inner {
+            border: none;
+        }
     }
-  }
 }
 
 .contact-nav-char {
-  display: block;
-  background: #eee;
-  text-decoration: none;
-  padding: 3px 5px;
+    display: block;
+    background: #eee;
+    text-decoration: none;
+    padding: 3px 5px;
 }
 
 .contact-scroll {
-  .scroll-content {
-    padding: 0px 2px !important;
-  }
-  .scroll-content::-webkit-scrollbar {
-    display: none;
-  }
+    .scroll-content {
+        padding: 0px 2px !important;
+    }
+    .scroll-content::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .contact-headImg {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  vertical-align: middle;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    vertical-align: middle;
 }
+
 .contact-friend-name {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 .contact-friend-item {
-  ion-label {
-    margin: 0px;
-  }
+    ion-label {
+        margin: 0px;
+    }
+    .contact-friend-onlinestate {
+        position: absolute;
+        top: 18px;
+        right: 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #F97271;
+        &.online {
+            background-color: greenyellow;
+        }
+    }
 }
