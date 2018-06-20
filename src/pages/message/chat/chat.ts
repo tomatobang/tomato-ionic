@@ -7,6 +7,7 @@ import { ChatService } from './providers/chat-service';
 import { GlobalService } from '@providers/global.service';
 import { CacheService } from '@providers/cache.service';
 import { InfoService } from '@providers/info.service';
+import { MessageService } from '@providers//data/message/message.service';
 import { setTimeout } from 'timers';
 
 @IonicPage()
@@ -33,7 +34,8 @@ export class Chat {
     public ref: ChangeDetectorRef,
     public globalService: GlobalService,
     public info: InfoService,
-    public cache: CacheService
+    public cache: CacheService,
+    public messageService: MessageService
   ) {
     // Get the navParams toUserId parameter
     this.toUserId = navParams.get('toUserId');
@@ -58,6 +60,7 @@ export class Chat {
             message: data.message ? data.message : data.content,
             status: 'success',
           };
+          this.updateMsgState(data._id);
           this.pushNewMsg(newMsg);
         });
       }
@@ -77,6 +80,7 @@ export class Chat {
         status: 'success',
       };
       this.pushNewMsg(newMsg);
+      this.updateMsgState(messages[index]._id);
     }
     // Get mock user information
     // this.chatService.getUserInfo().then(res => {
@@ -102,6 +106,21 @@ export class Chat {
     });
   }
 
+  /**
+   * 消息置为已读
+   * @param id 消息编号
+   */
+  updateMsgState(id) {
+    this.messageService
+      .updateMessageState({
+        id: id,
+        has_read: true,
+      })
+      .subscribe(data => {
+        console.log('updateMsgState', data);
+      });
+  }
+
   ionViewDidLoad() {
     // this.switchEmojiPicker();
   }
@@ -112,7 +131,7 @@ export class Chat {
   }
 
   ionViewDidEnter() {
-    // get message list
+    // Mock: get message list
     // this.getMsg();
     // // Subscribe to received  new message events
     // this.events.subscribe('chat:received', (msg, time) => {
