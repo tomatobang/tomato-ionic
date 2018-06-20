@@ -47,7 +47,10 @@ import { MyAppComponent } from './app.component';
       },
     }),
     SocketIoModule,
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__tomatobangdb',
+      driverOrder: ['indexeddb', 'sqlite', 'websql'],
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyAppComponent],

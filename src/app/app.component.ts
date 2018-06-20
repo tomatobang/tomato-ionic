@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -15,7 +15,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 @Component({
   templateUrl: 'app.html',
 })
-export class MyAppComponent {
+export class MyAppComponent implements OnInit {
   rootPage: any;
   hideNav = false;
 
@@ -80,4 +80,6 @@ export class MyAppComponent {
       this.hideNav = false;
     });
   }
+
+  ngOnInit() {}
 }
