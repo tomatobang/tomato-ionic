@@ -7,6 +7,7 @@ import { ChatService } from './providers/chat-service';
 import { GlobalService } from '@providers/global.service';
 import { CacheService } from '@providers/cache.service';
 import { InfoService } from '@providers/info.service';
+import { MessageService } from '@providers//data/message/message.service';
 import { setTimeout } from 'timers';
 
 @IonicPage()
@@ -24,7 +25,7 @@ export class Chat {
   toUserId: string;
   toUserName: string;
   editorMsg = '';
-  _isOpenEmojiPicker = false;
+  isOpenEmojiPicker = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,7 +34,8 @@ export class Chat {
     public ref: ChangeDetectorRef,
     public globalService: GlobalService,
     public info: InfoService,
-    public cache: CacheService
+    public cache: CacheService,
+    public messageService: MessageService
   ) {
     // Get the navParams toUserId parameter
     this.toUserId = navParams.get('toUserId');
@@ -41,12 +43,12 @@ export class Chat {
     this.userId = this.globalService.userinfo.userid;
     this.userName = this.globalService.userinfo.username;
 
+    // 监听实时消息
     this.info.realtimeMsgMonitor.subscribe(data => {
       if (data) {
         if (this.toUserId !== data.from) {
           return;
         }
-        const id = Date.now().toString();
         this.getFriendName(data.from).then(name => {
           const newMsg: ChatMessage = {
             messageId: data.create_at,
@@ -58,10 +60,28 @@ export class Chat {
             message: data.message ? data.message : data.content,
             status: 'success',
           };
+          this.updateMsgState(data._id);
           this.pushNewMsg(newMsg);
         });
       }
     });
+
+    // 显示历史未读消息
+    const messages = this.info.getUnreadHistoryMsg(this.toUserId);
+    for (let index = 0; index < messages.length; index++) {
+      const newMsg: ChatMessage = {
+        messageId: messages[index].create_at,
+        userId: this.toUserId,
+        userName: this.toUserName,
+        userImgUrl: './assets/tomato-active.png',
+        toUserId: this.userId,
+        time: messages[index].create_at,
+        message: messages[index].content,
+        status: 'success',
+      };
+      this.pushNewMsg(newMsg);
+      this.updateMsgState(messages[index]._id);
+    }
     // Get mock user information
     // this.chatService.getUserInfo().then(res => {
     //   this.userId = res.userId;
@@ -86,6 +106,21 @@ export class Chat {
     });
   }
 
+  /**
+   * 消息置为已读
+   * @param id 消息编号
+   */
+  updateMsgState(id) {
+    this.messageService
+      .updateMessageState({
+        id: id,
+        has_read: true,
+      })
+      .subscribe(data => {
+        console.log('updateMsgState', data);
+      });
+  }
+
   ionViewDidLoad() {
     // this.switchEmojiPicker();
   }
@@ -96,7 +131,7 @@ export class Chat {
   }
 
   ionViewDidEnter() {
-    // get message list
+    // Mock: get message list
     // this.getMsg();
     // // Subscribe to received  new message events
     // this.events.subscribe('chat:received', (msg, time) => {
@@ -106,14 +141,14 @@ export class Chat {
   }
 
   _focus() {
-    this._isOpenEmojiPicker = false;
+    this.isOpenEmojiPicker = false;
     this.content.resize();
     this.scrollToBottom();
   }
 
   switchEmojiPicker() {
-    this._isOpenEmojiPicker = !this._isOpenEmojiPicker;
-    if (!this._isOpenEmojiPicker) {
+    this.isOpenEmojiPicker = !this.isOpenEmojiPicker;
+    if (!this.isOpenEmojiPicker) {
       this.messageInput.setFocus();
     }
     this.content.resize();
@@ -158,7 +193,7 @@ export class Chat {
     this.pushNewMsg(newMsg);
     this.editorMsg = '';
 
-    if (!this._isOpenEmojiPicker) {
+    if (!this.isOpenEmojiPicker) {
       this.messageInput.setFocus();
     }
 

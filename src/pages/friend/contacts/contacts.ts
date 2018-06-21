@@ -17,6 +17,7 @@ import { PinyinService } from '@providers/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
 import { GlobalService } from '@providers/global.service';
 import { CacheService } from '@providers/cache.service';
+import { ChatIOService } from '@providers/utils/socket.io.service';
 
 @IonicPage()
 @Component({
@@ -29,6 +30,7 @@ export class ContactsPage implements OnInit {
   userid;
   friendlist = [];
   newFriendList = [];
+  friendOnlineState = {};
 
   stickerChar = '';
 
@@ -39,7 +41,8 @@ export class ContactsPage implements OnInit {
     private el: ElementRef,
     private render: Renderer2,
     public globalService: GlobalService,
-    public cache: CacheService
+    public cache: CacheService,
+    public chatIO: ChatIOService
   ) {
     this.userid = globalService.userinfo.userid;
     this.getAgreedUserFriend();
@@ -53,6 +56,76 @@ export class ContactsPage implements OnInit {
     this.cache.getFriendList().subscribe(data => {
       this.friendlist = data;
       this.getSortedFriendlist();
+      this.loadOnlineFriendList();
+    });
+  }
+
+  /**
+   * 加载在线好友列表
+   */
+  loadOnlineFriendList() {
+    const userid = this.globalService.userinfo.userid;
+    this.chatIO.load_online_friend_list(userid);
+
+    this.chatIO.load_online_friend_list_succeed().subscribe(data => {
+      let fid = '';
+      const friendlist = data.friendlist;
+      for (const end of friendlist) {
+        if (end.length > 10) {
+          fid = end;
+        }
+        // 好友在线
+        if (end === '1') {
+          this.friendOnlineState[fid] = true;
+        }
+      }
+      console.log('load_online_friend_list_succeed', friendlist);
+    });
+
+    this.chatIO.fail().subscribe(err => {
+      console.error(err);
+    });
+  }
+
+  ngOnInit() {
+    const event$ = Observable.fromEvent(
+      this.myScrollContainer._scrollContent.nativeElement,
+      'scroll'
+    )
+      .debounceTime(100)
+      .distinctUntilChanged();
+    event$.subscribe(event => {
+      if (this.navChars) {
+        const ctSrollTop = this.myScrollContainer._scrollContent.nativeElement
+          .scrollTop;
+        let target = this.navChars[0];
+        this.navChars.forEach(element => {
+          if (element.offsetTop - ctSrollTop <= 0) {
+            target = element;
+          }
+          this.stickerChar = target.textContent;
+          console.log(element.textContent, element.offsetTop);
+        });
+      }
+    });
+  }
+
+  OnNavcScroll(evt) {
+    const element = <HTMLElement>(
+      this.myScrollContainer._scrollContent.nativeElement
+    );
+    element.scrollTop = evt;
+  }
+
+  /**
+   * 导航至好友详情页
+   * @param userid 好友编号
+   * @param friendname 好友名称
+   */
+  toFriendInfo(userid, friendname) {
+    this.navCtrl.push('FriendInfoPage', {
+      userid: userid,
+      friendname: friendname,
     });
   }
 
@@ -96,42 +169,5 @@ export class ContactsPage implements OnInit {
         }
       });
     }
-  }
-
-  ngOnInit() {
-    const event$ = Observable.fromEvent(
-      this.myScrollContainer._scrollContent.nativeElement,
-      'scroll'
-    )
-      .debounceTime(100)
-      .distinctUntilChanged();
-    event$.subscribe(event => {
-      if (this.navChars) {
-        const ctSrollTop = this.myScrollContainer._scrollContent.nativeElement
-          .scrollTop;
-        let target = this.navChars[0];
-        this.navChars.forEach(element => {
-          if (element.offsetTop - ctSrollTop <= 0) {
-            target = element;
-          }
-          this.stickerChar = target.textContent;
-          console.log(element.textContent, element.offsetTop);
-        });
-      }
-    });
-  }
-
-  OnNavcScroll(evt) {
-    const element = <HTMLElement>(
-      this.myScrollContainer._scrollContent.nativeElement
-    );
-    element.scrollTop = evt;
-  }
-
-  toFriendInfo(userid, friendname) {
-    this.navCtrl.push('FriendInfoPage', {
-      userid: userid,
-      friendname: friendname,
-    });
   }
 }

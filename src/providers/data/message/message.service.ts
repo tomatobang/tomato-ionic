@@ -43,4 +43,13 @@ export class MessageService extends RebirthHttp {
   getUnreadMessagesCount(@Body data: {}): Observable<any> {
     return null;
   }
+
+  /**
+   * 更新消息状态
+   * @param data
+   */
+  @POST(baseUrl + 'api/message/updateReadState')
+  updateMessageState(@Body data: { id; has_read }): Observable<any> {
+    return null;
+  }
 }

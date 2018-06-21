@@ -84,6 +84,7 @@
     "cordova-plugin-vibration": "^2.1.6",
     "cordova-plugin-wechat": "^2.1.0",
     "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-sqlite-storage": "^2.3.2",
     "de.appplant.cordova.plugin.local-notification": "^0.8.5",
     "echarts": "^3.8.2",
     "es6-promise-plugin": "^4.2.2",
@@ -183,7 +184,8 @@
       "cordova-plugin-qrscanner": {},
       "TalkingData": {},
       "cordova-hot-code-push-plugin": {},
-      "cordova-android-support-gradle-release": {}
+      "cordova-android-support-gradle-release": {},
+      "cordova-sqlite-storage": {}
     },
     "platforms": [
       "android"

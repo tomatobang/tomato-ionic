@@ -72,17 +72,6 @@ export class FriendPage {
     public chatIO: ChatIOService,
     public globalservice: GlobalService
   ) {
-    const userid = this.globalservice.userinfo.userid;
-    this.chatIO.load_online_friend_list(userid);
-
-    this.chatIO.load_online_friend_list_succeed().subscribe(data => {
-      console.log('load_online_friend_list_succeed', data);
-    });
-
-    this.chatIO.fail().subscribe(err => {
-      console.error(err);
-    });
-
     // this.testChatIO();
   }
 

@@ -14,6 +14,7 @@ import { ChatIOService } from '@providers/utils/socket.io.service';
 export class InfoService {
   unreadMsgCount = 0;
   chatingNow;
+  unreadMessage;
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
   });
@@ -24,7 +25,7 @@ export class InfoService {
     public chatIO: ChatIOService
   ) {}
 
-  public messageSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public messageSubject: Subject<any> = new Subject<any>();
   public get newMessagesMonitor(): Observable<any> {
     return this.messageSubject.asObservable();
   }
@@ -39,7 +40,7 @@ export class InfoService {
     return this.realtimeMsgSubject.asObservable();
   }
 
-  public realtimeMsgListSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public realtimeMsgListSubject: Subject<any> = new Subject<any>();
   public get realtimeMsgListMonitor(): Observable<any> {
     return this.realtimeMsgListSubject.asObservable();
   }
@@ -48,6 +49,21 @@ export class InfoService {
    * 初始化消息服务
    */
   public init() {
+    this.loadUnreadMsg();
+    this.chatIO.receive_message().subscribe(data => {
+      if (this.chatingNow) {
+        this.realtimeMsgSubject.next(data);
+      }
+      this.realtimeMsgListSubject.next(data);
+      this.unreadMsgCount += 1;
+      this.messagCountSubject.next(this.unreadMsgCount);
+    });
+  }
+
+  /**
+   * 加载未读消息
+   */
+  loadUnreadMsg() {
     this.messageService.getUnreadMessages().subscribe(data => {
       if (data) {
         let count = 0;
@@ -59,20 +75,32 @@ export class InfoService {
         this.unreadMsgCount = count;
         this.messagCountSubject.next(this.unreadMsgCount);
         this.messageSubject.next(data);
+        this.unreadMessage = data;
       }
-    });
-
-    this.chatIO.receive_message().subscribe(data => {
-      if (this.chatingNow) {
-        this.realtimeMsgSubject.next(data);
-      }
-      this.realtimeMsgListSubject.next(data);
-      this.unreadMsgCount += 1;
-      this.messagCountSubject.next(this.unreadMsgCount);
     });
   }
 
+  /**
+   * 设置正在聊天的用户
+   * @param userid 用户编号
+   */
   registerChatMsg(userid) {
     this.chatingNow = userid;
+  }
+
+  /**
+   * 获取用户未读消息列表
+   * @param userid 用户编号
+   */
+  getUnreadHistoryMsg(userid) {
+    if (this.unreadMessage) {
+      for (let index = 0; index < this.unreadMessage.length; index++) {
+        const element = this.unreadMessage[index];
+        if (element._id === userid) {
+          return element.messages;
+        }
+      }
+    }
+    return [];
   }
 }

@@ -13,7 +13,7 @@ export class TabsPage implements OnInit {
   tab2Root: any = 'MinePage';
   tab3Root: any = 'MessagePage';
 
-  messsageBadge = 0;
+  messsageBadge = '';
 
   @ViewChild('myTabs') myTabs: Tabs;
 
@@ -26,7 +26,9 @@ export class TabsPage implements OnInit {
   }
   ngOnInit(): void {
     this.info.messageCountMonitor.subscribe(data => {
-      this.messsageBadge = data;
+      if (data) {
+        this.messsageBadge = data;
+      }
     });
   }
 
