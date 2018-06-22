@@ -39,6 +39,11 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
+  @GET(baseUrl + 'api/user/auth')
+  auth(): Observable<any> {
+    return null;
+  }
+
   @GET(baseUrl + 'api/user/searchUsers')
   searchUsers(
     @Query('keyword') keyword?: string,

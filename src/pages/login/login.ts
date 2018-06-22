@@ -9,6 +9,8 @@ import { OnlineUserService, User } from '@providers/data.service';
 import { GlobalService } from '@providers/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { JPushService } from '@providers/utils/jpush.service';
+import { InfoService } from '@providers/info.service';
+import { ChatIOService } from '@providers/utils/socket.io.service';
 
 @IonicPage()
 @Component({
@@ -37,7 +39,9 @@ export class LoginPage implements OnInit {
     public navCtrl: NavController,
     private toastCtrl: ToastController,
     public jPushService: JPushService,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public info: InfoService,
+    public chatIO: ChatIOService
   ) {
     this.user.username = navParams.get('username');
     this.user.password = navParams.get('password');
@@ -70,6 +74,8 @@ export class LoginPage implements OnInit {
       this.globalservice.userinfo = JSON.stringify(userinfo);
       this.rebirthProvider.headers({ Authorization: token }, true);
       this.jPushService.init(this.user.username);
+      this.chatIO.login(this.globalservice.userinfo.userid);
+      this.info.init();
       this.navCtrl.setRoot('TabsPage', {
         animate: true,
       });

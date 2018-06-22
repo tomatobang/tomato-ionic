@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { App, Events } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import { OnlineTomatoService } from '@providers/data.service';
 import { VoicePlayService } from '@providers/utils/voiceplay.service';
 import { GlobalService } from '@providers/global.service';
@@ -23,7 +23,6 @@ export class TodaylistComponent implements OnInit {
     public globalservice: GlobalService,
     public tomatoservice: OnlineTomatoService,
     public voiceService: VoicePlayService,
-    public app: App,
     public events: Events
   ) {
     console.log('Hello TodaylistComponent Component');
@@ -88,20 +87,6 @@ export class TodaylistComponent implements OnInit {
               this.tomatoCount_time += minutes;
             }
           }
-        } else {
-          // token 过期
-          this.app.getRootNav().setRoot(
-            'LoginPage',
-            {
-              username: this.globalservice.userinfo.username,
-              password: this.globalservice.userinfo.password,
-            },
-            {},
-            () => {
-              this.globalservice.userinfo = '';
-              this.globalservice.token = '';
-            }
-          );
         }
       },
       err => {

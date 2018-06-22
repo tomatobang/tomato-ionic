@@ -11,6 +11,10 @@ import { GlobalService } from '@providers/global.service';
 import { JPushService } from '@providers/utils/jpush.service';
 import { NativeService } from '@providers/utils/native.service';
 import { OnlineUserService } from '@providers/data.service';
+import {
+  ChatIOService,
+  TomatoIOService,
+} from '@providers/utils/socket.io.service';
 
 @IonicPage()
 @Component({
@@ -33,7 +37,9 @@ export class MinePage implements OnInit {
     public platform: Platform,
     private userservice: OnlineUserService,
     private app: App,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public chatIO: ChatIOService,
+    public tomatoIO: TomatoIOService
   ) {}
 
   public ngOnInit(): void {
@@ -69,6 +75,8 @@ export class MinePage implements OnInit {
       },
       {},
       () => {
+        this.chatIO.logout(this.globalservice.userinfo.userid);
+        this.tomatoIO.logout(this.globalservice.userinfo.userid);
         this.globalservice.userinfo = '';
         this.globalservice.token = '';
         this.jPushService.clearAlias();

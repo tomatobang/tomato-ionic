@@ -14,6 +14,13 @@ export class TomatoIOService {
     this.socket.emit('load_tomato', { userid, endname: 'ionic' });
   }
 
+  /**
+   * 登出
+   */
+  logout(userid: string) {
+    this.socket.emit('logout', { userid, endname: 'ionic' });
+  }
+
   load_tomato_succeed() {
     return this.socket.fromEvent<any>('load_tomato_succeed').map(data => data);
   }
