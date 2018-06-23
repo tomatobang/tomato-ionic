@@ -49,6 +49,7 @@ export class Chat {
       if (data) {
         messages = messages.concat(data);
       }
+      let minusCount = 0;
       for (let index = 0; index < messages.length; index++) {
         const newMsg: ChatMessage = {
           messageId: messages[index].create_at,
@@ -62,10 +63,14 @@ export class Chat {
         };
         this.pushNewMsg(newMsg);
         if (!messages[index].has_read) {
+          minusCount -= 1;
           this.updateMsgState(messages[index]._id);
         }
       }
-      this.info.updateMessageState(this.toUserId);
+      if (minusCount < 0) {
+        this.info.addUnreadMsgCount(minusCount, this.toUserId);
+        this.info.updateMessageState(this.toUserId);
+      }
     });
 
     // 监听实时消息
@@ -89,17 +94,11 @@ export class Chat {
             this.updateMsgState(data._id);
           }
           this.info.updateMessageState(this.toUserId);
+          this.info.addUnreadMsgCount(0, this.toUserId);
           this.pushNewMsg(newMsg);
         });
       }
     });
-
-    // Get mock user information
-    // this.chatService.getUserInfo().then(res => {
-    //   this.userId = res.userId;
-    //   this.userName = res.userName;
-    //   this.userImgUrl = res.userImgUrl;
-    // });
   }
 
   getFriendName(id): Promise<any> {
@@ -139,16 +138,10 @@ export class Chat {
 
   ionViewWillLeave() {
     // unsubscribe
-    this.events.unsubscribe('chat:received');
+    this.info.registerChatMsg(null);
   }
 
   ionViewDidEnter() {
-    // Mock: get message list
-    // this.getMsg();
-    // // Subscribe to received  new message events
-    // this.events.subscribe('chat:received', (msg, time) => {
-    //   this.pushNewMsg(msg);
-    // });
     this.info.registerChatMsg(this.toUserId);
   }
 
@@ -216,13 +209,6 @@ export class Chat {
         this.msgList[index].status = 'success';
       }
     }, 600);
-
-    // this.chatService.sendMsg(newMsg).then(() => {
-    //   const index = this.getMsgIndexById(id);
-    //   if (index !== -1) {
-    //     this.msgList[index].status = 'success';
-    //   }
-    // });
   }
 
   /**
