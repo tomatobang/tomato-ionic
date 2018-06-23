@@ -43,6 +43,31 @@ export class Chat {
     this.userId = this.globalService.userinfo.userid;
     this.userName = this.globalService.userinfo.username;
 
+    this.info.getFriendHistoryMsg(this.toUserId).subscribe(data => {
+      // 显示历史未读消息:从服务端加载
+      let messages = this.info.getUnreadHistoryMsg(this.toUserId);
+      if (data) {
+        messages = messages.concat(data);
+      }
+      for (let index = 0; index < messages.length; index++) {
+        const newMsg: ChatMessage = {
+          messageId: messages[index].create_at,
+          userId: this.toUserId,
+          userName: this.toUserName,
+          userImgUrl: './assets/tomato-active.png',
+          toUserId: this.userId,
+          time: messages[index].create_at,
+          message: messages[index].content,
+          status: 'success',
+        };
+        this.pushNewMsg(newMsg);
+        if (!messages[index].has_read) {
+          this.updateMsgState(messages[index]._id);
+        }
+      }
+      this.info.updateMessageState(this.toUserId);
+    });
+
     // 监听实时消息
     this.info.realtimeMsgMonitor.subscribe(data => {
       if (data) {
@@ -57,31 +82,18 @@ export class Chat {
             userImgUrl: './assets/tomato-active.png',
             toUserId: this.userId,
             time: data.create_at,
-            message: data.message ? data.message : data.content,
+            message: data.content,
             status: 'success',
           };
-          this.updateMsgState(data._id);
+          if (!data.has_read) {
+            this.updateMsgState(data._id);
+          }
+          this.info.updateMessageState(this.toUserId);
           this.pushNewMsg(newMsg);
         });
       }
     });
 
-    // 显示历史未读消息
-    const messages = this.info.getUnreadHistoryMsg(this.toUserId);
-    for (let index = 0; index < messages.length; index++) {
-      const newMsg: ChatMessage = {
-        messageId: messages[index].create_at,
-        userId: this.toUserId,
-        userName: this.toUserName,
-        userImgUrl: './assets/tomato-active.png',
-        toUserId: this.userId,
-        time: messages[index].create_at,
-        message: messages[index].content,
-        status: 'success',
-      };
-      this.pushNewMsg(newMsg);
-      this.updateMsgState(messages[index]._id);
-    }
     // Get mock user information
     // this.chatService.getUserInfo().then(res => {
     //   this.userId = res.userId;

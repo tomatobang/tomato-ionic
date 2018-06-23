@@ -56,8 +56,8 @@ export class MessagePage implements OnInit {
   ngOnInit(): void {
     // 获取通知列表
     this.getReqFriendList();
+
     // 监听未读消息
-    this.info.loadUnreadMsg();
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
@@ -66,14 +66,16 @@ export class MessagePage implements OnInit {
           this.newMessages[i].content = element.messages[0].content;
           this.newMessages[i].count += 1;
         } else {
+          this.newMessages.push({
+            fid: element._id,
+            name: name,
+            content: element.messages[0].content,
+            count: element.count,
+          });
+          this.userSet.set(element._id, index);
           this.getFriendName(element._id).then(name => {
-            this.newMessages.push({
-              fid: element._id,
-              name: name,
-              content: element.messages[0].content,
-              count: element.count,
-            });
-            this.userSet.set(element._id, index);
+            const i = this.userSet.get(element._id);
+            this.newMessages[i].name = name;
           });
         }
       }
@@ -84,19 +86,22 @@ export class MessagePage implements OnInit {
       if (data) {
         if (this.userSet.has(data.from)) {
           const i = this.userSet.get(data.from);
-          this.newMessages[i].content = data.message
-            ? data.message
+          this.newMessages[i].content = data.content
+            ? data.content
             : data.content;
           this.newMessages[i].count += 1;
         } else {
+          this.newMessages.push({
+            fid: data.from,
+            name: '',
+            content: data.content,
+            count: 1,
+          });
+          this.userSet.set(data.from, this.newMessages.length - 1);
+
           this.getFriendName(data.from).then(name => {
-            this.newMessages.push({
-              fid: data.from,
-              name: name,
-              content: data.message,
-              count: 1,
-            });
-            this.userSet.set(data.from, this.newMessages.length - 1);
+            const i = this.userSet.get(data.from);
+            this.newMessages[i].name = name;
           });
         }
       }
