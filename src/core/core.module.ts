@@ -12,6 +12,7 @@ import { QiniuUploadService } from '@providers/qiniu.upload.service';
 import { JPushService } from '@providers/utils/jpush.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { MessageService } from '@providers/data/message/message.service';
+import { OnlineUserService } from '@providers/data.service';
 
 import { Helper } from '@providers/utils/helper';
 import { NativeService } from '@providers/utils/native.service';
@@ -43,6 +44,7 @@ import { UserFriendService } from '@providers/data/user_friend';
     MessageService,
     InfoService,
     CacheService,
+    OnlineUserService,
   ],
 })
 export class CoreModule {}

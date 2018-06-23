@@ -8,6 +8,7 @@ export class Message {
 }
 
 export class MessageRet {
+  _id: string;
   count: number;
   messages: Message;
 }

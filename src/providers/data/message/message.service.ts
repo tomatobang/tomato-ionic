@@ -15,7 +15,7 @@ import {
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';
 
-import { Message, MessageRet } from './message.model';
+import { MessageRet } from './message.model';
 
 @Injectable()
 export class MessageService extends RebirthHttp {
@@ -31,7 +31,7 @@ export class MessageService extends RebirthHttp {
    * @param state
    */
   @GET(baseUrl + 'api/message')
-  getUnreadMessages(): Observable<MessageRet[]> {
+  getUnreadMessages(@Query('startTime') startTime?): Observable<MessageRet[]> {
     return null;
   }
 

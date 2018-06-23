@@ -31,7 +31,7 @@
         </ion-avatar>
         <h2>{{ m.name }}</h2>
         <p>{{ m.content }}</p>
-        <ion-badge item-end color="danger">{{ m.count }}</ion-badge>
+        <ion-badge item-end color="danger" *ngIf="m.count !==0">{{ m.count }}</ion-badge>
       </button>
     </ion-list>
 

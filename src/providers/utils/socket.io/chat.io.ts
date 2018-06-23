@@ -15,6 +15,13 @@ export class ChatIOService {
   }
 
   /**
+   * 登出
+   */
+  logout(userid: string) {
+    this.socket.emit('logout', { userid, endname: 'ionic' });
+  }
+
+  /**
    * 接收消息
    */
   receive_message() {

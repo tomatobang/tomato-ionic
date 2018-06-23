@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform, Events } from 'ionic-angular';
+import { App, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { RebirthHttpProvider } from 'rebirth-http';
+import { BackgroundMode } from '@ionic-native/background-mode';
+
 // TODO:启用极光推送
 // import { JPushService } from '@providers/utils/jpush.service';
 import { GlobalService } from '@providers/global.service';
 import { InfoService } from '@providers/info.service';
+import { ChatIOService } from '@providers/utils/socket.io.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { NativeService } from '@providers/utils/native.service';
-import { ChatIOService } from '@providers/utils/socket.io.service';
-import { RebirthHttpProvider } from 'rebirth-http';
-import { BackgroundMode } from '@ionic-native/background-mode';
+import { OnlineUserService } from '@providers/data.service';
 
 @Component({
   templateUrl: 'app.html',
@@ -20,6 +22,7 @@ export class MyAppComponent implements OnInit {
   hideNav = false;
 
   constructor(
+    public app: App,
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
@@ -27,11 +30,12 @@ export class MyAppComponent implements OnInit {
     updateService: UpdateService,
     public rebirthProvider: RebirthHttpProvider,
     private backgroundMode: BackgroundMode,
-    global: GlobalService,
-    native: NativeService,
-    info: InfoService,
+    public global: GlobalService,
+    public native: NativeService,
+    public info: InfoService,
     public chatIO: ChatIOService,
-    private events: Events
+    private events: Events,
+    public userService: OnlineUserService
   ) {
     platform.ready().then(() => {
       statusBar.overlaysWebView(false);
@@ -55,23 +59,6 @@ export class MyAppComponent implements OnInit {
     });
 
     // Check if the user has already seen the tutorial
-    if (global.isFirstTimeOpen) {
-      global.isFirstTimeOpen = false;
-      this.rootPage = 'GuidePage';
-    } else {
-      if (global.userinfo) {
-        this.rebirthProvider.headers({ Authorization: global.token }, true);
-        this.rebirthProvider.addResponseErrorInterceptor(err => {
-          console.error('请求错误！', err);
-        });
-        // 消息服务初始化
-        chatIO.login(global.userinfo.userid);
-        info.init();
-        this.rootPage = 'TabsPage';
-      } else {
-        this.rootPage = 'LoginPage';
-      }
-    }
 
     events.subscribe('qrScanner:show', () => {
       this.hideNav = true;
@@ -81,5 +68,43 @@ export class MyAppComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.global.isFirstTimeOpen) {
+      this.global.isFirstTimeOpen = false;
+      this.rootPage = 'GuidePage';
+    } else {
+      if (this.global.userinfo) {
+        this.rebirthProvider.headers(
+          { Authorization: this.global.token },
+          true
+        );
+        this.rebirthProvider.addResponseErrorInterceptor(err => {
+          console.error('请求错误！', err);
+        });
+        this.userService.auth().subscribe(data => {
+          if (data && data.status) {
+            this.chatIO.login(this.global.userinfo.userid);
+            this.info.init();
+            this.rootPage = 'TabsPage';
+          } else {
+            // token 过期
+            this.app.getRootNav().setRoot(
+              'LoginPage',
+              {
+                username: this.global.userinfo.username,
+                password: this.global.userinfo.password,
+              },
+              {},
+              () => {
+                this.global.userinfo = '';
+                this.global.token = '';
+              }
+            );
+          }
+        });
+      } else {
+        this.rootPage = 'LoginPage';
+      }
+    }
+  }
 }

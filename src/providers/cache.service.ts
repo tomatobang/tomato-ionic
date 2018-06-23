@@ -18,8 +18,6 @@ export class CacheService {
     public storage: Storage
   ) {
     this.userid = globalService.userinfo.userid;
-
-    // TODO: 从本地存储中加载好友列表
   }
 
   /**
@@ -64,12 +62,25 @@ export class CacheService {
     }
   }
 
-  private _clone(object: any) {
-    if (object) {
-      return JSON.parse(JSON.stringify(object));
-    } else {
-      return null;
-    }
+  /**
+   * 获取所有好友聊天记录
+   * @param fid 好友编号
+   */
+  public getAllFriendMsg(): Observable<any> {
+    const ret = [];
+    this.storage.remove('friend:message:undefined');
+    return new Observable(responseObserver => {
+      this.storage
+        .forEach((value: any, key: string) => {
+          if (key.startsWith('friend:message:')) {
+            ret.push(value);
+          }
+        })
+        .then(() => {
+          responseObserver.next(ret);
+          responseObserver.complete();
+        });
+    });
   }
 
   /**
@@ -78,9 +89,11 @@ export class CacheService {
    */
   public getFriendMsg(fid): Observable<any> {
     return new Observable(responseObserver => {
-      this.storage.get(fid).then(data => {
-        responseObserver.next(data);
-        responseObserver.complete();
+      this.storage.get('friend:message:' + fid).then(data => {
+        if (data) {
+          responseObserver.next(data.messages ? data.messages : []);
+          responseObserver.complete();
+        }
       });
     });
   }
@@ -91,6 +104,78 @@ export class CacheService {
    * @param data 聊天记录
    */
   public setFriendMsg(fid, data) {
-    this.storage.set(fid, data);
+    this.storage.get('friend:message:' + fid).then(sdata => {
+      if (sdata) {
+        const newdata = sdata;
+        newdata.count += data.count;
+        newdata.messages = newdata.messages.concat(data.messages);
+        this.storage.set('friend:message:' + fid, newdata);
+      } else {
+        this.storage.set('friend:message:' + fid, data);
+      }
+    });
+  }
+
+  /**
+   * 本地存储好友聊天记录
+   * @param fid 好友编号
+   * @param data 聊天记录
+   */
+  public addRealTimeFriendMsg(fid, data) {
+    this.storage.get('friend:message:' + fid).then(sdata => {
+      if (sdata) {
+        const newdata = sdata;
+        newdata.count += 1;
+        newdata.messages.push(data);
+        this.storage.set('friend:message:' + fid, newdata);
+      }
+    });
+  }
+
+  /**
+   * 消息置为已读
+   * @param fid
+   */
+  updateMessageState(fid) {
+    this.storage.get('friend:message:' + fid).then(sdata => {
+      if (sdata) {
+        const newdata = sdata;
+        newdata.count = 0;
+        const array = newdata.messages;
+        for (let index = 0; index < array.length; index++) {
+          const element = array[index];
+          element.has_read = true;
+        }
+        this.storage.set('friend:message:' + fid, newdata);
+      }
+    });
+  }
+
+  /**
+   * 获取消息同步时间
+   */
+  public getMessageSyncTime(): Observable<any> {
+    return new Observable(responseObserver => {
+      this.storage.get('message_sync_time').then(data => {
+        responseObserver.next(data);
+        responseObserver.complete();
+      });
+    });
+  }
+
+  /**
+   * 设置消息同步时间
+   * @param datetime 日期
+   */
+  public setMessageSyncTime(datetime) {
+    return this.storage.set('message_sync_time', datetime);
+  }
+
+  private _clone(object: any) {
+    if (object) {
+      return JSON.parse(JSON.stringify(object));
+    } else {
+      return null;
+    }
   }
 }
