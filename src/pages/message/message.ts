@@ -108,7 +108,9 @@ export class MessagePage implements OnInit {
 
     this.info.singleMessageCountMonitor.subscribe(data => {
       const i = this.userSet.get(data);
-      this.newMessages[i].count = 0;
+      if (i >= 0) {
+        this.newMessages[i].count = 0;
+      }
     });
   }
 

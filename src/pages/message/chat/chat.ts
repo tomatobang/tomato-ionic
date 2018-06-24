@@ -53,10 +53,10 @@ export class Chat {
       for (let index = 0; index < messages.length; index++) {
         const newMsg: ChatMessage = {
           messageId: messages[index].create_at,
-          userId: this.toUserId,
+          userId: messages[index].from ? messages[index].from : this.toUserId,
           userName: this.toUserName,
           userImgUrl: './assets/tomato-active.png',
-          toUserId: this.userId,
+          toUserId: messages[index].to ? messages[index].to : this.userId,
           time: messages[index].create_at,
           message: messages[index].content,
           status: 'success',
@@ -85,7 +85,7 @@ export class Chat {
             userId: data.from,
             userName: name,
             userImgUrl: './assets/tomato-active.png',
-            toUserId: this.userId,
+            toUserId: data.to,
             time: data.create_at,
             message: data.content,
             status: 'success',
@@ -101,6 +101,10 @@ export class Chat {
     });
   }
 
+  /**
+   * 获取好友名称
+   * @param id 用户编号
+   */
   getFriendName(id): Promise<any> {
     return new Promise((resolve, reject) => {
       this.cache.getFriendList().subscribe(friendList => {
@@ -132,34 +136,6 @@ export class Chat {
       });
   }
 
-  ionViewDidLoad() {
-    // this.switchEmojiPicker();
-  }
-
-  ionViewWillLeave() {
-    // unsubscribe
-    this.info.registerChatMsg(null);
-  }
-
-  ionViewDidEnter() {
-    this.info.registerChatMsg(this.toUserId);
-  }
-
-  _focus() {
-    this.isOpenEmojiPicker = false;
-    this.content.resize();
-    this.scrollToBottom();
-  }
-
-  switchEmojiPicker() {
-    this.isOpenEmojiPicker = !this.isOpenEmojiPicker;
-    if (!this.isOpenEmojiPicker) {
-      this.messageInput.setFocus();
-    }
-    this.content.resize();
-    this.scrollToBottom();
-  }
-
   /**
    * @name getMsg
    * @returns {Promise<ChatMessage[]>}
@@ -173,6 +149,7 @@ export class Chat {
   }
 
   /**
+   * 发送消息
    * @name sendMsg
    */
   sendMsg() {
@@ -181,7 +158,14 @@ export class Chat {
     }
 
     this.chatService.sendMessage(this.userId, this.toUserId, this.editorMsg);
-
+    this.cache.addRealTimeFriendMsg(this.toUserId, {
+      from: this.userId,
+      to: this.toUserId,
+      content: this.editorMsg,
+      type: 1,
+      create_at: Date.now(),
+      has_read: true,
+    });
     // Display message
     const id = Date.now().toString();
     const newMsg: ChatMessage = {
@@ -227,6 +211,34 @@ export class Chat {
 
   getMsgIndexById(id: string) {
     return this.msgList.findIndex(e => e.messageId === id);
+  }
+
+  ionViewDidLoad() {
+    // this.switchEmojiPicker();
+  }
+
+  ionViewWillLeave() {
+    // unsubscribe
+    this.info.registerChatMsg(null);
+  }
+
+  ionViewDidEnter() {
+    this.info.registerChatMsg(this.toUserId);
+  }
+
+  _focus() {
+    this.isOpenEmojiPicker = false;
+    this.content.resize();
+    this.scrollToBottom();
+  }
+
+  switchEmojiPicker() {
+    this.isOpenEmojiPicker = !this.isOpenEmojiPicker;
+    if (!this.isOpenEmojiPicker) {
+      this.messageInput.setFocus();
+    }
+    this.content.resize();
+    this.scrollToBottom();
   }
 
   scrollToBottom() {
