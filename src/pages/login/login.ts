@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
       this.globalservice.userinfo = JSON.stringify(userinfo);
       this.rebirthProvider.headers({ Authorization: token }, true);
       this.jPushService.init(this.user.username);
-      this.chatIO.login(this.globalservice.userinfo.userid);
+      this.chatIO.login(this.globalservice.userinfo._id);
       this.info.init();
       this.navCtrl.setRoot('TabsPage', {
         animate: true,

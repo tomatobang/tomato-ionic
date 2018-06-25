@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
 
@@ -58,6 +57,7 @@ export class InfoService {
     this.loadUnreadMsg();
     this.loadHistoryMsg();
     this.chatIO.receive_message().subscribe(data => {
+      this.cache.setMessageSyncTime(new Date(data.create_at).getTime());
       this.cache.addRealTimeFriendMsg(data.from, data);
       if (this.chatingNow) {
         this.realtimeMsgSubject.next(data);
@@ -113,12 +113,15 @@ export class InfoService {
       if (messageSyncTime) {
         messageSyncTime = new Date(messageSyncTime);
       }
-      this.cache.setMessageSyncTime(new Date().getTime());
+
       this.messageService.getUnreadMessages(messageSyncTime).subscribe(data => {
-        if (data) {
+        const messages = data.messages;
+        const lst_create_at = data.lst_create_at;
+        if (messages) {
+          this.cache.setMessageSyncTime(new Date(lst_create_at).getTime());
           let count = 0;
-          for (let index = 0; index < data.length; index++) {
-            const element = data[index];
+          for (let index = 0; index < messages.length; index++) {
+            const element = messages[index];
             count += element.count;
             // 存储好友消息
             this.cache.setFriendMsg(element._id, element);
@@ -126,8 +129,8 @@ export class InfoService {
           // 发布总数
           this.unreadMsgCount += count;
           this.messagCountSubject.next(this.unreadMsgCount);
-          this.messageSubject.next(data);
-          this.unreadMessage = this.unreadMessage.concat(data);
+          this.messageSubject.next(messages);
+          this.unreadMessage = this.unreadMessage.concat(messages);
         }
       });
     });
@@ -141,7 +144,8 @@ export class InfoService {
     this.chatingNow = userid;
   }
 
-  /**
+  /** 
+   * @deprecated
    * 获取用户未读消息列表
    * @param userid 用户编号
    */

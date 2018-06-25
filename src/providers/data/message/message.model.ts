@@ -12,3 +12,8 @@ export class MessageRet {
   count: number;
   messages: Message;
 }
+
+export class UnreadMessageRet {
+  lst_create_at: string;
+  messages: MessageRet[];
+}

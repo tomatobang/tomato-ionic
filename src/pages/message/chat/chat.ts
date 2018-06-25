@@ -40,15 +40,11 @@ export class Chat {
     // Get the navParams toUserId parameter
     this.toUserId = navParams.get('toUserId');
     this.toUserName = navParams.get('toUserName');
-    this.userId = this.globalService.userinfo.userid;
+    this.userId = this.globalService.userinfo._id;
     this.userName = this.globalService.userinfo.username;
 
-    this.info.getFriendHistoryMsg(this.toUserId).subscribe(data => {
+    this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
       // 显示历史未读消息:从服务端加载
-      let messages = this.info.getUnreadHistoryMsg(this.toUserId);
-      if (data) {
-        messages = messages.concat(data);
-      }
       let minusCount = 0;
       for (let index = 0; index < messages.length; index++) {
         const newMsg: ChatMessage = {
@@ -156,7 +152,6 @@ export class Chat {
     if (!this.editorMsg.trim()) {
       return;
     }
-
     this.chatService.sendMessage(this.userId, this.toUserId, this.editorMsg);
     this.cache.addRealTimeFriendMsg(this.toUserId, {
       from: this.userId,

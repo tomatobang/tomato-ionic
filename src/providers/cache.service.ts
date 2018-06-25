@@ -15,14 +15,13 @@ export class CacheService {
     public globalService: GlobalService,
     public userFriendService: UserFriendService,
     public storage: Storage
-  ) {
-    this.userid = globalService.userinfo.userid;
-  }
+  ) {}
 
   /**
    * 获取好友列表
    */
   getFriendList(): Observable<any> {
+    this.userid = this.globalService.userinfo._id;
     if (this.friendlist) {
       return new Observable(responseObserver => {
         responseObserver.next(this.friendlist);

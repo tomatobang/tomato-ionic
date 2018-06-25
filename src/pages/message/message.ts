@@ -45,7 +45,7 @@ export class MessagePage implements OnInit {
       toUserName: 'Hancock',
     };
 
-    this.userid = globalservice.userinfo.userid;
+    this.userid = globalservice.userinfo._id;
 
     // 注册收到消息服务
     this.chatIO.receive_message().subscribe(data => {
@@ -148,6 +148,9 @@ export class MessagePage implements OnInit {
     });
   }
 
+  /**
+   * 获取好友发起请求列表
+   */
   getReqFriendList() {
     this.userFriendService
       .getFriends(UserFriendState.SendRequest)
@@ -171,6 +174,11 @@ export class MessagePage implements OnInit {
       });
   }
 
+  /**
+   * 同意好友请求
+   * @param id 当前用户编号
+   * @param friendid 好友编号
+   */
   responseReq(id, friendid) {
     this.chatIO.response_friend_request(id, friendid, this.userid, 2);
     this.chatIO.responseAddFriendSuccess().subscribe(data => {

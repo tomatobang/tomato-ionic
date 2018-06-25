@@ -44,7 +44,7 @@ export class ContactsPage implements OnInit {
     public cache: CacheService,
     public chatIO: ChatIOService
   ) {
-    this.userid = globalService.userinfo.userid;
+    this.userid = globalService.userinfo._id;
     this.getAgreedUserFriend();
     // this.mock();
   }
@@ -64,7 +64,7 @@ export class ContactsPage implements OnInit {
    * 加载在线好友列表
    */
   loadOnlineFriendList() {
-    const userid = this.globalService.userinfo.userid;
+    const userid = this.globalService.userinfo._id;
     this.chatIO.load_online_friend_list(userid);
 
     this.chatIO.load_online_friend_list_succeed().subscribe(data => {
