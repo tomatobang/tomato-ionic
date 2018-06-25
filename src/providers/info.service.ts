@@ -46,7 +46,7 @@ export class InfoService {
     return this.realtimeMsgSubject.asObservable();
   }
 
-  public realtimeMsgListSubject: Subject<any> = new Subject<any>();
+  public realtimeMsgListSubject: Subject<any> = new ReplaySubject<any>();
   public get realtimeMsgListMonitor(): Observable<any> {
     return this.realtimeMsgListSubject.asObservable();
   }
@@ -157,6 +157,11 @@ export class InfoService {
     return [];
   }
 
+  /**
+   * 设置未读消息数
+   * @param val 未读消息数(+/-)
+   * @param fid 好友编号
+   */
   addUnreadMsgCount(val, fid) {
     this.unreadMsgCount += val;
     this.messagCountSubject.next(this.unreadMsgCount);

@@ -24,7 +24,7 @@ export class MessagePage implements OnInit {
   messageList = [
     {
       id: '1',
-      name: '王五',
+      name: '王五(demo)',
       friendid: '',
       info: '我是王五',
       portrait: '',
@@ -60,15 +60,16 @@ export class MessagePage implements OnInit {
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = data.length - 1; index >= 0; index--) {
         const element = data[index];
-        if (this.userSet.has(element._id)) {
+        if (this.userSet.has(element._id) && element.messages) {
           const i = this.userSet.get(element._id);
-          this.newMessages[i].content = element.messages[0].content;
+          this.newMessages[i].content =
+            element.messages[element.messages.length - 1].content;
           this.newMessages[i].count += 1;
         } else {
           this.newMessages.push({
             fid: element._id,
             name: name,
-            content: element.messages[0].content,
+            content: element.messages[element.messages.length - 1].content,
             count: element.count,
           });
           this.userSet.set(element._id, index);
