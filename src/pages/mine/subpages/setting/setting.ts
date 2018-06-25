@@ -3,12 +3,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { GlobalService } from '@providers/global.service';
 import { Insomnia } from '@ionic-native/insomnia';
+import { Storage } from '@ionic/storage';
 
-declare var window;
 @IonicPage()
 @Component({
   selector: 'cmp-setting',
-  templateUrl: 'setting.html'
+  templateUrl: 'setting.html',
 })
 export class SettingPage implements OnInit {
   resttime: number;
@@ -21,7 +21,8 @@ export class SettingPage implements OnInit {
   whiteNoiseType: string;
   constructor(
     public globalservice: GlobalService,
-    private insomnia: Insomnia
+    private insomnia: Insomnia,
+    public storage: Storage
   ) {}
 
   ngOnInit() {
@@ -30,18 +31,33 @@ export class SettingPage implements OnInit {
     this.isAlwaysLight = this.globalservice.isAlwaysLight;
   }
 
+  /**
+   * 番茄钟时长
+   * @param value 时长
+   */
   setCountdown(value: number) {
     this.globalservice.countdown = value;
   }
 
+  /**
+   * 短休息间隔
+   * @param value 休息时长
+   */
   setResttime(value: number) {
     this.globalservice.resttime = value;
   }
 
+  /**
+   * 长休息间隔
+   * @param value 休息时长
+   */
   setLongResttime(value: number) {
     this.longresttime = value;
   }
 
+  /**
+   * 设置屏幕常亮状态
+   */
   changeLightState() {
     if (this.isAlwaysLight) {
       this.globalservice.isAlwaysLight = true;
@@ -62,6 +78,13 @@ export class SettingPage implements OnInit {
         }
       );
     }
+  }
+
+  /**
+   * 清除消息记录
+   */
+  clearMsgCache() {
+    this.storage.clear();
   }
 
   setLongbreakTomatoNum() {}
