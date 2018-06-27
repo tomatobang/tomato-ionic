@@ -37,14 +37,12 @@ export class Chat {
     public cache: CacheService,
     public messageService: MessageService
   ) {
-    // Get the navParams toUserId parameter
     this.toUserId = navParams.get('toUserId');
     this.toUserName = navParams.get('toUserName');
     this.userId = this.globalService.userinfo._id;
     this.userName = this.globalService.userinfo.username;
 
     this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
-      // 显示历史未读消息:从服务端加载
       let minusCount = 0;
       for (let index = 0; index < messages.length; index++) {
         const newMsg: ChatMessage = {
@@ -89,7 +87,6 @@ export class Chat {
           if (!data.has_read) {
             this.updateMsgState(data._id);
           }
-          this.info.updateMessageState(this.toUserId);
           this.info.addUnreadMsgCount(0, this.toUserId);
           this.pushNewMsg(newMsg);
         });

@@ -20,17 +20,7 @@ export class MessagePage implements OnInit {
 
   newMessages = [];
   userSet = new Map();
-
-  messageList = [
-    {
-      id: '1',
-      name: '王五(demo)',
-      friendid: '',
-      info: '我是王五',
-      portrait: '',
-      state: 1,
-    },
-  ];
+  messageList = [];
 
   constructor(
     public navCtrl: NavController,
@@ -46,17 +36,11 @@ export class MessagePage implements OnInit {
     };
 
     this.userid = globalservice.userinfo._id;
-
-    // 注册收到消息服务
-    this.chatIO.receive_message().subscribe(data => {
-      console.log('receiveMessage', data);
-    });
   }
 
   ngOnInit(): void {
     // 获取通知列表
     this.getReqFriendList();
-
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = data.length - 1; index >= 0; index--) {
         const element = data[index];

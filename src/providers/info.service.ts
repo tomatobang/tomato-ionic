@@ -1,5 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -25,7 +25,7 @@ export class InfoService {
     public cache: CacheService
   ) {}
 
-  public messageSubject: Subject<any> = new ReplaySubject<any>();
+  public messageSubject: Subject<any> = new ReplaySubject<any>(2);
   public get newMessagesMonitor(): Observable<any> {
     return this.messageSubject.asObservable();
   }
@@ -40,14 +40,14 @@ export class InfoService {
     return this.singleMessagCountSubject.asObservable();
   }
 
-  public realtimeMsgSubject: Subject<any> = new ReplaySubject<any>(null);
-  public get realtimeMsgMonitor(): Observable<any> {
-    return this.realtimeMsgSubject.asObservable();
-  }
-
   public realtimeMsgListSubject: Subject<any> = new ReplaySubject<any>();
   public get realtimeMsgListMonitor(): Observable<any> {
     return this.realtimeMsgListSubject.asObservable();
+  }
+
+  public realtimeMsgSubject: Subject<any> = new Subject<any>();
+  public get realtimeMsgMonitor(): Observable<any> {
+    return this.realtimeMsgSubject.asObservable();
   }
 
   /**
@@ -58,12 +58,21 @@ export class InfoService {
     this.loadHistoryMsg();
     this.chatIO.receive_message().subscribe(data => {
       this.cache.setMessageSyncTime(new Date(data.create_at).getTime());
-      this.cache.addRealTimeFriendMsg(data.from, data);
       if (this.chatingNow) {
+        data.has_read = true;
         this.realtimeMsgSubject.next(data);
       } else {
         this.unreadMsgCount += 1;
       }
+      this.cache.addRealTimeFriendMsg(data.from, {
+        from: data.from,
+        to: data.to,
+        content: data.content,
+        type: data.type,
+        create_at: data.create_at,
+        has_read: data.has_read,
+      });
+
       this.realtimeMsgListSubject.next(data);
       this.messagCountSubject.next(this.unreadMsgCount);
     });
@@ -144,7 +153,7 @@ export class InfoService {
     this.chatingNow = userid;
   }
 
-  /** 
+  /**
    * @deprecated
    * 获取用户未读消息列表
    * @param userid 用户编号
