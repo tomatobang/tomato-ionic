@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 
 import { GlobalService } from './global.service';
 import { UserFriendService } from '@providers/data/user_friend';
@@ -68,7 +67,6 @@ export class CacheService {
    */
   public getAllFriendMsg(): Observable<any> {
     const ret = [];
-    this.storage.remove('friend:message:undefined');
     return new Observable(responseObserver => {
       this.storage
         .forEach((value: any, key: string) => {
@@ -125,7 +123,16 @@ export class CacheService {
     this.storage.get('friend:message:' + fid).then(sdata => {
       if (sdata) {
         const newdata = sdata;
-        newdata.count += 1;
+        if (fid === data.from) {
+          newdata.count += 1;
+        }
+        newdata.messages.push(data);
+        this.storage.set('friend:message:' + fid, newdata);
+      } else {
+        const newdata = { count: 1, _id: fid, messages: [] };
+        if (fid === data.from) {
+          newdata.count = 0;
+        }
         newdata.messages.push(data);
         this.storage.set('friend:message:' + fid, newdata);
       }

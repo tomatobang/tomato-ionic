@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Events } from 'ionic-angular';
 
-import { UserInfo } from './chat-userinfo.model';
 import { ChatMessage } from './chat-message.model';
 
 import 'rxjs/add/operator/toPromise';
@@ -29,6 +28,10 @@ export class ChatService {
     this.chatIO.send_message(from, to, message);
   }
 
+  /**
+   * 消息模拟
+   * @param msg
+   */
   mockNewMsg(msg) {
     setTimeout(() => {
       this.events.publish(
@@ -48,12 +51,19 @@ export class ChatService {
     }, Math.random() * 1800);
   }
 
+  /**
+   *  模拟消息列表
+   */
   getMsgList(): Observable<ChatMessage[]> {
     const msgListUrl = './assets/mock/msg-list.json';
 
     return this.http.get<any>(msgListUrl).pipe(map(response => response.array));
   }
 
+  /**
+   * 模拟消息发送
+   * @param msg
+   */
   sendMsg(msg: ChatMessage) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -61,17 +71,6 @@ export class ChatService {
       }, Math.random() * 1000);
     }).then(() => {
       this.mockNewMsg(msg);
-    });
-  }
-
-  getUserInfo(): Promise<UserInfo> {
-    const userInfo: UserInfo = {
-      userId: '140000198202211138',
-      userName: 'Luff',
-      userImgUrl: './assets/user.jpg',
-    };
-    return new Promise((resolve, reject) => {
-      resolve(userInfo);
     });
   }
 }

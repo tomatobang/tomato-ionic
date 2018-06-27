@@ -31,12 +31,17 @@ export class InfoService {
     return this.messageSubject.asObservable();
   }
 
-  public messagCountSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public messagCountSubject: Subject<any> = new ReplaySubject<any>(null);
   public get messageCountMonitor(): Observable<any> {
     return this.messagCountSubject.asObservable();
   }
 
-  public realtimeMsgSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public singleMessagCountSubject: Subject<any> = new ReplaySubject<any>(null);
+  public get singleMessageCountMonitor(): Observable<any> {
+    return this.singleMessagCountSubject.asObservable();
+  }
+
+  public realtimeMsgSubject: Subject<any> = new ReplaySubject<any>(null);
   public get realtimeMsgMonitor(): Observable<any> {
     return this.realtimeMsgSubject.asObservable();
   }
@@ -53,12 +58,13 @@ export class InfoService {
     this.loadUnreadMsg();
     this.loadHistoryMsg();
     this.chatIO.receive_message().subscribe(data => {
-      this.cache.addRealTimeFriendMsg(data._id, data);
+      this.cache.addRealTimeFriendMsg(data.from, data);
       if (this.chatingNow) {
         this.realtimeMsgSubject.next(data);
+      } else {
+        this.unreadMsgCount += 1;
       }
       this.realtimeMsgListSubject.next(data);
-      this.unreadMsgCount += 1;
       this.messagCountSubject.next(this.unreadMsgCount);
     });
   }
@@ -83,7 +89,7 @@ export class InfoService {
           count += element.count;
         }
         // 发布总数
-        this.unreadMsgCount = count;
+        this.unreadMsgCount += count;
         this.messagCountSubject.next(this.unreadMsgCount);
         this.messageSubject.next(data);
         this.unreadMessage = data;
@@ -149,5 +155,11 @@ export class InfoService {
       }
     }
     return [];
+  }
+
+  addUnreadMsgCount(val, fid) {
+    this.unreadMsgCount += val;
+    this.messagCountSubject.next(this.unreadMsgCount);
+    this.singleMessagCountSubject.next(fid);
   }
 }

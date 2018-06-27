@@ -49,23 +49,28 @@ export class Chat {
       if (data) {
         messages = messages.concat(data);
       }
+      let minusCount = 0;
       for (let index = 0; index < messages.length; index++) {
         const newMsg: ChatMessage = {
           messageId: messages[index].create_at,
-          userId: this.toUserId,
+          userId: messages[index].from ? messages[index].from : this.toUserId,
           userName: this.toUserName,
           userImgUrl: './assets/tomato-active.png',
-          toUserId: this.userId,
+          toUserId: messages[index].to ? messages[index].to : this.userId,
           time: messages[index].create_at,
           message: messages[index].content,
           status: 'success',
         };
         this.pushNewMsg(newMsg);
         if (!messages[index].has_read) {
+          minusCount -= 1;
           this.updateMsgState(messages[index]._id);
         }
       }
-      this.info.updateMessageState(this.toUserId);
+      if (minusCount < 0) {
+        this.info.addUnreadMsgCount(minusCount, this.toUserId);
+        this.info.updateMessageState(this.toUserId);
+      }
     });
 
     // 监听实时消息
@@ -80,7 +85,7 @@ export class Chat {
             userId: data.from,
             userName: name,
             userImgUrl: './assets/tomato-active.png',
-            toUserId: this.userId,
+            toUserId: data.to,
             time: data.create_at,
             message: data.content,
             status: 'success',
@@ -89,19 +94,17 @@ export class Chat {
             this.updateMsgState(data._id);
           }
           this.info.updateMessageState(this.toUserId);
+          this.info.addUnreadMsgCount(0, this.toUserId);
           this.pushNewMsg(newMsg);
         });
       }
     });
-
-    // Get mock user information
-    // this.chatService.getUserInfo().then(res => {
-    //   this.userId = res.userId;
-    //   this.userName = res.userName;
-    //   this.userImgUrl = res.userImgUrl;
-    // });
   }
 
+  /**
+   * 获取好友名称
+   * @param id 用户编号
+   */
   getFriendName(id): Promise<any> {
     return new Promise((resolve, reject) => {
       this.cache.getFriendList().subscribe(friendList => {
@@ -133,40 +136,6 @@ export class Chat {
       });
   }
 
-  ionViewDidLoad() {
-    // this.switchEmojiPicker();
-  }
-
-  ionViewWillLeave() {
-    // unsubscribe
-    this.events.unsubscribe('chat:received');
-  }
-
-  ionViewDidEnter() {
-    // Mock: get message list
-    // this.getMsg();
-    // // Subscribe to received  new message events
-    // this.events.subscribe('chat:received', (msg, time) => {
-    //   this.pushNewMsg(msg);
-    // });
-    this.info.registerChatMsg(this.toUserId);
-  }
-
-  _focus() {
-    this.isOpenEmojiPicker = false;
-    this.content.resize();
-    this.scrollToBottom();
-  }
-
-  switchEmojiPicker() {
-    this.isOpenEmojiPicker = !this.isOpenEmojiPicker;
-    if (!this.isOpenEmojiPicker) {
-      this.messageInput.setFocus();
-    }
-    this.content.resize();
-    this.scrollToBottom();
-  }
-
   /**
    * @name getMsg
    * @returns {Promise<ChatMessage[]>}
@@ -180,6 +149,7 @@ export class Chat {
   }
 
   /**
+   * 发送消息
    * @name sendMsg
    */
   sendMsg() {
@@ -188,7 +158,14 @@ export class Chat {
     }
 
     this.chatService.sendMessage(this.userId, this.toUserId, this.editorMsg);
-
+    this.cache.addRealTimeFriendMsg(this.toUserId, {
+      from: this.userId,
+      to: this.toUserId,
+      content: this.editorMsg,
+      type: 1,
+      create_at: Date.now(),
+      has_read: true,
+    });
     // Display message
     const id = Date.now().toString();
     const newMsg: ChatMessage = {
@@ -216,13 +193,6 @@ export class Chat {
         this.msgList[index].status = 'success';
       }
     }, 600);
-
-    // this.chatService.sendMsg(newMsg).then(() => {
-    //   const index = this.getMsgIndexById(id);
-    //   if (index !== -1) {
-    //     this.msgList[index].status = 'success';
-    //   }
-    // });
   }
 
   /**
@@ -241,6 +211,34 @@ export class Chat {
 
   getMsgIndexById(id: string) {
     return this.msgList.findIndex(e => e.messageId === id);
+  }
+
+  ionViewDidLoad() {
+    // this.switchEmojiPicker();
+  }
+
+  ionViewWillLeave() {
+    // unsubscribe
+    this.info.registerChatMsg(null);
+  }
+
+  ionViewDidEnter() {
+    this.info.registerChatMsg(this.toUserId);
+  }
+
+  _focus() {
+    this.isOpenEmojiPicker = false;
+    this.content.resize();
+    this.scrollToBottom();
+  }
+
+  switchEmojiPicker() {
+    this.isOpenEmojiPicker = !this.isOpenEmojiPicker;
+    if (!this.isOpenEmojiPicker) {
+      this.messageInput.setFocus();
+    }
+    this.content.resize();
+    this.scrollToBottom();
   }
 
   scrollToBottom() {

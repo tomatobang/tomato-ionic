@@ -57,9 +57,8 @@ export class MessagePage implements OnInit {
     // 获取通知列表
     this.getReqFriendList();
 
-    // 监听未读消息
     this.info.newMessagesMonitor.subscribe(data => {
-      for (let index = 0; index < data.length; index++) {
+      for (let index = data.length - 1; index >= 0; index--) {
         const element = data[index];
         if (this.userSet.has(element._id)) {
           const i = this.userSet.get(element._id);
@@ -106,8 +105,19 @@ export class MessagePage implements OnInit {
         }
       }
     });
+
+    this.info.singleMessageCountMonitor.subscribe(data => {
+      const i = this.userSet.get(data);
+      if (i >= 0) {
+        this.newMessages[i].count = 0;
+      }
+    });
   }
 
+  /**
+   * 获取好友名称
+   * @param id 好友编号
+   */
   getFriendName(id): Promise<any> {
     return new Promise((resolve, reject) => {
       this.cache.getFriendList().subscribe(friendList => {

@@ -26,8 +26,12 @@ export class TabsPage implements OnInit {
   }
   ngOnInit(): void {
     this.info.messageCountMonitor.subscribe(data => {
-      if (data) {
-        this.messsageBadge = data;
+      if (data !== undefined && data !== null) {
+        if (data === 0) {
+          this.messsageBadge = '';
+        } else {
+          this.messsageBadge = data;
+        }
       }
     });
   }
