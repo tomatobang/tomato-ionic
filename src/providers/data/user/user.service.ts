@@ -73,6 +73,11 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
+  @GET(baseUrl + 'api/logout/')
+  logout(): Observable<any> {
+    return null;
+  }
+
   @POST(baseUrl + 'email_username/verify')
   verifyUserNameEmail(@Body email_username: EmailUserName): Observable<any> {
     return null;

@@ -18,6 +18,14 @@ export class CacheService {
   ) {}
 
   /**
+   * 清除缓存
+   */
+  clearCache() {
+    this.storage.clear();
+    this.friendlist = null;
+  }
+
+  /**
    * 获取好友列表
    */
   getFriendList(): Observable<any> {
@@ -52,9 +60,9 @@ export class CacheService {
                   headImg: './assets/tomato-active.png',
                 });
               }
-              responseObserver.next(this.friendlist);
-              responseObserver.complete();
             }
+            responseObserver.next(this.friendlist);
+            responseObserver.complete();
           });
       });
     }

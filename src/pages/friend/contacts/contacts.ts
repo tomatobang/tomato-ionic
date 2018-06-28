@@ -41,21 +41,7 @@ export class ContactsPage implements OnInit {
     public globalService: GlobalService,
     public cache: CacheService,
     public chatIO: ChatIOService
-  ) {
-    this.userid = globalService.userinfo._id;
-    // this.mock();
-  }
-
-  /**
-   * 获取好友列表
-   */
-  getAgreedUserFriend() {
-    this.cache.getFriendList().subscribe(data => {
-      this.friendlist = data;
-      this.getSortedFriendlist();
-      this.loadOnlineFriendList();
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.getAgreedUserFriend();
@@ -79,6 +65,17 @@ export class ContactsPage implements OnInit {
           console.log(element.textContent, element.offsetTop);
         });
       }
+    });
+  }
+
+  /**
+   * 获取好友列表
+   */
+  getAgreedUserFriend() {
+    this.cache.getFriendList().subscribe(data => {
+      this.friendlist = data;
+      this.getSortedFriendlist();
+      this.loadOnlineFriendList();
     });
   }
 
