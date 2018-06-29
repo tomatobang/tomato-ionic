@@ -59,8 +59,8 @@ export class InfoService {
     this.chatIO.receive_message().subscribe(data => {
       this.cache.setMessageSyncTime(new Date(data.create_at).getTime());
       if (this.chatingNow) {
-        data.has_read = true;
         this.realtimeMsgSubject.next(data);
+        data.has_read = true;
       } else {
         this.unreadMsgCount += 1;
       }

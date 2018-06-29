@@ -130,14 +130,14 @@ export class CacheService {
     this.storage.get('friend:message:' + fid).then(sdata => {
       if (sdata) {
         const newdata = sdata;
-        if (fid === data.from) {
+        if (fid === data.from && !data.has_read) {
           newdata.count += 1;
         }
         newdata.messages.push(data);
         this.storage.set('friend:message:' + fid, newdata);
       } else {
         const newdata = { count: 1, _id: fid, messages: [] };
-        if (fid === data.from) {
+        if (fid === data.from || data.has_read) {
           newdata.count = 0;
         }
         newdata.messages.push(data);
