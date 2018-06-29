@@ -14,8 +14,8 @@ import { CacheService } from '@providers/cache.service';
   templateUrl: 'message.html',
 })
 export class MessagePage implements OnInit {
-  toUser: Object;
   showType = 'msg';
+
   userid;
 
   newMessages = [];
@@ -30,11 +30,6 @@ export class MessagePage implements OnInit {
     public info: InfoService,
     public cache: CacheService
   ) {
-    this.toUser = {
-      toUserId: '210000198410281948',
-      toUserName: 'Hancock',
-    };
-
     this.userid = globalservice.userinfo._id;
   }
 
@@ -68,23 +63,29 @@ export class MessagePage implements OnInit {
     // 监听实时消息
     this.info.realtimeMsgListMonitor.subscribe(data => {
       if (data) {
-        if (this.userSet.has(data.from)) {
-          const i = this.userSet.get(data.from);
+        let fid = data.from;
+        let count = 1;
+        if (data.from === this.userid) {
+          fid = data.to;
+          count = 0;
+        }
+        if (this.userSet.has(fid)) {
+          const i = this.userSet.get(fid);
           this.newMessages[i].content = data.content
             ? data.content
             : data.content;
-          this.newMessages[i].count += 1;
+          this.newMessages[i].count += count;
         } else {
           this.newMessages.push({
-            fid: data.from,
+            fid: fid,
             name: '',
             content: data.content,
-            count: 1,
+            count: count,
           });
-          this.userSet.set(data.from, this.newMessages.length - 1);
+          this.userSet.set(fid, this.newMessages.length - 1);
 
-          this.getFriendName(data.from).then(name => {
-            const i = this.userSet.get(data.from);
+          this.getFriendName(fid).then(name => {
+            const i = this.userSet.get(fid);
             this.newMessages[i].name = name;
           });
         }

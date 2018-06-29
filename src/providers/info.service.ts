@@ -79,6 +79,16 @@ export class InfoService {
   }
 
   /**
+   * 同步本地消息至缓存与消息列表
+   * @param fid 好友编号
+   * @param msg 消息
+   */
+  syncMsgFromLocal(fid, msg) {
+    this.cache.addRealTimeFriendMsg(fid, msg);
+    this.realtimeMsgListSubject.next(msg);
+  }
+
+  /**
    * 消息状态置为已读
    * @param fid
    */

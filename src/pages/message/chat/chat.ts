@@ -150,7 +150,7 @@ export class Chat {
       return;
     }
     this.chatService.sendMessage(this.userId, this.toUserId, this.editorMsg);
-    this.cache.addRealTimeFriendMsg(this.toUserId, {
+    this.info.syncMsgFromLocal(this.toUserId, {
       from: this.userId,
       to: this.toUserId,
       content: this.editorMsg,
