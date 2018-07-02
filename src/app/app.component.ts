@@ -83,7 +83,7 @@ export class MyAppComponent implements OnInit {
         });
         this.userService.auth().subscribe(data => {
           if (data && data.status) {
-            this.chatIO.login(this.global.userinfo.userid);
+            this.chatIO.login(this.global.userinfo._id);
             this.info.init();
             this.rootPage = 'TabsPage';
           } else {

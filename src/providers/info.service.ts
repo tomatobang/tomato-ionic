@@ -1,8 +1,7 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
 
@@ -26,7 +25,7 @@ export class InfoService {
     public cache: CacheService
   ) {}
 
-  public messageSubject: Subject<any> = new ReplaySubject<any>();
+  public messageSubject: Subject<any> = new ReplaySubject<any>(2);
   public get newMessagesMonitor(): Observable<any> {
     return this.messageSubject.asObservable();
   }
@@ -41,14 +40,14 @@ export class InfoService {
     return this.singleMessagCountSubject.asObservable();
   }
 
-  public realtimeMsgSubject: Subject<any> = new ReplaySubject<any>(null);
-  public get realtimeMsgMonitor(): Observable<any> {
-    return this.realtimeMsgSubject.asObservable();
-  }
-
-  public realtimeMsgListSubject: Subject<any> = new Subject<any>();
+  public realtimeMsgListSubject: Subject<any> = new ReplaySubject<any>();
   public get realtimeMsgListMonitor(): Observable<any> {
     return this.realtimeMsgListSubject.asObservable();
+  }
+
+  public realtimeMsgSubject: Subject<any> = new Subject<any>();
+  public get realtimeMsgMonitor(): Observable<any> {
+    return this.realtimeMsgSubject.asObservable();
   }
 
   /**
@@ -58,15 +57,35 @@ export class InfoService {
     this.loadUnreadMsg();
     this.loadHistoryMsg();
     this.chatIO.receive_message().subscribe(data => {
-      this.cache.addRealTimeFriendMsg(data.from, data);
+      this.cache.setMessageSyncTime(new Date(data.create_at).getTime());
       if (this.chatingNow) {
         this.realtimeMsgSubject.next(data);
+        data.has_read = true;
       } else {
         this.unreadMsgCount += 1;
       }
+      this.cache.addRealTimeFriendMsg(data.from, {
+        from: data.from,
+        to: data.to,
+        content: data.content,
+        type: data.type,
+        create_at: data.create_at,
+        has_read: data.has_read,
+      });
+
       this.realtimeMsgListSubject.next(data);
       this.messagCountSubject.next(this.unreadMsgCount);
     });
+  }
+
+  /**
+   * 同步本地消息至缓存与消息列表
+   * @param fid 好友编号
+   * @param msg 消息
+   */
+  syncMsgFromLocal(fid, msg) {
+    this.cache.addRealTimeFriendMsg(fid, msg);
+    this.realtimeMsgListSubject.next(msg);
   }
 
   /**
@@ -113,12 +132,15 @@ export class InfoService {
       if (messageSyncTime) {
         messageSyncTime = new Date(messageSyncTime);
       }
-      this.cache.setMessageSyncTime(new Date().getTime());
+
       this.messageService.getUnreadMessages(messageSyncTime).subscribe(data => {
-        if (data) {
+        const messages = data.messages;
+        const lst_create_at = data.lst_create_at;
+        if (messages) {
+          this.cache.setMessageSyncTime(new Date(lst_create_at).getTime());
           let count = 0;
-          for (let index = 0; index < data.length; index++) {
-            const element = data[index];
+          for (let index = 0; index < messages.length; index++) {
+            const element = messages[index];
             count += element.count;
             // 存储好友消息
             this.cache.setFriendMsg(element._id, element);
@@ -126,8 +148,8 @@ export class InfoService {
           // 发布总数
           this.unreadMsgCount += count;
           this.messagCountSubject.next(this.unreadMsgCount);
-          this.messageSubject.next(data);
-          this.unreadMessage = this.unreadMessage.concat(data);
+          this.messageSubject.next(messages);
+          this.unreadMessage = this.unreadMessage.concat(messages);
         }
       });
     });
@@ -142,6 +164,7 @@ export class InfoService {
   }
 
   /**
+   * @deprecated
    * 获取用户未读消息列表
    * @param userid 用户编号
    */
@@ -157,6 +180,11 @@ export class InfoService {
     return [];
   }
 
+  /**
+   * 设置未读消息数
+   * @param val 未读消息数(+/-)
+   * @param fid 好友编号
+   */
   addUnreadMsgCount(val, fid) {
     this.unreadMsgCount += val;
     this.messagCountSubject.next(this.unreadMsgCount);

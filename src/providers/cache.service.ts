@@ -15,14 +15,21 @@ export class CacheService {
     public globalService: GlobalService,
     public userFriendService: UserFriendService,
     public storage: Storage
-  ) {
-    this.userid = globalService.userinfo.userid;
+  ) {}
+
+  /**
+   * 清除缓存
+   */
+  clearCache() {
+    this.storage.clear();
+    this.friendlist = null;
   }
 
   /**
    * 获取好友列表
    */
   getFriendList(): Observable<any> {
+    this.userid = this.globalService.userinfo._id;
     if (this.friendlist) {
       return new Observable(responseObserver => {
         responseObserver.next(this.friendlist);
@@ -53,9 +60,9 @@ export class CacheService {
                   headImg: './assets/tomato-active.png',
                 });
               }
-              responseObserver.next(this.friendlist);
-              responseObserver.complete();
             }
+            responseObserver.next(this.friendlist);
+            responseObserver.complete();
           });
       });
     }
@@ -123,14 +130,14 @@ export class CacheService {
     this.storage.get('friend:message:' + fid).then(sdata => {
       if (sdata) {
         const newdata = sdata;
-        if (fid === data.from) {
+        if (fid === data.from && !data.has_read) {
           newdata.count += 1;
         }
         newdata.messages.push(data);
         this.storage.set('friend:message:' + fid, newdata);
       } else {
         const newdata = { count: 1, _id: fid, messages: [] };
-        if (fid === data.from) {
+        if (fid === data.from || data.has_read) {
           newdata.count = 0;
         }
         newdata.messages.push(data);

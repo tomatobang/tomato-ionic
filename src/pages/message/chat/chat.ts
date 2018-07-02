@@ -37,18 +37,12 @@ export class Chat {
     public cache: CacheService,
     public messageService: MessageService
   ) {
-    // Get the navParams toUserId parameter
     this.toUserId = navParams.get('toUserId');
     this.toUserName = navParams.get('toUserName');
-    this.userId = this.globalService.userinfo.userid;
+    this.userId = this.globalService.userinfo._id;
     this.userName = this.globalService.userinfo.username;
 
-    this.info.getFriendHistoryMsg(this.toUserId).subscribe(data => {
-      // 显示历史未读消息:从服务端加载
-      let messages = this.info.getUnreadHistoryMsg(this.toUserId);
-      if (data) {
-        messages = messages.concat(data);
-      }
+    this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
       let minusCount = 0;
       for (let index = 0; index < messages.length; index++) {
         const newMsg: ChatMessage = {
@@ -93,7 +87,6 @@ export class Chat {
           if (!data.has_read) {
             this.updateMsgState(data._id);
           }
-          this.info.updateMessageState(this.toUserId);
           this.info.addUnreadMsgCount(0, this.toUserId);
           this.pushNewMsg(newMsg);
         });
@@ -156,9 +149,8 @@ export class Chat {
     if (!this.editorMsg.trim()) {
       return;
     }
-
     this.chatService.sendMessage(this.userId, this.toUserId, this.editorMsg);
-    this.cache.addRealTimeFriendMsg(this.toUserId, {
+    this.info.syncMsgFromLocal(this.toUserId, {
       from: this.userId,
       to: this.toUserId,
       content: this.editorMsg,

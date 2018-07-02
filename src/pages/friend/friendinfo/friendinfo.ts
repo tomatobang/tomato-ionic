@@ -7,7 +7,7 @@ import { NavController, Content, IonicPage, NavParams } from 'ionic-angular';
   templateUrl: 'friendinfo.html',
 })
 export class FriendInfoPage {
-  friendName = '张三';
+  friendName = '';
   userid;
 
   @ViewChild(Content) content: Content;

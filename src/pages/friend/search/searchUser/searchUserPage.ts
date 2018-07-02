@@ -24,7 +24,7 @@ export class SearchUserPage implements OnInit {
   ionViewDidLoad() {}
 
   ngOnInit(): void {
-    this.userid = this.global.userinfo.userid;
+    this.userid = this.global.userinfo._id;
   }
 
   seachUsers(evt) {

@@ -7,8 +7,13 @@ export class Message {
   has_read?: boolean;
 }
 
-export class MessageRet {
+interface MessageRet {
   _id: string;
   count: number;
   messages: Message;
+}
+
+export class UnreadMessageRet {
+  lst_create_at: string;
+  messages: MessageRet[];
 }

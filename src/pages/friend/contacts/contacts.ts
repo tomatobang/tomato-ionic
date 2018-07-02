@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ViewChildren,
   QueryList,
   ElementRef,
   Renderer2,
@@ -39,55 +38,14 @@ export class ContactsPage implements OnInit {
     private http: HttpClient,
     public navCtrl: NavController,
     private el: ElementRef,
-    private render: Renderer2,
     public globalService: GlobalService,
     public cache: CacheService,
     public chatIO: ChatIOService
-  ) {
-    this.userid = globalService.userinfo.userid;
-    this.getAgreedUserFriend();
-    // this.mock();
-  }
-
-  /**
-   * 获取好友列表
-   */
-  getAgreedUserFriend() {
-    this.cache.getFriendList().subscribe(data => {
-      this.friendlist = data;
-      this.getSortedFriendlist();
-      this.loadOnlineFriendList();
-    });
-  }
-
-  /**
-   * 加载在线好友列表
-   */
-  loadOnlineFriendList() {
-    const userid = this.globalService.userinfo.userid;
-    this.chatIO.load_online_friend_list(userid);
-
-    this.chatIO.load_online_friend_list_succeed().subscribe(data => {
-      let fid = '';
-      const friendlist = data.friendlist;
-      for (const end of friendlist) {
-        if (end.length > 10) {
-          fid = end;
-        }
-        // 好友在线
-        if (end === '1') {
-          this.friendOnlineState[fid] = true;
-        }
-      }
-      console.log('load_online_friend_list_succeed', friendlist);
-    });
-
-    this.chatIO.fail().subscribe(err => {
-      console.error(err);
-    });
-  }
+  ) {}
 
   ngOnInit() {
+    this.getAgreedUserFriend();
+
     const event$ = Observable.fromEvent(
       this.myScrollContainer._scrollContent.nativeElement,
       'scroll'
@@ -110,11 +68,49 @@ export class ContactsPage implements OnInit {
     });
   }
 
+  /**
+   * 获取好友列表
+   */
+  getAgreedUserFriend() {
+    this.cache.getFriendList().subscribe(data => {
+      this.friendlist = data;
+      this.getSortedFriendlist();
+      this.loadOnlineFriendList();
+    });
+  }
+
   OnNavcScroll(evt) {
     const element = <HTMLElement>(
       this.myScrollContainer._scrollContent.nativeElement
     );
     element.scrollTop = evt;
+  }
+
+  /**
+   * 加载在线好友列表
+   */
+  loadOnlineFriendList() {
+    const userid = this.globalService.userinfo._id;
+    this.chatIO.load_online_friend_list(userid);
+
+    this.chatIO.load_online_friend_list_succeed().subscribe(data => {
+      let fid = '';
+      const friendlist = data.friendlist;
+      for (const end of friendlist) {
+        if (end.length > 10) {
+          fid = end;
+        }
+        // 好友在线
+        if (end === '1') {
+          this.friendOnlineState[fid] = true;
+        }
+      }
+      console.log('load_online_friend_list_succeed', friendlist);
+    });
+
+    this.chatIO.fail().subscribe(err => {
+      console.error(err);
+    });
   }
 
   /**

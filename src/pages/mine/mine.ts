@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   NavController,
   ActionSheetController,
@@ -10,11 +10,12 @@ import {
 import { GlobalService } from '@providers/global.service';
 import { JPushService } from '@providers/utils/jpush.service';
 import { NativeService } from '@providers/utils/native.service';
-import { OnlineUserService } from '@providers/data.service';
+import { CacheService } from '@providers/cache.service';
 import {
   ChatIOService,
   TomatoIOService,
 } from '@providers/utils/socket.io.service';
+import { OnlineUserService } from '@providers/data.service';
 
 @IonicPage()
 @Component({
@@ -35,11 +36,12 @@ export class MinePage implements OnInit {
     public actionSheetCtrl: ActionSheetController,
     public native: NativeService,
     public platform: Platform,
-    private userservice: OnlineUserService,
+    private cache: CacheService,
     private app: App,
     private modalCtrl: ModalController,
     public chatIO: ChatIOService,
-    public tomatoIO: TomatoIOService
+    public tomatoIO: TomatoIOService,
+    public userService: OnlineUserService
   ) {}
 
   public ngOnInit(): void {
@@ -66,22 +68,33 @@ export class MinePage implements OnInit {
     }
   }
 
+  /**
+   * 登出
+   */
   logout() {
-    this.app.getRootNav().setRoot(
-      'LoginPage',
-      {
-        username: this.globalservice.userinfo.username,
-        password: this.globalservice.userinfo.password,
-      },
-      {},
-      () => {
-        this.chatIO.logout(this.globalservice.userinfo.userid);
-        this.tomatoIO.logout(this.globalservice.userinfo.userid);
-        this.globalservice.userinfo = '';
-        this.globalservice.token = '';
-        this.jPushService.clearAlias();
-      }
-    );
+    this.userService.logout().subscribe(ret => {
+      this.app.getRootNav().setRoot(
+        'LoginPage',
+        {
+          username: this.globalservice.userinfo.username,
+          password: this.globalservice.userinfo.password,
+        },
+        {},
+        () => {
+          if (!this.globalservice.userinfo) {
+            this.cache.clearCache();
+            this.globalservice.token = '';
+            return;
+          }
+          this.chatIO.logout(this.globalservice.userinfo._id);
+          this.tomatoIO.logout(this.globalservice.userinfo._id);
+          this.globalservice.userinfo = '';
+          this.globalservice.token = '';
+          this.jPushService.clearAlias();
+          this.cache.clearCache();
+        }
+      );
+    });
   }
 
   setting() {

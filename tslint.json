@@ -30,6 +30,7 @@
     "no-use-before-declare": false,
     "component-class-suffix": [false, "Component"],
     "directive-class-suffix": [true, "Directive"],
+    "max-classes-per-file": [true, 2],
     "no-shadowed-variable": [
       true,
       {

@@ -27,7 +27,7 @@ export class UserFriendService extends RebirthHttp {
     super(http);
   }
 
-  @Cacheable({ pool: 'user_friend' })
+  // @Cacheable({ pool: 'user_friend' })
   @GET(baseUrl + 'api/user_friend')
   getFriends(
     @Query('state') state: number,

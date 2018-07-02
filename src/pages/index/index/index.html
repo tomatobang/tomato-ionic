@@ -1,6 +1,6 @@
 <div class="tomato-user-bio">
-    <ion-marquee [speed]="30">
-        {{ userBio? userBio: '暂无签名！' }}
+    <ion-marquee [speed]="30" [text]="userBio">
+        {{ this.userBio }}
     </ion-marquee>
 
 </div>

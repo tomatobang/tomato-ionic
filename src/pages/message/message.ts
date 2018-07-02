@@ -14,23 +14,13 @@ import { CacheService } from '@providers/cache.service';
   templateUrl: 'message.html',
 })
 export class MessagePage implements OnInit {
-  toUser: Object;
   showType = 'msg';
+
   userid;
 
   newMessages = [];
   userSet = new Map();
-
-  messageList = [
-    {
-      id: '1',
-      name: '王五',
-      friendid: '',
-      info: '我是王五',
-      portrait: '',
-      state: 1,
-    },
-  ];
+  messageList = [];
 
   constructor(
     public navCtrl: NavController,
@@ -40,35 +30,25 @@ export class MessagePage implements OnInit {
     public info: InfoService,
     public cache: CacheService
   ) {
-    this.toUser = {
-      toUserId: '210000198410281948',
-      toUserName: 'Hancock',
-    };
-
-    this.userid = globalservice.userinfo.userid;
-
-    // 注册收到消息服务
-    this.chatIO.receive_message().subscribe(data => {
-      console.log('receiveMessage', data);
-    });
+    this.userid = globalservice.userinfo._id;
   }
 
   ngOnInit(): void {
     // 获取通知列表
     this.getReqFriendList();
-
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = data.length - 1; index >= 0; index--) {
         const element = data[index];
-        if (this.userSet.has(element._id)) {
+        if (this.userSet.has(element._id) && element.messages) {
           const i = this.userSet.get(element._id);
-          this.newMessages[i].content = element.messages[0].content;
+          this.newMessages[i].content =
+            element.messages[element.messages.length - 1].content;
           this.newMessages[i].count += 1;
         } else {
           this.newMessages.push({
             fid: element._id,
             name: name,
-            content: element.messages[0].content,
+            content: element.messages[element.messages.length - 1].content,
             count: element.count,
           });
           this.userSet.set(element._id, index);
@@ -83,23 +63,29 @@ export class MessagePage implements OnInit {
     // 监听实时消息
     this.info.realtimeMsgListMonitor.subscribe(data => {
       if (data) {
-        if (this.userSet.has(data.from)) {
-          const i = this.userSet.get(data.from);
+        let fid = data.from;
+        let count = 1;
+        if (data.from === this.userid) {
+          fid = data.to;
+          count = 0;
+        }
+        if (this.userSet.has(fid)) {
+          const i = this.userSet.get(fid);
           this.newMessages[i].content = data.content
             ? data.content
             : data.content;
-          this.newMessages[i].count += 1;
+          this.newMessages[i].count += count;
         } else {
           this.newMessages.push({
-            fid: data.from,
+            fid: fid,
             name: '',
             content: data.content,
-            count: 1,
+            count: count,
           });
-          this.userSet.set(data.from, this.newMessages.length - 1);
+          this.userSet.set(fid, this.newMessages.length - 1);
 
-          this.getFriendName(data.from).then(name => {
-            const i = this.userSet.get(data.from);
+          this.getFriendName(fid).then(name => {
+            const i = this.userSet.get(fid);
             this.newMessages[i].name = name;
           });
         }
@@ -147,6 +133,9 @@ export class MessagePage implements OnInit {
     });
   }
 
+  /**
+   * 获取好友发起请求列表
+   */
   getReqFriendList() {
     this.userFriendService
       .getFriends(UserFriendState.SendRequest)
@@ -170,6 +159,11 @@ export class MessagePage implements OnInit {
       });
   }
 
+  /**
+   * 同意好友请求
+   * @param id 当前用户编号
+   * @param friendid 好友编号
+   */
   responseReq(id, friendid) {
     this.chatIO.response_friend_request(id, friendid, this.userid, 2);
     this.chatIO.responseAddFriendSuccess().subscribe(data => {

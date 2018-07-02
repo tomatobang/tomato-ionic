@@ -1,13 +1,7 @@
-import {
-  Component,
-  ViewChild,
-  OnInit,
-  OnDestroy,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { VoicePlayService } from '@providers/utils/voiceplay.service';
-import { AlertController, App, Events } from 'ionic-angular';
+import { AlertController, Events } from 'ionic-angular';
 import { AngularRoundProgressDirective } from '@directives/angular-round-progress.directive';
 
 import { GlobalService } from '@providers/global.service';
@@ -54,7 +48,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
   child: AngularRoundProgressDirective;
 
   constructor(
-    private app: App,
     public events: Events,
     public globalservice: GlobalService,
     public tomatoIO: TomatoIOService,
@@ -66,7 +59,11 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.userid = this.globalservice.userinfo.username;
-    this.userBio = this.globalservice.userinfo.bio;
+    if (this.globalservice.userinfo.bio) {
+      this.userBio = this.globalservice.userinfo.bio;
+    } else {
+      this.userBio = '';
+    }
     this.events.subscribe('bio:update', bio => {
       this.userBio = bio;
     });
