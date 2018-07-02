@@ -54,7 +54,7 @@ export class OnlineUserService extends UserService {
   }
 
   @GET(baseUrl + 'api/user/:id')
-  getUserByTitle(@Path('id') userName: string): Observable<User> {
+  getUserByID(@Path('id') id: string): Observable<User> {
     return null;
   }
 

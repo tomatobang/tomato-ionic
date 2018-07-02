@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, Content, IonicPage } from 'ionic-angular';
+import { NavParams, IonicPage } from 'ionic-angular';
 import { OnlineUserService } from '@providers/data.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
 import { GlobalService } from '@providers/global.service';
@@ -8,7 +8,6 @@ import { GlobalService } from '@providers/global.service';
 @Component({
   selector: 'page-searchUserPage',
   templateUrl: 'searchUserPage.html',
-  providers: [OnlineUserService],
 })
 export class SearchUserPage implements OnInit {
   searchReturnItems = [];

@@ -14,7 +14,7 @@ export abstract class UserService extends RebirthHttp {
     keyword?: string
   ): Observable<SearchResult<User>>;
 
-  abstract getUserByTitle(userName: string): Observable<User>;
+  abstract getUserByID(userName: string): Observable<User>;
 
   abstract updateUser(userUrl: string, user: User): Observable<any>;
 
