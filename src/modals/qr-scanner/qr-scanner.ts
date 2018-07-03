@@ -8,11 +8,8 @@ import {
 } from 'ionic-angular';
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
-
-import { setTimeout } from 'timers';
 import { Vibration } from '@ionic-native/vibration';
 
-import lodash from 'lodash';
 
 @IonicPage()
 @Component({

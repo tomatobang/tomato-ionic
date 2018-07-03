@@ -7,18 +7,16 @@ import {
   Platform,
 } from 'ionic-angular';
 
-import lodash from 'lodash';
-
 @IonicPage()
 @Component({
   selector: 'modal-qr-img',
   templateUrl: 'qr-img.html',
 })
 export class QRImgModal {
-  private qrcodeUrl: String;
-  private username: String;
-  private bio: String;
-  private headImg: String;
+  public qrcodeUrl: String;
+  public username: String;
+  public bio: String;
+  public headImg: String;
 
   constructor(
     private app: App,

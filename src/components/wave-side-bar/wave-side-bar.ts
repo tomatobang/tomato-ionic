@@ -1,10 +1,4 @@
-import {
-  Component,
-  ViewChild,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PinyinService } from '@providers/utils/pinyin.service';
 
 @Component({
@@ -21,9 +15,11 @@ export class WaveSideBarComponent {
 
   goList(event: any): any {
     // 根据坐标来获取元素！
-    const elementFromPoint = <HTMLElement>document.elementFromPoint(
-      event.changedTouches[0].pageX,
-      event.changedTouches[0].pageY
+    const elementFromPoint = <HTMLElement>(
+      document.elementFromPoint(
+        event.changedTouches[0].pageX,
+        event.changedTouches[0].pageY
+      )
     );
     const nodeName = elementFromPoint
       ? elementFromPoint.nodeName.toUpperCase()

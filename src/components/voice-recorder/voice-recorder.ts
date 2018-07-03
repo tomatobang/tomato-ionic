@@ -1,19 +1,15 @@
 import {
   Component,
-  forwardRef,
   ElementRef,
   OnInit,
   OnDestroy,
   Input,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Platform } from 'ionic-angular';
 import { Gesture } from 'ionic-angular/gestures/gesture';
 import { Media, MediaObject } from '@ionic-native/media';
 import {
   FileTransfer,
-  FileUploadOptions,
-  FileTransferObject,
 } from '@ionic-native/file-transfer';
 import { QiniuUploadService } from '@providers/qiniu.upload.service';
 
