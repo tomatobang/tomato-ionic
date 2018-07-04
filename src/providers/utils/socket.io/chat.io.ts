@@ -1,16 +1,44 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { ChatSocket } from './config/chat';
-// import { Message } from '../../data/message/message.model';
 
 @Injectable()
 export class ChatIOService {
-  constructor(private socket: ChatSocket) {}
+  hasConnected = false;
+  userid;
+
+  constructor(private socket: ChatSocket) {
+    socket.on('connect', () => {
+      this.hasConnected = true;
+      if (this.userid) {
+        this.login(this.userid);
+      }
+    });
+
+    socket.on('disconnect', () => {
+      this.hasConnected = false;
+      this.reconnect();
+    });
+  }
+
+  /**
+   * 断线重连
+   */
+  reconnect() {
+    this.socket.connect();
+    setTimeout(() => {
+      if (!this.hasConnected) {
+        this.reconnect();
+      }
+    }, 5000);
+  }
 
   /**
    * 登录
    */
   login(userid: string) {
+    this.userid = userid;
+    console.log('ChatIOService login');
     this.socket.emit('login', { userid, endname: 'ionic' });
   }
 

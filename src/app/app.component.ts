@@ -29,12 +29,12 @@ export class MyAppComponent implements OnInit {
     // jPushService: JPushService,
     updateService: UpdateService,
     public rebirthProvider: RebirthHttpProvider,
-    private backgroundMode: BackgroundMode,
+    protected backgroundMode: BackgroundMode,
     public global: GlobalService,
     public native: NativeService,
     public info: InfoService,
     public chatIO: ChatIOService,
-    private events: Events,
+    protected events: Events,
     public userService: OnlineUserService
   ) {
     platform.ready().then(() => {
