@@ -1,25 +1,16 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { ChatSocket } from './config/chat';
+import { Socket } from 'ng-socket-io';
+import { GlobalService } from '@providers/global.service';
+import { chatSocketUrl } from '../../../config';
 
 @Injectable()
 export class ChatIOService {
+  socket: Socket;
   hasConnected = false;
   userid;
 
-  constructor(private socket: ChatSocket) {
-    socket.on('connect', () => {
-      this.hasConnected = true;
-      if (this.userid) {
-        this.login(this.userid);
-      }
-    });
-
-    socket.on('disconnect', () => {
-      this.hasConnected = false;
-      this.reconnect();
-    });
-  }
+  constructor(public g: GlobalService) {}
 
   /**
    * 断线重连
@@ -38,6 +29,25 @@ export class ChatIOService {
    */
   login(userid: string) {
     this.userid = userid;
+    if (!this.socket) {
+      this.socket = new Socket({
+        url: chatSocketUrl,
+        options: {
+          query: 'token=' + this.g.token,
+        },
+      });
+      this.socket.on('connect', () => {
+        this.hasConnected = true;
+        if (this.userid) {
+          this.login(this.userid);
+        }
+      });
+      this.socket.on('disconnect', () => {
+        this.hasConnected = false;
+        this.reconnect();
+      });
+    }
+
     console.log('ChatIOService login');
     this.socket.emit('login', { userid, endname: 'ionic' });
   }

@@ -1,16 +1,53 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { TomatoSocket } from './config/tomato';
+import { GlobalService } from '@providers/global.service';
+import { tomatoSocketUrl } from '../../../config';
 import { Tomato } from '../../data/tomato';
+import { Socket } from 'ng-socket-io';
 
 @Injectable()
 export class TomatoIOService {
-  constructor(private socket: TomatoSocket) {}
+  socket: Socket;
+  hasConnected = false;
+  userid;
+  constructor(public g: GlobalService) {}
+
+  /**
+   * 断线重连
+   */
+  reconnect() {
+    this.socket.connect();
+    setTimeout(() => {
+      if (!this.hasConnected) {
+        this.reconnect();
+      }
+    }, 5000);
+  }
 
   /**
    * 第一次，用于加载当前tomato
    */
   load_tomato(userid: string) {
+    this.userid = userid;
+    if (!this.socket) {
+      this.socket = new Socket({
+        url: tomatoSocketUrl,
+        options: {
+          query: 'token=' + this.g.token,
+        },
+      });
+      this.socket.on('connect', () => {
+        this.hasConnected = true;
+        if (this.userid) {
+          this.load_tomato(this.userid);
+        }
+      });
+
+      this.socket.on('disconnect', () => {
+        this.hasConnected = false;
+        this.reconnect();
+      });
+    }
     this.socket.emit('load_tomato', { userid, endname: 'ionic' });
   }
 
