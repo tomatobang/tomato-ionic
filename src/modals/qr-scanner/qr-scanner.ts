@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
 import {
-  App,
   IonicPage,
   ViewController,
   Events,
-  Platform,
 } from 'ionic-angular';
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
-
-import { setTimeout } from 'timers';
 import { Vibration } from '@ionic-native/vibration';
 
-import lodash from 'lodash';
 
 @IonicPage()
 @Component({
@@ -24,11 +19,9 @@ export class QRScannerModal {
   private ionApp: HTMLElement;
 
   constructor(
-    private app: App,
     private events: Events,
     private qrScanner: QRScanner,
     private viewCtrl: ViewController,
-    private platform: Platform,
     private vibration: Vibration
   ) {
     this.scanQrCode();

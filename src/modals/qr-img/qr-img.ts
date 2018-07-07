@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import {
-  App,
   IonicPage,
   ViewController,
   NavParams,
-  Platform,
 } from 'ionic-angular';
-
-import lodash from 'lodash';
 
 @IonicPage()
 @Component({
@@ -15,16 +11,14 @@ import lodash from 'lodash';
   templateUrl: 'qr-img.html',
 })
 export class QRImgModal {
-  private qrcodeUrl: String;
-  private username: String;
-  private bio: String;
-  private headImg: String;
+  public qrcodeUrl: String;
+  public username: String;
+  public bio: String;
+  public headImg: String;
 
   constructor(
-    private app: App,
     private params: NavParams,
     private viewCtrl: ViewController,
-    private platform: Platform
   ) {
     const userid = params.get('userid');
     const username = params.get('username');

@@ -1,4 +1,4 @@
-/** TODO:
+/**
  * 统一管理系统中通用服务
  */
 
@@ -20,8 +20,6 @@ import { NativeService } from '@providers/utils/native.service';
 import {
   TomatoIOService,
   ChatIOService,
-  ChatSocket,
-  TomatoSocket,
 } from '@providers/utils/socket.io.service';
 import { UserFriendService } from '@providers/data/user_friend';
 
@@ -38,8 +36,6 @@ import { UserFriendService } from '@providers/data/user_friend';
     QiniuUploadService,
     TomatoIOService,
     ChatIOService,
-    ChatSocket,
-    TomatoSocket,
     UserFriendService,
     MessageService,
     InfoService,

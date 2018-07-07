@@ -9,12 +9,12 @@
   <div class="user-info">
     <img src="assets/tomato-grey.png" alt="">
     <h4>{{ friendName }}</h4>
-    <p>work hard and you can find your path!</p>
+    <p>{{ bio }}</p>
   </div>
-  <!-- <p class="req-add-friend-but">
-    <button ion-button color="secondary" (click)="reqAddFriend()">保存到通讯录</button>
-  </p> -->
-  <p class="req-add-friend-but">
+  <p class="req-add-friend-but" *ngIf="!isFriend">
+    <button ion-button color="secondary" (click)="reqAddFriend()">请求加为好友</button>
+  </p>
+  <p class="req-add-friend-but" *ngIf="isFriend">
     <button ion-button color="secondary" (click)="toChatPage()">发起聊天</button>
   </p>
   <ion-list>

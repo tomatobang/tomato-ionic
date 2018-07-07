@@ -1,10 +1,9 @@
-import {
-  Component,
-  ViewChild,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+/**
+ * 通讯录导航
+ * TODO: 重构
+ */
+
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PinyinService } from '@providers/utils/pinyin.service';
 
 @Component({
@@ -20,10 +19,11 @@ export class WaveSideBarComponent {
   constructor(private pinUtil: PinyinService) {}
 
   goList(event: any): any {
-    // 根据坐标来获取元素！
-    const elementFromPoint = <HTMLElement>document.elementFromPoint(
-      event.changedTouches[0].pageX,
-      event.changedTouches[0].pageY
+    const elementFromPoint = <HTMLElement>(
+      document.elementFromPoint(
+        event.changedTouches[0].pageX,
+        event.changedTouches[0].pageY
+      )
     );
     const nodeName = elementFromPoint
       ? elementFromPoint.nodeName.toUpperCase()
@@ -35,7 +35,7 @@ export class WaveSideBarComponent {
     const firstCode = target.innerHTML.trim();
     const eleID = target.id;
     this.tipObj = this.pinUtil.togglePromptBox(true, firstCode);
-    // 根据 ID 定位滑动元素
+    // 根据 ID 定位元素
     const nav_to_elements = document.querySelectorAll('#' + eleID);
     let scrollTop = 0;
     if (nav_to_elements.length >= 1) {

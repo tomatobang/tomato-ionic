@@ -2,15 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { Cacheable } from 'rebirth-storage';
 import {
   RebirthHttp,
   RebirthHttpProvider,
   GET,
   POST,
-  DELETE,
   Query,
-  Path,
   Body,
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';

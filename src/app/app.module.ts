@@ -18,7 +18,7 @@ import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 
 // see:https://www.npmjs.com/package/ng-socket-io
-import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { SocketIoModule } from 'ng-socket-io';
 import { MyAppComponent } from './app.component';
 
 @NgModule({

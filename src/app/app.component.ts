@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { App, Platform, Events } from 'ionic-angular';
+import {
+  App,
+  Platform,
+  ToastController,
+  Events,
+  IonicApp,
+} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RebirthHttpProvider } from 'rebirth-http';
@@ -20,36 +26,41 @@ import { OnlineUserService } from '@providers/data.service';
 export class MyAppComponent implements OnInit {
   rootPage: any;
   hideNav = false;
+  backButtonPressed = false;
 
   constructor(
     public app: App,
-    platform: Platform,
+    public ionicApp: IonicApp,
+    public platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     // jPushService: JPushService,
     updateService: UpdateService,
     public rebirthProvider: RebirthHttpProvider,
-    private backgroundMode: BackgroundMode,
+    protected backgroundMode: BackgroundMode,
     public global: GlobalService,
     public native: NativeService,
     public info: InfoService,
     public chatIO: ChatIOService,
-    private events: Events,
-    public userService: OnlineUserService
+    protected events: Events,
+    public userService: OnlineUserService,
+    public toastCtrl: ToastController
   ) {
     platform.ready().then(() => {
       statusBar.overlaysWebView(false);
       statusBar.styleDefault();
       statusBar.backgroundColorByHexString('#f8f8f8');
 
-      // 手动隐藏 splash screen
+      // 隐藏 splash screen
       splashScreen.hide();
 
       // 检查更新
       updateService.checkUpdate();
       native.initNativeService();
 
-      // 开启后台运行
+      this.registerBackButtonAction();
+
+      // 开启后台运行模式
       // backgroundMode.enable();
 
       // 极光推送初始化
@@ -57,8 +68,6 @@ export class MyAppComponent implements OnInit {
       //   jPushService.init(global.userinfo.username);
       // }
     });
-
-    // Check if the user has already seen the tutorial
 
     events.subscribe('qrScanner:show', () => {
       this.hideNav = true;
@@ -105,6 +114,45 @@ export class MyAppComponent implements OnInit {
       } else {
         this.rootPage = 'LoginPage';
       }
+    }
+  }
+
+  /**
+   * 物理键返回事件处理
+   */
+  registerBackButtonAction() {
+    this.platform.registerBackButtonAction(() => {
+      let activePortal =
+        this.ionicApp._modalPortal.getActive() ||
+        this.ionicApp._toastPortal.getActive() ||
+        this.ionicApp._loadingPortal.getActive() ||
+        this.ionicApp._overlayPortal.getActive();
+      if (activePortal) {
+        activePortal.dismiss().catch(() => {});
+        activePortal.onDidDismiss(() => {});
+        return;
+      }
+      let activeNav = this.app.getActiveNav();
+      return activeNav.canGoBack() ? activeNav.pop() : this.showExit();
+    }, 1);
+  }
+
+  /**
+   * 确认是否关闭 App
+   */
+  showExit() {
+    if (this.backButtonPressed) {
+      this.platform.exitApp();
+    } else {
+      this.toastCtrl
+        .create({
+          message: '再按一次退出应用',
+          duration: 2000,
+          position: 'top',
+        })
+        .present();
+      this.backButtonPressed = true;
+      setTimeout(() => (this.backButtonPressed = false), 2000);
     }
   }
 }

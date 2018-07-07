@@ -1,12 +1,6 @@
-import {
-  Directive,
-  ElementRef,
-  Input,
-  Renderer2,
-} from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 declare var window: any;
-let hasFixRatio = false;
 @Directive({
   selector: '[angularRoundProgress]',
 })
@@ -28,9 +22,7 @@ export class AngularRoundProgressDirective {
   labelColor = '#F97271';
 
   timerStatusValue: any;
-  /**
-   * 只能发现
-   */
+
   @Input()
   get timerStatus(): any {
     return this.timerStatusValue;
@@ -52,10 +44,6 @@ export class AngularRoundProgressDirective {
   }
 
   fixPixelRatio(context) {
-    /* todo:
-            模块切换时，hasFixRatio 会被重置，但是并不会触发 constructor 函数
-        */
-    //  if (!hasFixRatio) {
     const backingStore =
       context.backingStorePixelRatio ||
       context.webkitBackingStorePixelRatio ||
@@ -78,9 +66,6 @@ export class AngularRoundProgressDirective {
     if (ratio >= 3) {
       this.labelFont = '120pt  lighter 微软雅黑';
     }
-
-    hasFixRatio = true;
-    //  }
   }
 
   render() {

@@ -117,8 +117,10 @@ export class FriendPage {
    * @param qrCode 二维码内容
    */
   onScanQRCode(qrCode: object) {
-    console.log('成功扫描到:', qrCode);
     alert('成功扫描到:' + JSON.stringify(qrCode));
+    this.navCtrl.push('FriendInfoPage', {
+      userid: JSON.stringify(qrCode),
+    });
   }
 
   /**
@@ -126,7 +128,7 @@ export class FriendPage {
    * @param evt evt info
    */
   onScanQRCodeERR(evt) {
-    console.log(evt);
+    console.log('扫码错误', evt);
   }
 
   showRefresher() {

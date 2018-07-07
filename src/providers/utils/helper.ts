@@ -1,5 +1,8 @@
 /**
  * 辅助类
+ * 1. 时间
+ * 2. 文件名
+ * 3. 平台检测
  */
 import { Injectable } from '@angular/core';
 

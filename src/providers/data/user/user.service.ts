@@ -4,11 +4,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { Cacheable } from 'rebirth-storage';
 import {
-  RebirthHttp,
   RebirthHttpProvider,
   GET,
   POST,
-  DELETE,
   Query,
   Path,
   Body,
@@ -54,7 +52,7 @@ export class OnlineUserService extends UserService {
   }
 
   @GET(baseUrl + 'api/user/:id')
-  getUserByTitle(@Path('id') userName: string): Observable<User> {
+  getUserByID(@Path('id') id: string): Observable<User> {
     return null;
   }
 

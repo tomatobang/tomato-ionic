@@ -1,5 +1,6 @@
 /**
  * 极光推送服务
+ * TODO: 启用
  */
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
