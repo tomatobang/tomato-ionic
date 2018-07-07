@@ -9,10 +9,7 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Media, MediaObject, MEDIA_STATUS } from '@ionic-native/media';
 import { Helper } from './helper';
-import { resolve } from 'url';
-import { reject } from 'q';
 import { Observable } from 'rxjs/Observable';
-import { observeOn } from 'rxjs/operator/observeOn';
 declare var window;
 
 @Injectable()
@@ -57,7 +54,10 @@ export class VoicePlayService {
               reject(err);
             });
           fileTransfer.onProgress((evt: ProgressEvent) => {
-            const progress = window.parseInt(evt.loaded / evt.total * 100, 10);
+            const progress = window.parseInt(
+              (evt.loaded / evt.total) * 100,
+              10
+            );
             console.log(progress);
           });
         }
@@ -78,7 +78,6 @@ export class VoicePlayService {
       // 检查是否已下载过
       this.file.checkFile(targetPath, filename).then(
         success => {
-          // alert("已经下载,直接播放！");
           observer.next({
             data: true,
             value: targetPathWithFileName,
@@ -104,7 +103,10 @@ export class VoicePlayService {
               observer.error(err);
             });
           fileTransfer.onProgress((evt: ProgressEvent) => {
-            const progress = window.parseInt(evt.loaded / evt.total * 100, 10);
+            const progress = window.parseInt(
+              (evt.loaded / evt.total) * 100,
+              10
+            );
             observer.next({
               data: false,
               value: progress,

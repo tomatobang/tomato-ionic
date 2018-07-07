@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import {
-  App,
   IonicPage,
   ViewController,
   NavParams,
-  Platform,
 } from 'ionic-angular';
 
 @IonicPage()
@@ -19,10 +17,8 @@ export class QRImgModal {
   public headImg: String;
 
   constructor(
-    private app: App,
     private params: NavParams,
     private viewCtrl: ViewController,
-    private platform: Platform
   ) {
     const userid = params.get('userid');
     const username = params.get('username');

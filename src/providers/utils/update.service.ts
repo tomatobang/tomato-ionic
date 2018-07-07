@@ -1,6 +1,6 @@
 /**
  * App 更新服务( Android )
- * (暂未启用)
+ * TODO: 启用
  */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,9 +9,7 @@ import { GlobalService } from '../global.service';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileOpener } from '@ionic-native/file-opener';
 
-import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { loadavg } from 'os';
 
 declare var window;
 
@@ -46,7 +44,6 @@ export class UpdateService {
         appVersionInfo = data[0];
       }
       if (window.cordova) {
-        // 注意区分测试版与正式版
         window.cordova.getAppVersion.getVersionNumber().then(version => {
           if (this.compare(appVersionInfo.version, version)) {
             this.showUpdateConfirm(
@@ -87,8 +84,8 @@ export class UpdateService {
   }
 
   /**
-   * [getServerVersion 获取最新版本号]
-   * @param  {[type]}  appSystem [系统名称]
+   * 比对版本号并更新
+   * @param appSystem 系统名
    */
   getServerVersion(appSystem): Observable<any> {
     return new Observable(responseObserver => {
@@ -138,7 +135,6 @@ export class UpdateService {
       const trustHosts = true;
       const options = {};
       const fileTransfer: FileTransferObject = this.transfer.create();
-      // APP下载存放的路径，可以使用 window.cordova file 插件进行相关配置
       window.resolveLocalFileSystemURL(
         window.cordova.file.externalApplicationStorageDirectory,
         fileEntry => {
@@ -178,7 +174,7 @@ export class UpdateService {
               // 下载进度
               fileTransfer.onProgress((evt: ProgressEvent) => {
                 const downloadProgress = window.parseInt(
-                  evt.loaded / evt.total * 100,
+                  (evt.loaded / evt.total) * 100,
                   10
                 );
                 loading.data.content = `<div>已下载${downloadProgress}%</div>`;

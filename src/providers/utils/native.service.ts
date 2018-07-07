@@ -1,8 +1,14 @@
+/**
+ * 原生服务
+ * 1. 网络状态
+ * 2. 头像下载
+ * 3. 文件下载
+ * 4. 屏幕常亮
+ */
+
 import { Injectable } from '@angular/core';
 import {
   Platform,
-  AlertController,
-  LoadingController,
   ToastController,
   Toast,
 } from 'ionic-angular';
@@ -12,8 +18,6 @@ import { Network } from '@ionic-native/network';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Helper } from './helper';
-
-declare var window;
 
 @Injectable()
 export class NativeService {
@@ -84,7 +88,7 @@ export class NativeService {
       // offlineOnlineThrottle('网络已连接！');
       setTimeout(() => {
         if (this.network.type === 'wifi') {
-          console.log('we got a wifi connection, woohoo!');
+          console.log('got network:wifi!');
         }
       }, 3000);
     });

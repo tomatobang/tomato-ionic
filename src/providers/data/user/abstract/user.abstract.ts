@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { RebirthHttp } from 'rebirth-http';

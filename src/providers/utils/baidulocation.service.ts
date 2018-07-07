@@ -12,7 +12,6 @@ export class BaiduLocationService {
 
   startLocation(callback): Promise<any> {
     return new Promise((resolve, reject) => {
-      // 手机环境
       if (window.cordova) {
         if (this.plf.is('android')) {
           window.baidumap_location.getCurrentPosition(
@@ -62,13 +61,13 @@ export class BaiduLocationService {
               'Longitude: ' +
               position.coords.longitude
           );
-          // 注意：在得到准确位置前，需要对原生的坐标系转化成百度的坐标系
+          // 坐标转换
           const point = new window.BMap.Point(
             position.coords.longitude,
             position.coords.latitude
           );
           window.BMap.Convertor.translate(point, 0, TranslatedPoint => {
-            // 调用百度的逆地址解析
+            // 百度逆地址解析
             const geoc = new window.BMap.Geocoder();
             geoc.getLocation(
               TranslatedPoint,
@@ -99,7 +98,8 @@ export class BaiduLocationService {
 
   createDetailAddr(data) {
     let addr, pois;
-    const addrDatas = [],  isAndroid = this.plf.is('android');
+    const addrDatas = [],
+      isAndroid = this.plf.is('android');
     if (isAndroid) {
       addr = data.addr.substring(2);
       pois = data.pois;

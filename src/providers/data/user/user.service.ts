@@ -4,11 +4,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { Cacheable } from 'rebirth-storage';
 import {
-  RebirthHttp,
   RebirthHttpProvider,
   GET,
   POST,
-  DELETE,
   Query,
   Path,
   Body,

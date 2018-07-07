@@ -1,10 +1,7 @@
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Cacheable } from 'rebirth-storage';
 import { RebirthHttp } from 'rebirth-http';
 
 import { Task } from '../model/task.model';
-import { SearchResult } from '../model/search-result.model';
 
 export abstract class TaskService extends RebirthHttp {
   abstract createTask(task: Task): Observable<any>;
