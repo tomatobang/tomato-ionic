@@ -91,7 +91,7 @@ export class MyAppComponent implements OnInit {
           console.error('请求错误！', err);
         });
         this.userService.auth().subscribe(data => {
-          if (data && data.status) {
+          if (data && data.status && data.status !== 'fail') {
             this.chatIO.login(this.global.userinfo._id);
             this.info.init();
             this.rootPage = 'TabsPage';
@@ -122,7 +122,7 @@ export class MyAppComponent implements OnInit {
    */
   registerBackButtonAction() {
     this.platform.registerBackButtonAction(() => {
-      let activePortal =
+      const activePortal =
         this.ionicApp._modalPortal.getActive() ||
         this.ionicApp._toastPortal.getActive() ||
         this.ionicApp._loadingPortal.getActive() ||
@@ -132,7 +132,7 @@ export class MyAppComponent implements OnInit {
         activePortal.onDidDismiss(() => {});
         return;
       }
-      let activeNav = this.app.getActiveNav();
+      const activeNav = this.app.getActiveNav();
       return activeNav.canGoBack() ? activeNav.pop() : this.showExit();
     }, 1);
   }

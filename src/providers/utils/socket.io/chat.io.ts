@@ -46,6 +46,8 @@ export class ChatIOService {
         this.hasConnected = false;
         this.reconnect();
       });
+      this.socket.on('verify_failed', () => {
+      });
     }
 
     console.log('ChatIOService login');
