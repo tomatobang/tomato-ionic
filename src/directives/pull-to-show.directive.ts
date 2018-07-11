@@ -3,6 +3,7 @@
  * from: https://github.com/ionic-team/ionic/blob/master/src/components/refresher/refresher.ts
  * update at 18-04-02: now it change to:
  * https://github.com/ionic-team/ionic/blob/master/core/src/components/refresher/refresher.tsx
+ * TODO: 重构
  */
 
 import {
@@ -86,7 +87,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
   >();
 
   constructor(
-    private _plt: Platform,
+    public _plt: Platform,
     @Host() private _content: Content,
     private _zone: NgZone,
     gestureCtrl: GestureController,

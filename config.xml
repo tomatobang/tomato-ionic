@@ -139,6 +139,6 @@
         <auto-install enabled="true" />
     </chcp>
     <plugin name="cordova-android-support-gradle-release" spec="^1.4.2" />
-    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-sqlite-storage" spec="^2.3.2" />
+    <engine name="android" spec="6.3.0" />
 </widget>
