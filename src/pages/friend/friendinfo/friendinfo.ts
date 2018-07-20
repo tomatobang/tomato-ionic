@@ -80,7 +80,7 @@ export class FriendInfoPage {
    */
   toChatPage() {
     this.navCtrl.push('Chat', {
-      toUserId: this.userid,
+      toUserId: this.friendid,
       toUserName: this.friendName,
     });
   }

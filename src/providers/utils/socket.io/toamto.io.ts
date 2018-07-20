@@ -16,10 +16,10 @@ export class TomatoIOService {
    * 断线重连
    */
   reconnect() {
-    this.socket.connect();
+    this.reconnect();
     setTimeout(() => {
       if (!this.hasConnected) {
-        this.reconnect();
+        this.socket.connect();
       }
     }, 5000);
   }
@@ -46,6 +46,8 @@ export class TomatoIOService {
       this.socket.on('disconnect', () => {
         this.hasConnected = false;
         this.reconnect();
+      });
+      this.socket.on('verify_failed', () => {
       });
     }
     this.socket.emit('load_tomato', { userid, endname: 'ionic' });
