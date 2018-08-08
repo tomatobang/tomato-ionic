@@ -72,9 +72,6 @@ export class LoginPage implements OnInit {
           default:
         }
         return state;
-      })
-      .subscribe(state => {
-        // pass
       });
   }
 

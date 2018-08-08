@@ -4,7 +4,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 
-// directives
 import { DebounceClickDirective } from '@directives/debounce-click.directive';
 
 // AoT requires an exported function for factories
@@ -25,6 +24,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   declarations: [DebounceClickDirective],
   providers: [], // better be empty!
-  exports: [PipesModule, TranslateModule],
+  exports: [PipesModule, TranslateModule, DebounceClickDirective],
 })
 export class SharedModule {}

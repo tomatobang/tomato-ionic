@@ -1,12 +1,10 @@
 import {
   Action,
-  ActionReducer,
   createSelector,
   createFeatureSelector,
 } from '@ngrx/store';
 import { GameAction } from './game.action';
 import { ITile } from '../interfaces/index';
-import { Tile } from '../models/index';
 
 export interface ActionWithPayload<T> extends Action {
   payload: T;

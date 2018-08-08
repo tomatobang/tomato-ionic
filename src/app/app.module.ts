@@ -21,6 +21,9 @@ import { SharedModule } from '../shared/shared.module';
 import { SocketIoModule } from 'ng-socket-io';
 import { MyAppComponent } from './app.component';
 
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
 @NgModule({
   declarations: [MyAppComponent],
   imports: [
@@ -51,6 +54,8 @@ import { MyAppComponent } from './app.component';
       name: '__tomatobangdb',
       driverOrder: ['indexeddb', 'sqlite', 'websql'],
     }),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyAppComponent],

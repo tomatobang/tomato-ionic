@@ -7,7 +7,8 @@ import {
   Output,
   OnDestroy,
 } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Directive({ selector: '[debounceClickDirective]' })
 export class DebounceClickDirective implements OnInit, OnDestroy {
@@ -20,7 +21,7 @@ export class DebounceClickDirective implements OnInit, OnDestroy {
   }
   public ngOnInit() {
     this.debounceStream$ = this.clicks
-      .debounceTime(this.debounceClickDirective)
+      .pipe(debounceTime(this.debounceClickDirective))
       .subscribe(event => this.debounceClick.emit(event));
   }
   public ngOnDestroy() {
