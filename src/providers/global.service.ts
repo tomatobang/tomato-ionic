@@ -11,6 +11,9 @@ const settingSubject: Subject<any> = new Subject<any>();
 @Injectable()
 export class GlobalService {
   public notificationSubject: Subject<any> = new Subject<any>();
+  public serverAddress = baseUrl;
+  public qiniuDomain = 'http://osv2a938x.bkt.clouddn.com/';
+
   private _isActive = false;
   private _isFirstTimeOpen: boolean;
   private _token: string;
@@ -18,9 +21,6 @@ export class GlobalService {
   private _countdown = 0;
   private _resttime = 0;
   private _isAlwaysLight = false;
-
-  serverAddress = baseUrl;
-  qiniuDomain = 'http://osv2a938x.bkt.clouddn.com/';
 
   constructor(public events: Events) {}
 

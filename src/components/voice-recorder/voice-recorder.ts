@@ -25,7 +25,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   recordWait = false;
   isStartedVoice = false;
   mediaRec: MediaObject;
-  // media s rc
+  // media src
   mediaSrc = '';
   // media path
   mediaPath = '';
