@@ -1,10 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { GridService } from './grid.service';
 import { Tile } from '../models/index';
-import { Store, Action, select } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import { GameAction } from './game.action';
-import { Observable } from 'rxjs/Observable';
 
 import { IPosition } from '../interfaces/position';
 import 'rxjs/add/operator/map';
@@ -20,7 +18,10 @@ export class GameService {
   public won;
   public game;
 
-  constructor(private gridService: GridService, private store: Store<fromGame.GameState>) {
+  constructor(
+    private gridService: GridService,
+    private store: Store<fromGame.GameState>
+  ) {
     // const store$ = store.select('game');
     this.currentScore = store.pipe(select(fromGame.getCurrentScore));
     this.highScore = store.pipe(select(fromGame.getHighcore));
@@ -28,7 +29,7 @@ export class GameService {
     this.gameOver = store.pipe(select(fromGame.getGameoverState));
     this.won = store.pipe(select(fromGame.getWonState));
 
-   this.game = store.pipe(select('game'));
+    this.game = store.pipe(select('game'));
     // this.currentScore = store$.map(({ currentScore }: IGame) => currentScore);
   }
 

@@ -3,12 +3,11 @@ import { map } from 'rxjs/operators/map';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Events } from 'ionic-angular';
-
-import { ChatMessage } from './chat-message.model';
-
 import 'rxjs/add/operator/toPromise';
 
 import { ChatIOService } from '@providers/utils/socket.io.service';
+import { ChatMessage } from './chat-message.model';
+
 
 @Injectable()
 export class ChatService {
@@ -29,48 +28,11 @@ export class ChatService {
   }
 
   /**
-   * 消息模拟
-   * @param msg
-   */
-  mockNewMsg(msg) {
-    setTimeout(() => {
-      this.events.publish(
-        'chat:received',
-        {
-          messageId: Date.now().toString(),
-          userId: '210000198410281948',
-          userName: 'Hancock',
-          userImgUrl: './assets/to-user.jpg',
-          toUserId: '140000198202211138',
-          time: Date.now(),
-          message: msg.message,
-          status: 'success',
-        },
-        Date.now()
-      );
-    }, Math.random() * 1800);
-  }
-
-  /**
-   *  模拟消息列表
+   * @mock 
+   * 模拟消息列表
    */
   getMsgList(): Observable<ChatMessage[]> {
     const msgListUrl = './assets/mock/msg-list.json';
-
     return this.http.get<any>(msgListUrl).pipe(map(response => response.array));
-  }
-
-  /**
-   * 模拟消息发送
-   * @param msg
-   */
-  sendMsg(msg: ChatMessage) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(msg);
-      }, Math.random() * 1000);
-    }).then(() => {
-      this.mockNewMsg(msg);
-    });
   }
 }
