@@ -130,18 +130,6 @@ export class Chat {
   }
 
   /**
-   * @name getMsg
-   * @returns {Promise<ChatMessage[]>}
-   */
-  getMsg() {
-    // Get mock message list
-    return this.chatService.getMsgList().subscribe(res => {
-      this.msgList = res;
-      this.scrollToBottom();
-    });
-  }
-
-  /**
    * 发送消息
    * @name sendMsg
    */
@@ -158,7 +146,7 @@ export class Chat {
       create_at: Date.now(),
       has_read: true,
     });
-    // Display message
+    
     const id = Date.now().toString();
     const newMsg: ChatMessage = {
       messageId: Date.now().toString(),

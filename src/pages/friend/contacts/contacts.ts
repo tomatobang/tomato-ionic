@@ -6,7 +6,7 @@ import {
   ElementRef,
   Renderer2,
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { fromEvent } from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { Friendinfo } from './providers/contact-friendinfo.model';
 import { GlobalService } from '@providers/global.service';
 import { CacheService } from '@providers/cache.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @IonicPage()
 @Component({
@@ -46,12 +47,14 @@ export class ContactsPage implements OnInit {
   ngOnInit() {
     this.getAgreedUserFriend();
 
-    const event$ = Observable.fromEvent(
+    const event$ = fromEvent(
       this.myScrollContainer._scrollContent.nativeElement,
       'scroll'
-    )
-      .debounceTime(100)
-      .distinctUntilChanged();
+    ).pipe(
+      debounceTime(100),
+      distinctUntilChanged()
+    );
+
     event$.subscribe(event => {
       if (this.navChars) {
         const ctSrollTop = this.myScrollContainer._scrollContent.nativeElement

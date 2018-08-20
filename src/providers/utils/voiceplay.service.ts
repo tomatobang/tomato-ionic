@@ -173,14 +173,10 @@ export class VoicePlayService {
       this.mediaRec.stop();
       this.mediaRec.release();
     }
-    function getPhoneGapPath() {
-      let loc = window.location.pathname;
-      loc = loc.substr(0, loc.length - 9);
-      return 'file://' + loc;
-    }
+
     let applicationDirectory = '';
     if (this.platform.is('android')) {
-      applicationDirectory = getPhoneGapPath();
+      applicationDirectory = this.getPhoneGapPath();
     }
     const path = applicationDirectory + file_url;
     this.mediaRec = this.media.create(path);
@@ -208,6 +204,12 @@ export class VoicePlayService {
       this.mediaRec.play();
     }
     this.isPlaying = true;
+  }
+
+  getPhoneGapPath() {
+    let loc = window.location.pathname;
+    loc = loc.substr(0, loc.length - 9);
+    return 'file://' + loc;
   }
 
   resume_local_voice() {

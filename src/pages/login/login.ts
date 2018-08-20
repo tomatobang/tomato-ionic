@@ -12,6 +12,11 @@ import { JPushService } from '@providers/utils/jpush.service';
 import { InfoService } from '@providers/info.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
 
+import { Store } from '@ngrx/store';
+import { LoginActionTypes, Login } from './ngrx/login.actions';
+
+import { State } from './ngrx/login.reducer';
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -29,11 +34,10 @@ export class LoginPage implements OnInit {
     'assets/imgs/background/background-2.jpg',
     'assets/imgs/background/background-3.jpg',
     'assets/imgs/background/background-4.jpg',
-    'assets/imgs/background/background-5.jpg'
+    'assets/imgs/background/background-5.jpg',
   ];
 
   constructor(
-    public service: OnlineUserService,
     public globalservice: GlobalService,
     public rebirthProvider: RebirthHttpProvider,
     public navCtrl: NavController,
@@ -41,7 +45,8 @@ export class LoginPage implements OnInit {
     public jPushService: JPushService,
     public navParams: NavParams,
     public info: InfoService,
-    public chatIO: ChatIOService
+    public chatIO: ChatIOService,
+    public store$: Store<State>
   ) {
     this.user.username = navParams.get('username');
     this.user.password = navParams.get('password');
@@ -53,33 +58,45 @@ export class LoginPage implements OnInit {
       this.user.username = this.globalservice.userinfo.username;
       this.user.password = this.globalservice.userinfo.password;
     }
+
+    this.store$
+      .select(state => {
+        const loginState = state['login']['login'];
+        switch (loginState.actionType) {
+          case LoginActionTypes.LOGINSUCCESS:
+            this.loginSuccess(loginState);
+            break;
+          case LoginActionTypes.LOGINFAILED:
+            this.loginFailed(loginState);
+            break;
+          default:
+        }
+        return state;
+      });
   }
 
   public doLogin(): void {
     console.log('doLogin', this.user);
-    this.service.login(this.user).subscribe(data => {
-      const retOBJ = data;
-      const status = retOBJ.status;
-      let token = '';
-      let userinfo = this.user;
-      if (status === 'success') {
-        token = retOBJ.token;
-        userinfo = retOBJ.userinfo;
-      } else {
-        this.error = '登陆出错！';
-        return;
-      }
-      console.log(data);
-      this.globalservice.token = token;
-      this.globalservice.userinfo = JSON.stringify(userinfo);
-      this.rebirthProvider.headers({ Authorization: token }, true);
-      this.jPushService.init(this.user.username);
-      this.chatIO.login(this.globalservice.userinfo._id);
-      this.info.init();
-      this.navCtrl.setRoot('TabsPage', {
-        animate: true,
-      });
+    this.store$.dispatch(new Login(this.user));
+  }
+
+  loginSuccess(retOBJ) {
+    let token = '';
+    token = retOBJ.token;
+    const userinfo = retOBJ.userinfo;
+    this.globalservice.token = token;
+    this.globalservice.userinfo = JSON.stringify(userinfo);
+    this.rebirthProvider.headers({ Authorization: token }, true);
+    this.jPushService.init(this.user.username);
+    this.chatIO.login(this.globalservice.userinfo._id);
+    this.info.init();
+    this.navCtrl.setRoot('TabsPage', {
+      animate: true,
     });
+  }
+
+  loginFailed(retOBJ) {
+    this.error = retOBJ.loginTip;
   }
 
   public doLogout(): void {

@@ -1,16 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  OnDestroy,
-  Input,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, Input } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Gesture } from 'ionic-angular/gestures/gesture';
 import { Media, MediaObject } from '@ionic-native/media';
-import {
-  FileTransfer,
-} from '@ionic-native/file-transfer';
+import { FileTransfer } from '@ionic-native/file-transfer';
 import { QiniuUploadService } from '@providers/qiniu.upload.service';
 
 declare let window;
@@ -22,21 +14,21 @@ declare let window;
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
   couldPlay = false;
-  temp_file_path: string;
-
-  _postParams: any;
+  uploadMediaFilepath: string;
   uploadUrl: string;
   isUploading = false;
   uploadProgress = 0;
 
-  el: HTMLElement;
+  element: HTMLElement;
   pressGesture: Gesture;
   isStartRecord = false;
   recordWait = false;
   isStartedVoice = false;
   mediaRec: MediaObject;
-  src = '';
-  path = '';
+  // media src
+  mediaSrc = '';
+  // media path
+  mediaPath = '';
   voiceDuration = '0';
   voice = {
     ImgUrl: './assets/voice/recog000.png',
@@ -44,6 +36,8 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
       this.ImgUrl = './assets/voice/recog000.png';
     },
   };
+
+  _postParams: any;
 
   @Input()
   get voiceUploadUrl(): any {
@@ -69,154 +63,161 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     private qiniu: QiniuUploadService
   ) {
     if (this.platform.is('ios')) {
-      this.path = window.cordova ? window.cordova.file.documentsDirectory : '';
-      this.src = 'cordovaIMVoice.m4a';
+      this.mediaPath = window.cordova
+        ? window.cordova.file.documentsDirectory
+        : '';
+      this.mediaSrc = 'cordovaIMVoice.m4a';
     } else {
-      this.path = window.cordova
+      this.mediaPath = window.cordova
         ? window.cordova.file.externalApplicationStorageDirectory
         : '';
-      this.src = 'cordovaIMVoice.mp3';
+      this.mediaSrc = 'cordovaIMVoice.mp3';
     }
-    this.el = elRef.nativeElement;
+    this.element = elRef.nativeElement;
   }
 
   ngOnInit() {
-    this.pressGesture = new Gesture(this.el, { time: 200 });
+    this.pressGesture = new Gesture(this.element, { time: 200 });
     this.pressGesture.listen();
 
     this.pressGesture.on('press', e => {
       console.log('press');
       this.onHold();
     });
-    this.el.onpointerleave = () => {
+    this.element.onpointerleave = () => {
       console.log('onpointerleave');
       this.onRecordEnd();
     };
 
-    this.el.ontouchend = () => {
+    this.element.ontouchend = () => {
       console.log('ontouchend');
       this.onRecordEnd();
     };
-    this.el.ontouchcancel = () => {
+    this.element.ontouchcancel = () => {
       console.log('ontouchcancel');
       this.onRecordEnd();
     };
-  }
-
-  onRecordEnd() {
-    this.recordWait = true;
-    this.voice.reset();
-    this.onRelease();
   }
 
   ngOnDestroy() {
     this.pressGesture.destroy();
   }
 
+  /**
+   * 录音结束
+   */
+  onRecordEnd() {
+    this.recordWait = true;
+    this.voice.reset();
+    this.onRelease();
+  }
+
+  /**
+   * 录音开始
+   */
   onHold() {
     this.isStartRecord = true;
     this.recordWait = false;
     try {
       // 初始化录音
-      this.startRec();
+      this.initRecordMedia();
       // 开始录音
       this.mediaRec.startRecord();
       // 开始标识置 true
       this.isStartedVoice = true;
-      return false;
     } catch (err) {
       console.log(err);
     }
   }
 
-  startRec() {
-    try {
-      if (this.mediaRec) {
-        this.mediaRec.release();
-      }
-      // 模拟声音大小变化
-      const voicechange = setInterval(() => {
-        if (!this.recordWait) {
-          const i = Math.round(Math.random() * 9);
-          this.voice.ImgUrl = 'assets/voice/recog00' + i + '.png';
-        } else {
-          clearInterval(voicechange);
-        }
-      }, 400);
-      this.mediaRec = this.media.create(this.getNewMediaURL(this.src));
-      this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
-      this.mediaRec.onSuccess.subscribe(() =>
-        console.log('audio is successful')
-      );
-      this.mediaRec.onError.subscribe(error => console.log('Error!', error));
-    } catch (err) {
-      console.log(err);
+  initRecordMedia() {
+    if (this.mediaRec) {
+      this.mediaRec.release();
     }
+    this.mediaRec = this.media.create(this.getNewMediaURL(this.mediaSrc));
+    this.mediaRec.onStatusUpdate.subscribe(status => console.log(status));
+    this.mediaRec.onSuccess.subscribe(() => console.log('audio is successful'));
+    this.mediaRec.onError.subscribe(error => console.log('Error!', error));
+
+    this.startVoiceRecordAnimate();
+  }
+
+  /**
+   * 录音动画
+   */
+  startVoiceRecordAnimate() {
+    const voicechange = setInterval(() => {
+      if (!this.recordWait) {
+        const i = Math.round(Math.random() * 9);
+        this.voice.ImgUrl = 'assets/voice/recog00' + i + '.png';
+      } else {
+        clearInterval(voicechange);
+      }
+    }, 400);
   }
 
   onRelease() {
-    try {
-      if (!this.isStartedVoice) {
-        return;
-      }
-      this.isStartedVoice = false;
-      this.recordWait = true;
-      setTimeout(() => {
-        this.isStartRecord = false;
-      }, 1000);
-      if (this.mediaRec) {
-        this.mediaRec.stopRecord();
-        this.mediaRec.release();
-      }
-      this.mediaRec = this.media.create(this.getMediaURL(this.src));
-      this.mediaRec.onSuccess.subscribe(() =>
-        console.log('touchend():Audio Success')
-      );
-      this.mediaRec.onError.subscribe(error =>
-        console.log('touchend():Audio Error:', error)
-      );
-      this.mediaRec.play();
-      this.mediaRec.stop();
-
-      let counter = 0;
-      const timerDur = setInterval(() => {
-        counter = counter + 100;
-        if (counter > 2000) {
-          clearInterval(timerDur);
-        }
-        const dur = this.mediaRec.getDuration();
-        if (dur > 0) {
-          clearInterval(timerDur);
-          let tmpPath = this.getMediaURL(this.src);
-          if (this.platform.is('ios')) {
-            tmpPath = this.path + this.src;
-          }
-          this.temp_file_path = tmpPath.replace('file://', '');
-          this.couldPlay = true;
-          this.voiceDuration = dur.toFixed(1);
-          if (this.mediaRec) {
-            this.mediaRec.release();
-          }
-        }
-      }, 100);
-      return false;
-    } catch (e) {
-      console.log(e);
+    if (!this.isStartedVoice) {
+      return;
     }
+    this.isStartedVoice = false;
+    this.recordWait = true;
+    setTimeout(() => {
+      this.isStartRecord = false;
+    }, 1000);
+    if (this.mediaRec) {
+      this.mediaRec.stopRecord();
+      this.mediaRec.release();
+    }
+    this.mediaRec = this.media.create(this.getMediaPlayURL(this.mediaSrc));
+    this.mediaRec.onSuccess.subscribe(() =>
+      console.log('touchend():Audio Success')
+    );
+    this.mediaRec.onError.subscribe(error =>
+      console.log('touchend():Audio Error:', error)
+    );
+    this.mediaRec.play();
+    this.mediaRec.stop();
+
+    let counter = 0;
+    const timerDur = setInterval(() => {
+      counter = counter + 100;
+      if (counter > 2000) {
+        clearInterval(timerDur);
+      }
+      const dur = this.mediaRec.getDuration();
+      if (dur > 0) {
+        clearInterval(timerDur);
+        let tmpPath = this.getMediaPlayURL(this.mediaSrc);
+        if (this.platform.is('ios')) {
+          tmpPath = this.mediaPath + this.mediaSrc;
+        }
+        this.uploadMediaFilepath = tmpPath.replace('file://', '');
+        this.voiceDuration = dur.toFixed(1);
+        this.couldPlay = true;
+        if (this.mediaRec) {
+          this.mediaRec.release();
+        }
+      }
+    }, 100);
   }
 
-  play(voiFile) {
+  /**
+   * 播放录音文件
+   * @param filepath 媒体路径
+   */
+  play(filepath) {
     if (this.mediaRec) {
       this.mediaRec.stop();
       this.mediaRec.release();
     }
-    if (!voiFile) {
-      voiFile = this.getNewMediaURL(this.src);
+    if (!filepath) {
+      filepath = this.getNewMediaURL(this.mediaSrc);
     }
     if (this.platform.is('ios')) {
-      voiFile = voiFile.replace('file://', '');
+      filepath = filepath.replace('file://', '');
     }
-    this.mediaRec = this.media.create(voiFile);
+    this.mediaRec = this.media.create(filepath);
 
     this.mediaRec.onSuccess.subscribe(() => {
       console.log('play():Audio Success');
@@ -226,38 +227,48 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     });
 
     this.mediaRec.play();
-    return false;
   }
 
-  getNewMediaURL(s) {
+  /**
+   * 获取新媒体路径
+   * @param mediaSrc
+   */
+  getNewMediaURL(mediaSrc) {
     if (this.platform.is('android')) {
-      return this.path + s;
+      return this.mediaPath + mediaSrc;
+    } else {
+      // ios
+      return 'documents://' + mediaSrc;
     }
-    return 'documents://' + s;
   }
 
-  getMediaURL(s) {
+  getMediaPlayURL(mediaSrc) {
     if (this.platform.is('android')) {
-      return this.path + s;
+      return this.mediaPath + mediaSrc;
+    } else {
+      // ios
+      return (this.mediaPath + mediaSrc).replace('file://', '');
     }
-    return (this.path + s).replace('file://', '');
   }
 
+  /**
+   * 上传录音文件至七牛
+   */
   uploadVoiceFile() {
     return new Promise((resolve, reject) => {
       this.isUploading = true;
-      if (!this.temp_file_path) {
+      if (!this.uploadMediaFilepath) {
         reject('没有录音!');
       }
-      const fileName = this.temp_file_path.substr(
-        this.temp_file_path.lastIndexOf('/') + 1
+      const fileName = this.uploadMediaFilepath.substr(
+        this.uploadMediaFilepath.lastIndexOf('/') + 1
       );
 
       this.qiniu.initQiniu().subscribe(data => {
         if (data) {
           this.qiniu
             .uploadLocFile(
-              this.temp_file_path,
+              this.uploadMediaFilepath,
               this._postParams.userid +
                 '_' +
                 this._postParams.taskid +

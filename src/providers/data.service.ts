@@ -21,12 +21,10 @@
     }
  *
  */
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import * as querystring from 'querystring';
 import { baseUrl } from '../config';
 import { CacheService } from './cache.service';
@@ -40,11 +38,10 @@ export * from './data/user_friend';
 export class DataService {
   baseUrl: string = baseUrl;
   headers: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/x-www-form-urlencoded',
   });
 
-  constructor(public http: HttpClient, public cacheService: CacheService) {
-  }
+  constructor(public http: HttpClient, public cacheService: CacheService) {}
 
   public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
   public get TasksMonitor(): Observable<any> {
@@ -64,7 +61,7 @@ export class DataService {
     this.tomatoesSubject.next(obj);
   }
 
-  amapHttpUtil(url: string, options: Object): Observable<any> {
+  amapHttpUtil(url: string, options: Object): Observable<Object> {
     const params = new HttpParams({
       fromString: querystring.stringify(options),
     });

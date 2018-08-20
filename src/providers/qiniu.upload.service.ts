@@ -56,37 +56,39 @@ export class QiniuUploadService {
           name: name,
         },
         data => {
-          console.log('qiniu,uploadLocFile ret succeed:', data);
+          console.log('qiniu uploadLocFile succeed:', data);
           observer.next({
             data: true,
             value: data,
           });
           observer.complete();
-          // debugger;
         },
         progress => {
-          // console.log('qiniu,uploadLocFile ret progress:', progress);
+          // console.log('qiniu uploadLocFile progress:', progress);
           observer.next({
             data: false,
             value: progress,
           });
-          // debugger;
         },
         err => {
           console.log('qiniu,uploadLocFile ret err:', err);
           observer.error(err);
-          // debugger;
         }
       );
     });
   }
 
+  /**
+   * 七牛初始化
+   */
   initQiniu(): Observable<any> {
     return Observable.create(observer => {
       if (this._qiuniutokeninfo) {
         const timespan = new Date().getTime() - this._qiuniutokeninfo.getTime();
         const timespan_milliseconds = timespan % (3600 * 1000);
-        const timespan_minutes = Math.floor(timespan_milliseconds / (60 * 1000));
+        const timespan_minutes = Math.floor(
+          timespan_milliseconds / (60 * 1000)
+        );
         if (timespan_minutes < 115) {
           observer.next(true);
         } else {
@@ -102,16 +104,13 @@ export class QiniuUploadService {
     this.getUploadToken().subscribe(
       data => {
         console.log('qiniutoken:', data);
-        const qiuniutokeninfo = {
-          qiniutoken: data.uploadToken,
-          dateTime: new Date().getTime(),
-        };
         this._qiuniutokeninfo = data.uploadToken;
         this.init(data.uploadToken).subscribe(d => {
           observer.next(true);
         });
       },
       err => {
+        console.log('qiniu init error:', err);
         observer.error(false);
       }
     );

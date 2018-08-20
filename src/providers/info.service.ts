@@ -1,3 +1,7 @@
+/**
+ * 系统聊天消息中转
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 

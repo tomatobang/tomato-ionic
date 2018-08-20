@@ -71,18 +71,7 @@ export class FriendPage {
     public navCtrl: NavController,
     public chatIO: ChatIOService,
     public globalservice: GlobalService
-  ) {
-    // this.testChatIO();
-  }
-
-  testChatIO() {
-    const zhangs = '5b0f712e24b71d2cc029bf11';
-    const lisi = '5b0f714924b71d2cc029bf12';
-    this.chatIO.send_friend_request(lisi, zhangs);
-    this.chatIO.requestAddFriendSuccess().subscribe(data => {
-      console.log('requestAddFriendSuccess', data);
-    });
-  }
+  ) {}
 
   /**
    * 跳转至消息页

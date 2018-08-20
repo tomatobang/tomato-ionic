@@ -1,6 +1,5 @@
 /**
- * App 更新服务( Android )
- * TODO: 启用
+ * App 更新服务
  */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -110,13 +109,13 @@ export class UpdateService {
       buttons: [
         {
           text: '以后再说',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           },
         },
         {
           text: '立即升级',
-          handler: data => {
+          handler: () => {
             this.downloadApp(this.platform.is('android'), downloadUrl);
           },
         },

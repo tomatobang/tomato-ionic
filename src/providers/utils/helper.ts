@@ -13,8 +13,6 @@ declare var window;
 export class Helper {
   constructor(public platform: Platform) {}
 
-  init() {}
-
   getBasePath() {
     let basePath;
     if (this.platform.is('ios')) {
