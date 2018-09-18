@@ -24,6 +24,8 @@ import { MyAppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
+import { JPush } from '@jiguang-ionic/jpush';
+
 @NgModule({
   declarations: [MyAppComponent],
   imports: [
@@ -72,6 +74,7 @@ import { StoreModule } from '@ngrx/store';
       provide: ErrorHandler,
       useClass: IonicErrorHandler,
     },
+    JPush,
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],
 })
