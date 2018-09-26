@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  App,
-  Platform,
-  ToastController,
-  Events,
-  IonicApp,
-} from 'ionic-angular';
+import { App, Platform, ToastController, Events, IonicApp } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
-// TODO:启用极光推送
-// import { JPushService } from '@providers/utils/jpush.service';
+import { JPush } from '@jiguang-ionic/jpush';
 import { GlobalService } from '@providers/global.service';
 import { InfoService } from '@providers/info.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
@@ -29,20 +22,20 @@ export class MyAppComponent implements OnInit {
   backButtonPressed = false;
 
   constructor(
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    jPush: JPush,
+    updateService: UpdateService,
+    backgroundMode: BackgroundMode,
+    events: Events,
     public app: App,
     public ionicApp: IonicApp,
     public platform: Platform,
-    statusBar: StatusBar,
-    splashScreen: SplashScreen,
-    // jPushService: JPushService,
-    updateService: UpdateService,
     public rebirthProvider: RebirthHttpProvider,
-    protected backgroundMode: BackgroundMode,
     public global: GlobalService,
     public native: NativeService,
     public info: InfoService,
     public chatIO: ChatIOService,
-    protected events: Events,
     public userService: OnlineUserService,
     public toastCtrl: ToastController
   ) {
@@ -50,23 +43,19 @@ export class MyAppComponent implements OnInit {
       statusBar.overlaysWebView(false);
       statusBar.styleDefault();
       statusBar.backgroundColorByHexString('#f8f8f8');
-
-      // 隐藏 splash screen
       splashScreen.hide();
 
-      // 检查更新
       updateService.checkUpdate();
       native.initNativeService();
-
       this.registerBackButtonAction();
-
-      // 开启后台运行模式
-      // backgroundMode.enable();
-
-      // 极光推送初始化
-      // if (global.userinfo){
-      //   jPushService.init(global.userinfo.username);
-      // }
+      if (global.userinfo) {
+        jPush.init();
+        jPush.setAlias({
+          sequence: new Date().getTime(),
+          alias: global.userinfo.username,
+        });
+      }
+      backgroundMode.disable();
     });
 
     events.subscribe('qrScanner:show', () => {
@@ -83,10 +72,7 @@ export class MyAppComponent implements OnInit {
       this.rootPage = 'GuidePage';
     } else {
       if (this.global.userinfo) {
-        this.rebirthProvider.headers(
-          { Authorization: this.global.token },
-          true
-        );
+        this.rebirthProvider.headers({ Authorization: this.global.token }, true);
         this.rebirthProvider.addResponseErrorInterceptor(err => {
           console.error('请求错误！', err);
         });
@@ -118,7 +104,7 @@ export class MyAppComponent implements OnInit {
   }
 
   /**
-   * 物理键返回事件处理
+   * 物理键返回事件
    */
   registerBackButtonAction() {
     this.platform.registerBackButtonAction(() => {
