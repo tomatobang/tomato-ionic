@@ -1,20 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  NavController,
-  ActionSheetController,
-  IonicPage,
-  App,
-  Platform,
-  ModalController,
-} from 'ionic-angular';
+import { NavController, ActionSheetController, IonicPage, App, Platform, ModalController } from 'ionic-angular';
 import { GlobalService } from '@providers/global.service';
-import { JPushService } from '@providers/utils/jpush.service';
+import { JPush } from '@jiguang-ionic/jpush';
 import { NativeService } from '@providers/utils/native.service';
 import { CacheService } from '@providers/cache.service';
-import {
-  ChatIOService,
-  TomatoIOService,
-} from '@providers/utils/socket.io.service';
+import { ChatIOService, TomatoIOService } from '@providers/utils/socket.io.service';
 import { OnlineUserService } from '@providers/data.service';
 
 @IonicPage()
@@ -32,7 +22,7 @@ export class MinePage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public globalservice: GlobalService,
-    public jPushService: JPushService,
+    public jPushService: JPush,
     public actionSheetCtrl: ActionSheetController,
     public native: NativeService,
     public platform: Platform,
@@ -54,15 +44,9 @@ export class MinePage implements OnInit {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
         if (readySource === 'cordova') {
-          this.native
-            .downloadHeadImg(
-              this.userid,
-              false,
-              this.globalservice.qiniuDomain + this.globalservice.userinfo.img
-            )
-            .then(url => {
-              this.headImg = `${url}?${new Date().getTime()}`;
-            });
+          this.native.downloadHeadImg(this.userid, false, this.globalservice.qiniuDomain + this.globalservice.userinfo.img).then(url => {
+            this.headImg = `${url}?${new Date().getTime()}`;
+          });
         }
       });
     }
@@ -90,7 +74,7 @@ export class MinePage implements OnInit {
           this.tomatoIO.logout(this.globalservice.userinfo._id);
           this.globalservice.userinfo = '';
           this.globalservice.token = '';
-          this.jPushService.clearAlias();
+          this.jPushService.deleteAlias(this.globalservice.jpushAlias);
           this.cache.clearCache();
         }
       );

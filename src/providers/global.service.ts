@@ -18,6 +18,7 @@ export class GlobalService {
   private _isFirstTimeOpen: boolean;
   private _token: string;
   private _userinfo: any;
+  private _jpushAlias: any;
   private _countdown = 0;
   private _resttime = 0;
   private _isAlwaysLight = false;
@@ -68,6 +69,42 @@ export class GlobalService {
     this._token = value;
     localStorage.setItem('token', value);
     tokenSubject.next(value);
+  }
+  
+
+  get jpushAlias() {
+    if (this._jpushAlias) {
+      return this._jpushAlias;
+    } else {
+      const jpushaliasStr = localStorage.getItem('jpushalias');
+      if (jpushaliasStr) {
+        try {
+          this._jpushAlias = JSON.parse(jpushaliasStr);
+          return this._jpushAlias;
+        } catch (error) {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    }
+  }
+
+  set jpushAlias(value: any) {
+    if (typeof value === 'string') {
+      if (value === '') {
+        this._jpushAlias = null;
+        localStorage.removeItem('jpushalias');
+      } else {
+        this._jpushAlias = JSON.parse(value);
+        localStorage.setItem('jpushalias', value);
+      }
+    } else if (typeof value === 'object') {
+      this._jpushAlias = value;
+      localStorage.setItem('jpushalias', JSON.stringify(value));
+    }
+
+    subject.next(value);
   }
 
   get userinfo() {

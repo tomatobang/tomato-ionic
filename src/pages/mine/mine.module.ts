@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule, IonicModule } from 'ionic-angular';
 import { MinePage } from './mine';
 
-import { JPushService } from '@providers/utils/jpush.service';
 import { NativeService } from '@providers/utils/native.service';
 import { OnlineUserService } from '@providers/data.service';
 import { FileTransfer } from '@ionic-native/file-transfer';
@@ -18,7 +17,6 @@ import { Helper } from '@providers/utils/helper';
     File,
     Helper,
     NativeService,
-    JPushService,
     OnlineUserService
   ],
   exports: [MinePage]

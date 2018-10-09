@@ -1,9 +1,9 @@
 import { LoginActionTypes, LoginActionsUnion } from './login.actions';
+// import { createSelector } from 'reselect';
 
 export interface State {
   actionType: string;
   token: string;
-  isLoginSuccess: boolean;
   loginTip: string;
   userinfo: {
     _id: string;
@@ -20,7 +20,6 @@ export interface State {
 const loginInit = {
   actionType: 'init',
   token: '',
-  isLoginSuccess: false,
   loginTip: '',
   userinfo: {
     _id: '',
@@ -34,10 +33,7 @@ const loginInit = {
   loginRemember: false,
 };
 
-export function loginReducer(
-  state: State = loginInit,
-  action: LoginActionsUnion
-): State {
+export function loginReducer(state: State = loginInit, action: LoginActionsUnion): State {
   if (action.type) {
     state.actionType = action.type;
   }
@@ -58,3 +54,5 @@ export function loginReducer(
 
   return state;
 }
+
+// export const getUserInfo = (state: State) => state.actionType;

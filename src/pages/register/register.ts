@@ -9,12 +9,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OnlineUserService, User } from '@providers/data.service';
 import { GlobalService } from '@providers/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { JPushService } from '@providers/utils/jpush.service';
 
 @IonicPage()
 @Component({
   selector: 'register',
-  providers: [OnlineUserService, GlobalService, JPushService],
+  providers: [OnlineUserService, GlobalService],
   templateUrl: 'register.html',
 })
 export class RegisterPage implements OnInit {
@@ -58,7 +57,6 @@ export class RegisterPage implements OnInit {
     public rebirthProvider: RebirthHttpProvider,
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public jPushService: JPushService,
     public navParams: NavParams
   ) {
     this.user.username = '';
