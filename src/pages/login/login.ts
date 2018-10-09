@@ -65,7 +65,7 @@ export class LoginPage implements OnInit {
         default:
       }
       return state;
-    });
+    }).subscribe();
   }
 
   public doLogin(): void {
