@@ -70,7 +70,6 @@ export class GlobalService {
     localStorage.setItem('token', value);
     tokenSubject.next(value);
   }
-  
 
   get jpushAlias() {
     if (this._jpushAlias) {

@@ -53,19 +53,21 @@ export class LoginPage implements OnInit {
       this.user.username = this.globalservice.userinfo.username;
       this.user.password = this.globalservice.userinfo.password;
     }
-    this.store$.select(state => {
-      const loginState = state['login']['login'];
-      switch (loginState.actionType) {
-        case LoginActionTypes.LOGINSUCCESS:
-          this.loginSuccess(loginState);
-          break;
-        case LoginActionTypes.LOGINFAILED:
-          this.loginFailed(loginState);
-          break;
-        default:
-      }
-      return state;
-    }).subscribe();
+    this.store$
+      .select(state => {
+        const loginState = state['login']['login'];
+        switch (loginState.actionType) {
+          case LoginActionTypes.LOGINSUCCESS:
+            this.loginSuccess(loginState);
+            break;
+          case LoginActionTypes.LOGINFAILED:
+            this.loginFailed(loginState);
+            break;
+          default:
+        }
+        return state;
+      })
+      .subscribe(d => {});
   }
 
   public doLogin(): void {
