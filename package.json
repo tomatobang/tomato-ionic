@@ -1,6 +1,7 @@
 {
   "name": "tomatobang",
   "author": "yipeng",
+  "version": "0.3.0",
   "homepage": "http://www.tomatobang.com/",
   "private": true,
   "scripts": {
