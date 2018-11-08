@@ -9,7 +9,6 @@ import { InfoService } from '@providers/info.service';
 import { GlobalService } from '@providers/global.service';
 import { CacheService } from '@providers/cache.service';
 import { QiniuUploadService } from '@providers/qiniu.upload.service';
-import { JPushService } from '@providers/utils/jpush.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { MessageService } from '@providers/data/message/message.service';
 import { OnlineUserService } from '@providers/data.service';
@@ -30,7 +29,6 @@ import { UserFriendService } from '@providers/data/user_friend';
   providers: [
     NativeService,
     Helper,
-    JPushService,
     UpdateService,
     GlobalService,
     QiniuUploadService,

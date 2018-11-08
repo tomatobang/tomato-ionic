@@ -90,5 +90,4 @@ org/
 io/
 barcodescanner/
 
-package-lock.json
 simulation/

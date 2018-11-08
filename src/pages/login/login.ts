@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  NavController,
-  IonicPage,
-  ToastController,
-  NavParams,
-} from 'ionic-angular';
+import { NavController, IonicPage, ToastController, NavParams } from 'ionic-angular';
 import { OnlineUserService, User } from '@providers/data.service';
 import { GlobalService } from '@providers/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { JPushService } from '@providers/utils/jpush.service';
+import { JPush } from '@jiguang-ionic/jpush';
 import { InfoService } from '@providers/info.service';
 import { ChatIOService } from '@providers/utils/socket.io.service';
 
@@ -20,7 +15,7 @@ import { State } from './ngrx/login.reducer';
 @IonicPage()
 @Component({
   selector: 'page-login',
-  providers: [OnlineUserService, GlobalService, JPushService],
+  providers: [OnlineUserService, GlobalService, JPush],
   templateUrl: 'login.html',
 })
 export class LoginPage implements OnInit {
@@ -42,7 +37,7 @@ export class LoginPage implements OnInit {
     public rebirthProvider: RebirthHttpProvider,
     public navCtrl: NavController,
     private toastCtrl: ToastController,
-    public jPushService: JPushService,
+    public jPushService: JPush,
     public navParams: NavParams,
     public info: InfoService,
     public chatIO: ChatIOService,
@@ -58,7 +53,6 @@ export class LoginPage implements OnInit {
       this.user.username = this.globalservice.userinfo.username;
       this.user.password = this.globalservice.userinfo.password;
     }
-
     this.store$
       .select(state => {
         const loginState = state['login']['login'];
@@ -72,7 +66,8 @@ export class LoginPage implements OnInit {
           default:
         }
         return state;
-      });
+      })
+      .subscribe(d => {});
   }
 
   public doLogin(): void {
@@ -87,7 +82,14 @@ export class LoginPage implements OnInit {
     this.globalservice.token = token;
     this.globalservice.userinfo = JSON.stringify(userinfo);
     this.rebirthProvider.headers({ Authorization: token }, true);
-    this.jPushService.init(this.user.username);
+    const jpushAlias = {
+      sequence: Math.random(),
+      alias: this.user.username,
+    };
+    this.globalservice.jpushAlias = JSON.stringify(jpushAlias);
+    this.jPushService.init().then(v => {
+      this.jPushService.setAlias(jpushAlias);
+    });
     this.chatIO.login(this.globalservice.userinfo._id);
     this.info.init();
     this.navCtrl.setRoot('TabsPage', {

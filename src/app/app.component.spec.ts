@@ -1,5 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
-import { IonicModule, Platform } from 'ionic-angular';
+import { IonicModule, Platform, IonicApp } from 'ionic-angular';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,10 +21,13 @@ import { Insomnia } from '@ionic-native/insomnia';
 import { Network } from '@ionic-native/network';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
-import { RebirthStorageModule } from 'rebirth-storage';
+import { JPush } from '@jiguang-ionic/jpush';
 import { RebirthHttpModule } from 'rebirth-http';
+import { IonicStorageModule } from '@ionic/storage';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
+
+class IonicAppMock { }
 
 describe('MyApp Component', () => {
   let fixture;
@@ -37,6 +40,10 @@ describe('MyApp Component', () => {
         IonicModule.forRoot(MyAppComponent),
         HttpClientModule,
         RebirthHttpModule,
+        IonicStorageModule.forRoot({
+          name: '__tomatobangdb',
+          driverOrder: ['indexeddb', 'sqlite', 'websql'],
+        }),
         CoreModule,
         SharedModule,
       ],
@@ -50,6 +57,8 @@ describe('MyApp Component', () => {
         UpdateService,
         RebirthHttpProvider,
         BackgroundMode,
+        JPush,
+        { provide: IonicApp, useClass: IonicAppMock },
         { provide: StatusBar, useClass: StatusBarMock },
         { provide: SplashScreen, useClass: SplashScreenMock },
         { provide: Platform, useClass: PlatformMock },
@@ -59,14 +68,16 @@ describe('MyApp Component', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MyAppComponent);
+    // fixture.detectChanges();
     component = fixture.componentInstance;
+    
   });
 
   it('should be created', () => {
     expect(component instanceof MyAppComponent).toBe(true);
   });
 
-  it('should rootPage equals to GuidePage', () => {
-    expect(component.rootPage).toBe('LoginPage');
+  it('should rootPage equals to undefined', () => {
+    expect(component.rootPage).toBe(undefined);
   });
 });
