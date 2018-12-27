@@ -1,5 +1,5 @@
 /**
- * 百度定位服务
+ * baidu location service
  */
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
@@ -16,7 +16,6 @@ export class BaiduLocationService {
         if (this.plf.is('android')) {
           window.baidumap_location.getCurrentPosition(
             data => {
-              console.log('android location success');
               resolve({
                 code: 0,
                 message: '定位成功',
@@ -24,7 +23,6 @@ export class BaiduLocationService {
               });
             },
             err => {
-              console.log('android location error');
               reject({
                 code: -1,
                 message: '手机定位功能未开启(Android)',
@@ -34,7 +32,6 @@ export class BaiduLocationService {
         } else {
           this.ios_location(
             data => {
-              console.log('ios location success');
               resolve({
                 code: 0,
                 message: '定位成功',

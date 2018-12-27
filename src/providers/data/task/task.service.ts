@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Cacheable } from 'rebirth-storage';
 import {
-  RebirthHttp,
   RebirthHttpProvider,
   GET,
   POST,
@@ -16,7 +14,6 @@ import { baseUrl } from '../../../config';
 
 import { TaskService } from './abstract/task.abstract';
 import { Task } from './model/task.model';
-import { SearchResult } from './model/search-result.model';
 
 @Injectable()
 export class OnlineTaskService extends TaskService {
@@ -32,7 +29,6 @@ export class OnlineTaskService extends TaskService {
     return null;
   }
 
-  // @Cacheable({ pool: 'tasks' })
   @GET(baseUrl + 'api/task')
   getTasks(
     @Query('pageIndex') pageIndex = 1,

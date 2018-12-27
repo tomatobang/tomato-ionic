@@ -42,7 +42,6 @@ export class QiniuUploadService {
         err => {
           console.log('qiniu,init ret err:', err);
           observer.error(err);
-          // debugger;
         }
       );
     });
@@ -64,7 +63,6 @@ export class QiniuUploadService {
           observer.complete();
         },
         progress => {
-          // console.log('qiniu uploadLocFile progress:', progress);
           observer.next({
             data: false,
             value: progress,

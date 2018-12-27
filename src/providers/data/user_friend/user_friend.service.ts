@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-// import { Cacheable } from 'rebirth-storage';
 import {
   RebirthHttp,
   RebirthHttpProvider,
@@ -14,7 +13,6 @@ import {
 import { baseUrl } from '../../../config';
 
 import { UserFriend } from './model/user_friend.model';
-import { SearchResult } from './model/search-result.model';
 
 @Injectable()
 export class UserFriendService extends RebirthHttp {
@@ -25,7 +23,6 @@ export class UserFriendService extends RebirthHttp {
     super(http);
   }
 
-  // @Cacheable({ pool: 'user_friend' })
   @GET(baseUrl + 'api/user_friend')
   getFriends(
     @Query('state') state: number,

@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Cacheable } from 'rebirth-storage';
 import {
-  RebirthHttp,
   RebirthHttpProvider,
   GET,
   POST,
@@ -17,8 +15,6 @@ import { baseUrl } from '../../../config';
 
 import { TomatoService } from './abstract/tomato.abstract';
 import { Tomato } from './model/tomato.model';
-import { SearchResult } from './model/search-result.model';
-
 
 @Injectable()
 export class OnlineTomatoService extends TomatoService {
@@ -34,7 +30,6 @@ export class OnlineTomatoService extends TomatoService {
     return null;
   }
 
-  // @Cacheable({ pool: 'tomatos' })
   @GET(baseUrl + 'api/tomato')
   getTomatos(
     @Query('pageIndex') pageIndex = 1,
@@ -86,7 +81,6 @@ export class OnlineTomatoService extends TomatoService {
 export const TOMATO_SERVICE_PROVIDERS: Array<any> = [
   {
     provide: TomatoService,
-    // environment.deploy === 'github' ? GithubTomatoService : OnlineTomatoService
     useClass: OnlineTomatoService
   }
 ];
