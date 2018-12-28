@@ -3,7 +3,6 @@
     </div>
     <form [formGroup]="userForm" (ngSubmit)="doRegister()" novalidate class="form-horizontal tb-userform" role="form">
 
-        <!-- 表单项 -->
         <ion-list>
             <ion-item>
                 <ion-label color="primary">用户名</ion-label>
@@ -30,7 +29,6 @@
 
         </ion-list>
 
-        <!-- 本地验证 -->
         <div *ngIf="formErrors.username" class="text-danger">
             {{ formErrors.username }}
         </div>

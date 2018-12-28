@@ -22,7 +22,6 @@ export class GameService {
     private gridService: GridService,
     private store: Store<fromGame.GameState>
   ) {
-    // const store$ = store.select('game');
     this.currentScore = store.pipe(select(fromGame.getCurrentScore));
     this.highScore = store.pipe(select(fromGame.getHighcore));
     this.tiles = store.pipe(select(fromGame.getTitles));
@@ -30,7 +29,6 @@ export class GameService {
     this.won = store.pipe(select(fromGame.getWonState));
 
     this.game = store.pipe(select('game'));
-    // this.currentScore = store$.map(({ currentScore }: IGame) => currentScore);
   }
 
   newGame(): void {

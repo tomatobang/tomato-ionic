@@ -21,7 +21,7 @@
         <button ion-item (click)="changeBio()">
             <h2>签名</h2>
             <ion-note item-end>
-               {{ bio }} 
+               {{ bio | StringTruncate: 14 }} 
             </ion-note>
         </button>
         <button ion-item (click)="changeSex()">

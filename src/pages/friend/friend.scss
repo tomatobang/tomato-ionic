@@ -215,7 +215,5 @@ cmp-friend {
     }
     .rank.gray {
         @include ribbonize($gray, black);
-    } // .rank-list ion-item:last-child {
-    //     border-bottom: none !important;
-    // }
+    }
 }

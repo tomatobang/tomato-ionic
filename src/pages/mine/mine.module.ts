@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule, IonicModule } from 'ionic-angular';
+import { IonicPageModule } from 'ionic-angular';
 import { MinePage } from './mine';
 
 import { NativeService } from '@providers/utils/native.service';

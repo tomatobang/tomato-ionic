@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   IonicPage,
   ModalController,
-  ViewController,
   ActionSheetController,
   Platform,
 } from 'ionic-angular';
@@ -14,7 +13,6 @@ import { NativeService } from '@providers/utils/native.service';
 import { QiniuUploadService } from '@providers/qiniu.upload.service';
 import { GlobalService } from '@providers/global.service';
 
-declare var window;
 @IonicPage()
 @Component({
   selector: 'cmp-profile',
@@ -258,7 +256,6 @@ export class ProfilePage implements OnInit {
                             filename: filename,
                           })
                           .subscribe(ret => {
-                            // 这里需要更新缓存的用户信息
                             this.globalservice.userinfo.img = filename;
                             this.globalservice.userinfo = JSON.stringify(
                               this.globalservice.userinfo

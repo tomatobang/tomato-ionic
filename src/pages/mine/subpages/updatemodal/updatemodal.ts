@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 
-declare var window;
 @IonicPage()
 @Component({
   selector: 'cmp-updatemodal',

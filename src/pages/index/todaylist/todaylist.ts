@@ -29,7 +29,6 @@ export class TodaylistComponent implements OnInit {
   }
 
   ngOnInit() {
-    // 加载今日番茄钟
     this.loadTomatoes();
     this.initTomatoIO();
 
@@ -46,7 +45,6 @@ export class TodaylistComponent implements OnInit {
   }
 
   initTomatoIO() {
-    // 服务端新增
     this.tomatoIO.new_tomate_added().subscribe(t => {
       if (t && t !== 'null') {
         this.historyTomatoes.unshift(t);

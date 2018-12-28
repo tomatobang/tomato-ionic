@@ -84,7 +84,6 @@ export class RegisterPage implements OnInit {
         })
         .subscribe(data => {
           const ret: any = data;
-          // 邮箱可用
           if (ret.success) {
             this.service.register(this.user).subscribe(
               d => {

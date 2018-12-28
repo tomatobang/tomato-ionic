@@ -97,13 +97,11 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
         this.startTask(t, false);
       }
     });
-    // 其它终端开启
     this.tomatoIO.other_end_start_tomato().subscribe(t => {
       if (t && t !== 'null') {
         this.startTask(t, false);
       }
     });
-    // 其它终端中断
     this.tomatoIO.other_end_break_tomato().subscribe(data => {
       this.breakActiveTask(false);
     });
@@ -191,7 +189,6 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     }
     this.isResting = true;
     this.resttimeout = setTimeout(this.onRestTimeout.bind(this), 1000);
-    // 休息任务提醒
     this.restnotifyID += 1;
     this.localNotifications.schedule({
       id: this.restnotifyID,
