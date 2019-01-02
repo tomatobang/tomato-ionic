@@ -14,6 +14,7 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="APP_SECRET" value="55e81acb-3fc4-4286-bf50-ffe9a6040bde" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -133,4 +134,6 @@
         <variable name="APP_KEY" value="e4fad56dc2d40b58d77629f7" />
     </plugin>
     <engine name="android" spec="6.3.0" />
+    <plugin name="cordova-plugin-appcenter-analytics" spec="^0.2.2" />
+    <plugin name="cordova-plugin-appcenter-crashes" spec="^0.2.2" />
 </widget>

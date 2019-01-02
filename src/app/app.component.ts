@@ -12,6 +12,8 @@ import { ChatIOService } from '@providers/utils/socket.io.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { NativeService } from '@providers/utils/native.service';
 import { OnlineUserService } from '@providers/data.service';
+import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
+import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
 
 @Component({
   templateUrl: 'app.html',
@@ -37,7 +39,9 @@ export class MyAppComponent implements OnInit {
     public info: InfoService,
     public chatIO: ChatIOService,
     public userService: OnlineUserService,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private AppCenterCrashes: AppCenterCrashes,
+    private appCenterAnalytics: AppCenterAnalytics
   ) {
     platform.ready().then(() => {
       statusBar.overlaysWebView(false);
@@ -56,6 +60,16 @@ export class MyAppComponent implements OnInit {
         });
       }
       backgroundMode.disable();
+      this.AppCenterCrashes.setEnabled(true).then(() => {
+        this.AppCenterCrashes.lastSessionCrashReport().then(report => {
+          console.log('Crash report', report);
+        });
+      });
+      this.appCenterAnalytics.setEnabled(true).then(() => {
+        this.appCenterAnalytics.trackEvent('APP 打开', { TEST: global.userinfo ? global.userinfo.username : '无名氏' }).then(() => {
+          console.log('Custom event tracked');
+        });
+      });
     });
 
     events.subscribe('qrScanner:show', () => {
@@ -114,8 +128,8 @@ export class MyAppComponent implements OnInit {
         this.ionicApp._loadingPortal.getActive() ||
         this.ionicApp._overlayPortal.getActive();
       if (activePortal) {
-        activePortal.dismiss().catch(() => {});
-        activePortal.onDidDismiss(() => {});
+        activePortal.dismiss().catch(() => { });
+        activePortal.onDidDismiss(() => { });
         return;
       }
       const activeNav = this.app.getActiveNav();
