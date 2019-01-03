@@ -76,7 +76,7 @@ export class UpdateService {
 
   /**
    * get version number from server end
-   * @param OS OS type 
+   * @param OS OS type
    */
   getServerVersion(OS): Observable<any> {
     return new Observable(responseObserver => {

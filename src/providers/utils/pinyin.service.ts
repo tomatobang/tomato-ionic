@@ -12,7 +12,7 @@ export class PinyinService {
     }
     return null;
   }
-  
+
   checkForm(obj) {
     const result = [];
     const keys = Object.keys(obj);

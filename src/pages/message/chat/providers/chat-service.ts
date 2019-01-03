@@ -28,7 +28,7 @@ export class ChatService {
   }
 
   /**
-   * @mock 
+   * @mock
    * 模拟消息列表
    */
   getMsgList(): Observable<ChatMessage[]> {

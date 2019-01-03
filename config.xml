@@ -133,7 +133,7 @@
     <plugin name="jpush-phonegap-plugin" spec="^3.4.3">
         <variable name="APP_KEY" value="e4fad56dc2d40b58d77629f7" />
     </plugin>
-    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-plugin-appcenter-analytics" spec="^0.2.2" />
     <plugin name="cordova-plugin-appcenter-crashes" spec="^0.2.2" />
+    <engine name="android" spec="6.3.0" />
 </widget>

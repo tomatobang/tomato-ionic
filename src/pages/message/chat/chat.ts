@@ -146,7 +146,7 @@ export class Chat {
       create_at: Date.now(),
       has_read: true,
     });
-    
+
     const id = Date.now().toString();
     const newMsg: ChatMessage = {
       messageId: Date.now().toString(),
