@@ -15,6 +15,7 @@ import { OnlineUserService } from '@providers/data.service';
 import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
 import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
 
+declare var window;
 @Component({
   templateUrl: 'app.html',
 })
@@ -44,32 +45,33 @@ export class MyAppComponent implements OnInit {
     private appCenterAnalytics: AppCenterAnalytics
   ) {
     platform.ready().then(() => {
-      statusBar.overlaysWebView(false);
-      statusBar.styleDefault();
-      statusBar.backgroundColorByHexString('#f8f8f8');
-      splashScreen.hide();
-
-      updateService.checkUpdate();
-      native.initNativeService();
-      this.registerBackButtonAction();
-      if (global.userinfo) {
-        jPush.init();
-        jPush.setAlias({
-          sequence: new Date().getTime(),
-          alias: global.userinfo.username,
+      if (window.cordova) {
+        statusBar.overlaysWebView(false);
+        statusBar.styleDefault();
+        statusBar.backgroundColorByHexString('#f8f8f8');
+        splashScreen.hide();
+        updateService.checkUpdate();
+        native.initNativeService();
+        this.registerBackButtonAction();
+        if (global.userinfo) {
+          jPush.init();
+          jPush.setAlias({
+            sequence: new Date().getTime(),
+            alias: global.userinfo.username,
+          });
+        }
+        backgroundMode.disable();
+        this.AppCenterCrashes.setEnabled(true).then(() => {
+          this.AppCenterCrashes.lastSessionCrashReport().then(report => {
+            console.log('Crash report', report);
+          });
+        });
+        this.appCenterAnalytics.setEnabled(true).then(() => {
+          this.appCenterAnalytics.trackEvent('APP 打开', { TEST: global.userinfo ? global.userinfo.username : '无名氏' }).then(() => {
+            console.log('Custom event tracked');
+          });
         });
       }
-      backgroundMode.disable();
-      this.AppCenterCrashes.setEnabled(true).then(() => {
-        this.AppCenterCrashes.lastSessionCrashReport().then(report => {
-          console.log('Crash report', report);
-        });
-      });
-      this.appCenterAnalytics.setEnabled(true).then(() => {
-        this.appCenterAnalytics.trackEvent('APP 打开', { TEST: global.userinfo ? global.userinfo.username : '无名氏' }).then(() => {
-          console.log('Custom event tracked');
-        });
-      });
     });
 
     events.subscribe('qrScanner:show', () => {
