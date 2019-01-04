@@ -89,7 +89,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-file" spec="^4.1.0" />
     <plugin name="cordova-plugin-media" spec="^3.0.1">
         <variable name="MICROPHONE_USAGE_DESCRIPTION" value="APP 需要使用您的麦克风才能进行录音" />
@@ -117,7 +116,6 @@
         <variable name="WECHATAPPID" value="wx38fc9b5cea9cf3f9" />
     </plugin>
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="^0.8.5" />
-    <plugin name="talkingdata" spec="^1.2.2" />
     <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.5.0" />
     <hook src="hooks/after_build/after_build_custom_action.js" type="after_build" />
@@ -136,4 +134,5 @@
     <plugin name="cordova-plugin-appcenter-analytics" spec="^0.2.2" />
     <plugin name="cordova-plugin-appcenter-crashes" spec="^0.2.2" />
     <engine name="android" spec="6.3.0" />
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
 </widget>
