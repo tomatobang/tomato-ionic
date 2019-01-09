@@ -124,7 +124,7 @@
     "echarts": "^3.8.2",
     "hidpi-canvas": "^1.0.10",
     "ionic-angular": "^3.9.2",
-    "ionic-marquee": "^0.1.0",
+    "ionic-marquee": "^0.4.0",
     "ionicons": "3.0.0",
     "jpush-phonegap-plugin": "^3.4.3",
     "moment": "^2.18.1",
