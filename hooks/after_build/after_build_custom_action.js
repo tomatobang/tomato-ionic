@@ -9,7 +9,7 @@ module.exports = function (ctx) {
         deferral = ctx.requireCordovaModule('q').defer();
 
     var platformRoot = path.join(ctx.opts.projectRoot, 'platforms/android');
-    var apkFileLocation = path.join(platformRoot, 'app/build/outputs/apk/debug/android-debug.apk');
+    var apkFileLocation = path.join(platformRoot, 'app/build/outputs/apk/debug/app-debug.apk');
 
     fs.stat(apkFileLocation, function (err, stats) {
         if (err) {
