@@ -112,6 +112,7 @@
     "cordova-plugin-local-notification": "^0.9.0-beta.2",
     "cordova-plugin-media": "^5.0.2",
     "cordova-plugin-network-information": "^1.3.4",
+    "cordova-plugin-qiniu": "git+https://github.com/pengkobe/cordova-plugin-qiniu.git",
     "cordova-plugin-qrscanner": "^2.6.0",
     "cordova-plugin-screen-locker": "^0.2.2",
     "cordova-plugin-screenshot": "^1.0.1",
@@ -211,7 +212,8 @@
       "cordova-plugin-qrscanner": {},
       "cordova-plugin-media": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-qiniu": {}
     },
     "platforms": [
       "android"
