@@ -5,13 +5,15 @@ import {
   ActionSheetController,
   Platform,
 } from 'ionic-angular';
-
+import { SafeUrl } from '@angular/platform-browser';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { OnlineUserService } from '@providers/data.service';
 import { NativeService } from '@providers/utils/native.service';
 import { QiniuUploadService } from '@providers/qiniu.upload.service';
 import { GlobalService } from '@providers/global.service';
+import { Helper } from '@providers/utils/helper';
+
 
 @IonicPage()
 @Component({
@@ -26,7 +28,7 @@ export class ProfilePage implements OnInit {
   displayName: string;
   location: string;
   bio: string;
-  headImg = './assets/tomato-active.png';
+  headImg: SafeUrl;
   headImgQiniu: string;
 
   constructor(
@@ -37,8 +39,9 @@ export class ProfilePage implements OnInit {
     public native: NativeService,
     public platform: Platform,
     private userservice: OnlineUserService,
-    private qn: QiniuUploadService
-  ) {}
+    private qn: QiniuUploadService,
+    private helper: Helper
+  ) { }
 
   ngOnInit() {
     this.username = this.globalservice.userinfo.username;
@@ -69,8 +72,10 @@ export class ProfilePage implements OnInit {
               this.globalservice.qiniuDomain + this.headImgQiniu
             )
             .then(url => {
-              this.headImg = `${url}?${new Date().getTime()}`;
+              this.headImg = this.helper.dealWithLocalUrl(url);
             });
+        } else {
+          this.headImg = this.helper.dealWithLocalUrl('./assets/tomato-active.png');
         }
       });
     }
@@ -267,7 +272,7 @@ export class ProfilePage implements OnInit {
                                 this.globalservice.qiniuDomain + filename
                               )
                               .then(url => {
-                                this.headImg = url + '?' + new Date().getTime();
+                                this.headImg = this.helper.dealWithLocalUrl(url);
                               });
                           });
                       });
@@ -305,27 +310,32 @@ export class ProfilePage implements OnInit {
                   this.globalservice.userinfo.username +
                   '_' +
                   new Date().valueOf();
-                this.qn.uploadLocFile(FILE_URI, filename).subscribe(data => {
-                  this.userservice
-                    .updateUserHeadImg({
-                      userid: this.userid,
-                      filename: filename,
-                    })
-                    .subscribe(ret => {
-                      this.globalservice.userinfo.img = filename;
-                      this.globalservice.userinfo = JSON.stringify(
-                        this.globalservice.userinfo
-                      );
-                      this.native
-                        .downloadHeadImg(
-                          this.userid,
-                          true,
-                          this.globalservice.qiniuDomain + filename
-                        )
-                        .then(url => {
-                          this.headImg = url + '?' + new Date().getTime();
+                this.qn.initQiniu().subscribe(isInit => {
+                  if (isInit) {
+                    this.qn.uploadLocFile(FILE_URI, filename).subscribe(data => {
+                      this.userservice
+                        .updateUserHeadImg({
+                          userid: this.userid,
+                          filename: filename,
+                        })
+                        .subscribe(ret => {
+                          this.globalservice.userinfo.img = filename;
+                          this.globalservice.userinfo = JSON.stringify(
+                            this.globalservice.userinfo
+                          );
+                          this.native
+                            .downloadHeadImg(
+                              this.userid,
+                              true,
+                              this.globalservice.qiniuDomain + filename
+                            )
+                            .then(url => {
+                              this.headImg = this.helper.dealWithLocalUrl(url);
+                            });
                         });
                     });
+
+                  }
                 });
               },
               err => {

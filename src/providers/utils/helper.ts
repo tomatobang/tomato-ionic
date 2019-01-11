@@ -2,13 +2,14 @@
  * utils
  */
 import { Injectable } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Platform } from 'ionic-angular';
 declare var window;
 
 @Injectable()
 export class Helper {
-  constructor(public platform: Platform) {}
+  constructor(public platform: Platform, private sanitizer: DomSanitizer) { }
 
   getBasePath() {
     let basePath;
@@ -57,5 +58,11 @@ export class Helper {
     const arr = url.split('/');
     const fileName = arr[arr.length - 1];
     return fileName;
+  }
+
+  dealWithLocalUrl(url): SafeUrl {
+    url = window.Ionic.WebView.convertFileSrc(url) + '?' + new Date().getTime();
+    url = this.sanitizer.bypassSecurityTrustUrl(url);
+    return url;
   }
 }
