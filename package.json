@@ -213,7 +213,9 @@
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-ionic-webview": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   },
   "snyk": true
 }

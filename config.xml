@@ -121,11 +121,12 @@
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.0" />
     <plugin name="cordova-plugin-media" spec="^5.0.2" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^3.0.0" />
     <chcp>
         <config-file url="http://labroom.yipeng.info/_tb_www/chcp.json" />
         <native-interface version="1" />
         <auto-download enabled="true" />
         <auto-install enabled="true" />
     </chcp>
-    <plugin name="cordova-plugin-ionic-webview" spec="^3.0.0" />
+    <engine name="android" spec="7.1.4" />
 </widget>

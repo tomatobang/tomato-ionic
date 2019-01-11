@@ -12,6 +12,7 @@ declare var window;
 @Injectable()
 export class QiniuUploadService {
   private _qiuniutokeninfo: any;
+  private _lastInitTime;
 
   constructor(public http: HttpClient, public _g: GlobalService) {}
 
@@ -81,8 +82,8 @@ export class QiniuUploadService {
    */
   initQiniu(): Observable<any> {
     return Observable.create(observer => {
-      if (this._qiuniutokeninfo) {
-        const timespan = new Date().getTime() - this._qiuniutokeninfo.getTime();
+      if (this._qiuniutokeninfo && this._lastInitTime) {
+        const timespan = new Date().getTime() - this._lastInitTime.getTime();
         const timespan_milliseconds = timespan % (3600 * 1000);
         const timespan_minutes = Math.floor(
           timespan_milliseconds / (60 * 1000)
@@ -104,6 +105,7 @@ export class QiniuUploadService {
         console.log('qiniutoken:', data);
         this._qiuniutokeninfo = data.uploadToken;
         this.init(data.uploadToken).subscribe(d => {
+          this._lastInitTime = new Date();
           observer.next(true);
         });
       },
