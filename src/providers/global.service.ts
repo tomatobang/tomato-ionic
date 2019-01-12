@@ -12,7 +12,7 @@ const settingSubject: Subject<any> = new Subject<any>();
 export class GlobalService {
   public notificationSubject: Subject<any> = new Subject<any>();
   public serverAddress = baseUrl;
-  public qiniuDomain = 'http://osv2a938x.bkt.clouddn.com/';
+  public qiniuDomain = 'http://pl5a1kqkd.bkt.clouddn.com/';
 
   private _isActive = false;
   private _isFirstTimeOpen: boolean;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { IonicPage } from 'ionic-angular';
 import { GlobalService } from '@providers/global.service';

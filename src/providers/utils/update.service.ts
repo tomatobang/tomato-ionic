@@ -1,5 +1,5 @@
 /**
- * App 更新服务
+ * App update service
  */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -27,14 +27,6 @@ export class UpdateService {
     private fileOpener: FileOpener
   ) {}
 
-  /**
-   * 初始化
-   */
-  init() {}
-
-  /**
-   * 检查更新
-   */
   checkUpdate() {
     const appSystem = this.platform.is('android') ? 'android' : 'ios';
     this.getServerVersion(appSystem).subscribe(data => {
@@ -56,9 +48,9 @@ export class UpdateService {
   }
 
   /**
-   * 版本号对比
-   * @param curV 当前版本
-   * @param reqV 请求版本
+   * compare version
+   * @param curV current version number
+   * @param reqV request version number
    */
   compare(curV, reqV) {
     if (curV && reqV) {
@@ -77,16 +69,16 @@ export class UpdateService {
       diff = diff !== 0 ? diff : arr1.length - arr2.length;
       return diff > 0;
     } else {
-      console.log('版本号不能为空');
+      console.log('version number should not be empty');
       return false;
     }
   }
 
   /**
-   * 比对版本号并更新
-   * @param appSystem 系统名
+   * get version number from server end
+   * @param OS OS type
    */
-  getServerVersion(appSystem): Observable<any> {
+  getServerVersion(OS): Observable<any> {
     return new Observable(responseObserver => {
       this.http
         .get(this._global.serverAddress + 'api/version', {})
@@ -98,9 +90,9 @@ export class UpdateService {
   }
 
   /**
-   * 更新提示框
-   * @param updateContent 内容
-   * @param downloadUrl 下载地址
+   * update comfirm modal
+   * @param updateContent update content
+   * @param downloadUrl url to download apk file
    */
   showUpdateConfirm(updateContent, downloadUrl) {
     const prompt = this.alertCtrl.create({
@@ -125,7 +117,7 @@ export class UpdateService {
   }
 
   /**
-   * Android 版下载
+   * Android apk file download
    * @param isAndroid
    * @param downloadUrl
    */
@@ -170,7 +162,6 @@ export class UpdateService {
                     alert.present();
                   }
                 );
-              // 下载进度
               fileTransfer.onProgress((evt: ProgressEvent) => {
                 const downloadProgress = window.parseInt(
                   (evt.loaded / evt.total) * 100,
@@ -186,7 +177,7 @@ export class UpdateService {
         }
       );
     } else {
-      // ios 跳转到 app store
+      // ios to app store
       window.location.href = downloadUrl;
     }
   }

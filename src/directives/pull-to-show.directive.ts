@@ -26,7 +26,8 @@ import {
   GestureDelegate,
 } from 'ionic-angular/gestures/gesture-controller';
 
-import { Platform, Content } from 'ionic-angular';
+import { Content } from 'ionic-angular';
+import { Platform } from 'ionic-angular/platform/platform';
 import { isTrueProperty } from 'ionic-angular/util/util';
 import { pointerCoord } from 'ionic-angular/util/dom';
 import { PointerEvents } from 'ionic-angular/gestures/pointer-events';
@@ -341,7 +342,7 @@ export class PullToShowDirective implements OnInit, OnDestroy {
   }
 
   _close(state: string, delay: string) {
-    let timer: number;
+    let timer: any;
 
     function close(ev: TransitionEvent) {
       // closing is done, return to inactive state

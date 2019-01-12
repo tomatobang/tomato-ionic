@@ -20,8 +20,10 @@ import { File } from '@ionic-native/file';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Network } from '@ionic-native/network';
 import { BackgroundMode } from '@ionic-native/background-mode';
-
+import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
+import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
 import { JPush } from '@jiguang-ionic/jpush';
+
 import { RebirthHttpModule } from 'rebirth-http';
 import { IonicStorageModule } from '@ionic/storage';
 import { CoreModule } from '../core/core.module';
@@ -58,6 +60,8 @@ describe('MyApp Component', () => {
         RebirthHttpProvider,
         BackgroundMode,
         JPush,
+        AppCenterCrashes,
+        AppCenterAnalytics,
         { provide: IonicApp, useClass: IonicAppMock },
         { provide: StatusBar, useClass: StatusBarMock },
         { provide: SplashScreen, useClass: SplashScreenMock },

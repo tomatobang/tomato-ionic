@@ -12,7 +12,10 @@ import { ChatIOService } from '@providers/utils/socket.io.service';
 import { UpdateService } from '@providers/utils/update.service';
 import { NativeService } from '@providers/utils/native.service';
 import { OnlineUserService } from '@providers/data.service';
+import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
+import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
 
+declare var window;
 @Component({
   templateUrl: 'app.html',
 })
@@ -37,25 +40,38 @@ export class MyAppComponent implements OnInit {
     public info: InfoService,
     public chatIO: ChatIOService,
     public userService: OnlineUserService,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private AppCenterCrashes: AppCenterCrashes,
+    private appCenterAnalytics: AppCenterAnalytics
   ) {
     platform.ready().then(() => {
-      statusBar.overlaysWebView(false);
-      statusBar.styleDefault();
-      statusBar.backgroundColorByHexString('#f8f8f8');
-      splashScreen.hide();
-
-      updateService.checkUpdate();
-      native.initNativeService();
-      this.registerBackButtonAction();
-      if (global.userinfo) {
-        jPush.init();
-        jPush.setAlias({
-          sequence: new Date().getTime(),
-          alias: global.userinfo.username,
+      if (window.cordova) {
+        statusBar.overlaysWebView(false);
+        statusBar.styleDefault();
+        statusBar.backgroundColorByHexString('#f8f8f8');
+        splashScreen.hide();
+        updateService.checkUpdate();
+        native.initNativeService();
+        this.registerBackButtonAction();
+        if (global.userinfo) {
+          jPush.init();
+          jPush.setAlias({
+            sequence: new Date().getTime(),
+            alias: global.userinfo.username,
+          });
+        }
+        backgroundMode.disable();
+        this.AppCenterCrashes.setEnabled(true).then(() => {
+          this.AppCenterCrashes.lastSessionCrashReport().then(report => {
+            console.log('Crash report', report);
+          });
+        });
+        this.appCenterAnalytics.setEnabled(true).then(() => {
+          this.appCenterAnalytics.trackEvent('APP 打开', { TEST: global.userinfo ? global.userinfo.username : '无名氏' }).then(() => {
+            console.log('Custom event tracked');
+          });
         });
       }
-      backgroundMode.disable();
     });
 
     events.subscribe('qrScanner:show', () => {
@@ -114,8 +130,8 @@ export class MyAppComponent implements OnInit {
         this.ionicApp._loadingPortal.getActive() ||
         this.ionicApp._overlayPortal.getActive();
       if (activePortal) {
-        activePortal.dismiss().catch(() => {});
-        activePortal.onDidDismiss(() => {});
+        activePortal.dismiss().catch(() => { });
+        activePortal.onDidDismiss(() => { });
         return;
       }
       const activeNav = this.app.getActiveNav();

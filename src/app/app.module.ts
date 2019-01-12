@@ -11,6 +11,9 @@ import { File } from '@ionic-native/file';
 import { Insomnia } from '@ionic-native/insomnia';
 import { Network } from '@ionic-native/network';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
+import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
+
 
 import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
@@ -75,6 +78,8 @@ import { JPush } from '@jiguang-ionic/jpush';
       useClass: IonicErrorHandler,
     },
     JPush,
+    AppCenterCrashes,
+    AppCenterAnalytics
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],
 })

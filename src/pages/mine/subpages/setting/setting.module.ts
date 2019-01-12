@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule, IonicModule } from 'ionic-angular';
+import { IonicPageModule } from 'ionic-angular';
 import { SettingPage } from './setting';
 import { Insomnia } from '@ionic-native/insomnia';
 

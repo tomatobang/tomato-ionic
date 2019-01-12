@@ -1,9 +1,5 @@
 /**
- * 原生服务
- * 1. 网络状态
- * 2. 头像下载
- * 3. 文件下载
- * 4. 屏幕常亮
+ * natice services
  */
 
 import { Injectable } from '@angular/core';
@@ -37,22 +33,12 @@ export class NativeService {
     private network: Network
   ) {}
 
-  /**
-   * 初始化
-   */
-  init() {}
 
-  /**
-   * 初始化 Native 服务
-   */
   initNativeService() {
     this.listenInsomniaState();
     this.listenNetworkState();
   }
 
-  /**
-   * 监听屏幕显示状态
-   */
   listenInsomniaState() {
     if (this.globalservice.isAlwaysLight) {
       this.insomnia
@@ -64,9 +50,6 @@ export class NativeService {
     }
   }
 
-  /**
-   * 监听网络状态
-   */
   listenNetworkState() {
     this.createToast();
     const offlineOnlineThrottle = this.throttle(msg => {
@@ -85,7 +68,6 @@ export class NativeService {
       console.log('network connected!');
       this.isOffline = false;
       this.toast.dismissAll();
-      // offlineOnlineThrottle('网络已连接！');
       setTimeout(() => {
         if (this.network.type === 'wifi') {
           console.log('got network:wifi!');

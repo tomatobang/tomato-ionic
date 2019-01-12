@@ -6,6 +6,8 @@ import { NativeService } from '@providers/utils/native.service';
 import { CacheService } from '@providers/cache.service';
 import { ChatIOService, TomatoIOService } from '@providers/utils/socket.io.service';
 import { OnlineUserService } from '@providers/data.service';
+import { SafeUrl } from '@angular/platform-browser';
+import { Helper } from '@providers/utils/helper';
 
 @IonicPage()
 @Component({
@@ -16,7 +18,7 @@ export class MinePage implements OnInit {
   userid = '';
   username = '';
   bio = '';
-  headImg = './assets/tomato-active.png';
+  headImg: SafeUrl;
   showBigHeadImg = false;
 
   constructor(
@@ -31,8 +33,9 @@ export class MinePage implements OnInit {
     private modalCtrl: ModalController,
     public chatIO: ChatIOService,
     public tomatoIO: TomatoIOService,
-    public userService: OnlineUserService
-  ) {}
+    public userService: OnlineUserService,
+    private helper: Helper
+  ) { }
 
   public ngOnInit(): void {
     this.username = this.globalservice.userinfo.username;
@@ -45,8 +48,10 @@ export class MinePage implements OnInit {
       this.platform.ready().then(readySource => {
         if (readySource === 'cordova') {
           this.native.downloadHeadImg(this.userid, false, this.globalservice.qiniuDomain + this.globalservice.userinfo.img).then(url => {
-            this.headImg = `${url}?${new Date().getTime()}`;
+            this.headImg = this.helper.dealWithLocalUrl(url);
           });
+        } else {
+          this.headImg = this.helper.dealWithLocalUrl('./assets/tomato-active.png');
         }
       });
     }
@@ -83,24 +88,24 @@ export class MinePage implements OnInit {
 
   setting() {
     console.log('setting!');
-    this.navCtrl.push('SettingPage', {}, {}, () => {});
+    this.navCtrl.push('SettingPage', {}, {}, () => { });
   }
 
   about() {
     console.log('about!');
-    this.navCtrl.push('AboutPage', {}, {}, () => {});
+    this.navCtrl.push('AboutPage', {}, {}, () => { });
   }
 
   profile() {
-    this.navCtrl.push('ProfilePage', {}, {}, () => {});
+    this.navCtrl.push('ProfilePage', {}, {}, () => { });
   }
 
   statistics() {
-    this.navCtrl.push('StatisticsPage', {}, {}, () => {});
+    this.navCtrl.push('StatisticsPage', {}, {}, () => { });
   }
 
   toGameBoard() {
-    this.navCtrl.push('TwoZeroFourEightPage', {}, {}, () => {});
+    this.navCtrl.push('TwoZeroFourEightPage', {}, {}, () => { });
   }
 
   /**

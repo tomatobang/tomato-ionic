@@ -6,7 +6,6 @@ import { Helper } from '@providers/utils/helper';
 import { GlobalService } from '@providers/global.service';
 import { VoiceRecorderComponent } from '@components/voice-recorder/';
 import { baseUrl } from '../../../config';
-import { transition } from '@angular/core/src/animation/dsl';
 
 @IonicPage()
 @Component({
@@ -119,7 +118,6 @@ export class TaskPage implements OnInit {
 
   addTask = function(isActive: any) {
     const task = this.newTask;
-    // task.num = 1;
     task.isActive = true;
     task.voiceUrl = '';
     // 创建任务

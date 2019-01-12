@@ -125,7 +125,6 @@ export class OnlineUserService extends UserService {
 export const USER_SERVICE_PROVIDERS: Array<any> = [
   {
     provide: UserService,
-    // environment.deploy === 'github' ? GithubUserService : OnlineUserService
     useClass: OnlineUserService,
   },
 ];

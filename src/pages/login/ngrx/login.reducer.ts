@@ -1,5 +1,4 @@
 import { LoginActionTypes, LoginActionsUnion } from './login.actions';
-// import { createSelector } from 'reselect';
 
 export interface State {
   actionType: string;
@@ -45,14 +44,10 @@ export function loginReducer(state: State = loginInit, action: LoginActionsUnion
       state.token = action.payload.token;
       break;
     }
-
     case LoginActionTypes.LOGINFAILED: {
       state.loginTip = '登陆出错！';
       break;
     }
   }
-
   return state;
 }
-
-// export const getUserInfo = (state: State) => state.actionType;
