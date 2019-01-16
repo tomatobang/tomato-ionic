@@ -206,10 +206,11 @@ export class VoicePlayService {
     this.isPlaying = true;
   }
 
+  /**
+   * android only
+   */
   getPhoneGapPath() {
-    let loc = window.location.pathname;
-    loc = loc.substr(0, loc.length - 9);
-    return 'file://' + loc;
+    return 'file:///android_asset/www/';
   }
 
   resume_local_voice() {
