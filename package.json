@@ -89,7 +89,7 @@
     "build": "^0.1.4",
     "codelyzer": "^4.1.0",
     "com.darktalker.cordova.screenshot": "^0.1.6",
-    "cordova-android": "7.1.4",
+    "cordova-android": "8.0.0",
     "cordova-android-support-gradle-release": "^1.4.2",
     "cordova-hot-code-push-plugin": "^1.5.3",
     "cordova-plugin-app-event": "^1.2.1",
