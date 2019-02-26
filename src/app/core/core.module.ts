@@ -28,6 +28,18 @@ import { DataService } from '@services/data.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { EmitService } from '@services/emit.service';
 
+import { InfoService } from '@services/info.service';
+import { CacheService } from '@services/cache.service';
+import { MessageService } from '@services/data/message/message.service';
+import { OnlineUserService } from '@services/data.service';
+import { Helper } from '@services/utils/helper';
+
+import {
+  TomatoIOService,
+  ChatIOService,
+} from '@services/utils/socket.io.service';
+import { UserFriendService } from '@services/data/user_friend';
+
 @NgModule({
   imports: [CommonModule, HttpClientModule],
   exports: [],
@@ -53,6 +65,14 @@ import { EmitService } from '@services/emit.service';
     DataService,
     BaiduLocationService,
     EmitService,
+    InfoService,
+    CacheService,
+    MessageService,
+    OnlineUserService,
+    Helper,
+    TomatoIOService,
+    ChatIOService,
+    UserFriendService
   ],
 })
-export class CoreModule {}
+export class CoreModule { }
