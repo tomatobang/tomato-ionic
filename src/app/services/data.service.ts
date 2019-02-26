@@ -4,13 +4,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as querystring from 'querystring';
 import { Cacheable } from './offlinecache.service';
 
 import { baseUrl } from '../config';
 import { NativeService } from './native.service';
+
+export * from './data/task';
+export * from './data/tomato';
+export * from './data/user';
+export * from './data/user_friend';
 
 @Injectable()
 export class DataService {
@@ -19,7 +24,7 @@ export class DataService {
     'Content-Type': 'application/x-www-form-urlencoded',
   });
 
-  constructor(public http: HttpClient, public native: NativeService) {}
+  constructor(public http: HttpClient, public native: NativeService) { }
 
   amapHttpUtil(url: string, options: Object): Observable<Object> {
     const params = new HttpParams({
@@ -45,5 +50,23 @@ export class DataService {
       })
     );
     return obs;
+  }
+
+  public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public get TasksMonitor(): Observable<any> {
+    return this.taskSubject.asObservable();
+  }
+
+  public tomatoesSubject: Subject<any> = new BehaviorSubject<any>(null);
+  public get TomatoesMonitor(): Observable<any> {
+    return this.tomatoesSubject.asObservable();
+  }
+
+  taskChange(obj) {
+    this.taskSubject.next(obj);
+  }
+
+  tomatoeschange(obj) {
+    this.tomatoesSubject.next(obj);
   }
 }

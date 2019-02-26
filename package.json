@@ -1,5 +1,5 @@
 {
-  "name": "ionic4-boilerplate",
+  "name": "com.tomatobang.ionic",
   "version": "0.4.0",
   "author": "pengkobe",
   "homepage": "http://github.com/pengkobe/ionic4-boilerplate",
@@ -49,6 +49,7 @@
     "@ionic-native/file-transfer": "^5.0.0-beta.21",
     "@ionic-native/insomnia": "^5.0.0-beta.21",
     "@ionic-native/local-notifications": "^5.0.0-beta.21",
+    "@ionic-native/media": "^5.2.0",
     "@ionic-native/network": "^5.0.0-beta.21",
     "@ionic-native/qr-scanner": "^5.0.0-beta.21",
     "@ionic-native/splash-screen": "5.0.0-beta.21",
@@ -79,6 +80,7 @@
     "cordova-plugin-ionic-webview": "^2.2.0",
     "cordova-plugin-jcore": "^1.2.5",
     "cordova-plugin-local-notification": "^0.9.0-beta.2",
+    "cordova-plugin-media": "^5.0.2",
     "cordova-plugin-network-information": "^2.0.1",
     "cordova-plugin-qrscanner": "^2.6.0",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -90,6 +92,7 @@
     "echarts": "^4.2.0-rc.2",
     "jpush-phonegap-plugin": "^3.4.7",
     "moment": "^2.22.2",
+    "ng-socket-io": "^0.2.4",
     "ngx-echarts": "^4.0.0",
     "raven-js": "^3.27.0",
     "rebirth-http": "^6.0.2",
@@ -166,7 +169,8 @@
       "cordova-plugin-background-mode": {},
       "cordova-plugin-file-opener2": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      },
+      "cordova-plugin-media": {}
     },
     "platforms": [
       "android"

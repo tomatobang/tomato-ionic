@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tomatobang.ionic" version="0.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tomatobang.ionic" version="0.4.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>番茄帮</name>
     <description>for your better work &amp; life.</description>
-     <author email="yipeng.info@gmail.com" href="http://yipeng.info/">Create By pengkobe</author>
+    <author email="yipeng.info@gmail.com" href="http://yipeng.info/">Create By pengkobe</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -88,7 +88,7 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-      <chcp>
+    <chcp>
         <config-file url="http://labroom.yipeng.info/_tb_www/chcp.json" />
         <native-interface version="1" />
         <auto-download enabled="true" />
@@ -122,4 +122,5 @@
     <plugin name="cordova-plugin-file-opener2" spec="^2.1.4">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
+    <plugin name="cordova-plugin-media" spec="^5.0.2" />
 </widget>
