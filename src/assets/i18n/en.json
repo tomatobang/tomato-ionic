@@ -1,9 +1,21 @@
 {
   "HOME": {
-    "IndexPage": "index",
-    "Tomatobang": "Tomatobang",
-    "Message": "Message",
-    "Discover": "Discover",
-    "Me": "Me"
+    "Home": "Home",
+    "List": "List",
+    "Test": "Test",
+    "Me": "Me",
+    "Toggle": "Toggle Menu",
+    "Menu": "Menu",
+    "Scan": "Scan",
+    "ScreenAlwaysLight": "Screen Always Light",
+    "SwitchLanguage": "Switch Language",
+    "LanguageCH": "Chinese",
+    "LanguageEN": "English",
+    "Theme": "Theme",
+    "Cancel": "Cancel",
+    "confirm": "OK",
+    "GetRandomNumber": "Get Random Number",
+    "Calendar": "Calendar",
+    "DynamicForm": "DynamicForm"
   }
 }

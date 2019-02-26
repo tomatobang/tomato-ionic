@@ -1,7 +1,7 @@
 {
-  "name": "tomatobang",
+  "name": "ionic4-boilerplate",
   "integrations": {
     "cordova": {}
   },
-  "type": "ionic-angular"
+  "type": "angular"
 }

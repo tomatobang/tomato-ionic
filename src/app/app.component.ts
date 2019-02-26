@@ -1,160 +1,178 @@
-import { Component, OnInit } from '@angular/core';
-import { App, Platform, ToastController, Events, IonicApp } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { RebirthHttpProvider } from 'rebirth-http';
-import { BackgroundMode } from '@ionic-native/background-mode';
+import { Component, ViewChildren, QueryList } from '@angular/core';
+import {
+  Platform,
+  ToastController,
+  Events,
+  ModalController,
+  ActionSheetController,
+  PopoverController,
+  IonRouterOutlet,
+  MenuController,
+} from '@ionic/angular';
+import { Router } from '@angular/router';
 
-import { JPush } from '@jiguang-ionic/jpush';
-import { GlobalService } from '@providers/global.service';
-import { InfoService } from '@providers/info.service';
-import { ChatIOService } from '@providers/utils/socket.io.service';
-import { UpdateService } from '@providers/utils/update.service';
-import { NativeService } from '@providers/utils/native.service';
-import { OnlineUserService } from '@providers/data.service';
-import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
-import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
-declare var window;
+import { GlobalService } from '@services/global.service';
+import { UpdateService } from '@services/update.service';
+import { NativeService } from '@services/native.service';
+import { TranslateService } from '@ngx-translate/core';
+import { EmitService } from '@services/emit.service';
+
 @Component({
-  templateUrl: 'app.html',
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
 })
-export class MyAppComponent implements OnInit {
-  rootPage: any;
-  hideNav = false;
+export class MyApp {
   backButtonPressed = false;
+  hideNav = false;
+
+  pages: Array<{ title: string; component: any }>;
+
+  lastTimeBackPress = 0;
+  timePeriodToExit = 2000;
+
+  @ViewChildren(IonRouterOutlet)
+  routerOutlets: QueryList<IonRouterOutlet>;
+
+  selectedTheme: String;
 
   constructor(
-    statusBar: StatusBar,
-    splashScreen: SplashScreen,
-    jPush: JPush,
-    updateService: UpdateService,
-    backgroundMode: BackgroundMode,
-    events: Events,
-    public app: App,
-    public ionicApp: IonicApp,
     public platform: Platform,
-    public rebirthProvider: RebirthHttpProvider,
+    public events: Events,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
     public global: GlobalService,
     public native: NativeService,
-    public info: InfoService,
-    public chatIO: ChatIOService,
-    public userService: OnlineUserService,
+    public updateService: UpdateService,
+    public translateservice: TranslateService,
+    public globalservice: GlobalService,
+    public emitservice: EmitService,
     public toastCtrl: ToastController,
-    private AppCenterCrashes: AppCenterCrashes,
-    private appCenterAnalytics: AppCenterAnalytics
+    public modalCtrl: ModalController,
+    private menuCtrl: MenuController,
+    private actionSheetCtrl: ActionSheetController,
+    private popoverCtrl: PopoverController,
+    private router: Router
   ) {
-    platform.ready().then(() => {
+    this.emitservice.getActiveTheme().subscribe(val => {
+      if (val) {
+        this.selectedTheme = val;
+      }
+    });
+    this.initializeApp();
+    this.initTranslate();
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.splashScreen.hide();
+      this.statusBar.styleDefault();
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString('#f8f8f8');
       if (window.cordova) {
-        statusBar.overlaysWebView(false);
-        statusBar.styleDefault();
-        statusBar.backgroundColorByHexString('#f8f8f8');
-        splashScreen.hide();
-        updateService.checkUpdate();
-        native.initNativeService();
+        this.native.initNativeService();
+        this.updateService.checkUpdate();
         this.registerBackButtonAction();
-        if (global.userinfo) {
-          jPush.init();
-          jPush.setAlias({
-            sequence: new Date().getTime(),
-            alias: global.userinfo.username,
-          });
-        }
-        backgroundMode.disable();
-        this.AppCenterCrashes.setEnabled(true).then(() => {
-          this.AppCenterCrashes.lastSessionCrashReport().then(report => {
-            console.log('Crash report', report);
-          });
-        });
-        this.appCenterAnalytics.setEnabled(true).then(() => {
-          this.appCenterAnalytics.trackEvent('APP 打开', { TEST: global.userinfo ? global.userinfo.username : '无名氏' }).then(() => {
-            console.log('Custom event tracked');
-          });
-        });
+        this.native.initAppCenter();
       }
     });
 
-    events.subscribe('qrScanner:show', () => {
+    this.events.subscribe('qrScanner:show', () => {
       this.hideNav = true;
     });
-    events.subscribe('qrScanner:hide', () => {
+    this.events.subscribe('qrScanner:hide', () => {
       this.hideNav = false;
     });
   }
 
-  ngOnInit() {
-    if (this.global.isFirstTimeOpen) {
-      this.global.isFirstTimeOpen = false;
-      this.rootPage = 'GuidePage';
+  initTranslate() {
+    this.translateservice.addLangs(['en', 'zh']);
+    this.translateservice.setDefaultLang('en');
+    if (this.globalservice.languageType) {
+      this.translateservice.use(this.globalservice.languageType);
     } else {
-      if (this.global.userinfo) {
-        this.rebirthProvider.headers({ Authorization: this.global.token }, true);
-        this.rebirthProvider.addResponseErrorInterceptor(err => {
-          console.error('请求错误！', err);
-        });
-        this.userService.auth().subscribe(data => {
-          if (data && data.status && data.status !== 'fail') {
-            this.chatIO.login(this.global.userinfo._id);
-            this.info.init();
-            this.rootPage = 'TabsPage';
-          } else {
-            // token 过期
-            this.app.getRootNav().setRoot(
-              'LoginPage',
-              {
-                username: this.global.userinfo.username,
-                password: this.global.userinfo.password,
-              },
-              {},
-              () => {
-                this.global.userinfo = '';
-                this.global.token = '';
-              }
-            );
-          }
-        });
-      } else {
-        this.rootPage = 'LoginPage';
-      }
+      const browserLang = this.translateservice.getBrowserLang();
+      this.translateservice.use(
+        browserLang.match(/en|zh/) ? browserLang : 'en'
+      );
     }
+
+    this.emitservice.eventEmit.subscribe(val => {
+      if (val === 'languageType') {
+        this.translateservice.use(this.globalservice.languageType);
+      }
+    });
   }
 
   /**
    * 物理键返回事件
    */
   registerBackButtonAction() {
-    this.platform.registerBackButtonAction(() => {
-      const activePortal =
-        this.ionicApp._modalPortal.getActive() ||
-        this.ionicApp._toastPortal.getActive() ||
-        this.ionicApp._loadingPortal.getActive() ||
-        this.ionicApp._overlayPortal.getActive();
-      if (activePortal) {
-        activePortal.dismiss().catch(() => { });
-        activePortal.onDidDismiss(() => { });
-        return;
+    this.platform.backButton.subscribe(async () => {
+      // close action sheet
+      try {
+        const element = await this.actionSheetCtrl.getTop();
+        if (element) {
+          element.dismiss();
+          return;
+        }
+      } catch (error) {}
+
+      // close popover
+      try {
+        const element = await this.popoverCtrl.getTop();
+        if (element) {
+          element.dismiss();
+          return;
+        }
+      } catch (error) {}
+
+      // close modal
+      try {
+        const element = await this.modalCtrl.getTop();
+        if (element) {
+          element.dismiss();
+          return;
+        }
+      } catch (error) {
+        console.log(error);
       }
-      const activeNav = this.app.getActiveNav();
-      return activeNav.canGoBack() ? activeNav.pop() : this.showExit();
-    }, 1);
+
+      // close side menua
+      try {
+        const element = await this.menuCtrl.getOpen();
+        if (element !== null) {
+          this.menuCtrl.close();
+          return;
+        }
+      } catch (error) {}
+
+      this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
+        if (outlet && outlet.canGoBack()) {
+          outlet.pop();
+        } else if (this.router.url === '/home') {
+          if (
+            new Date().getTime() - this.lastTimeBackPress <
+            this.timePeriodToExit
+          ) {
+            navigator['app'].exitApp(); // work in ionic 4
+          } else {
+            const toast = await this.toastCtrl.create({
+              message: '再按一次退出应用',
+              duration: 2000,
+              position: 'top',
+            });
+            await toast.present();
+            this.lastTimeBackPress = new Date().getTime();
+          }
+        }
+      });
+    });
   }
 
-  /**
-   * 确认是否关闭 App
-   */
-  showExit() {
-    if (this.backButtonPressed) {
-      this.platform.exitApp();
-    } else {
-      this.toastCtrl
-        .create({
-          message: '再按一次退出应用',
-          duration: 2000,
-          position: 'top',
-        })
-        .present();
-      this.backButtonPressed = true;
-      setTimeout(() => (this.backButtonPressed = false), 2000);
-    }
+  navigate(url) {
+    return this.router.navigateByUrl(url);
   }
 }

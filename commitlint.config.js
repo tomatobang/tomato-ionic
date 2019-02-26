@@ -3,6 +3,23 @@ module.exports = {
 
   rules: {
     'subject-case': [0, 'never'],
-    'type-enum': [2, 'always', ['docs', 'chore', 'feat', 'fix', 'build', 'ci', 'merge', 'perf', 'refactor', 'revert', 'style', 'test']],
+    'type-enum': [
+      2,
+      'always',
+      [
+        'docs',
+        'chore',
+        'feat',
+        'fix',
+        'build',
+        'ci',
+        'merge',
+        'perf',
+        'refactor',
+        'revert',
+        'style',
+        'test',
+      ],
+    ],
   },
 };
