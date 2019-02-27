@@ -3,7 +3,6 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Events } from '@ionic/angular';
-import 'rxjs/add/operator/toPromise';
 
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { ChatMessage } from './chat-message.model';

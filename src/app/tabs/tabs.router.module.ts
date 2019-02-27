@@ -35,6 +35,21 @@ const routes: Routes = [
         outlet: 'list',
         loadChildren: '../pages/list/list.module#ListPageModule',
       },
+      {
+        path: 'friend',
+        outlet: 'friend',
+        loadChildren: '../pages/friend/friend.module#FriendPageModule',
+      },
+      {
+        path: 'message',
+        outlet: 'message',
+        loadChildren: '../pages/message/message.module#MessagePageModule',
+      },
+      {
+        path: 'me',
+        outlet: 'me',
+        loadChildren: '../pages/mine/mine.module#MinePageModule',
+      },
     ],
   },
   {

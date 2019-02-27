@@ -19,10 +19,10 @@
             <ion-icon name="sync" item-start color="primary"></ion-icon>
             <ion-label>长休息间隔番茄钟数</ion-label>
             <ion-select [(ngModel)]="longbreakTomatoNum" (ngModelChange)="setLongbreakTomatoNum($event)" cancelText="取消" okText="确定!">
-                <ion-option value="2">2</ion-option>
-                <ion-option value="4" selected="true">4</ion-option>
-                <ion-option value="5">5</ion-option>
-                <ion-option value="6">6</ion-option>
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="4" selected="true">4</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+                <ion-select-option value="6">6</ion-select-option>
             </ion-select>
         </ion-item>
 
@@ -30,11 +30,11 @@
             <ion-icon name="speedometer" item-start color="primary"></ion-icon>
             <ion-label>番茄钟时长</ion-label>
             <ion-select [(ngModel)]="countdown" (ngModelChange)="setCountdown($event)" cancelText="取消" okText="确定!">
-                <ion-option value="1">1</ion-option>
-                <ion-option value="20">20</ion-option>
-                <ion-option value="25" selected="true">25</ion-option>
-                <ion-option value="30">30</ion-option>
-                <ion-option value="35">35</ion-option>
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="20">20</ion-select-option>
+                <ion-select-option value="25" selected="true">25</ion-select-option>
+                <ion-select-option value="30">30</ion-select-option>
+                <ion-select-option value="35">35</ion-select-option>
             </ion-select>
         </ion-item>
 
@@ -42,10 +42,10 @@
             <ion-icon name="speedometer" item-start color="primary"></ion-icon>
             <ion-label>短休息时长</ion-label>
             <ion-select [(ngModel)]="resttime" (ngModelChange)="setResttime($event)" cancelText="取消" okText="确定!">
-                <ion-option value="1">1</ion-option>
-                <ion-option value="5" selected="true">5</ion-option>
-                <ion-option value="8">8</ion-option>
-                <ion-option value="10">10</ion-option>
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="5" selected="true">5</ion-select-option>
+                <ion-select-option value="8">8</ion-select-option>
+                <ion-select-option value="10">10</ion-select-option>
             </ion-select>
         </ion-item>
 
@@ -53,10 +53,10 @@
             <ion-icon name="speedometer" item-start color="primary"></ion-icon>
             <ion-label>长休息时长</ion-label>
             <ion-select [(ngModel)]="longresttime" (ngModelChange)="setLongResttime($event)" cancelText="取消" okText="确定!">
-                <ion-option value="15">15</ion-option>
-                <ion-option value="18">18</ion-option>
-                <ion-option value="20" selected="true">20</ion-option>
-                <ion-option value="25">25</ion-option>
+                <ion-select-option value="15">15</ion-select-option>
+                <ion-select-option value="18">18</ion-select-option>
+                <ion-select-option value="20" selected="true">20</ion-select-option>
+                <ion-select-option value="25">25</ion-select-option>
             </ion-select>
         </ion-item>
     </ion-list>
@@ -76,10 +76,10 @@
             <ion-icon name="musical-notes" item-start color="primary"></ion-icon>
             <ion-label>白噪音效</ion-label>
             <ion-select [(ngModel)]="whiteNoiseType" (ngModelChange)="setWhiteNoiseType($event)" cancelText="取消" okText="确定!">
-                <ion-option value="1">雨声</ion-option>
-                <ion-option value="2">瀑布</ion-option>
-                <ion-option value="3" selected="true">海浪</ion-option>
-                <ion-option value="4">鸟鸣</ion-option>
+                <ion-select-option value="1">雨声</ion-select-option>
+                <ion-select-option value="2">瀑布</ion-select-option>
+                <ion-select-option value="3" selected="true">海浪</ion-select-option>
+                <ion-select-option value="4">鸟鸣</ion-select-option>
             </ion-select>
         </ion-item>
         <ion-item>

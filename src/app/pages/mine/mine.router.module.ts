@@ -30,10 +30,6 @@ const routes: Routes = [
     path: 'statistics',
     component: StatisticsPage,
   },
-  {
-    path: 'game',
-    loadChildren: './ngrxtodo/ngrxtodo.module#NgrxTodoPageModule',
-  },
 ];
 
 @NgModule({

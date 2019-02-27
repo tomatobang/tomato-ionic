@@ -8,14 +8,12 @@ import { GlobalService } from '@services/global.service';
 import { CacheService } from '@services/cache.service';
 import { InfoService } from '@services/info.service';
 import { MessageService } from '@services//data/message/message.service';
-import { setTimeout } from 'timers';
-
 
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
 })
-export class Chat {
+export class ChatPage {
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput;
   msgList: ChatMessage[] = [];

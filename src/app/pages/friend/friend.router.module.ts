@@ -10,7 +10,6 @@ import { SearchPage } from './search/search';
 import { SearchUserPage } from './search/searchUser/searchUser';
 import { HistoryTomatoPage } from './search/historyTomato/historyTomato';
 
-
 import { FriendPage } from './friend';
 
 const routes: Routes = [
