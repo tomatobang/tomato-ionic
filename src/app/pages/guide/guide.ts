@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/Storage';
 
 @Component({
-  selector: 'cmp-guide',
+  selector: 'page-guide',
   templateUrl: 'guide.html'
 })
 export class GuidePage {

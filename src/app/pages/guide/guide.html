@@ -1,18 +1,18 @@
 <ion-header no-border>
-  <ion-navbar>
+  <ion-toolbar>
     <ion-buttons end *ngIf="showSkip">
       <button ion-button (click)="startApp()" color="primary">跳过</button>
     </ion-buttons>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content no-bounce>
   <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
 
     <ion-slide>
-      <img src="assets/tomatobang.jpg" class="slide-image"/>
+      <img src="assets/tomatobang.jpg" class="slide-image" />
       <h2 class="slide-title">
-          <b>好玩</b>
+        <b>好玩</b>
       </h2>
       <p>
         管理你 <b>工作&生活</b> 的最佳工具.
@@ -20,19 +20,19 @@
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/tomatobang.jpg" class="slide-image"/>
-      <h2 class="slide-title" >语音记录</h2>
+      <img src="assets/tomatobang.jpg" class="slide-image" />
+      <h2 class="slide-title">语音记录</h2>
       <p>让你迷上自己的声音.</p>
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/tomatobang.jpg" class="slide-image"/>
+      <img src="assets/tomatobang.jpg" class="slide-image" />
       <h2 class="slide-title">支持多端同步</h2>
       <p>PC端与 App 端神奇同步.</p>
     </ion-slide>
 
     <ion-slide>
-      <img src="assets/tomatobang.jpg" class="slide-image"/>
+      <img src="assets/tomatobang.jpg" class="slide-image" />
       <h2 class="slide-title">准备好了么?</h2>
       <button ion-button icon-end large clear (click)="startApp()">
         马上开始
