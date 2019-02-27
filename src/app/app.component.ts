@@ -13,12 +13,18 @@ import { Router } from '@angular/router';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { JPush } from '@jiguang-ionic/jpush/ngx';
+import { RebirthHttpProvider } from 'rebirth-http';
 
 import { GlobalService } from '@services/global.service';
 import { UpdateService } from '@services/update.service';
 import { NativeService } from '@services/native.service';
 import { TranslateService } from '@ngx-translate/core';
 import { EmitService } from '@services/emit.service';
+import { OnlineUserService } from '@services/data.service';
+import { InfoService } from '@services/info.service';
+import { ChatIOService } from '@services/utils/socket.io.service';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +45,12 @@ export class MyApp {
   selectedTheme: String;
 
   constructor(
+    private jPush: JPush,
+    private backgroundMode: BackgroundMode,
+    public rebirthProvider: RebirthHttpProvider,
+    public info: InfoService,
+    public chatIO: ChatIOService,
+    public userService: OnlineUserService,
     public platform: Platform,
     public events: Events,
     public statusBar: StatusBar,
@@ -76,6 +88,16 @@ export class MyApp {
         this.updateService.checkUpdate();
         this.registerBackButtonAction();
         this.native.initAppCenter();
+
+        if (this.global.userinfo) {
+          this.jPush.init();
+          this.jPush.setAlias({
+            sequence: new Date().getTime(),
+            alias: this.global.userinfo.username,
+          });
+        }
+        this.backgroundMode.disable();
+        this.initRoute();
       }
     });
 
@@ -85,6 +107,43 @@ export class MyApp {
     this.events.subscribe('qrScanner:hide', () => {
       this.hideNav = false;
     });
+  }
+
+  initRoute() {
+      if (this.global.isFirstTimeOpen) {
+        this.global.isFirstTimeOpen = false;
+        this.router.navigate(['guide']);
+      } else {
+        if (this.global.userinfo) {
+          this.rebirthProvider.headers({ Authorization: this.global.token }, true);
+          this.rebirthProvider.addResponseErrorInterceptor(err => {
+            console.error('请求错误！', err);
+          });
+          this.userService.auth().subscribe(data => {
+            if (data && data.status && data.status !== 'fail') {
+              this.chatIO.login(this.global.userinfo._id);
+              this.info.init();
+              this.router.navigate(['tabs']);
+            } else {
+              // token 过期
+              // this.app.getRootNav().setRoot(
+              //   'LoginPage',
+              //   {
+              //     username: this.global.userinfo.username,
+              //     password: this.global.userinfo.password,
+              //   },
+              //   {},
+              //   () => {
+              //     this.global.userinfo = '';
+              //     this.global.token = '';
+              //   }
+              // );
+            }
+          });
+        } else {
+          this.router.navigate(['login']);
+        }
+      }
   }
 
   initTranslate() {
@@ -118,7 +177,7 @@ export class MyApp {
           element.dismiss();
           return;
         }
-      } catch (error) {}
+      } catch (error) { }
 
       // close popover
       try {
@@ -127,7 +186,7 @@ export class MyApp {
           element.dismiss();
           return;
         }
-      } catch (error) {}
+      } catch (error) { }
 
       // close modal
       try {
@@ -147,7 +206,7 @@ export class MyApp {
           this.menuCtrl.close();
           return;
         }
-      } catch (error) {}
+      } catch (error) { }
 
       this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
         if (outlet && outlet.canGoBack()) {

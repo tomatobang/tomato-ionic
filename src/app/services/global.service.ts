@@ -23,7 +23,7 @@ export class GlobalService {
   private _isAlwaysLight = false;
   private _languageType;
 
-  constructor(public events: Events) {}
+  constructor(public events: Events) { }
 
   public bioUpdate(bio: String) {
     this.events.publish('bio:update', bio);
@@ -146,10 +146,10 @@ export class GlobalService {
       return this._isFirstTimeOpen;
     } else {
       const isFirstTimeOpen = localStorage.getItem('isFirstTimeOpen');
-      if (isFirstTimeOpen === 'false') {
-        return false;
-      } else {
+      if (isFirstTimeOpen === 'true') {
         return true;
+      } else {
+        return false;
       }
     }
   }

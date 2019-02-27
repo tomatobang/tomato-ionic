@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { GlobalService } from './global.service';
 import { UserFriendService } from '@services/data/user_friend';
 import { UserFriendState } from '@services/data/user_friend/model/state.enum';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/Storage';
 
 @Injectable()
 export class CacheService {

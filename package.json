@@ -57,6 +57,7 @@
     "@ionic-native/vibration": "^5.0.0-beta.21",
     "@ionic/angular": "4.0.0-beta.15",
     "@ionic/storage": "^2.2.0",
+    "@jiguang-ionic/jpush": "^2.0.0",
     "@ngrx/effects": "^6.1.2",
     "@ngrx/store": "^6.1.2",
     "@ngrx/store-devtools": "^6.1.2",

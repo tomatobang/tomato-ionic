@@ -17,9 +17,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AppCenterAnalytics } from '@ionic-native/app-center-analytics/ngx';
 import { AppCenterCrashes } from '@ionic-native/app-center-crashes/ngx';
-
+import { RebirthHttpProvider } from 'rebirth-http';
 import { JPush } from '../../nativewrapper/jpush/ngx';
-
 import { GlobalService } from '@services/global.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { UpdateService } from '@services/update.service';
@@ -57,7 +56,7 @@ import { UserFriendService } from '@services/data/user_friend';
     AppCenterAnalytics,
     AppCenterCrashes,
     LocalNotifications,
-
+    RebirthHttpProvider,
     NativeService,
     UpdateService,
     GlobalService,
