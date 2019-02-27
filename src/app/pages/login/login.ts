@@ -16,6 +16,7 @@ import { State } from './ngrx/login.reducer';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
+  styleUrls: ['./login.scss']
 })
 export class LoginPage implements OnInit {
   user = new User();

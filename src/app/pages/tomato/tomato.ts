@@ -9,9 +9,11 @@ import { TaskPage } from './task/task';
 @Component({
   selector: 'page-tomato',
   templateUrl: 'tomato.html',
+  styleUrls: ['./tomato.scss']
 })
 export class TomatoPage {
-  page_title = '首页';
+
+  page_title = '番茄';
   segment = 'index';
   @ViewChild(Slides) slides: Slides;
   IsInTomatoTodaySlide = false;

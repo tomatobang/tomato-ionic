@@ -11,6 +11,7 @@ import { baseUrl } from '../../../config';
 @Component({
   selector: 'cmp-task',
   templateUrl: 'task.html',
+  styleUrls: ['./task.scss']
 })
 export class TaskPage implements OnInit {
   showDismissButton = true;

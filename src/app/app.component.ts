@@ -75,6 +75,7 @@ export class MyApp {
     });
     this.initializeApp();
     this.initTranslate();
+    this.initRoute();
   }
 
   initializeApp() {
@@ -97,7 +98,7 @@ export class MyApp {
           });
         }
         this.backgroundMode.disable();
-        this.initRoute();
+        
       }
     });
 
@@ -107,10 +108,10 @@ export class MyApp {
     this.events.subscribe('qrScanner:hide', () => {
       this.hideNav = false;
     });
+
   }
 
   initRoute() {
-    debugger;
       if (this.global.isFirstTimeOpen) {
         this.global.isFirstTimeOpen = false;
         this.router.navigate(['guide']);

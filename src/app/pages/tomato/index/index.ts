@@ -11,6 +11,7 @@ import { Helper } from '@services/utils/helper';
 @Component({
   selector: 'cmp-index-index',
   templateUrl: 'index.html',
+  styleUrls: ['./index.scss']
 })
 export class IndexIndexPage implements OnInit, AfterViewInit {
   username: string;

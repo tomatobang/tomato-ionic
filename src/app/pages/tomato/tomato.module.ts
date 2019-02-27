@@ -51,6 +51,7 @@ import { TomatoPageRoutingModule } from './tomato.router.module'
     FileTransfer,
     LocalNotifications,
   ],
+  entryComponents: [TaskPage],
   // to supress html syntax warning
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

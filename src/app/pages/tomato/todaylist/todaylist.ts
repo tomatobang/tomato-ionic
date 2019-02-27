@@ -10,6 +10,7 @@ import { Helper } from '@services/utils/helper';
 @Component({
   selector: 'todaylist',
   templateUrl: 'todaylist.html',
+  styleUrls: ['./todaylist.scss']
 })
 export class TodaylistComponent implements OnInit {
   historyTomatoes: Array<any> = [];
@@ -111,7 +112,7 @@ export class TodaylistComponent implements OnInit {
             this.voicePlaySrc = './assets/voice/voice.png';
           });
         })
-        .catch(e => {});
+        .catch(e => { });
     } else {
       alert('此番茄钟无音频记录！');
     }

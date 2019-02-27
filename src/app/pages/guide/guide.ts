@@ -9,7 +9,8 @@ import { Storage } from '@ionic/Storage';
 
 @Component({
   selector: 'page-guide',
-  templateUrl: 'guide.html'
+  templateUrl: 'guide.html',
+  styleUrls: ['./guide.scss']
 })
 export class GuidePage {
   showSkip = true;

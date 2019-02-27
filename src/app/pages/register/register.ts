@@ -9,8 +9,9 @@ import { RebirthHttpProvider } from 'rebirth-http';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'register',
+  selector: 'page-register',
   templateUrl: 'register.html',
+  styleUrls: ['./register.scss']
 })
 export class RegisterPage implements OnInit {
   userForm: FormGroup;
