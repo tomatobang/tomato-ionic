@@ -1,0 +1,77 @@
+.tomato-user-bio {
+  background: #eee;
+  position: absolute;
+  top: 0px;
+  text-align: center;
+  width: 100%;
+  color: #f97271;
+  font-family: 'Hosted Source Han Sans Normal';
+}
+img.play-icon {
+  width: 25px;
+}
+.tomato-break-reason {
+  color: gray;
+  font-size: 12px;
+  text-align: left;
+}
+.tomato-start-end-time {
+  font-size: 12px;
+}
+.tomato-canvas-style {
+  width: 240px;
+  height: 240px;
+}
+.text-breaked {
+  color: #f97271 !important;
+}
+
+.white-noise-tag-icon {
+  position: absolute;
+  right: 15px;
+  top: 25px;
+
+  ion-icon::before,
+  .white-noise-tag-icon ion-icon::before {
+    font-size: 36px;
+  }
+}
+
+.white-noise-icon-label {
+  font-size: 12px;
+  vertical-align: text-top;
+  margin-left: 3px;
+}
+.start-old-task {
+  label {
+    font-size: 12px;
+    color: #aaa;
+  }
+  span {
+    color: #12eeb9;
+    font-size: 18px;
+  }
+}
+.tomato-replay-icon {
+  font-size: 50px;
+  color: #f97271;
+}
+
+.active-task-title {
+  font-size: 27px;
+  color: #12eeb9;
+}
+.rest-title {
+  color: grey;
+}
+.break-tomato {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px 25px;
+  font-size: 1.5rem;
+}
+
+.break-tomato span {
+  border-color: #f97271;
+  color: #f97271;
+}

@@ -16,6 +16,11 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
+        path: 'tomato',
+        outlet: 'tomato',
+        loadChildren: '../pages/tomato/tomato.module#TomatoPageModule',
+      },
+      {
         path: 'home',
         outlet: 'home',
         component: HomePage,
@@ -48,4 +53,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

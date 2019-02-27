@@ -71,7 +71,7 @@ import { UserFriendService } from '@services/data/user_friend';
     Helper,
     TomatoIOService,
     ChatIOService,
-    UserFriendService
+    UserFriendService,
   ],
 })
 export class CoreModule { }
