@@ -1,0 +1,35 @@
+.divContainer{
+    margin-top:0px;
+}
+
+.statistics-container .scroll-content{
+    padding: 0px 5px;
+}
+
+.calendar-nav{
+    display: flex;
+    width: 48%;
+    flex-direction: row;
+    margin: auto;
+    margin-top:20px;
+    .left-nav, .right-nav{
+        text-align: center;
+        vertical-align: middle;
+        flex: 2;
+        color: #8c8c8c;
+        font-size: 30px;
+    }
+    .year-month-block{
+        text-align: center;
+        flex: 2;
+
+        .month-label{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 40px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            color: #F97271
+        }
+    }
+}
+
