@@ -7,9 +7,10 @@ import { Socket } from 'ngx-socket-io';
 
 @Injectable()
 export class TomatoIOService {
+  socket: Socket;
   hasConnected = false;
   userid;
-  constructor(public g: GlobalService, private socket: Socket) { }
+  constructor(public g: GlobalService) { }
 
   /**
    * 断线重连

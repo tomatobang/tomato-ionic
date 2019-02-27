@@ -11,8 +11,6 @@ import { StoreModule } from '@ngrx/store';
 import { RebirthHttpModule } from 'rebirth-http';
 
 import { SocketIoModule } from 'ngx-socket-io';
-
-
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';

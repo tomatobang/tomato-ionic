@@ -10,7 +10,8 @@ export class ChatIOService {
   hasConnected = false;
   userid;
 
-  constructor(public g: GlobalService) {}
+  constructor(public g: GlobalService) {
+  }
 
   /**
    * 断线重连

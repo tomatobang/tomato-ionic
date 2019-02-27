@@ -23,11 +23,8 @@ export class GuidePage {
   ) { }
 
   startApp() {
-    // this.navCtrl.push('LoginPage').then(() => {
-    //   this.storage.set('hasSeenGuide', 'true');
-    // });
-    // this.router.navigate(['login'])
-    // this.router.navigateByUrl('login');
+    this.storage.set('hasSeenGuide', 'true');
+    this.router.navigate(['login'])
   }
 
   onSlideChangeStart(slider: Slides) {

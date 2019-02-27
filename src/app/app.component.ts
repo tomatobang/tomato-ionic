@@ -110,6 +110,7 @@ export class MyApp {
   }
 
   initRoute() {
+    debugger;
       if (this.global.isFirstTimeOpen) {
         this.global.isFirstTimeOpen = false;
         this.router.navigate(['guide']);
@@ -125,6 +126,7 @@ export class MyApp {
               this.info.init();
               this.router.navigate(['tabs']);
             } else {
+              this.router.navigate(['login']);
               // token 过期
               // this.app.getRootNav().setRoot(
               //   'LoginPage',

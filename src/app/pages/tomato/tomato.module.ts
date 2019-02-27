@@ -21,7 +21,7 @@ import { File } from '@ionic-native/file/ngx';
 import { Media } from '@ionic-native/media/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-
+import { SocketIoModule } from 'ngx-socket-io';
 import { TomatoPageRoutingModule } from './tomato.router.module'
 
 @NgModule({
@@ -40,6 +40,7 @@ import { TomatoPageRoutingModule } from './tomato.router.module'
     SharedModule,
     CoreModule,
     TomatoPageRoutingModule,
+    SocketIoModule
   ],
   providers: [
     OnlineTaskService,
