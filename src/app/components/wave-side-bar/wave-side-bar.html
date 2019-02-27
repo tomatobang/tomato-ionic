@@ -1,0 +1,11 @@
+<div class="wave-side-bar-container">
+  <ul class="alpha-sidebar" draggable="true" (touchmove)="goList($event)" (touchend)="hidePromptBox()" (dragover)="$event.preventDefault()"
+    (touchstart)="goListByTouch($event)">
+    <li *ngFor="let data of wavadata" data-id="{{data.id}}">
+     {{ data.firstCode }}
+    </li>
+    <div class="alpha-promptBox" *ngIf="tipObj.isShow">
+      <div>{{ tipObj.content }}</div>
+    </div>
+  </ul>
+</div>

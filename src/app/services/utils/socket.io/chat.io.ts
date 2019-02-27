@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import { GlobalService } from '@services/global.service';
 import { chatSocketUrl } from '../../../config';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ChatIOService {
@@ -64,7 +65,7 @@ export class ChatIOService {
    * 接收消息
    */
   receive_message() {
-    return this.socket.fromEvent<any>('message_received').map(data => data);
+    return this.socket.fromEvent<any>('message_received').pipe(map(data => data));
   }
 
   /**
@@ -88,7 +89,7 @@ export class ChatIOService {
   load_online_friend_list_succeed() {
     return this.socket
       .fromEvent<any>('online_friendlist_received')
-      .map(data => data);
+      .pipe(map(data => data));
   }
 
   /**
@@ -108,7 +109,7 @@ export class ChatIOService {
   requestAddFriendSuccess() {
     return this.socket
       .fromEvent<any>('requestAddFriend_success')
-      .map(data => data);
+      .pipe(map(data => data));
   }
 
   /**
@@ -130,34 +131,34 @@ export class ChatIOService {
   responseAddFriendSuccess() {
     return this.socket
       .fromEvent<any>('responseAddFriend_success')
-      .map(data => data);
+      .pipe(map(data => data));
   }
 
   /**
    * 添加新好友
    */
   new_added_friend() {
-    return this.socket.fromEvent<any>('new_added_friend').map(data => data);
+    return this.socket.fromEvent<any>('new_added_friend').pipe(map(data => data));
   }
 
   /**
    * 好友在线
    */
   friend_online() {
-    return this.socket.fromEvent<any>('friend_online').map(data => data);
+    return this.socket.fromEvent<any>('friend_online').pipe(map(data => data));
   }
 
   /**
    * 好友离线
    */
   friend_offline() {
-    return this.socket.fromEvent<any>('friend_offline').map(data => data);
+    return this.socket.fromEvent<any>('friend_offline').pipe(map(data => data));
   }
 
   /**
    * 服务端错误消息
    */
   fail() {
-    return this.socket.fromEvent<any>('fail').map(data => data);
+    return this.socket.fromEvent<any>('fail').pipe(map(data => data));
   }
 }

@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 import { GlobalService } from '@services/global.service';
 import { tomatoSocketUrl } from '../../../config';
 import { Tomato } from '../../data/tomato';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable()
 export class TomatoIOService {
-  socket: Socket;
   hasConnected = false;
   userid;
-  constructor(public g: GlobalService) { }
+  constructor(public g: GlobalService, private socket: Socket) { }
 
   /**
    * 断线重连
@@ -61,7 +60,7 @@ export class TomatoIOService {
   }
 
   load_tomato_succeed() {
-    return this.socket.fromEvent<any>('load_tomato_succeed').map(data => data);
+    return this.socket.fromEvent('load_tomato_succeed').pipe(map(data => data));
   }
 
   /**
@@ -70,7 +69,7 @@ export class TomatoIOService {
   other_end_break_tomato() {
     return this.socket
       .fromEvent<any>('other_end_break_tomato')
-      .map(data => data);
+      .pipe(map(data => data));
   }
   /**
    * 中断番茄钟
@@ -87,7 +86,7 @@ export class TomatoIOService {
    * 中断番茄钟
    */
   break_tomato_succeed() {
-    this.socket.fromEvent<any>('break_tomato_succeed').map(data => data);
+    this.socket.fromEvent<any>('break_tomato_succeed').pipe(map(data => data));
   }
 
   /**
@@ -96,7 +95,7 @@ export class TomatoIOService {
   other_end_start_tomato() {
     return this.socket
       .fromEvent<any>('other_end_start_tomato')
-      .map(data => data);
+      .pipe(map(data => data));
   }
 
   /**
@@ -122,6 +121,6 @@ export class TomatoIOService {
    *
    */
   new_tomate_added() {
-    return this.socket.fromEvent<any>('new_tomate_added').map(data => data);
+    return this.socket.fromEvent<any>('new_tomate_added').pipe(map(data => data));
   }
 }

@@ -92,12 +92,11 @@
     "echarts": "^4.2.0-rc.2",
     "jpush-phonegap-plugin": "^3.4.7",
     "moment": "^2.22.2",
-    "ng-socket-io": "^0.2.4",
     "ngx-echarts": "^4.0.0",
+    "ngx-socket-io": "^2.1.1",
     "raven-js": "^3.27.0",
     "rebirth-http": "^6.0.2",
     "rxjs": "6.2.2",
-    "rxjs-compat": "^6.4.0",
     "todomvc-app-css": "^2.1.2",
     "todomvc-common": "^1.0.5",
     "zone.js": "^0.8.26"
