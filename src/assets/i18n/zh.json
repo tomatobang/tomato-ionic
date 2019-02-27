@@ -9,13 +9,17 @@
     "Scan": "扫码",
     "ScreenAlwaysLight": "屏幕常亮",
     "SwitchLanguage": "语言切换",
-    "LanguageCH":"中文",
-    "LanguageEN":"英文",
-    "Theme":"皮肤切换",
-    "Cancel":"取消",
-    "confirm":"确定",
-    "GetRandomNumber":"点击获取随机数",
-    "Calendar":"日历",
-    "DynamicForm":"动态表单"
+    "LanguageCH": "中文",
+    "LanguageEN": "英文",
+    "Theme": "皮肤切换",
+    "Cancel": "取消",
+    "confirm": "确定",
+    "GetRandomNumber": "点击获取随机数",
+    "Calendar": "日历",
+    "DynamicForm": "动态表单",
+    "IndexPage": "首页",
+    "Tomatobang": "番茄帮",
+    "Message": "消息",
+    "Discover": "发现"
   }
 }
