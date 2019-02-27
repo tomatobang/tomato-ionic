@@ -19,6 +19,7 @@ import {
   FileTransfer,
   FileTransferObject,
 } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 declare var window;
 
@@ -38,8 +39,9 @@ export class NativeService {
     private network: Network,
     private localNotifications: LocalNotifications,
     private appCenterAnalytics: AppCenterAnalytics,
-    private appCenterCrashes: AppCenterCrashes
-  ) {}
+    private appCenterCrashes: AppCenterCrashes,
+    private file: File
+  ) { }
 
   /**
    * 初始化
@@ -113,7 +115,7 @@ export class NativeService {
    */
   throttle(fn, delay) {
     let timer = null;
-    return function(msg) {
+    return function (msg) {
       clearTimeout(timer);
       timer = setTimeout(() => {
         fn(msg);
@@ -140,8 +142,66 @@ export class NativeService {
    * 本地通知
    * @param obj
    */
-  localNotify(obj: { id; text; sound?; data?; trigger? }) {
+  localNotify(obj: { id; text; sound?; data?; trigger?}) {
     this.localNotifications.schedule([obj]);
+  }
+
+  getBasePath() {
+    let basePath;
+    if (this.platform.is('ios')) {
+      basePath = window.cordova.file.documentsDirectory + 'TomatoBang/';
+    } else {
+      basePath = window.cordova.file.externalApplicationStorageDirectory;
+    }
+    return basePath;
+  }
+
+  downloadHeadImg(filename, change, remotepath) {
+    const targetPath = this.getBasePath() + 'headimg/';
+    const targetPathWithFileName =
+      this.getBasePath() + 'headimg/' + filename + '.png';
+    if (this.headimgurl && !change) {
+      return new Promise((resolve, reject) => {
+        resolve(this.headimgurl);
+      });
+    }
+
+    return new Promise((resolve, reject) => {
+      // 检查是否已下载过
+      this.file.checkFile(targetPath, filename + '.png').then(
+        success => {
+          if (change) {
+            // 先删除本地文件再下载
+            this.file.removeFile(targetPath, filename + '.png').then(() => {
+              this.filedownload(remotepath, targetPathWithFileName).then(
+                (file: any) => {
+                  this.headimgurl = file;
+                  resolve(file);
+                },
+                err => {
+                  reject(err);
+                }
+              );
+            });
+          } else {
+            // 直接使用本地文件
+            this.headimgurl = targetPathWithFileName;
+            resolve(targetPathWithFileName);
+          }
+        },
+        error => {
+          this.filedownload(remotepath, targetPathWithFileName).then(
+            (file: any) => {
+              this.headimgurl = file;
+              resolve(file);
+            },
+            err => {
+              reject(err);
+            }
+          );
+        }
+      );
+    });
   }
 
   /**
@@ -268,7 +328,7 @@ export class NativeService {
             .then(resolve)
             .catch(err => {
               // a zero lenght file is created while trying to download and save
-              fileEntry.remove(() => {});
+              fileEntry.remove(() => { });
               reject(err);
             }),
         reject

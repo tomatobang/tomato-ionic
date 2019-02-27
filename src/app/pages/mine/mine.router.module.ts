@@ -15,7 +15,7 @@ const routes: Routes = [
     component: MinePage,
   },
   {
-    path: 'aboet',
+    path: 'about',
     component: AboutPage,
   },
   {
