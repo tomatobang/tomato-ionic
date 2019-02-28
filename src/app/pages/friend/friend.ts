@@ -77,14 +77,14 @@ export class FriendPage {
    * 跳转至消息页
    */
   toMessagePage() {
-    this.router.navigate(['message']);
+    this.router.navigate(['./friend/message']);
   }
 
   /**
    * 跳转至搜索页
    */
   ToSearchPage() {
-    this.router.navigate(['search']);
+    this.router.navigate(['./friend/search']);
   }
 
   /**

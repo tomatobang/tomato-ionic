@@ -1,30 +1,7 @@
 <ion-tabs>
 
-  <ion-tab tab="tomato-view">
-    <ion-router-outlet name="tomato"></ion-router-outlet>
-  </ion-tab>
-  <!-- <ion-tab tab="home-view">
-    <ion-router-outlet name="home"></ion-router-outlet>
-  </ion-tab> -->
-  <ion-tab tab="list-view">
-    <ion-router-outlet name="list"></ion-router-outlet>
-  </ion-tab>
-  <!-- <ion-tab tab="test-view">
-    <ion-router-outlet name="test"></ion-router-outlet>
-  </ion-tab> -->
-  <ion-tab tab="message-view">
-    <ion-router-outlet name="message"></ion-router-outlet>
-  </ion-tab>
-  <ion-tab tab="friend-view">
-    <ion-router-outlet name="friend"></ion-router-outlet>
-  </ion-tab>
-
-  <ion-tab tab="me-view">
-    <ion-router-outlet name="me"></ion-router-outlet>
-  </ion-tab>
-
   <ion-tab-bar slot="bottom">
-    <ion-tab-button href="/tabs/(tomato:tomato)" tab="tomato-view">
+    <ion-tab-button tab="tomato">
       <ion-icon name="information-circle"></ion-icon>
       <ion-label>{{ 'HOME.TomatoPage' | translate }}</ion-label>
     </ion-tab-button>
@@ -34,7 +11,7 @@
       <ion-label>{{ 'HOME.Home' | translate }}</ion-label>
     </ion-tab-button> -->
 
-    <ion-tab-button href="/tabs/(list:list)" tab="list-view">
+    <ion-tab-button tab="list">
       <ion-icon name="information-circle"></ion-icon>
       <ion-label>{{ 'HOME.List' | translate }}</ion-label>
     </ion-tab-button>
@@ -43,17 +20,17 @@
       <ion-icon name="hammer"></ion-icon>
       <ion-label>{{ 'HOME.Test' | translate }}</ion-label>
     </ion-tab-button> -->
-    <ion-tab-button href="/tabs/(message:message)" tab="message-view">
+    <ion-tab-button tab="message">
       <ion-icon name="hammer"></ion-icon>
       <ion-label>消息</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button href="/tabs/(friend:friend)" tab="friend-view">
+    <ion-tab-button tab="friend">
       <ion-icon name="hammer"></ion-icon>
       <ion-label>圈子</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button href="/tabs/(me:me)" tab="me-view">
+    <ion-tab-button tab="me">
       <ion-icon name="hammer"></ion-icon>
       <ion-label>{{ 'HOME.Me' | translate }}</ion-label>
     </ion-tab-button>

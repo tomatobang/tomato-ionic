@@ -11,7 +11,9 @@ import { TaskPage } from './task/task';
   styleUrls: ['./tomato.scss']
 })
 export class TomatoPage {
-
+  slideOpts = {
+    effect: 'flip'
+  };
   page_title = '番茄';
   segment = 'index';
   @ViewChild('tomato_slides') slides;

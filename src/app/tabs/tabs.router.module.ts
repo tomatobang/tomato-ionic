@@ -17,8 +17,12 @@ const routes: Routes = [
       },
       {
         path: 'tomato',
-        outlet: 'tomato',
-        loadChildren: '../pages/tomato/tomato.module#TomatoPageModule',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/tomato/tomato.module#TomatoPageModule',
+          },
+        ]
       },
       {
         path: 'home',
@@ -32,23 +36,40 @@ const routes: Routes = [
       },
       {
         path: 'list',
-        outlet: 'list',
-        loadChildren: '../pages/list/list.module#ListPageModule',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/list/list.module#ListPageModule',
+          },
+        ]
       },
       {
         path: 'friend',
-        outlet: 'friend',
-        loadChildren: '../pages/friend/friend.module#FriendPageModule',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/friend/friend.module#FriendPageModule',
+          },
+        ]
       },
       {
         path: 'message',
-        outlet: 'message',
-        loadChildren: '../pages/message/message.module#MessagePageModule',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/message/message.module#MessagePageModule',
+
+          },
+        ]
       },
       {
         path: 'me',
-        outlet: 'me',
-        loadChildren: '../pages/mine/mine.module#MinePageModule',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/mine/mine.module#MinePageModule',
+          },
+        ]
       },
     ],
   },
