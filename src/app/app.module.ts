@@ -1,5 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { ErrorHandler, NgModule,Injectable } from '@angular/core';
+
+@Injectable()
+export class IonicGestureConfig extends HammerGestureConfig {
+  buildHammer(element: HTMLElement) {
+    const mc = new (<any>window).Hammer(element);
+    for (const eventName of Object.keys(this.overrides)) {
+      mc.get(eventName).set(this.overrides[eventName]);
+    }
+    return mc;
+  }
+}
+
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/Storage';
@@ -40,6 +53,7 @@ import { RavenErrorHandler } from './raven-error-handler.';
   bootstrap: [MyApp],
   entryComponents: [MyApp],
   providers: [
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }

@@ -5,7 +5,6 @@ import { Store, select } from '@ngrx/store';
 import { GameAction } from './game.action';
 
 import { IPosition } from '../interfaces/position';
-import 'rxjs/add/operator/map';
 
 import * as fromGame from './game.reducer';
 

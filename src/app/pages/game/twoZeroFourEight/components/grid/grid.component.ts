@@ -3,7 +3,8 @@ import { ITile } from '../../interfaces/index';
 
 @Component({
   selector: 'grid',
-  templateUrl: './grid.component.html'
+  templateUrl: './grid.component.html',
+  styleUrls: ['../../twoZeroFourEight.scss']
 })
 
 export class GridComponent {

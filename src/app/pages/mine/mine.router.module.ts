@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'statistics',
     component: StatisticsPage,
   },
+  {
+    path: 'game',
+    loadChildren: '../game//twoZeroFourEight/twoZeroFourEight.module#TwoZeroFourEightPageModule',
+  },
 ];
 
 @NgModule({

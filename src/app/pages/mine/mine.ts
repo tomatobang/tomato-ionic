@@ -110,7 +110,7 @@ export class MinePage implements OnInit {
   }
 
   toGameBoard() {
-    this.router.navigate(['game']);
+    this.router.navigate(['tabs/me/game']);
   }
 
   /**

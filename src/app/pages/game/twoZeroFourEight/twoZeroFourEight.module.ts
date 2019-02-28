@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 import { TwoZeroFourEightPage } from './twoZeroFourEight';
 
 import { GridComponent } from './components/grid/grid.component';
@@ -13,6 +14,8 @@ import { UniqueIdService } from './services/uniqueId.service';
 import { GameService } from './services/game.service';
 import { GridService } from './services/grid.service';
 
+import { TwoZeroFourEightPageRoutingModule } from './twoZeroFourEight.router.module'
+
 @NgModule({
   declarations: [
     TwoZeroFourEightPage,
@@ -22,6 +25,8 @@ import { GridService } from './services/grid.service';
   ],
   imports: [
     IonicModule,
+    CommonModule,
+    TwoZeroFourEightPageRoutingModule,
     StoreModule.forRoot({ game: GameReducer }),
   ],
   providers: [UniqueIdService, GameService, GridService],

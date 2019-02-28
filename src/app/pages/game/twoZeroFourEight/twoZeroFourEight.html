@@ -5,11 +5,13 @@
 </ion-header>
 
 <ion-content padding no-bounce>
-  <div class="container">
-      <div class="scores-container">
-        <div class="score-container">{{ game.currentScore | async }}</div>
-        <div class="best-container">{{ game.highScore | async }}</div>
-      </div>
+  <div class="container" (swipeleft)="onSwipeLeft($event)" (swiperight)="onSwipeRight($event)" (swipeup)="onSwipeUp($event)"
+    (swipedown)="onSwipeDown($event)">
+
+    <div class="scores-container">
+      <div class="score-container">{{ game.currentScore | async }}</div>
+      <div class="best-container">{{ game.highScore | async }}</div>
+    </div>
 
     <div #gameContainer class="game-container">
       <message [won]="game.won | async" *ngIf="game.gameOver | async"></message>

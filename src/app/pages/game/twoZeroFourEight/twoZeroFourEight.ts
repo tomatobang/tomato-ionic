@@ -8,16 +8,14 @@ import {
 import { GameService } from './services/game.service';
 import { DIRECTIONS } from './enums/index';
 import { Events } from '@ionic/angular';
-import { GestureController } from '@ionic/core/dist/collection/utils/gesture/gesture-controller';
-declare var Hammer: any;
 
 @Component({
   selector: 'TwoZeroFourEight',
   templateUrl: './twoZeroFourEight.html',
+  styleUrls: ['./twoZeroFourEight.scss']
 })
 
 export class TwoZeroFourEightPage implements OnInit {
-  swipeGesture: GestureController;
   @ViewChild('gameContainer') gameContainer: ElementRef;
 
   constructor(public game: GameService, public events: Events) { }
@@ -28,37 +26,36 @@ export class TwoZeroFourEightPage implements OnInit {
 
   ngOnInit() {
     this.newGame();
+    this.key = '';
   }
 
-  ionViewDidLoad() {
-    this.swipeGesture = new GestureController(this.gameContainer.nativeElement, {
-      recognizers: [[Hammer.Swipe, { direction: Hammer.DIRECTION_ALL }]],
-    });
-    this.swipeGesture.listen();
-    let key = '';
-    this.swipeGesture.on('swipeleft', e => {
-      console.log('swipeleft');
-      key = DIRECTIONS[37];
-      this.game.move(key);
-    });
-    this.swipeGesture.on('swiperight', e => {
-      console.log('swiperight');
-      key = DIRECTIONS[39];
-      this.game.move(key);
-    });
-
-    this.swipeGesture.on('swipeup', e => {
-      console.log('swipeup');
-      key = DIRECTIONS[38];
-      this.game.move(key);
-    });
-
-    this.swipeGesture.on('swipedown', e => {
-      console.log('swipedown');
-      key = DIRECTIONS[40];
-      this.game.move(key);
-    });
+  ionViewDidEnter() {
   }
+
+  key = '';
+  onSwipeLeft() {
+    console.log('swipeleft');
+    this.key = DIRECTIONS[37];
+    this.game.move(this.key);
+  }
+  onSwipeRight() {
+    console.log('swiperight');
+    this.key = DIRECTIONS[39];
+    this.game.move(this.key);
+  }
+
+  onSwipeUp() {
+    console.log('swipeup');
+    this.key = DIRECTIONS[38];
+    this.game.move(this.key);
+  }
+
+  onSwipeDown() {
+    console.log('swipedown');
+    this.key = DIRECTIONS[40];
+    this.game.move(this.key);
+  }
+
 
   @HostListener('window:keydown', ['$event'])
   public onKeydown(event: KeyboardEvent): void {

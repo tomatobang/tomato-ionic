@@ -3,7 +3,8 @@ import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'message',
-  templateUrl: './message.component.html'
+  templateUrl: './message.component.html',
+  styleUrls: ['../../twoZeroFourEight.scss']
 })
 
 export class MessageComponent {
