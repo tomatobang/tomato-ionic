@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {
   ModalController,
-  NavParams,
 } from '@ionic/angular';
 
 @Component({
@@ -15,7 +14,6 @@ export class QRImgModal {
   public headImg: String;
 
   constructor(
-    private params: NavParams,
     private modalCtrl: ModalController,
   ) {
     const userid = params.get('userid');

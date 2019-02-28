@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
     <ion-title>关于</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -7,7 +10,7 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-     {{ appversion }}
+      {{ appversion }}
     </ion-card-header>
     <img src="./assets/imgs/logo.png" />
     <ion-card-content>

@@ -6,11 +6,9 @@ import { RebirthHttpProvider } from 'rebirth-http';
 import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
-import { Router } from '@angular/router';
-
 import { Store } from '@ngrx/store';
 import { LoginActionTypes, Login } from './ngrx/login.actions';
-
+import { Router, ActivatedRoute } from '@angular/router';
 import { State } from './ngrx/login.reducer';
 
 @Component({
@@ -38,13 +36,15 @@ export class LoginPage implements OnInit {
     private toastCtrl: ToastController,
     private jPushService: JPush,
     private router: Router,
-    // public navParams: NavParams,
+    private actrouter: ActivatedRoute,
     private info: InfoService,
     private chatIO: ChatIOService,
     private store$: Store<State>
   ) {
-    // this.user.username = navParams.get('username');
-    // this.user.password = navParams.get('password');
+    this.actrouter.queryParams.subscribe((queryParams) => {
+      this.user.username = queryParams["username"];
+      this.user.password = queryParams["password"];
+    });
   }
 
   ngOnInit() {

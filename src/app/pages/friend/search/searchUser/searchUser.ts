@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams } from '@ionic/angular';
 import { OnlineUserService } from '@services/data.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
@@ -15,7 +14,6 @@ export class SearchUserPage implements OnInit {
 
   constructor(
     public userservice: OnlineUserService,
-    public navParams: NavParams,
     public chatIO: ChatIOService,
     public global: GlobalService
   ) { }

@@ -9,7 +9,7 @@ import {
   AfterViewInit,
   HostBinding,
 } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import {
   CalendarDay,
   CalendarMonth,
@@ -133,11 +133,10 @@ export class CalendarModal implements OnInit, AfterViewInit {
   constructor(
     private _renderer: Renderer2,
     public _elementRef: ElementRef,
-    public params: NavParams,
     public modalCtrl: ModalController,
     public ref: ChangeDetectorRef,
     public calSvc: CalendarService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.init();

@@ -1,11 +1,14 @@
 <ion-header>
   <ion-toolbar [class.show-background]="showToolbar">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
     <ion-title [hidden]="!showToolbar">{{ friendName }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content #friendinfo_content class="content" (ionScroll)="onScroll($event)" [class.transition]="transition" [style.background-size]="headerImgSize"
-  [style.background-image]="'url('+ headerImgUrl+ ')'">
+<ion-content #friendinfo_content class="content" (ionScroll)="onScroll($event)" [class.transition]="transition"
+  [style.background-size]="headerImgSize" [style.background-image]="'url('+ headerImgUrl+ ')'">
   <div class="user-info">
     <img src="assets/tomato-grey.png" alt="">
     <h4>{{ friendName }}</h4>

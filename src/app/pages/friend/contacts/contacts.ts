@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { NavController } from '@ionic/angular';
 import { PinyinService } from '@services/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
 import { GlobalService } from '@services/global.service';
@@ -34,7 +33,6 @@ export class ContactsPage implements OnInit {
   constructor(
     private pinyinUtil: PinyinService,
     private http: HttpClient,
-    public navCtrl: NavController,
     private el: ElementRef,
     public globalService: GlobalService,
     public cache: CacheService,

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
-import {NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Events } from '@ionic/angular';
 
 import { ChatMessage } from './providers/chat-message.model';
@@ -8,6 +8,7 @@ import { GlobalService } from '@services/global.service';
 import { CacheService } from '@services/cache.service';
 import { InfoService } from '@services/info.service';
 import { MessageService } from '@services//data/message/message.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'page-chat',
@@ -26,7 +27,7 @@ export class ChatPage {
   isOpenEmojiPicker = false;
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
+    private actrouter: ActivatedRoute,
     public chatService: ChatService,
     public events: Events,
     public ref: ChangeDetectorRef,
@@ -35,61 +36,66 @@ export class ChatPage {
     public cache: CacheService,
     public messageService: MessageService
   ) {
-    this.toUserId = navParams.get('toUserId');
-    this.toUserName = navParams.get('toUserName');
-    this.userId = this.globalService.userinfo._id;
-    this.userName = this.globalService.userinfo.username;
+    this.actrouter.queryParams.subscribe((queryParams) => {
+      this.toUserId = queryParams["toUserId"];
+      this.toUserName = queryParams["toUserName"];
 
-    this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
-      let minusCount = 0;
-      for (let index = 0; index < messages.length; index++) {
-        const newMsg: ChatMessage = {
-          messageId: messages[index].create_at,
-          userId: messages[index].from ? messages[index].from : this.toUserId,
-          userName: this.toUserName,
-          userImgUrl: './assets/tomato-active.png',
-          toUserId: messages[index].to ? messages[index].to : this.userId,
-          time: messages[index].create_at,
-          message: messages[index].content,
-          status: 'success',
-        };
-        this.pushNewMsg(newMsg);
-        if (!messages[index].has_read) {
-          minusCount -= 1;
-          this.updateMsgState(messages[index]._id);
-        }
-      }
-      if (minusCount < 0) {
-        this.info.addUnreadMsgCount(minusCount, this.toUserId);
-        this.info.updateMessageState(this.toUserId);
-      }
-    });
+      this.userId = this.globalService.userinfo._id;
+      this.userName = this.globalService.userinfo.username;
 
-    // 监听实时消息
-    this.info.realtimeMsgMonitor.subscribe(data => {
-      if (data) {
-        if (this.toUserId !== data.from) {
-          return;
-        }
-        this.getFriendName(data.from).then(name => {
+      this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
+        let minusCount = 0;
+        for (let index = 0; index < messages.length; index++) {
           const newMsg: ChatMessage = {
-            messageId: data.create_at,
-            userId: data.from,
-            userName: name,
+            messageId: messages[index].create_at,
+            userId: messages[index].from ? messages[index].from : this.toUserId,
+            userName: this.toUserName,
             userImgUrl: './assets/tomato-active.png',
-            toUserId: data.to,
-            time: data.create_at,
-            message: data.content,
+            toUserId: messages[index].to ? messages[index].to : this.userId,
+            time: messages[index].create_at,
+            message: messages[index].content,
             status: 'success',
           };
-          if (!data.has_read) {
-            this.updateMsgState(data._id);
-          }
-          this.info.addUnreadMsgCount(0, this.toUserId);
           this.pushNewMsg(newMsg);
-        });
-      }
+          if (!messages[index].has_read) {
+            minusCount -= 1;
+            this.updateMsgState(messages[index]._id);
+          }
+        }
+        if (minusCount < 0) {
+          this.info.addUnreadMsgCount(minusCount, this.toUserId);
+          this.info.updateMessageState(this.toUserId);
+        }
+      });
+
+      // 监听实时消息
+      this.info.realtimeMsgMonitor.subscribe(data => {
+        if (data) {
+          if (this.toUserId !== data.from) {
+            return;
+          }
+          this.getFriendName(data.from).then(name => {
+            const newMsg: ChatMessage = {
+              messageId: data.create_at,
+              userId: data.from,
+              userName: name,
+              userImgUrl: './assets/tomato-active.png',
+              toUserId: data.to,
+              time: data.create_at,
+              message: data.content,
+              status: 'success',
+            };
+            if (!data.has_read) {
+              this.updateMsgState(data._id);
+            }
+            this.info.addUnreadMsgCount(0, this.toUserId);
+            this.pushNewMsg(newMsg);
+          });
+        }
+      });
     });
+
+
   }
 
   /**
@@ -222,7 +228,7 @@ export class ChatPage {
   scrollToBottom() {
     setTimeout(() => {
       // if (this.content._scroll) {
-        this.content.scrollToBottom();
+      this.content.scrollToBottom();
       // }
     }, 400);
   }

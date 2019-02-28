@@ -49,7 +49,7 @@
 
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'hot'" class="friend-working-on-list">
-            <div class="tomato-friend-task-list" navPush="FriendInfoPage">
+            <div class="tomato-friend-task-list" (click)="toFriendInfo()">
                 <div class="tomato-friend-task-top">
                     <span class="tomato-friend-task-state">
                         <span class="tomato-friend-task-name">张三</span>的番茄钟“打卡健身”正在进行中...

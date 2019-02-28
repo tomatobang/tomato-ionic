@@ -61,8 +61,10 @@ export class Helper {
   }
 
   dealWithLocalUrl(url): SafeUrl {
-    url = window.Ionic.WebView.convertFileSrc(url) + '?' + new Date().getTime();
-    url = this.sanitizer.bypassSecurityTrustUrl(url);
+    if (window.cordova) {
+      url = window.Ionic.WebView.convertFileSrc(url) + '?' + new Date().getTime();
+      url = this.sanitizer.bypassSecurityTrustUrl(url);
+    }
     return url;
   }
 }

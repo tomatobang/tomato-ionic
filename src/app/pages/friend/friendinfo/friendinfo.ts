@@ -1,10 +1,8 @@
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { NavParams } from '@ionic/angular';
-
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
 import { OnlineUserService } from '@services/data.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'page-friendinfo',
@@ -25,17 +23,20 @@ export class FriendInfoPage {
 
   constructor(
     public ref: ChangeDetectorRef,
-    public navParams: NavParams,
     public chatIO: ChatIOService,
     public global: GlobalService,
     public userservice: OnlineUserService,
-    private router: Router
+    private router: Router,
+    private actrouter: ActivatedRoute,
+    
   ) {
     this.userid = this.global.userinfo._id;
-    this.friendid = navParams.get('userid');
-    this.friendName = navParams.get('friendname');
-    this.loadUserInfo(this.friendid);
-
+    this.actrouter.queryParams.subscribe((queryParams)=>{
+      this.friendid = queryParams["userid"];
+      this.friendName = queryParams["friendname"];
+      this.loadUserInfo(this.friendid);
+    });
+   
     if (this.friendid && !this.friendName) {
       this.isFriend = false;
     } else {

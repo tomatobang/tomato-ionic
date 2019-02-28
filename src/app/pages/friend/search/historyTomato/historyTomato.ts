@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavParams } from '@ionic/angular';
 import { OnlineTomatoService } from '@services/data.service';
 
 
@@ -14,7 +13,6 @@ export class HistoryTomatoPage {
 
   constructor(
     public tomatoservice: OnlineTomatoService,
-    public navParams: NavParams
   ) {}
 
   ionViewDidLoad() {}

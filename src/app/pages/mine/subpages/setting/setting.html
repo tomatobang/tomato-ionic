@@ -1,5 +1,8 @@
 <ion-header>
     <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text=""></ion-back-button>
+        </ion-buttons>
         <ion-title>设置</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -18,7 +21,8 @@
         <ion-item>
             <ion-icon name="sync" item-start color="primary"></ion-icon>
             <ion-label>长休息间隔番茄钟数</ion-label>
-            <ion-select [(ngModel)]="longbreakTomatoNum" (ngModelChange)="setLongbreakTomatoNum($event)" cancelText="取消" okText="确定!">
+            <ion-select [(ngModel)]="longbreakTomatoNum" (ngModelChange)="setLongbreakTomatoNum($event)" cancelText="取消"
+                okText="确定!">
                 <ion-select-option value="2">2</ion-select-option>
                 <ion-select-option value="4" selected="true">4</ion-select-option>
                 <ion-select-option value="5">5</ion-select-option>
@@ -83,7 +87,7 @@
             </ion-select>
         </ion-item>
         <ion-item>
-            <button ion-button  (click)="clearMsgCache()">
+            <button ion-button (click)="clearMsgCache()">
                 清除消息记录
             </button>
         </ion-item>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { GlobalService } from '@services/global.service';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/Storage';
 
 @Component({
   selector: 'cmp-setting',

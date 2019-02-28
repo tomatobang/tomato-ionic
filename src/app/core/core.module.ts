@@ -31,6 +31,8 @@ import { InfoService } from '@services/info.service';
 import { CacheService } from '@services/cache.service';
 import { MessageService } from '@services/data/message/message.service';
 import { OnlineUserService } from '@services/data.service';
+import { OnlineTomatoService } from '@services/data.service';
+
 import { Helper } from '@services/utils/helper';
 
 import {
@@ -68,6 +70,7 @@ import { UserFriendService } from '@services/data/user_friend';
     CacheService,
     MessageService,
     OnlineUserService,
+    OnlineTomatoService,
     Helper,
     TomatoIOService,
     ChatIOService,

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams } from '@ionic/angular';
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'friend-tomatoes',
@@ -10,10 +9,13 @@ export class FriendTomatoesPage implements OnInit {
   title = '';
   tomatoes: Array<any>;
 
-  constructor(public navParams: NavParams) {}
+  constructor(public actrouter: ActivatedRoute) { }
 
   ngOnInit() {
-    this.title = this.navParams.get('friendName');
-    this.tomatoes = new Array(10).fill('');
+
+    this.actrouter.queryParams.subscribe((queryParams) => {
+      this.title = queryParams["friendName"];
+      this.tomatoes = new Array(10).fill('');
+    });
   }
 }

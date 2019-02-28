@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component } from '@angular/core';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
 import { Router } from '@angular/router';
@@ -10,8 +9,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./friend.scss']
 })
 export class FriendPage {
+  
   pullingIcon = false;
-  isShowMenuCard = false;
+  isShowMenuCard = true;
+
   public rankList: {
     title: string;
     image: string;
@@ -68,7 +69,6 @@ export class FriendPage {
   // @ViewChild('qrScanner') qrScanner: QRScannerComponent;
 
   constructor(
-    public navCtrl: NavController,
     public chatIO: ChatIOService,
     public globalservice: GlobalService,
     private router: Router
@@ -78,14 +78,14 @@ export class FriendPage {
    * 跳转至消息页
    */
   toMessagePage() {
-    this.router.navigate(['./friend/message']);
+    this.router.navigate(['tabs/friend/message']);
   }
 
   /**
    * 跳转至搜索页
    */
   ToSearchPage() {
-    this.router.navigate(['./friend/search']);
+    this.router.navigate(['tabs/friend/search']);
   }
 
   /**
@@ -99,7 +99,7 @@ export class FriendPage {
    * 跳转至通讯录
    */
   ToContactsPage() {
-    this.router.navigate(['contact']);
+    this.router.navigate(['tabs/friend/contact']);
   }
 
   /**
@@ -108,11 +108,15 @@ export class FriendPage {
    */
   onScanQRCode(qrCode: object) {
     alert('成功扫描到:' + JSON.stringify(qrCode));
-    this.router.navigate(['friendinfo'], {
+    this.router.navigate(['tabs/friend/friendinfo'], {
       queryParams: {
         userid: JSON.stringify(qrCode),
       }
     });
+  }
+
+  toFriendInfo() {
+    this.router.navigate(['tabs/friend/friendinfo']);
   }
 
   /**
@@ -121,19 +125,5 @@ export class FriendPage {
    */
   onScanQRCodeERR(evt) {
     console.log('扫码错误', evt);
-  }
-
-  showRefresher() {
-    this.pullingIcon = true;
-  }
-
-  showMenuCard() {
-    this.isShowMenuCard = true;
-    this.pullingIcon = false;
-  }
-
-  hideMenuCard() {
-    this.isShowMenuCard = false;
-    this.pullingIcon = false;
   }
 }

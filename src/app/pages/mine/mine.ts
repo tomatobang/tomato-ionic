@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController,Platform, ModalController } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
@@ -35,7 +35,9 @@ export class MinePage implements OnInit {
     public tomatoIO: TomatoIOService,
     public userService: OnlineUserService,
     private helper: Helper,
-    private router: Router
+    private router: Router,
+    private actrouter: ActivatedRoute,
+    
   ) { }
 
   public ngOnInit(): void {
@@ -86,20 +88,24 @@ export class MinePage implements OnInit {
 
   setting() {
     console.log('setting!');
-    this.router.navigate(['setting']);
+    this.router.navigate(['tabs/me/setting']);
+    
   }
 
   about() {
     console.log('about!');
-    this.router.navigate(['about']);
+    this.router.navigate(['tabs/me/about']);
   }
 
   profile() {
-    this.router.navigate(['profile']);
+    this.router.navigate(['tabs/me/profile']);
   }
 
   statistics() {
-    this.router.navigate(['statistics']);
+    this.router.navigate(['tabs/me/statistics']);
+    // this.router.navigate(['statistics'],{
+    //   relativeTo:this.actrouter
+    // });
   }
 
   toGameBoard() {

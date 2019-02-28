@@ -1,5 +1,8 @@
 <ion-header>
     <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text=""></ion-back-button>
+        </ion-buttons>
         <ion-title>个人资料</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -9,37 +12,37 @@
         <ion-item>
             <h2>用户名</h2>
             <ion-note item-end>
-               {{ username }}
+                {{ username }}
             </ion-note>
         </ion-item>
-        <button ion-item (click)="changeHeadImg()">
+        <ion-item (click)="changeHeadImg()">
             <h2>头像</h2>
             <ion-note item-end>
-                <img [src]="headImg" class="headImg"/>
+                <img [src]="headImg" class="headImg" />
             </ion-note>
-        </button>
-        <button ion-item (click)="changeBio()">
+        </ion-item>
+        <ion-item (click)="changeBio()">
             <h2>签名</h2>
             <ion-note item-end>
-               {{ bio | StringTruncate: 14 }} 
+                {{ bio | StringTruncate: 14 }}
             </ion-note>
-        </button>
-        <button ion-item (click)="changeSex()">
+        </ion-item>
+        <ion-item (click)="changeSex()">
             <h2>性别</h2>
             <ion-note item-end> {{ sex=="sec"? "保密":sex }} </ion-note>
-        </button>
-        <button ion-item (click)="changeDisplayName()">
+        </ion-item>
+        <ion-item (click)="changeDisplayName()">
             <h2>昵称</h2>
             <ion-note item-end> {{ displayName }} </ion-note>
-        </button>
-        <button ion-item (click)="changeEmail()">
+        </ion-item>
+        <ion-item (click)="changeEmail()">
             <h2>邮箱</h2>
             <ion-note item-end> {{ email }} </ion-note>
-        </button>
-        <button ion-item (click)="changeLocation()">
+        </ion-item>
+        <ion-item (click)="changeLocation()">
             <h2>所在地</h2>
             <ion-note item-end> {{ location }} </ion-note>
-        </button>
+        </ion-item>
     </ion-list>
 
 </ion-content>

@@ -1,13 +1,12 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
 })
 export class SearchPage {
-  constructor(public router: Router, public navParams: NavParams) { }
+  constructor(public router: Router) { }
 
   ionViewDidLoad() { }
 
