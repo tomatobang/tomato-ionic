@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
-import { HomePage } from '../pages/home/home.page';
 import { TestPage } from '../pages/test/test.page';
 
 const routes: Routes = [
@@ -12,7 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/tabs/(home:home)',
+        redirectTo: '/tabs/tomato',
         pathMatch: 'full',
       },
       {
@@ -23,11 +22,6 @@ const routes: Routes = [
             loadChildren: '../pages/tomato/tomato.module#TomatoPageModule',
           },
         ]
-      },
-      {
-        path: 'home',
-        outlet: 'home',
-        component: HomePage,
       },
       {
         path: 'test',
@@ -75,7 +69,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/(home:home)',
+    redirectTo: '/tabs/tomato',
     pathMatch: 'full',
   },
   {

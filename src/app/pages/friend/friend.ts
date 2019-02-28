@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'cmp-friend',
   templateUrl: 'friend.html',
+  styleUrls: ['./friend.scss']
 })
 export class FriendPage {
   pullingIcon = false;

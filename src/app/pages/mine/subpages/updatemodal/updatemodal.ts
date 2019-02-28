@@ -3,7 +3,8 @@ import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'cmp-updatemodal',
-  templateUrl: 'updatemodal.html'
+  templateUrl: 'updatemodal.html',
+  styleUrls: ['./updatemodal.scss']
 })
 export class UpdatemodalPage implements OnInit {
   update: string;

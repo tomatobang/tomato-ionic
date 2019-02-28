@@ -5,6 +5,7 @@ declare var window;
 @Component({
   selector: 'cmp-about',
   templateUrl: 'about.html',
+  styleUrls: ['./about.scss']
 })
 export class AboutPage implements OnInit {
   appversion: any;

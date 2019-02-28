@@ -1,37 +1,37 @@
-page-register{
   .register-container {
-    margin: auto;
-    background: white;
-    padding: 0 10px;
+      margin: auto;
+      background: white;
+      padding: 0 10px;
   }
-  .text-danger {
-    color: red;
-  }
-  .register-submit-block {
-    margin-top: 25px;
-    margin-bottom: 40px;
-  }
-  .register-logo {
-    width: 90px;
-    height: 90px;
-    background-size: contain;
-    background-image: url(/assets/tomatobang.jpg);
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 25px;
-    border-radius: 50%;
-  }
-  
-  .register-button-area {
-    text-align: center;
-  }
-  
-  .register-button-area button {
-    width: 80%;
-  }
-  .register-button-area .button-outline {
-    color: #111;
-  }
-  
-}
 
+  .text-danger {
+      color: red;
+  }
+
+  .register-submit-block {
+      margin-top: 25px;
+      margin-bottom: 40px;
+  }
+
+  .register-logo {
+      width: 90px;
+      height: 90px;
+      background-size: contain;
+      background-image: url(/assets/tomatobang.jpg);
+      margin: auto;
+      margin-top: 50px;
+      margin-bottom: 25px;
+      border-radius: 50%;
+  }
+
+  .register-button-area {
+      text-align: center;
+  }
+
+  .register-button-area button {
+      width: 80%;
+  }
+
+  .register-button-area .button-outline {
+      color: #111;
+  }

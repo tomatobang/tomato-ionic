@@ -8,6 +8,7 @@ declare var window;
 @Component({
   selector: 'cmp-statistics',
   templateUrl: 'statistics.html',
+  styleUrls: ['./statistics.scss']
 })
 export class StatisticsPage implements OnInit {
   @ViewChild('divContainer') divContainer;

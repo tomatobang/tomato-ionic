@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'cmp-message',
   templateUrl: 'message.html',
+  styleUrls: ['./message.scss']
 })
 export class MessagePage implements OnInit {
   showType = 'msg';

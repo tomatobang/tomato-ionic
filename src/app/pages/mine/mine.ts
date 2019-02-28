@@ -14,6 +14,7 @@ import { QRScannerModal } from '@modals/qr-scanner/qr-scanner';
 @Component({
   selector: 'cmp-mine',
   templateUrl: 'mine.html',
+  styleUrls: ['./mine.scss']
 })
 export class MinePage implements OnInit {
   userid = '';

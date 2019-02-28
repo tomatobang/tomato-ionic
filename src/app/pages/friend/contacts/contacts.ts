@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'cmp-contacts',
   templateUrl: 'contacts.html',
+  styleUrls: ['./contacts.scss']
 })
 export class ContactsPage implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer;

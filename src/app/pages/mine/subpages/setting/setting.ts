@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 @Component({
   selector: 'cmp-setting',
   templateUrl: 'setting.html',
+  styleUrls: ['./setting.scss']
 })
 export class SettingPage implements OnInit {
   resttime: number;

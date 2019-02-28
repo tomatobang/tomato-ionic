@@ -1,15 +1,14 @@
-cmp-contacts {
-    ion-content>.scroll-content {
-        padding: 0px 2px !important;
-    }
-    .contact-sticker {
-        background: #F97271;
-        color: #fff;
-        position: absolute;
-        top: 0px;
-        z-index: 10;
-        width: 100%;
-    }
+ion-content>.scroll-content {
+    padding: 0px 2px !important;
+}
+
+.contact-sticker {
+    background: #F97271;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    z-index: 10;
+    width: 100%;
 }
 
 .contact-list {

@@ -2,8 +2,8 @@
     <div>
         {{ this.userBio }}
     </div>
-
 </div>
+
 <div class="start-old-task" *ngIf="currentTask.title && !activeTomato && !isResting">
     <label>继续上次任务:</label>
     <span>{{ currentTask.title }}</span>
@@ -11,7 +11,7 @@
         <ion-icon class="tomato-replay-icon" ios="ios-play" md="md-play" (click)="startTask(currentTask,true)"></ion-icon>
     </div>
 </div>
-<div>
+<div class="tomato-clock-block">
     <div angularRoundProgress [(timerStatus)]="timerStatus"></div>
 </div>
 <div class="active-task">

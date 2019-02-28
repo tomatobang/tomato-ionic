@@ -17,6 +17,7 @@ import { UpdatemodalPage } from '../updatemodal/updatemodal';
 @Component({
   selector: 'cmp-profile',
   templateUrl: 'profile.html',
+  styleUrls: ['./profile.scss']
 })
 export class ProfilePage implements OnInit {
   userid = '';
