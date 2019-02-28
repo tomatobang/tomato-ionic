@@ -70,7 +70,7 @@ export class TodaylistComponent implements OnInit {
     this.tomatoservice.getTodayTomatos(this.globalservice.token).subscribe(
       data => {
         if (refresher) {
-          refresher.complete();
+          refresher.target.complete();
         }
         const list = data;
         if (Array.isArray(list)) {
@@ -92,7 +92,7 @@ export class TodaylistComponent implements OnInit {
         console.error(err);
         if (refresher) {
           alert(err);
-          refresher.complete();
+          refresher.target.complete();
         }
       }
     );

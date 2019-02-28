@@ -12,15 +12,6 @@ import { VoiceRecorderComponent } from '@components/voice-recorder/';
 import { AutosizeDirective } from '@directives/autosize.directive';
 import { TaskPage } from './task/task';
 
-import {
-  OnlineTomatoService,
-  OnlineTaskService,
-} from '@services/data.service';
-import { VoicePlayService } from '@services/utils/voiceplay.service';
-import { File } from '@ionic-native/file/ngx';
-import { Media } from '@ionic-native/media/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { SocketIoModule } from 'ngx-socket-io';
 import { TomatoPageRoutingModule } from './tomato.router.module'
 
@@ -42,15 +33,7 @@ import { TomatoPageRoutingModule } from './tomato.router.module'
     TomatoPageRoutingModule,
     SocketIoModule
   ],
-  providers: [
-    OnlineTaskService,
-    OnlineTomatoService,
-    VoicePlayService,
-    File,
-    Media,
-    FileTransfer,
-    LocalNotifications,
-  ],
+  providers: [],
   entryComponents: [TaskPage],
   // to supress html syntax warning
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

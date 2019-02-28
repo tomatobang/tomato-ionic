@@ -8,8 +8,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { RebirthHttpModule } from 'rebirth-http';
-
 import { SocketIoModule } from 'ngx-socket-io';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -41,7 +39,6 @@ import { RavenErrorHandler } from './raven-error-handler.';
   entryComponents: [MyApp],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    RebirthHttpModule,
     // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],

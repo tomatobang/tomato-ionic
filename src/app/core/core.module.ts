@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
+import { Media } from '@ionic-native/media/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -32,7 +33,8 @@ import { CacheService } from '@services/cache.service';
 import { MessageService } from '@services/data/message/message.service';
 import { OnlineUserService } from '@services/data.service';
 import { OnlineTomatoService } from '@services/data.service';
-
+import { OnlineTaskService } from '@services/data.service';
+import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { Helper } from '@services/utils/helper';
 
 import {
@@ -50,6 +52,7 @@ import { UserFriendService } from '@services/data/user_friend';
     SplashScreen,
     BackgroundMode,
     File,
+    Media,
     JPush,
     FileTransfer,
     FileOpener,
@@ -71,10 +74,12 @@ import { UserFriendService } from '@services/data/user_friend';
     MessageService,
     OnlineUserService,
     OnlineTomatoService,
+    OnlineTaskService,
     Helper,
     TomatoIOService,
     ChatIOService,
     UserFriendService,
+    VoicePlayService,
   ],
 })
 export class CoreModule { }

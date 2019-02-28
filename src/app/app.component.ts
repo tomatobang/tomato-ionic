@@ -98,7 +98,6 @@ export class MyApp {
           });
         }
         this.backgroundMode.disable();
-        
       }
     });
 
@@ -112,41 +111,35 @@ export class MyApp {
   }
 
   initRoute() {
-      if (this.global.isFirstTimeOpen) {
-        this.global.isFirstTimeOpen = false;
-        this.router.navigate(['guide']);
+    if (this.global.isFirstTimeOpen) {
+      this.global.isFirstTimeOpen = false;
+      this.router.navigate(['guide']);
+    } else {
+      if (this.global.userinfo) {
+        this.rebirthProvider.headers({ Authorization: this.global.token }, true);
+        this.rebirthProvider.addResponseErrorInterceptor(err => {
+          console.error('请求错误！', err);
+        });
+
+        this.userService.auth().subscribe(data => {
+          if (data && data.status && data.status !== 'fail') {
+            this.chatIO.login(this.global.userinfo._id);
+            this.info.init();
+            this.router.navigate(['tabs']);
+          } else {
+            this.router.navigate(['login'], {
+              queryParams: {
+                username: this.global.userinfo.username,
+                password: this.global.userinfo.password,
+              }
+            });
+          }
+        });
+
       } else {
-        if (this.global.userinfo) {
-          this.rebirthProvider.headers({ Authorization: this.global.token }, true);
-          this.rebirthProvider.addResponseErrorInterceptor(err => {
-            console.error('请求错误！', err);
-          });
-          this.userService.auth().subscribe(data => {
-            if (data && data.status && data.status !== 'fail') {
-              this.chatIO.login(this.global.userinfo._id);
-              this.info.init();
-              this.router.navigate(['tabs']);
-            } else {
-              this.router.navigate(['login']);
-              // token 过期
-              // this.app.getRootNav().setRoot(
-              //   'LoginPage',
-              //   {
-              //     username: this.global.userinfo.username,
-              //     password: this.global.userinfo.password,
-              //   },
-              //   {},
-              //   () => {
-              //     this.global.userinfo = '';
-              //     this.global.token = '';
-              //   }
-              // );
-            }
-          });
-        } else {
-          this.router.navigate(['login']);
-        }
+        this.router.navigate(['login']);
       }
+    }
   }
 
   initTranslate() {

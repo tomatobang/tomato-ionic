@@ -13,7 +13,6 @@ import { FriendTomatoesPage } from './friendinfo/friend-tomatoes/friend-tomatoes
 import { SearchPage } from './search/search';
 import { SearchUserPage } from './search/searchUser/searchUser';
 import { HistoryTomatoPage } from './search/historyTomato/historyTomato';
-
 import { FriendPageRoutingModule } from './friend.router.module';
 
 
@@ -26,7 +25,7 @@ import { FriendPageRoutingModule } from './friend.router.module';
     FriendTomatoesPage,
     SearchPage,
     SearchUserPage,
-    HistoryTomatoPage
+    HistoryTomatoPage,
   ],
   imports: [
     IonicModule,

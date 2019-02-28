@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
 import { Router } from '@angular/router';
-
+import { ModalController } from '@ionic/angular';
+import { QRScannerModal } from '@modals/qr-scanner/qr-scanner';
+import { RebirthHttpProvider } from 'rebirth-http';
 @Component({
   selector: 'cmp-friend',
   templateUrl: 'friend.html',
   styleUrls: ['./friend.scss']
 })
 export class FriendPage {
-  
+
   pullingIcon = false;
   isShowMenuCard = true;
 
@@ -71,8 +73,12 @@ export class FriendPage {
   constructor(
     public chatIO: ChatIOService,
     public globalservice: GlobalService,
-    private router: Router
-  ) { }
+    public rebirthProvider: RebirthHttpProvider,
+    private router: Router,
+    public modalCtrl: ModalController,
+  ) {
+    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
+  }
 
   /**
    * 跳转至消息页
@@ -91,8 +97,15 @@ export class FriendPage {
   /**
    * 扫码加友
    */
-  scanToAddFriend() {
-    // this.qrScanner.open();
+  async scanToAddFriend() {
+    const modal = await this.modalCtrl.create({
+      component: QRScannerModal,
+      showBackdrop: true,
+    });
+    modal.onDidDismiss().then(qrCode => {
+      console.log(qrCode);
+    });
+    await modal.present();
   }
 
   /**

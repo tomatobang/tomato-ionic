@@ -3,6 +3,8 @@ import {
   ModalController,
   Events,
 } from '@ionic/angular';
+import { RebirthHttpProvider } from 'rebirth-http';
+import { GlobalService } from '@services/global.service';
 import { TaskPage } from './task/task';
 
 @Component({
@@ -19,7 +21,14 @@ export class TomatoPage {
   @ViewChild('tomato_slides') slides;
   IsInTomatoTodaySlide = false;
 
-  constructor(public events: Events, public modalCtrl: ModalController) { }
+  constructor(
+    public events: Events,
+    public modalCtrl: ModalController,
+    public rebirthProvider: RebirthHttpProvider,
+    public globalservice: GlobalService,
+  ) {
+    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
+  }
 
   slideChanged() {
     this.slides.getActiveIndex().then(currentIndex => {

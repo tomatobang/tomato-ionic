@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { NavController } from '@ionic/angular';
 import { UserFriendState } from '@services/data/user_friend/model/state.enum';
+import { RebirthHttpProvider } from 'rebirth-http';
 import { GlobalService } from '@services/global.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { UserFriendService } from '@services/data/user_friend';
@@ -27,11 +28,13 @@ export class MessagePage implements OnInit {
     public navCtrl: NavController,
     public userFriendService: UserFriendService,
     public globalservice: GlobalService,
+    public rebirthProvider: RebirthHttpProvider,
     public chatIO: ChatIOService,
     public info: InfoService,
     public cache: CacheService,
     public router: Router,
   ) {
+    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
     this.userid = globalservice.userinfo._id;
   }
 

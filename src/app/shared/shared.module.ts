@@ -13,7 +13,7 @@ import { DebounceClickDirective } from '@directives/debounce-click.directive';
 import { TrackEventDirective } from '@directives/trackEvent.directive';
 
 import { CalendarModule } from './ion2-calendar';
-
+import { RebirthHttpModule } from 'rebirth-http';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, 'assets/i18n/', '.json');
@@ -26,6 +26,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     PipesModule,
     CalendarModule,
+    RebirthHttpModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

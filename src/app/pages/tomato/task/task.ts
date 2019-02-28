@@ -7,7 +7,6 @@ import { GlobalService } from '@services/global.service';
 import { VoiceRecorderComponent } from '@components/voice-recorder/';
 import { baseUrl } from '../../../config';
 
-
 @Component({
   selector: 'cmp-task',
   templateUrl: 'task.html',

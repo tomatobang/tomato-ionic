@@ -90,7 +90,7 @@
                         <div *ngIf="!task.isplaying&&task.inDownloading" [ngStyle]="{'width':task.progress}" class="downloading-bg"></div>
                     </ion-avatar>
                 </ion-item>
-                <ion-item-options side="right">
+                <ion-item-options side="end">
                     <button ion-button color="primary" (click)="startTask(task)">
                         <ion-icon name="eye"></ion-icon> 开启
                     </button>
@@ -115,7 +115,7 @@
                         <span *ngIf="task.description">({{ task.description }})</span>
                     </h3>
                 </ion-item>
-                <ion-item-options side="right">
+                <ion-item-options side="end">
                     <button ion-button color="primary" (click)="addTaskToActiveList(task,1)">
                         <ion-icon name="text"></ion-icon> 转到激活
                     </button>
