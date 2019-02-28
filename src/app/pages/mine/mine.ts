@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, App, Platform, ModalController } from '@ionic/angular';
+import { ActionSheetController,Platform, ModalController } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { NativeService } from '@services/native.service';
@@ -29,7 +29,6 @@ export class MinePage implements OnInit {
     public native: NativeService,
     public platform: Platform,
     private cache: CacheService,
-    private app: App,
     private modalCtrl: ModalController,
     public chatIO: ChatIOService,
     public tomatoIO: TomatoIOService,

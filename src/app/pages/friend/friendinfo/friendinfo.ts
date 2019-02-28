@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { Content, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
@@ -17,7 +17,7 @@ export class FriendInfoPage {
   bio = '';
   isFriend = false;
 
-  @ViewChild(Content) content: Content;
+  @ViewChild('friendinfo_content') content;
   showToolbar = false;
   headerImgSize = '100%';
   headerImgUrl = '';

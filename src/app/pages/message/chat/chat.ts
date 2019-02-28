@@ -1,6 +1,6 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import {NavController, NavParams } from '@ionic/angular';
-import { Events, Content } from '@ionic/angular';
+import { Events } from '@ionic/angular';
 
 import { ChatMessage } from './providers/chat-message.model';
 import { ChatService } from './providers/chat-service';
@@ -14,7 +14,7 @@ import { MessageService } from '@services//data/message/message.service';
   templateUrl: 'chat.html',
 })
 export class ChatPage {
-  @ViewChild(Content) content: Content;
+  @ViewChild('chat_content') content;
   @ViewChild('chat_input') messageInput;
   msgList: ChatMessage[] = [];
   userId: string;

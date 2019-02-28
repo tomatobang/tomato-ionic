@@ -9,7 +9,7 @@ import {
   AfterViewInit,
   HostBinding,
 } from '@angular/core';
-import { NavParams, ModalController, Content } from '@ionic/angular';
+import { NavParams, ModalController } from '@ionic/angular';
 import {
   CalendarDay,
   CalendarMonth,
@@ -70,7 +70,7 @@ const NUM_OF_MONTHS_TO_CREATE = 3;
       </ion-calendar-week>
     </ion-header>
 
-    <ion-content
+    <ion-content #calendar_content 
       (ionScroll)="onScroll($event)"
       class="calendar-page"
       [scrollEvents]="true"
@@ -109,8 +109,8 @@ const NUM_OF_MONTHS_TO_CREATE = 3;
   `,
 })
 export class CalendarModal implements OnInit, AfterViewInit {
-  @ViewChild(Content)
-  content: Content;
+  @ViewChild('calendar_content')
+  content;
   @ViewChild('months')
   monthsEle: ElementRef;
 

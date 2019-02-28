@@ -14,7 +14,7 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ion-slides pager="false" (ionSlideDidChange)="slideChanged()">
+    <ion-slides #tomato_slides pager="false" (ionSlideDidChange)="slideChanged()">
         <!-- 首页 -->
         <ion-slide>
             <cmp-index-index></cmp-index-index>

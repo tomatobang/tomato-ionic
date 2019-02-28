@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content #chat_content>
   <div class="message-wrap">
     <div *ngFor="let msg of msgList" class="message" [class.left]=" msg.userId === toUserId " [class.right]=" msg.userId === userId ">
       <img class="user-img" [src]="msg.userImgUrl" alt="">

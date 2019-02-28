@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content" (ionScroll)="onScroll($event)" [class.transition]="transition" [style.background-size]="headerImgSize"
+<ion-content #friendinfo_content class="content" (ionScroll)="onScroll($event)" [class.transition]="transition" [style.background-size]="headerImgSize"
   [style.background-image]="'url('+ headerImgUrl+ ')'">
   <div class="user-info">
     <img src="assets/tomato-grey.png" alt="">

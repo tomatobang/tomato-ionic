@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 
 import {
   MenuController,
-  Slides,
+
 } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/Storage';
@@ -15,12 +15,12 @@ import { Storage } from '@ionic/Storage';
 export class GuidePage {
   showSkip = true;
 
-  @ViewChild('slides') slides: Slides;
+  @ViewChild('slides') slides;
 
   constructor(
     private menu: MenuController,
     private storage: Storage,
-    private router : Router
+    private router: Router
   ) { }
 
   startApp() {
@@ -28,7 +28,7 @@ export class GuidePage {
     this.router.navigate(['login'])
   }
 
-  onSlideChangeStart(slider: Slides) {
+  onSlideChangeStart(slider) {
     this.showSkip = !slider.isEnd();
   }
 

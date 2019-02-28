@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import {
   ModalController,
   Events,
-  Slides,
 } from '@ionic/angular';
 import { TaskPage } from './task/task';
 
@@ -15,7 +14,7 @@ export class TomatoPage {
 
   page_title = '番茄';
   segment = 'index';
-  @ViewChild(Slides) slides: Slides;
+  @ViewChild('tomato_slides') slides;
   IsInTomatoTodaySlide = false;
 
   constructor(public events: Events, public modalCtrl: ModalController) { }
