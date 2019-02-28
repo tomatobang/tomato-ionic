@@ -22,7 +22,7 @@
     <div class="bs-callout bs-callout-info" *ngIf="isResting">
         <h4 class="rest-title">休息中....</h4>
     </div>
-    <button ion-button block outline color="danger" class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</button>
+    <ion-button expand="block" fill="outline" color="danger" class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</ion-button>
 </div>
 <div class="white-noise-tag-icon">
     <ion-icon ios="ios-volume-up" md="md-volume-up" (click)="stopPlayWhiteNoise()" *ngIf="showWhiteNoiseIcon && whiteNoiseIsplaying">

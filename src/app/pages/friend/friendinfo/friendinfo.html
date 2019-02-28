@@ -15,10 +15,10 @@
     <p>{{ bio }}</p>
   </div>
   <p class="req-add-friend-but" *ngIf="!isFriend">
-    <button ion-button color="secondary" (click)="reqAddFriend()">请求加为好友</button>
+    <ion-button color="secondary" (click)="reqAddFriend()">请求加为好友</ion-button>
   </p>
   <p class="req-add-friend-but" *ngIf="isFriend">
-    <button ion-button color="secondary" (click)="toChatPage()">发起聊天</button>
+    <ion-button color="secondary" (click)="toChatPage()">发起聊天</ion-button>
   </p>
   <ion-list>
     <ion-item>
@@ -26,15 +26,15 @@
       深圳南山区
     </ion-item>
 
-    <button ion-item (click)="toFriendTomatoes()">
+    <ion-item (click)="toFriendTomatoes()">
       <ion-icon name="alarm" item-start class="setting-icon"></ion-icon>
       Ta 的番茄钟
-    </button>
+    </ion-item>
 
-    <button ion-item (click)="toMore()">
+    <ion-item (click)="toMore()">
       <ion-icon name="more" item-start class="setting-icon"></ion-icon>
       更多资料
-    </button>
+    </ion-item>
 
   </ion-list>
 

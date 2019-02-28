@@ -1,23 +1,23 @@
 <ion-header>
     <ion-toolbar>
         <ion-title *ngIf="openNewTaskForm">
-           {{ page_title }}
+            {{ page_title }}
         </ion-title>
-        <ion-buttons left *ngIf="showDismissButton">
-            <button ion-button (click)="dismiss()" style="width:22px">
-                <svg width="22px" enable-background="new 0 0 128 128" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink">
-                <g>
-                    <polygon fill="#373737" points="123.5429688,11.59375 116.4765625,4.5185547 64.0019531,56.9306641 11.5595703,4.4882813     4.4882813,11.5595703 56.9272461,63.9970703 4.4570313,116.4052734 11.5244141,123.4814453 63.9985352,71.0683594     116.4423828,123.5117188 123.5126953,116.4414063 71.0732422,64.0019531   "></polygon>
-                </g>
-            </svg>
-            </button>
+        <ion-buttons slot="start" *ngIf="showDismissButton">
+            <ion-button (click)="dismiss()" style="width:22px">
+                <svg width="22px" enable-background="new 0 0 128 128" version="1.1" viewBox="0 0 128 128" xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                        <polygon fill="#373737" points="123.5429688,11.59375 116.4765625,4.5185547 64.0019531,56.9306641 11.5595703,4.4882813     4.4882813,11.5595703 56.9272461,63.9970703 4.4570313,116.4052734 11.5244141,123.4814453 63.9985352,71.0683594     116.4423828,123.5117188 123.5126953,116.4414063 71.0732422,64.0019531   "></polygon>
+                    </g>
+                </svg>
+            </ion-button>
         </ion-buttons>
 
-        <ion-buttons left *ngIf="openNewTaskForm">
-            <button ion-button (click)="cancleAddTask()">
-             取消
-            </button>
+        <ion-buttons slot="start" *ngIf="openNewTaskForm">
+            <ion-button (click)="cancleAddTask()">
+                取消
+            </ion-button>
 
         </ion-buttons>
 
@@ -32,15 +32,15 @@
             </ion-segment>
         </div>
 
-        <ion-buttons right *ngIf="!openNewTaskForm">
-            <button ion-button icon-only (click)="addNewTaskLink()">
+        <ion-buttons slot="end" *ngIf="!openNewTaskForm">
+            <ion-button icon-only (click)="addNewTaskLink()">
                 <ion-icon name="create"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
 
-        <ion-buttons right *ngIf="openNewTaskForm">
-            <button ion-button icon-only outline color="primary" (click)="addTask()" class="add-task-button">添加
-            </button>
+        <ion-buttons slot="end" *ngIf="openNewTaskForm">
+            <ion-button outline color="primary" (click)="addTask()" class="add-task-button">添加
+            </ion-button>
         </ion-buttons>
 
     </ion-toolbar>
@@ -84,22 +84,23 @@
                         <span *ngIf="task.description">({{ task.description }})</span>
                     </div>
                     <ion-avatar item-end *ngIf="task.voiceUrl">
-                        <img src="./assets/voice/voice.png" *ngIf="!task.isplaying&&!task.inDownloading" class="play-icon" (click)="playVoiceRecord(task)">
+                        <img src="./assets/voice/voice.png" *ngIf="!task.isplaying&&!task.inDownloading" class="play-icon"
+                            (click)="playVoiceRecord(task)">
                         <img src="./assets/voice/voice_play_me.gif" *ngIf="task.isplaying" class="play-icon" (click)="stopPlayVoiceRecord(task)">
                         <div *ngIf="!task.isplaying&&task.inDownloading" class="downloading">{{ task.progress }}</div>
                         <div *ngIf="!task.isplaying&&task.inDownloading" [ngStyle]="{'width':task.progress}" class="downloading-bg"></div>
                     </ion-avatar>
                 </ion-item>
                 <ion-item-options side="end">
-                    <button ion-button color="primary" (click)="startTask(task)">
+                    <ion-item-option color="primary" (click)="startTask(task)">
                         <ion-icon name="eye"></ion-icon> 开启
-                    </button>
-                    <button ion-button color="primary" (click)="removeTaskFromActiveList(task)">
+                    </ion-item-option>
+                    <ion-item-option color="primary" (click)="removeTaskFromActiveList(task)">
                         <ion-icon name="eye-off"></ion-icon> 转到备用
-                    </button>
-                    <button ion-button color="danger" (click)="removeTask(task)">
+                    </ion-item-option>
+                    <ion-item-option color="danger" (click)="removeTask(task)">
                         <ion-icon name="remove"></ion-icon>删除
-                    </button>
+                    </ion-item-option>
                 </ion-item-options>
             </ion-item-sliding>
         </ion-list>
@@ -116,12 +117,12 @@
                     </h3>
                 </ion-item>
                 <ion-item-options side="end">
-                    <button ion-button color="primary" (click)="addTaskToActiveList(task,1)">
+                    <ion-item-option color="primary" (click)="addTaskToActiveList(task,1)">
                         <ion-icon name="text"></ion-icon> 转到激活
-                    </button>
-                    <button ion-button color="danger" (click)="removeTask(task)">
+                    </ion-item-option>
+                    <ion-item-option color="danger" (click)="removeTask(task)">
                         <ion-icon name="text"></ion-icon> 删除
-                    </button>
+                    </ion-item-option>
                 </ion-item-options>
             </ion-item-sliding>
         </ion-list>

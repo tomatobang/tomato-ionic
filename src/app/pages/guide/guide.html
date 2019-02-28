@@ -1,7 +1,7 @@
 <ion-header no-border>
   <ion-toolbar>
     <ion-buttons end *ngIf="showSkip">
-      <button ion-button (click)="startApp()" color="primary">跳过</button>
+      <ion-button (click)="startApp()" color="primary">跳过</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -34,10 +34,10 @@
     <ion-slide>
       <img src="assets/tomatobang.jpg" class="slide-image" />
       <h2 class="slide-title">准备好了么?</h2>
-      <button ion-button icon-end large clear (click)="startApp()">
+      <ion-button icon-end large clear (click)="startApp()">
         马上开始
         <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+      </ion-button>
     </ion-slide>
 
   </ion-slides>

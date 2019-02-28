@@ -10,9 +10,9 @@
     </button>
 
     <div id="play_block" #play_block>
-        <button *ngIf="couldPlay" ion-button round color="secondary" (click)="play()">
+        <ion-button *ngIf="couldPlay" shape="round" color="secondary" (click)="play()">
             播放( {{ voiceDuration }} ")
-        </button>
+        </ion-button>
     </div>
 
     <ion-list *ngIf="isUploading" class="voice-uploading-range">

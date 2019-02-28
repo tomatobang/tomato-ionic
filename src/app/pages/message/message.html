@@ -18,14 +18,14 @@
   <div [ngSwitch]="showType">
     <ion-list *ngSwitchCase="'msg'">
       <!-- 消息 -->
-      <button ion-item *ngFor="let m of newMessages" (click)="toChatPage(m.fid,m.name)">
+      <ion-item *ngFor="let m of newMessages" (click)="toChatPage(m.fid,m.name)">
         <ion-avatar item-left>
           <img src="./assets/tomato-active.png">
         </ion-avatar>
         <h2>{{ m.name }}</h2>
         <p>{{ m.content }}</p>
         <ion-badge item-end color="danger" *ngIf="m.count !==0">{{ m.count }}</ion-badge>
-      </button>
+      </ion-item>
     </ion-list>
 
     <ion-list *ngSwitchCase="'info'">
@@ -37,12 +37,12 @@
         <h2 class="message-requst-title">{{ message.name }}</h2>
         <h3> {{ message.info }}</h3>
         <p>2018-01-31 12:20</p>
-        <button class="message-agree" *ngIf="message.state===1" ion-button outline item-end (click)='responseReq(message.id, message.friendid)'>
+        <ion-button class="message-agree" *ngIf="message.state===1" outline item-end (click)='responseReq(message.id, message.friendid)'>
           添加
-        </button>
-        <button *ngIf="message.state===2" ion-button class="message-overtime" color="light" outline item-end disabled>
+        </ion-button>
+        <ion-button *ngIf="message.state===2" class="message-overtime" color="light" outline item-end disabled>
           已添加
-        </button>
+        </ion-button>
       </ion-item>
     </ion-list>
   </div>
