@@ -2,7 +2,7 @@
   "name": "com.tomatobang.ionic",
   "version": "0.4.0",
   "author": "pengkobe",
-  "homepage": "http://github.com/pengkobe/ionic4-boilerplate",
+  "homepage": "http://github.com/pengkobe/tomato-ionic",
   "scripts": {
     "ng": "ng",
     "dev": "bnr dev",

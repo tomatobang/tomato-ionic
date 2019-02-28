@@ -78,7 +78,7 @@ matrix:
     - cd ${TRAVIS_BUILD_DIR}
     - "./sh/package-android.sh"
     - set -e
-    - $TRAVIS_BUILD_DIR/pgyer_upload.sh "${TRAVIS_BUILD_DIR}/output/ionic4-boilerplate-release-signed.apk"
+    - $TRAVIS_BUILD_DIR/pgyer_upload.sh "${TRAVIS_BUILD_DIR}/output/tomato-ionic-release-signed.apk"
       ${PGYER_APIKEY}
   - os: osx
     sudo: required
@@ -104,7 +104,7 @@ notifications:
   - yipeng.info@gmail.com
 env:
   global:
-  - APP_NAME="ionic4-boilerplate"
+  - APP_NAME="tomato-ionic"
   - DEVELOPER_NAME="iPhone Distribution: Shenzhen Cloud Facilities Network Company
       Limited (CVU2X68836)"
   - PROFILE_NAME="ionic4_Ad_Hoc_Profile"
