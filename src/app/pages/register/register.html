@@ -1,19 +1,20 @@
 <ion-content class="register-container" no-bounce>
     <div class="register-logo">
     </div>
-    
+
     <form [formGroup]="userForm" (ngSubmit)="doRegister()" novalidate class="form-horizontal tb-userform" role="form">
 
         <ion-list>
             <ion-item>
                 <ion-label color="primary">用户名</ion-label>
-                <ion-input required placeholder="用户名" [ngClass]="{' is-danger': formErrors.username }" formControlName="username" [(ngModel)]="user.username"
-                    type="text"></ion-input>
+                <ion-input required placeholder="用户名" [ngClass]="{' is-danger': formErrors.username }" formControlName="username"
+                    [(ngModel)]="user.username" type="text"></ion-input>
             </ion-item>
 
             <ion-item>
                 <ion-label color="primary">邮箱</ion-label>
-                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }" placeholder="邮箱"></ion-input>
+                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }"
+                    placeholder="邮箱"></ion-input>
             </ion-item>
 
             <ion-item>
@@ -24,8 +25,8 @@
 
             <ion-item>
                 <ion-label color="primary">确认密码</ion-label>
-                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" validateEqual="password" formControlName="confirmPassword"
-                    type="password" placeholder="确认密码"></ion-input>
+                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" validateEqual="password"
+                    formControlName="confirmPassword" type="password" placeholder="确认密码"></ion-input>
             </ion-item>
 
         </ion-list>
@@ -47,10 +48,10 @@
         <div *ngIf="error">{{ error }}</div>
 
         <div class="register-button-area">
-            <button [disabled]="userForm.invalid" type="submit" color="primary" ion-button>注册</button>
+            <ion-button [disabled]="userForm.invalid" type="submit" color="primary" expand="block" fill="outline">注册</ion-button>
         </div>
         <div class="register-button-area">
-            <button type="button" color="light" ion-button outline (click)="navToLogin()">登陆</button>
+            <ion-button type="button" color="light" expand="block" fill="outline" (click)="navToLogin()">登陆</ion-button>
         </div>
 
     </form>

@@ -5,9 +5,9 @@
     </ion-title>
 
     <ion-buttons right *ngIf="showBigHeadImg">
-      <button ion-button (click)="closeBigHeadImg()">
+      <ion-button (click)="closeBigHeadImg()">
         <ion-icon name="md-close" showWhen="android,windows,ios"></ion-icon>
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -22,40 +22,39 @@
     </ion-card-header>
 
     <ion-list>
-      <button ion-item (click)="profile()">
+      <ion-item (click)="profile()">
         <ion-icon name="contact" item-start class="setting-icon"></ion-icon>
         我的资料
-      </button>
+      </ion-item>
 
-      <button ion-item (click)="statistics()">
+      <ion-item (click)="statistics()">
         <ion-icon name="podium" item-start class="setting-icon"></ion-icon>
         统计
-      </button>
-
-      <button ion-item (click)="toGameBoard()">
-        <ion-icon name="game-controller-b" item-start class="setting-icon"></ion-icon>
+      </ion-item>
+      <ion-item (click)="toGameBoard()">
+        <ion-icon name="logo-game-controller-b" item-start class="setting-icon"></ion-icon>
         轻松一下
-      </button>
+      </ion-item>
 
-      <button ion-item (click)="setting()">
+      <ion-item (click)="setting()">
         <ion-icon name="settings" item-start class="setting-icon"></ion-icon>
         设置
-      </button>
+      </ion-item>
 
-      <button ion-item (click)="about()">
+      <ion-item (click)="about()">
         <ion-icon name="information-circle" item-start class="setting-icon"></ion-icon>
         关于
-      </button>
+      </ion-item>
 
-      <button ion-item disabled>
+      <ion-item disabled>
         <ion-icon name="share-alt" item-start class="setting-icon"></ion-icon>
         分享
-      </button>
+      </ion-item>
 
-      <button (click)="logout()" ion-item>
+      <ion-item (click)="logout()" ion-item>
         <ion-icon name="log-out" item-start class="setting-icon"></ion-icon>
         退出
-      </button>
+      </ion-item>
     </ion-list>
 
   </div>
