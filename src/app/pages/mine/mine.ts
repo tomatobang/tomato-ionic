@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, Platform, ModalController } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
@@ -10,7 +10,7 @@ import { ChatIOService, TomatoIOService } from '@services/utils/socket.io.servic
 import { OnlineUserService } from '@services/data.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { Helper } from '@services/utils/helper';
-import { QRScannerModal } from '@modals/qr-scanner/qr-scanner';
+import { QRImgModal } from '@modals/qr-img/qr-img';
 
 @Component({
   selector: 'cmp-mine',
@@ -37,7 +37,6 @@ export class MinePage implements OnInit {
     public userService: OnlineUserService,
     private helper: Helper,
     private router: Router,
-    private actrouter: ActivatedRoute,
     public rebirthProvider: RebirthHttpProvider,
   ) { }
 
@@ -139,7 +138,7 @@ export class MinePage implements OnInit {
     //   headImg: this.headImg,
     // }
     const modal = await this.modalCtrl.create({
-      component: QRScannerModal,
+      component: QRImgModal,
       showBackdrop: true,
     });
 

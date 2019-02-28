@@ -13,6 +13,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
 import { QRScannerModalModule } from './modals/qr-scanner/qr-scanner.module';
+import { QRImgModalModule } from './modals/qr-img/qr-img.module';
 
 import { MyApp } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +29,7 @@ import { RavenErrorHandler } from './raven-error-handler.';
     SharedModule,
     BrowserModule,
     QRScannerModalModule,
+    QRImgModalModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(),
     StoreModule.forRoot({}),

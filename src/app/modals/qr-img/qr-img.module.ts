@@ -11,4 +11,4 @@ import { ClosePopupComponentModule } from '@components/close-popup/close-popup.m
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class QRScannerModalModule { }
+export class QRImgModalModule { }
