@@ -25,10 +25,11 @@
     <ion-button expand="block" fill="outline" color="danger" class="break-tomato" *ngIf="activeTomato" (click)="breakActiveTask(true)">中断当前番茄钟</ion-button>
 </div>
 <div class="white-noise-tag-icon">
-    <ion-icon ios="ios-volume-up" md="md-volume-up" (click)="stopPlayWhiteNoise()" *ngIf="showWhiteNoiseIcon && whiteNoiseIsplaying">
+
+    <ion-icon name="volume-high" (click)="stopPlayWhiteNoise()" *ngIf="showWhiteNoiseIcon && whiteNoiseIsplaying">
         <span class="white-noise-icon-label">白噪音</span>
     </ion-icon>
-    <ion-icon ios="ios-volume-off" md="md-volume-off" (click)="startPlayWhiteNoise()" *ngIf="showWhiteNoiseIcon && !whiteNoiseIsplaying">
+    <ion-icon name="volume-off" (click)="startPlayWhiteNoise()" *ngIf="showWhiteNoiseIcon && !whiteNoiseIsplaying">
         <span class="white-noise-icon-label">白噪音</span>
     </ion-icon>
 

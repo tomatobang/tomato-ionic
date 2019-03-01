@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/co
 @Component({
   selector: 'close-popup',
   templateUrl: 'close-popup.html',
-  styleUrls: ['close-popup.scss'],
+  styleUrls: ['./close-popup.scss'],
 })
 export class ClosePopupComponent {
 

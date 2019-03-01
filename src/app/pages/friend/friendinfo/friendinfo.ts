@@ -104,4 +104,8 @@ export class FriendInfoPage {
     }
     this.ref.detectChanges();
   }
+
+  toMore(){
+    
+  }
 }

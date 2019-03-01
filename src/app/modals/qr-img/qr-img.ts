@@ -7,6 +7,7 @@ import { GlobalService } from '@services/global.service';
 @Component({
   selector: 'modal-qr-img',
   templateUrl: 'qr-img.html',
+  styleUrls: ['./qr-img.scss']
 })
 export class QRImgModal {
   public qrcodeUrl: String;
@@ -22,6 +23,9 @@ export class QRImgModal {
     const username = this.globalservice.userinfo.username;
     this.bio = this.globalservice.userinfo.bio;
     this.headImg = this.globalservice.userinfo.img;
+    if (!this.headImg) {
+      this.headImg = '/assets/imgs/logo.png';
+    }
     this.username = username;
     this.qrcodeUrl =
       'http://qr.liantu.com/api.php?&bg=ffffff&fg=cc0000&text=' +

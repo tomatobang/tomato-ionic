@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html',
+  styleUrls: ['search.scss']
 })
 export class SearchPage {
   constructor(public router: Router) { }
