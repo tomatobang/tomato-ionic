@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { QRScannerModal } from '@modals/qr-scanner/qr-scanner';
+import { PopoverController } from '@ionic/angular';
 import { RebirthHttpProvider } from 'rebirth-http';
+import { PopOverPage } from './popover/popover';
+
 @Component({
   selector: 'cmp-friend',
   templateUrl: 'friend.html',
@@ -68,64 +69,30 @@ export class FriendPage {
   showType = 'hot';
   isPullToShow = false;
   ionApp: HTMLElement;
-  // @ViewChild('qrScanner') qrScanner: QRScannerComponent;
 
   constructor(
     public chatIO: ChatIOService,
     public globalservice: GlobalService,
     public rebirthProvider: RebirthHttpProvider,
     private router: Router,
-    public modalCtrl: ModalController,
+    private popoverController: PopoverController
   ) {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
 
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopOverPage,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
+  }
   /**
    * 跳转至消息页
    */
   toMessagePage() {
     this.router.navigate(['tabs/friend/message']);
-  }
-
-  /**
-   * 跳转至搜索页
-   */
-  ToSearchPage() {
-    this.router.navigate(['tabs/friend/search']);
-  }
-
-  /**
-   * 扫码加友
-   */
-  async scanToAddFriend() {
-    const modal = await this.modalCtrl.create({
-      component: QRScannerModal,
-      showBackdrop: true,
-    });
-    modal.onDidDismiss().then(qrCode => {
-      console.log(qrCode);
-    });
-    await modal.present();
-  }
-
-  /**
-   * 跳转至通讯录
-   */
-  ToContactsPage() {
-    this.router.navigate(['tabs/friend/contact']);
-  }
-
-  /**
-   * 扫码回调
-   * @param qrCode 二维码内容
-   */
-  onScanQRCode(qrCode: object) {
-    alert('成功扫描到:' + JSON.stringify(qrCode));
-    this.router.navigate(['tabs/friend/friendinfo'], {
-      queryParams: {
-        userid: JSON.stringify(qrCode),
-      }
-    });
   }
 
   toFriendInfo() {

@@ -72,11 +72,6 @@ const routes: Routes = [
     redirectTo: '/tabs/tomato',
     pathMatch: 'full',
   },
-  {
-    path: 'list',
-    redirectTo: '/tabs/(list:list)',
-    pathMatch: 'full',
-  },
 ];
 
 @NgModule({

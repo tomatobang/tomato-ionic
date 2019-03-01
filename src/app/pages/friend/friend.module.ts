@@ -11,6 +11,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { FriendInfoPage } from './friendinfo/friendinfo';
 import { FriendTomatoesPage } from './friendinfo/friend-tomatoes/friend-tomatoes';
 import { SearchPage } from './search/search';
+import { PopOverPage } from './popover/popover';
 import { SearchUserPage } from './search/searchUser/searchUser';
 import { HistoryTomatoPage } from './search/historyTomato/historyTomato';
 import { FriendPageRoutingModule } from './friend.router.module';
@@ -19,6 +20,7 @@ import { FriendPageRoutingModule } from './friend.router.module';
 @NgModule({
   declarations: [
     FriendPage,
+    PopOverPage,
     ContactsPage,
     ScrollHeightDirective,
     FriendInfoPage,
@@ -33,6 +35,7 @@ import { FriendPageRoutingModule } from './friend.router.module';
     CoreModule, SharedModule,
     FriendPageRoutingModule
   ],
+  entryComponents: [PopOverPage],
   providers: [QRScanner],
 })
 export class FriendPageModule { }

@@ -84,14 +84,6 @@ pull-to-show {
     white-space: nowrap;
 }
 
-.friendpage-tool-grid {
-    text-align: center;
-    background: #eee;
-    ion-icon {
-        font-size: 27px;
-        color: #f97271;
-    }
-} // Creates a rank effect with the given options:
 @mixin ribbonize ($rank-color, $text-color: white, $border-width: 3px) {
     span {
         color: $text-color;

@@ -10,43 +10,15 @@
                 </ion-segment-button>
             </ion-segment>
         </div>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="presentPopover()">
+                <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <div>
-        <div class="pulling-tips" *ngIf="pullingIcon">
-            <ion-icon name="arrow-down"></ion-icon>下拉加载菜单
-        </div>
-
-        <ion-card *ngIf="isShowMenuCard">
-            <ion-grid class="friendpage-tool-grid">
-                <ion-row>
-                    <ion-col col-4 (click)="scanToAddFriend()">
-                        <div>
-                            <ion-icon ios="ios-qr-scanner" md="md-qr-scanner"></ion-icon>
-                        </div>
-                        <div>扫码加友</div>
-                    </ion-col>
-
-                    <ion-col col-4 (click)="ToSearchPage()">
-                        <div>
-                            <ion-icon ios="ios-search" md="md-search"></ion-icon>
-                        </div>
-                        <div> 高级搜索 </div>
-                    </ion-col>
-
-                    <ion-col col-4 (click)="ToContactsPage()">
-                        <div>
-                            <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
-                        </div>
-                        <div>通讯录</div>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-card>
-    </div>
-
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'hot'" class="friend-working-on-list">
             <div class="tomato-friend-task-list" (click)="toFriendInfo()">
