@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
@@ -13,7 +13,7 @@ import { Network } from '@ionic-native/network';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
 import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
-
+import { JPush } from '@jiguang-ionic/jpush';
 
 import { RebirthStorageModule } from 'rebirth-storage';
 import { RebirthHttpModule } from 'rebirth-http';
@@ -26,8 +26,7 @@ import { MyAppComponent } from './app.component';
 
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-
-import { JPush } from '@jiguang-ionic/jpush';
+import { EFOSHttpInterceptor } from './providers/http.interceptor.service';
 
 @NgModule({
   declarations: [MyAppComponent],
@@ -79,8 +78,13 @@ import { JPush } from '@jiguang-ionic/jpush';
     },
     JPush,
     AppCenterCrashes,
-    AppCenterAnalytics
+    AppCenterAnalytics,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: EFOSHttpInterceptor,
+      multi: true
+    }
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],
 })
-export class AppModule {}
+export class AppModule { }

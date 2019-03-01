@@ -13,7 +13,7 @@ import { Helper } from '@providers/utils/helper';
   templateUrl: 'index.html',
 })
 export class IndexIndexPage implements OnInit, AfterViewInit {
-  userid: string;
+  username: string;
   userBio: string;
   notifyID = 0;
   restnotifyID = 10000;
@@ -58,7 +58,7 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.userid = this.globalservice.userinfo.username;
+    this.username = this.globalservice.userinfo.username;
     if (this.globalservice.userinfo.bio) {
       this.userBio = this.globalservice.userinfo.bio;
     } else {
@@ -91,7 +91,7 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
   }
 
   initTomatoIO() {
-    this.tomatoIO.load_tomato(this.userid);
+    this.tomatoIO.load_tomato(this.username);
     this.tomatoIO.load_tomato_succeed().subscribe(t => {
       if (t && t !== 'null') {
         this.startTask(t, false);
@@ -111,13 +111,12 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     this.activeTomato = task;
     this.currentTask = JSON.parse(JSON.stringify(task));
     if (raw) {
-      this.tomatoIO.start_tomato(this.userid, task, this.countdown);
+      this.tomatoIO.start_tomato(this.username, task, this.countdown);
       this.activeTomato.startTime = new Date();
     } else {
       this.activeTomato.startTime = new Date(this.activeTomato.startTime);
     }
     this.startTimer();
-    const that = this;
   }
 
   /**
@@ -293,7 +292,7 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
               breakReason: data.title,
             };
             this.events.publish('tomato:added', Object.assign({}, tomato));
-            this.tomatoIO.break_tomato(this.userid, tomatoDTO);
+            this.tomatoIO.break_tomato(this.username, tomatoDTO);
             this.stopTimer();
             this.startRestTimer(new Date());
           },

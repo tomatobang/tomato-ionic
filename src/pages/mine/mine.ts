@@ -76,7 +76,7 @@ export class MinePage implements OnInit {
             return;
           }
           this.chatIO.logout(this.globalservice.userinfo._id);
-          this.tomatoIO.logout(this.globalservice.userinfo._id);
+          this.tomatoIO.logout(this.globalservice.userinfo.username);
           this.globalservice.userinfo = '';
           this.globalservice.token = '';
           this.jPushService.deleteAlias(this.globalservice.jpushAlias);

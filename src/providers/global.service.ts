@@ -12,7 +12,7 @@ const settingSubject: Subject<any> = new Subject<any>();
 export class GlobalService {
   public notificationSubject: Subject<any> = new Subject<any>();
   public serverAddress = baseUrl;
-  public qiniuDomain = 'http://pl5a1kqkd.bkt.clouddn.com/';
+  public qiniuDomain = 'http://assets.tomatobang.com/';
 
   private _isActive = false;
   private _isFirstTimeOpen: boolean;
@@ -23,7 +23,7 @@ export class GlobalService {
   private _resttime = 0;
   private _isAlwaysLight = false;
 
-  constructor(public events: Events) {}
+  constructor(public events: Events) { }
 
   public bioUpdate(bio: String) {
     this.events.publish('bio:update', bio);
