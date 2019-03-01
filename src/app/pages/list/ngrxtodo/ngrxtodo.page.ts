@@ -1,9 +1,12 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from './../redux/ngrxtodo.reducer';
 import { Todo } from './../redux/todo/todo.model';
 import * as TodoActions from './../redux/todo/todo.actions';
+import {
+  getTodos,
+} from '../redux/todo/todo.selectors';
 
 @Component({
   selector: 'page-ngrxtodo-module',
@@ -18,13 +21,14 @@ export class NgRxTodoComponent {
   private populateTodos() {
     const todos: Todo[] = JSON.parse(
       localStorage.getItem('angular-ngrx-todos') ||
-        '[{"id":1,"completed":false,"text":"test"}]'
+      '[{"id":1,"completed":false,"text":"test"}]'
     );
     this.store.dispatch(new TodoActions.PopulateTodosAction(todos));
   }
 
   private updateTodos() {
-    this.store.select('todos').subscribe(todos => {
+    // select(getVisibleTodos)
+    this.store.pipe(select(getTodos)).subscribe(todos => {
       if (todos) {
         localStorage.setItem('angular-ngrx-todos', JSON.stringify(todos));
       }
@@ -32,6 +36,6 @@ export class NgRxTodoComponent {
   }
 
   backTolist() {
-    this.router.navigateByUrl('tabs/(list:list)');
+    this.router.navigateByUrl('tabs/list');
   }
 }
