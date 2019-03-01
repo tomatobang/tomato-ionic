@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'page-friendinfo',
   templateUrl: 'friendinfo.html',
+  styleUrls: ['friendinfo.scss'],
 })
 export class FriendInfoPage {
   friendid;
@@ -28,15 +29,15 @@ export class FriendInfoPage {
     public userservice: OnlineUserService,
     private router: Router,
     private actrouter: ActivatedRoute,
-    
+
   ) {
     this.userid = this.global.userinfo._id;
-    this.actrouter.queryParams.subscribe((queryParams)=>{
+    this.actrouter.queryParams.subscribe((queryParams) => {
       this.friendid = queryParams["userid"];
       this.friendName = queryParams["friendname"];
       this.loadUserInfo(this.friendid);
     });
-   
+
     if (this.friendid && !this.friendName) {
       this.isFriend = false;
     } else {
@@ -59,7 +60,7 @@ export class FriendInfoPage {
    * 查看番茄钟
    */
   toFriendTomatoes() {
-    this.router.navigate(['friendtomato'], {
+    this.router.navigate(['tabs/friend/friendtomato'], {
       queryParams: {
         friendName: this.friendName,
       }
@@ -82,15 +83,13 @@ export class FriendInfoPage {
    * 跳转至聊天页
    */
   toChatPage() {
-    this.router.navigate(['chat'], {
+    this.router.navigate(['tabs/message/chat'], {
       queryParams: {
         toUserId: this.friendid,
         toUserName: this.friendName,
       }
     })
   }
-
-  toMore() { }
 
   onScroll($event: any) {
     // 只对苹果有效

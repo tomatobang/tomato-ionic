@@ -15,6 +15,14 @@
 // ion-content {
 //     height: 100vh !important;
 // }
+ion-app.transparent {
+    background: none transparent;
+}
+
+.my-toast-style .toast-wrapper {
+    background: #F97271;
+    font-family: "Hosted Noto Sans Regular";
+}
 
 .transparent {
     visibility: hidden;

@@ -9,6 +9,7 @@ import { PinyinService } from '@services/utils/pinyin.service';
 @Component({
   selector: 'wave-side-bar',
   templateUrl: 'wave-side-bar.html',
+  styleUrls: ['wave-side-bar.scss']
 })
 export class WaveSideBarComponent {
   @Input() wavadata: any;
@@ -16,7 +17,7 @@ export class WaveSideBarComponent {
 
   tipObj = { isShow: true, content: 'A' };
 
-  constructor(private pinUtil: PinyinService) {}
+  constructor(private pinUtil: PinyinService) { }
 
   goList(event: any): any {
     const elementFromPoint = <HTMLElement>(

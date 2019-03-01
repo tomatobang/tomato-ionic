@@ -7,6 +7,7 @@ import { GlobalService } from '@services/global.service';
 @Component({
   selector: 'page-searchUserPage',
   templateUrl: 'searchUser.html',
+  styleUrls: ['searchUser.scss']
 })
 export class SearchUserPage implements OnInit {
   searchReturnItems = [];

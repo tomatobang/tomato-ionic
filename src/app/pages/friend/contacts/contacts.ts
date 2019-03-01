@@ -38,13 +38,12 @@ export class ContactsPage implements OnInit {
     public cache: CacheService,
     public chatIO: ChatIOService,
     public router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getAgreedUserFriend();
-
     const event$ = fromEvent(
-      this.myScrollContainer._scrollContent.nativeElement,
+      this.myScrollContainer.nativeElement,
       'scroll'
     ).pipe(
       debounceTime(100),
@@ -53,7 +52,7 @@ export class ContactsPage implements OnInit {
 
     event$.subscribe(event => {
       if (this.navChars) {
-        const ctSrollTop = this.myScrollContainer._scrollContent.nativeElement
+        const ctSrollTop = this.myScrollContainer.nativeElement
           .scrollTop;
         let target = this.navChars[0];
         this.navChars.forEach(element => {
@@ -80,7 +79,7 @@ export class ContactsPage implements OnInit {
 
   OnNavcScroll(evt) {
     const element = <HTMLElement>(
-      this.myScrollContainer._scrollContent.nativeElement
+      this.myScrollContainer.nativeElement
     );
     element.scrollTop = evt;
   }
@@ -118,7 +117,7 @@ export class ContactsPage implements OnInit {
    * @param friendname 好友名称
    */
   toFriendInfo(userid, friendname) {
-    this.router.navigate(['friendinfo'], {
+    this.router.navigate(['tabs/friend/friendinfo'], {
       queryParams: {
         userid: userid,
         friendname: friendname,

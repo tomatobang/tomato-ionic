@@ -84,11 +84,8 @@ export class ProfilePage implements OnInit {
    * 更新性别
    */
   async changeSex() {
-    // const profileModal = this.modalCtrl.create(UpdatemodalPage, {
-    //   update: 'sex',
-    //   value: this.sex,
-    // });
     this.createModal(data => {
+      data = data.data;
       if (!data) {
         return;
       }
@@ -100,18 +97,18 @@ export class ProfilePage implements OnInit {
             this.globalservice.userinfo = userdata;
           }
         });
-    });
+    }, {
+        update: 'sex',
+        value: this.sex,
+      });
   }
 
   /**
    * 修改签名
    */
   changeBio() {
-    // const profileModal = this.modalCtrl.create('UpdatemodalPage', {
-    //   update: 'bio',
-    //   value: this.bio,
-    // });
     this.createModal(data => {
+      data = data.data;
       if (!data) {
         return;
       }
@@ -124,18 +121,18 @@ export class ProfilePage implements OnInit {
             this.globalservice.bioUpdate(this.globalservice.userinfo.bio);
           }
         });
-    });
+    }, {
+        update: 'bio',
+        value: this.bio,
+      });
   }
 
   /**
    * 更新昵称
    */
   changeDisplayName() {
-    // const profileModal = this.modalCtrl.create('UpdatemodalPage', {
-    //   update: 'displayname',
-    //   value: this.displayName,
-    // });
     this.createModal(data => {
+      data = data.data;
       if (!data) {
         return;
       }
@@ -150,19 +147,18 @@ export class ProfilePage implements OnInit {
             this.globalservice.userinfo = userdata;
           }
         });
-    });
+    }, {
+        update: 'displayname',
+        value: this.displayName,
+      });
   }
 
   /**
    * 更新邮箱
    */
   changeEmail() {
-    // const profileModal = this.modalCtrl.create('UpdatemodalPage', {
-    //   update: 'email',
-    //   value: this.email,
-    // });
-
     this.createModal(data => {
+      data = data.data;
       if (!data) {
         return;
       }
@@ -174,18 +170,18 @@ export class ProfilePage implements OnInit {
             this.globalservice.userinfo = userdata;
           }
         });
-    });
+    }, {
+        update: 'email',
+        value: this.email,
+      });
   }
 
   /**
    * 更新地址
    */
   changeLocation() {
-    // const profileModal = this.modalCtrl.create('UpdatemodalPage', {
-    //   update: 'location',
-    //   value: this.location,
-    // });
     this.createModal(data => {
+      data = data.data;
       if (!data) {
         return;
       }
@@ -197,12 +193,16 @@ export class ProfilePage implements OnInit {
             this.globalservice.userinfo = userdata;
           }
         });
-    });
+    }, {
+        update: 'location',
+        value: this.location,
+      });
   }
 
-  async createModal(cb) {
+  async createModal(cb, componentProps) {
     const modal = await this.modalCtrl.create({
       component: UpdatemodalPage,
+      componentProps: componentProps,
       showBackdrop: true,
     });
 

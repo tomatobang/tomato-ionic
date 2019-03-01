@@ -5,6 +5,7 @@ import { OnlineTomatoService } from '@services/data.service';
 @Component({
   selector: 'page-historyTomato',
   templateUrl: 'historyTomato.html',
+  styleUrls: ['historyTomato.scss'],
   providers: [OnlineTomatoService],
 })
 export class HistoryTomatoPage {
@@ -13,9 +14,9 @@ export class HistoryTomatoPage {
 
   constructor(
     public tomatoservice: OnlineTomatoService,
-  ) {}
+  ) { }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() { }
 
   /**
    * 番茄钟搜索
@@ -31,5 +32,5 @@ export class HistoryTomatoPage {
     });
   }
 
-  playVoiceRecord() {}
+  playVoiceRecord() { }
 }

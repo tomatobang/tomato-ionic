@@ -12,11 +12,11 @@ export class SearchPage {
 
   toHistoryTomato() {
     console.log('toHistoryTomato!');
-    this.router.navigate(['historytomato']);
+    this.router.navigate(['tabs/friend/historytomato']);
   }
 
   toSearchUser() {
     console.log('toSearchUser!');
-    this.router.navigate(['searchuser']);
+    this.router.navigate(['tabs/friend/searchuser']);
   }
 }

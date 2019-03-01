@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
+  styleUrls: ['./chat.scss']
 })
 export class ChatPage {
   @ViewChild('chat_content') content;

@@ -2,7 +2,8 @@ import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/co
 
 @Component({
   selector: 'close-popup',
-  templateUrl: 'close-popup.html'
+  templateUrl: 'close-popup.html',
+  styleUrls: ['close-popup.scss'],
 })
 export class ClosePopupComponent {
 
@@ -12,7 +13,7 @@ export class ClosePopupComponent {
   @Input() color: string;
   @Output() closePopUp: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   close() {
     this.closePopUp.emit();

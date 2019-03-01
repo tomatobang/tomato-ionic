@@ -14,7 +14,7 @@
 </ion-header>
 
 <ion-content>
-    <div (ionPull)="showRefresher()" (ionToshow)="showMenuCard()" (ionCancel)="hideMenuCard()">
+    <div>
         <div class="pulling-tips" *ngIf="pullingIcon">
             <ion-icon name="arrow-down"></ion-icon>下拉加载菜单
         </div>
@@ -90,16 +90,15 @@
                             <span class="minute"> {{ item.minute }}</span> 分钟
                             <p class="rank-title">
                                 <ion-icon ios="ios-microphone" md="ios-microphone-outline"></ion-icon>
-                                {{ item.title }}</p>
+                                {{ item.title }}
+                            </p>
                         </div>
                     </div>
                     <p class="rank-location">
-                        <ion-icon name="pin"></ion-icon> 深圳市南山区</p>
+                        <ion-icon name="pin"></ion-icon> 深圳市南山区
+                    </p>
                 </ion-item>
             </ion-list>
         </ion-list>
     </div>
-
 </ion-content>
-
-<!-- <qr-scanner (wrongScaned)="onScanQRCodeERR($event)" (successScaned)="onScanQRCode($event)" #qrScanner></qr-scanner> -->

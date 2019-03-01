@@ -43,7 +43,10 @@ import { RavenErrorHandler } from './raven-error-handler.';
     BrowserModule,
     QRScannerModalModule,
     QRImgModalModule,
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__tomatobangdb',
+      driverOrder: ['indexeddb', 'sqlite', 'websql'],
+    }),
     IonicModule.forRoot(),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

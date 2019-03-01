@@ -11,6 +11,8 @@ declare let window;
   selector: 'voice-recorder',
   providers: [Media, FileTransfer],
   templateUrl: './voice-recorder.html',
+  styleUrls: ['voice-recorder.scss']
+
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
   couldPlay = false;

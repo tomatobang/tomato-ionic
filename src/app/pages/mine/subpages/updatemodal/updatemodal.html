@@ -1,14 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-     {{ page_title }}
+      {{ page_title }}
     </ion-title>
-    <ion-buttons left>
+    <ion-buttons slot="start">
       <ion-button (click)="dismiss()">取消
       </ion-button>
     </ion-buttons>
 
-    <ion-buttons right>
+    <ion-buttons slot="end">
       <ion-button icon-only outline color="secondary" (click)="save()" class="add-task-button">保存
       </ion-button>
     </ion-buttons>
@@ -17,27 +17,27 @@
 
 <ion-content padding>
   <ion-item *ngIf="update!='sex'">
-    <ion-textarea  placeholder="{{label}}" [(ngModel)]="value"></ion-textarea>
+    <ion-textarea placeholder="{{label}}" [(ngModel)]="value"></ion-textarea>
   </ion-item>
 
 
-  <ion-list radio-group [(ngModel)]="value" *ngIf="update=='sex'">
+  <ion-list *ngIf="update=='sex'">
+    <ion-radio-group  [(ngModel)]="value">
+      <ion-item>
+        <ion-label>男</ion-label>
+        <ion-radio value="man"></ion-radio>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>男</ion-label>
-      <ion-radio value="man"></ion-radio>
-    </ion-item>
+      <ion-item>
+        <ion-label>女</ion-label>
+        <ion-radio value="woman"></ion-radio>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>女</ion-label>
-      <ion-radio value="woman"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>保密</ion-label>
-      <ion-radio value="unknown"></ion-radio>
-    </ion-item>
-
+      <ion-item>
+        <ion-label>保密</ion-label>
+        <ion-radio value="unknown"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
   </ion-list>
 
 </ion-content>

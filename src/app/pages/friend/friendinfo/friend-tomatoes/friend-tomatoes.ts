@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'friend-tomatoes',
   templateUrl: 'friend-tomatoes.html',
+  styleUrls: ['friend-tomatoes.scss']
 })
 export class FriendTomatoesPage implements OnInit {
   title = '';
