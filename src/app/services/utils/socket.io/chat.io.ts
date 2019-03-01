@@ -11,6 +11,27 @@ export class ChatIOService {
   userid;
 
   constructor(public g: GlobalService) {
+    if (!this.socket) {
+      this.socket = new Socket({
+        url: chatSocketUrl,
+        options: {
+          query: 'token=' + this.g.token,
+        },
+      });
+      this.socket.on('connect', () => {
+        this.hasConnected = true;
+        if (this.userid) {
+          this.login(this.userid);
+        }
+      });
+      this.socket.on('disconnect', () => {
+        this.hasConnected = false;
+        this.reconnect();
+      });
+      this.socket.on('verify_failed', () => {
+      });
+    }
+
   }
 
   /**

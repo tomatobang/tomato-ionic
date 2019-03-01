@@ -21,7 +21,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { SocketIoModule } from 'ngx-socket-io';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
@@ -50,7 +49,6 @@ import { RavenErrorHandler } from './raven-error-handler.';
     IonicModule.forRoot(),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    SocketIoModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [MyApp],

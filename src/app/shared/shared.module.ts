@@ -14,6 +14,8 @@ import { TrackEventDirective } from '@directives/trackEvent.directive';
 
 import { CalendarModule } from './ion2-calendar';
 import { RebirthHttpModule } from 'rebirth-http';
+import { SocketIoModule } from 'ngx-socket-io';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, 'assets/i18n/', '.json');
@@ -27,6 +29,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PipesModule,
     CalendarModule,
     RebirthHttpModule,
+    SocketIoModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -46,6 +49,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CommonModule,
     FormsModule,
     CalendarModule,
+    SocketIoModule,
   ],
 })
 export class SharedModule { }

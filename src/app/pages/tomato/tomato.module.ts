@@ -12,7 +12,6 @@ import { VoiceRecorderComponent } from '@components/voice-recorder/';
 import { AutosizeDirective } from '@directives/autosize.directive';
 import { TaskPage } from './task/task';
 
-import { SocketIoModule } from 'ngx-socket-io';
 import { TomatoPageRoutingModule } from './tomato.router.module'
 
 @NgModule({
@@ -31,7 +30,6 @@ import { TomatoPageRoutingModule } from './tomato.router.module'
     SharedModule,
     CoreModule,
     TomatoPageRoutingModule,
-    SocketIoModule
   ],
   providers: [],
   entryComponents: [TaskPage],
