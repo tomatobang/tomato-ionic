@@ -34,6 +34,7 @@ import { MessageService } from '@services/data/message/message.service';
 import { OnlineUserService } from '@services/data.service';
 import { OnlineTomatoService } from '@services/data.service';
 import { OnlineTaskService } from '@services/data.service';
+import { OnlineTodoService } from '@services/data.service';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { Helper } from '@services/utils/helper';
 
@@ -75,6 +76,7 @@ import { UserFriendService } from '@services/data/user_friend';
     OnlineUserService,
     OnlineTomatoService,
     OnlineTaskService,
+    OnlineTodoService,
     Helper,
     TomatoIOService,
     ChatIOService,
