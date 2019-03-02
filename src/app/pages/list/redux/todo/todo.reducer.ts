@@ -8,16 +8,36 @@ export function TodosReducer(
   action: TodoActions.TodoActionType
 ) {
   switch (action.type) {
-    case TodoActions.ADD_TODO: {
+    // case TodoActions.ADD_TODO: {
+    //   return [
+    //     ...state,
+    //     {
+    //       id: action.id,
+    //       text: action.text,
+    //       completed: false,
+    //     },
+    //   ];
+    // }
+    case TodoActions.ADD_TODO_SUCCEED: {
       return [
         ...state,
         {
-          id: action.id,
-          text: action.text,
+          id: action.payload.id,
+          text: action.payload.text,
           completed: false,
         },
       ];
     }
+    // case TodoActions.ADD_TODO_FAILED: {
+    //   return [
+    //     ...state,
+    //     {
+    //       id: action.id,
+    //       text: action.text,
+    //       completed: false,
+    //     },
+    //   ];
+    // }
     case TodoActions.POPULATE_TODOS: {
       return action.todos;
     }

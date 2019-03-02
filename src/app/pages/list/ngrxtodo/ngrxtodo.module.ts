@@ -5,12 +5,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ngrxtodoReducer } from './../redux/ngrxtodo.reducer';
+import { EffectsModule } from '@ngrx/effects';
 
 import { NgRxTodoComponent } from './ngrxtodo.page';
 import { TodoComponent } from './todo/todo.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewTodoComponent } from './new-todo/new-todo.component';
+import { TodoEffects } from '../redux/todo/todo.effect';
 
 const routes: Routes = [
   {
@@ -42,12 +44,12 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    StoreModule.forRoot({}),
     StoreModule.forFeature('ngrxtodo', ngrxtodoReducer),
+    EffectsModule.forFeature([TodoEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 15, //  Retains last 15 states
     }),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class NgrxTodoPageModule {}
+export class NgrxTodoPageModule { }
