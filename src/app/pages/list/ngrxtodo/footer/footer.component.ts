@@ -27,7 +27,7 @@ export class FooterComponent implements OnInit {
   }
 
   completedAll() {
-    const action = new TodoActions.CompletedAllAction();
+    const action = new TodoActions.ToggleAllAction(true);
     this.store.dispatch(action);
   }
 

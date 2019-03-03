@@ -24,7 +24,6 @@ export function TodosReducer(
         if (action._id === todo._id) {
           return {
             ...todo,
-            completed: !todo.completed,
           };
         } else {
           return todo;
@@ -52,7 +51,7 @@ export function TodosReducer(
     case TodoActions.CLEAR_COMPLETED_TODO_SUCCEED: {
       return state.filter(todo => !todo.completed);
     }
-    
+
     case TodoActions.TOGGLE_ALL_TODO_SUCCEED: {
       const areAllMarked = state.every(todo => todo.completed);
       return state.map(todo => {
@@ -62,7 +61,7 @@ export function TodosReducer(
         };
       });
     }
-    
+
     case TodoActions.POPULATE_TODOS: {
       return action.todos;
     }

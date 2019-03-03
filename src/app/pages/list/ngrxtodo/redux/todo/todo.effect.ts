@@ -4,13 +4,18 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OnlineTodoService } from '@services/data.service';
+import { AppState } from '../ngrxtodo.reducer';
 import {
-    AddTodoAction, ToggleAction, DeleteTodoAction, ToggleAllAction, ClearCompletedAction, UpdateAction,
-    ADD_TODO, ADD_TODO_SUCCEED, TOGGLE_TODO, TOGGLE_TODO_SUCCEED, DELETE_TODO, DELETE_TODO_SUCCEED,
-    TOGGLE_ALL_TODO, TOGGLE_ALL_TODO_SUCCEED, CLEAR_COMPLETED_TODO, CLEAR_COMPLETED_TODO_SUCCEED,
+    AddTodoAction, ToggleAction,
+    DeleteTodoAction, ToggleAllAction,
+    ClearCompletedAction, UpdateAction,
+    ADD_TODO, ADD_TODO_SUCCEED,
+    TOGGLE_TODO, TOGGLE_TODO_SUCCEED,
+    DELETE_TODO, DELETE_TODO_SUCCEED,
+    TOGGLE_ALL_TODO, TOGGLE_ALL_TODO_SUCCEED,
+    CLEAR_COMPLETED_TODO, CLEAR_COMPLETED_TODO_SUCCEED,
     UPDATE_TODO, UPDATE_TODO_SUCCEED
 } from './todo.actions';
-import { AppState } from '../ngrxtodo.reducer';
 
 
 @Injectable()
@@ -24,31 +29,14 @@ export class TodoEffects {
             params = {
                 title: title,
                 type: 1,
-                tag: '',
             };
-            // this.apiService.createTodo(params).subscribe(res => {
-            //     if (res.status === 'success') {
-            //         this.store$.dispatch({
-            //             type: ADD_TODO_SUCCEED,
-            //             payload: res,
-            //         });
-            //     } else {
-            //         this.store$.dispatch({
-            //             type: ADD_TODO_FAILED,
-            //             payload: res,
-            //         });
-            //     }
-            // });
-
-            setTimeout(() => {
+            this.apiService.createTodo(params).subscribe(res => {
                 this.store$.dispatch({
                     type: ADD_TODO_SUCCEED,
-                    payload: {
-                        _id: new Date().getTime(),
-                        title: title,
-                    },
+                    payload: res,
                 });
-            }, 1000);
+            });
+
             return { type: '[todo]todo no_use' };
         })
     );
@@ -58,12 +46,28 @@ export class TodoEffects {
         ofType<ToggleAction>(TOGGLE_TODO),
         map((action: ToggleAction) => action.todo),
         mergeMap(async todo => {
-            setTimeout(() => {
+            todo.completed = !todo.completed;
+            this.apiService.updateTodo(todo._id, todo).subscribe(res => {
                 this.store$.dispatch({
                     type: TOGGLE_TODO_SUCCEED,
                     _id: todo._id,
                 });
-            }, 1000);
+            });
+            return { type: '[todo]todo no_use' };
+        })
+    );
+
+    @Effect()
+    deletetodo$: Observable<Action> = this.actions$.pipe(
+        ofType<DeleteTodoAction>(DELETE_TODO),
+        map((action: DeleteTodoAction) => action._id),
+        mergeMap(async _id => {
+            this.apiService.deleteTodo(_id).subscribe(res => {
+                this.store$.dispatch({
+                    type: DELETE_TODO_SUCCEED,
+                    _id: _id,
+                });
+            });
             return { type: '[todo]todo no_use' };
         })
     );
@@ -78,21 +82,6 @@ export class TodoEffects {
                     type: UPDATE_TODO_SUCCEED,
                     _id: action._id,
                     title: action.title,
-                });
-            }, 1000);
-            return { type: '[todo]todo no_use' };
-        })
-    );
-
-    @Effect()
-    deletetodo$: Observable<Action> = this.actions$.pipe(
-        ofType<DeleteTodoAction>(DELETE_TODO),
-        map((action: DeleteTodoAction) => action._id),
-        mergeMap(async _id => {
-            setTimeout(() => {
-                this.store$.dispatch({
-                    type: DELETE_TODO_SUCCEED,
-                    _id: _id,
                 });
             }, 1000);
             return { type: '[todo]todo no_use' };

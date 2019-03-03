@@ -44,17 +44,12 @@ export class OnlineTodoService extends TodoService {
   }
 
   @POST(baseUrl + 'api/todo/:id')
-  updateTodo(@Path('id') todoUrl: string, @Body todo: Todo): Observable<any> {
+  updateTodo(@Path('id') id: string, @Body todo: Todo): Observable<any> {
     return null;
   }
 
   @DELETE(baseUrl + 'api/todo/:id')
-  deleteTodo(@Path('id') todoUrl: string): Observable<any> {
-    return null;
-  }
-
-  @POST(baseUrl + 'api/todo/updateVoiceUrl')
-  updateVoiceUrl(@Body data: { todoid: string; relateUrl: string }): Observable<any> {
+  deleteTodo(@Path('id') id: string): Observable<any> {
     return null;
   }
 }

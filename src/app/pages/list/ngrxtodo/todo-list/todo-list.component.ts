@@ -27,10 +27,10 @@ export class TodoListComponent implements OnInit {
     this.readTodosState();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   toggleAll() {
-    this.store.dispatch(new TodoActions.CompletedAllAction());
+    this.store.dispatch(new TodoActions.ToggleAllAction(true));
   }
 
   private setFilter(filter: string) {
