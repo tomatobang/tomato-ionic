@@ -25,7 +25,7 @@ export class TodoComponent implements OnInit {
     this.checkField = new FormControl(false);
     this.checkField.valueChanges
     .subscribe(state => {
-      const action = new TodoActions.ToggleAction(this.todo._id);
+      const action = new TodoActions.ToggleAction(this.todo);
       this.store.dispatch(action);
     });
   }

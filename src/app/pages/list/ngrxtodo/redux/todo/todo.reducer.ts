@@ -18,20 +18,8 @@ export function TodosReducer(
         },
       ];
     }
-    // case TodoActions.ADD_TODO_FAILED: {
-    //   return [
-    //     ...state,
-    //     {
-    //       id: action._id,
-    //       text: action.text,
-    //       completed: false,
-    //     },
-    //   ];
-    // }
-    case TodoActions.POPULATE_TODOS: {
-      return action.todos;
-    }
-    case TodoActions.TOGGLE_TODO: {
+
+    case TodoActions.TOGGLE_TODO_SUCCEED: {
       return state.map(todo => {
         if (action._id === todo._id) {
           return {
@@ -43,25 +31,29 @@ export function TodosReducer(
         }
       });
     }
-    case TodoActions.DELETE_TODO: {
-      return state.filter(todo => action._id !== todo._id);
-    }
+
     case TodoActions.UPDATE_TODO: {
       return state.map(todo => {
         if (action._id === todo._id) {
           return {
             ...todo,
-            text: action.title,
+            title: action.title,
           };
         } else {
           return todo;
         }
       });
     }
-    case TodoActions.CLEAR_COMPLETED_TODO: {
+
+    case TodoActions.DELETE_TODO_SUCCEED: {
+      return state.filter(todo => action._id !== todo._id);
+    }
+
+    case TodoActions.CLEAR_COMPLETED_TODO_SUCCEED: {
       return state.filter(todo => !todo.completed);
     }
-    case TodoActions.COMPLETE_ALL_TODO: {
+    
+    case TodoActions.TOGGLE_ALL_TODO_SUCCEED: {
       const areAllMarked = state.every(todo => todo.completed);
       return state.map(todo => {
         return {
@@ -69,6 +61,10 @@ export function TodosReducer(
           completed: !areAllMarked,
         };
       });
+    }
+    
+    case TodoActions.POPULATE_TODOS: {
+      return action.todos;
     }
     default: {
       return state;
