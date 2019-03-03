@@ -1,17 +1,21 @@
 
 import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { ErrorHandler, NgModule,Injectable } from '@angular/core';
+import { ErrorHandler, NgModule, Injectable } from '@angular/core';
+import * as Hammer from 'hammerjs';
 
-// @Injectable()
-// export class IonicGestureConfig extends HammerGestureConfig {
-//   buildHammer(element: HTMLElement) {
-//     const mc = new (<any>window).Hammer(element);
-//     for (const eventName of Object.keys(this.overrides)) {
-//       mc.get(eventName).set(this.overrides[eventName]);
-//     }
-//     return mc;
-//   }
-// }
+@Injectable()
+export class IonicGestureConfig extends HammerGestureConfig {
+  overrides = <any>{
+    'swipe': { direction: Hammer.DIRECTION_ALL }
+  };
+  buildHammer(element: HTMLElement) {
+    const mc = new (<any>window).Hammer(element);
+    for (const eventName of Object.keys(this.overrides)) {
+      mc.get(eventName).set(this.overrides[eventName]);
+    }
+    return mc;
+  }
+}
 
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -54,7 +58,7 @@ import { RavenErrorHandler } from './raven-error-handler.';
   bootstrap: [MyApp],
   entryComponents: [MyApp],
   providers: [
-    // { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
