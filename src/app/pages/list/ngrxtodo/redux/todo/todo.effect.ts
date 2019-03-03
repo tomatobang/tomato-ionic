@@ -5,14 +5,15 @@ import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OnlineTodoService } from '@services/data.service';
 import { AddTodoAction, ADD_TODO, ADD_TODO_SUCCEED, ADD_TODO_FAILED } from './todo.actions';
-import { Todo } from './todo.model';
+import { AppState } from '../ngrxtodo.reducer';
+
 
 @Injectable()
 export class TodoEffects {
     @Effect()
     addtodo$: Observable<Action> = this.actions$.pipe(
         ofType<AddTodoAction>(ADD_TODO),
-        map((action: AddTodoAction) => action.text),
+        map((action: AddTodoAction) => action.title),
         mergeMap(async title => {
             let params;
             params = {
@@ -38,8 +39,8 @@ export class TodoEffects {
                 this.store$.dispatch({
                     type: ADD_TODO_SUCCEED,
                     payload: {
-                        id: new Date().getTime(),
-                        text: title,
+                        _id: new Date().getTime(),
+                        title: title,
                     },
                 });
             }, 3000);
@@ -49,7 +50,7 @@ export class TodoEffects {
 
     constructor(
         private actions$: Actions,
-        private store$: Store<Todo>,
+        private store$: Store<AppState>,
         private apiService: OnlineTodoService
     ) { }
 }

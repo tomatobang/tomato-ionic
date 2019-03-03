@@ -24,8 +24,8 @@ export class NewTodoComponent implements OnInit {
 
   saveTodo() {
     if (this.textField.valid) {
-      const text: string = this.textField.value;
-      const action = new TodoActions.AddTodoAction(text.trim());
+      const title: string = this.textField.value;
+      const action = new TodoActions.AddTodoAction(title.trim());
       this.store.dispatch(action);
       this.textField.setValue('', { emitEvent: false });
     }

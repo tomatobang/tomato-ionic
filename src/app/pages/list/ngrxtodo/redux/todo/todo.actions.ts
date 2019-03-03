@@ -13,12 +13,12 @@ export const COMPLETE_ALL_TODO = '[TODO] complete all';
 
 export class AddTodoAction implements Action {
   readonly type = ADD_TODO;
-  public id: number;
+  public _id: string;
 
   constructor(
-    public text: string
+    public title: string
   ) {
-    this.id = Math.random();
+    this._id = Math.random() + '';
   }
 }
 
@@ -44,7 +44,7 @@ export class DeleteTodoAction implements Action {
   readonly type = DELETE_TODO;
 
   constructor(
-    public id: number
+    public _id: string
   ) { }
 }
 
@@ -52,7 +52,7 @@ export class ToggleAction implements Action {
   readonly type = TOGGLE_TODO;
 
   constructor(
-    public id: number
+    public _id: string
   ) { }
 }
 
@@ -60,8 +60,8 @@ export class UpdateAction implements Action {
   readonly type = UPDATE_TODO;
 
   constructor(
-    public id: number,
-    public text: string,
+    public _id: string,
+    public title: string,
   ) { }
 }
 

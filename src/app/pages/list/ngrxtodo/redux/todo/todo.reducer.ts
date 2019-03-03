@@ -8,22 +8,12 @@ export function TodosReducer(
   action: TodoActions.TodoActionType
 ) {
   switch (action.type) {
-    // case TodoActions.ADD_TODO: {
-    //   return [
-    //     ...state,
-    //     {
-    //       id: action.id,
-    //       text: action.text,
-    //       completed: false,
-    //     },
-    //   ];
-    // }
     case TodoActions.ADD_TODO_SUCCEED: {
       return [
         ...state,
         {
-          id: action.payload.id,
-          text: action.payload.text,
+          _id: action.payload._id,
+          title: action.payload.title,
           completed: false,
         },
       ];
@@ -32,7 +22,7 @@ export function TodosReducer(
     //   return [
     //     ...state,
     //     {
-    //       id: action.id,
+    //       id: action._id,
     //       text: action.text,
     //       completed: false,
     //     },
@@ -43,7 +33,7 @@ export function TodosReducer(
     }
     case TodoActions.TOGGLE_TODO: {
       return state.map(todo => {
-        if (action.id === todo.id) {
+        if (action._id === todo._id) {
           return {
             ...todo,
             completed: !todo.completed,
@@ -54,14 +44,14 @@ export function TodosReducer(
       });
     }
     case TodoActions.DELETE_TODO: {
-      return state.filter(todo => action.id !== todo.id);
+      return state.filter(todo => action._id !== todo._id);
     }
     case TodoActions.UPDATE_TODO: {
       return state.map(todo => {
-        if (action.id === todo.id) {
+        if (action._id === todo._id) {
           return {
             ...todo,
-            text: action.text,
+            text: action.title,
           };
         } else {
           return todo;
