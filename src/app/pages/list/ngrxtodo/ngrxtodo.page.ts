@@ -1,12 +1,12 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { AppState } from './../redux/ngrxtodo.reducer';
-import { Todo } from './../redux/todo/todo.model';
-import * as TodoActions from './../redux/todo/todo.actions';
+import { AppState } from './redux/ngrxtodo.reducer';
+import { Todo } from './redux/todo/todo.model';
+import * as TodoActions from './redux/todo/todo.actions';
 import {
   getTodos,
-} from '../redux/todo/todo.selectors';
+} from './redux/todo/todo.selectors';
 
 @Component({
   selector: 'page-ngrxtodo-module',

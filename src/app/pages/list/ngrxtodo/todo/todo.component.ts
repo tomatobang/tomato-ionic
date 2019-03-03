@@ -2,9 +2,9 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { AppState } from './../../redux/ngrxtodo.reducer';
-import { Todo } from './../../redux/todo/todo.model';
-import * as TodoActions from './../../redux/todo/todo.actions';
+import { AppState } from './../redux/ngrxtodo.reducer';
+import { Todo } from './../redux/todo/todo.model';
+import * as TodoActions from './../redux/todo/todo.actions';
 
 @Component({
   selector: 'page-ngrxtodo',

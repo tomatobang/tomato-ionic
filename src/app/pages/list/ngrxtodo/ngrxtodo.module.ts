@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ngrxtodoReducer } from './../redux/ngrxtodo.reducer';
+import { ngrxtodoReducer } from './redux/ngrxtodo.reducer';
 import { EffectsModule } from '@ngrx/effects';
 
 import { NgRxTodoComponent } from './ngrxtodo.page';
@@ -12,7 +12,7 @@ import { TodoComponent } from './todo/todo.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewTodoComponent } from './new-todo/new-todo.component';
-import { TodoEffects } from '../redux/todo/todo.effect';
+import { TodoEffects } from './redux/todo/todo.effect';
 
 const routes: Routes = [
   {

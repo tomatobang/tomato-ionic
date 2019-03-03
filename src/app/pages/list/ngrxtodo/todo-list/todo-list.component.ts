@@ -3,14 +3,14 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
-import { AppState } from './../../redux/ngrxtodo.reducer';
-import { Todo } from './../../redux/todo/todo.model';
-import * as FilterActions from './../../redux/filter/filter.actions';
-import * as TodoActions from './../../redux/todo/todo.actions';
+import { AppState } from './../redux/ngrxtodo.reducer';
+import { Todo } from './../redux/todo/todo.model';
+import * as FilterActions from './../redux/filter/filter.actions';
+import * as TodoActions from './../redux/todo/todo.actions';
 import {
   getVisibleTodos,
   getStateCompleted,
-} from './../../redux/todo/todo.selectors';
+} from './../redux/todo/todo.selectors';
 
 @Component({
   selector: 'page-ngrxtodo-list',
