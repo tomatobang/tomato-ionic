@@ -52,6 +52,15 @@ export class OnlineTodoService extends TodoService {
   deleteTodo(@Path('id') id: string): Observable<any> {
     return null;
   }
+
+  @POST(baseUrl + 'api/todo/toggleall')
+  toggelAllTodo(@Body data): Observable<any> {
+    return null;
+  }
+  @POST(baseUrl + 'api/todo/deletecomplete')
+  deleteAllCompletedTodo(): Observable<any> {
+    return null;
+  }
 }
 
 export const TODO_SERVICE_PROVIDERS: Array<any> = [

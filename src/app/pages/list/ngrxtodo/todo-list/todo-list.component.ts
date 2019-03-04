@@ -30,7 +30,8 @@ export class TodoListComponent implements OnInit {
   ngOnInit() { }
 
   toggleAll() {
-    this.store.dispatch(new TodoActions.ToggleAllAction(true));
+    const state = this.todos.every(todo => todo.completed)
+    this.store.dispatch(new TodoActions.ToggleAllAction(!state));
   }
 
   private setFilter(filter: string) {

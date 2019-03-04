@@ -93,12 +93,14 @@ export class TodoEffects {
         ofType<ToggleAllAction>(TOGGLE_ALL_TODO),
         map((action: ToggleAllAction) => action.complete),
         mergeMap(async complete => {
-            setTimeout(() => {
+            this.apiService.toggelAllTodo({
+                complete: complete
+            }).subscribe(ret => {
                 this.store$.dispatch({
                     type: TOGGLE_ALL_TODO_SUCCEED,
                     complete: complete,
                 });
-            }, 1000);
+            });
             return { type: '[todo]todo no_use' };
         })
     );
@@ -108,11 +110,12 @@ export class TodoEffects {
         ofType<ClearCompletedAction>(CLEAR_COMPLETED_TODO),
         map((action: ClearCompletedAction) => action),
         mergeMap(async action => {
-            setTimeout(() => {
+            this.apiService.deleteAllCompletedTodo().subscribe(ret => {
+                debugger;
                 this.store$.dispatch({
                     type: CLEAR_COMPLETED_TODO_SUCCEED,
                 });
-            }, 1000);
+            });
             return { type: '[todo]todo no_use' };
         })
     );
