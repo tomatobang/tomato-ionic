@@ -1,0 +1,81 @@
+  .tb-userform {
+      ion-item {
+          border-top: none !important;
+          border-bottom: none !important;
+          .item-inner {
+              border-bottom: 1px solid tomato !important;
+          }
+      }
+  }
+
+  .scroll-content {
+      margin-top: 0 !important;
+  }
+
+  .slide-background {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-color: transparent;
+  }
+
+  .slide-zoom {
+      background: rgba(32, 32, 32, 0.2) !important;
+      height: 100%;
+  }
+
+  ion-slides {
+      height: 100%;
+  }
+
+  .login-container {
+      background: transparent;
+      color: white;
+      position: absolute;
+      top: 0;
+      padding: 10vw;
+      text-align: center;
+      width: 100%;
+      margin: 0 auto;
+      z-index: 2;
+      ion-item {
+          color: white !important;
+          padding-left: 10px !important;
+          margin-bottom: 10px;
+          background-color: transparent !important;
+          font-size: 0.9em;
+      }
+      .text-danger {
+          color: red;
+      }
+      .login-submit-block {
+          margin-top: 25px;
+          margin-bottom: 40px;
+      }
+      .login-logo {
+          width: 150px;
+          height: 150px;
+          background-size: contain;
+          background-image: url(/assets/tomatobang.jpg);
+          margin: auto;
+          margin-top: 50px;
+          margin-bottom: 25px;
+          border-radius: 50%;
+      }
+      .login-button-area {
+          text-align: center;
+      }
+      .login-button-area button {
+          width: 80%;
+      }
+      .login-button-area .button-outline {
+          color: #bbb;
+          border-color: tomato;
+      }
+      ion-button {
+          opacity: 0.8;
+      }
+      ion-input {
+          color: tomato;
+      }
+  }

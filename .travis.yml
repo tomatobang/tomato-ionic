@@ -1,0 +1,117 @@
+branches:
+  only:
+  - master
+matrix:
+  include:
+  - language: node_js
+    sudo: required
+    dist: trusty
+    node_js:
+    - 8.9.4
+    addons:
+      apt:
+        sources:
+        - google-chrome
+        packages:
+        - google-chrome-stable
+        - lib32stdc++6
+        - lib32z1
+    install:
+    - npm install
+    before_script:
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    script:
+    - npm run lint
+    - npm run test
+  - os: linux
+    sudo: required
+    language: android
+    android:
+      components:
+      - tools
+      - platform-tools
+      - build-tools-26.0.2
+      - android-25
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-m2repository
+    licenses:
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
+    before_cache:
+    - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+    - rm -f  $HOME/.gradle/caches/transforms-1/transforms-1.lock
+    - rm -rf $HOME/.gradle/caches/3.5/fileHashes/
+    - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+    cache:
+      directories:
+      - "$HOME/.gradle/caches/"
+      - "$HOME/.gradle/wrapper/"
+    before_install:
+    - export LANG=en_US.UTF-8
+    - nvm install 8.9.0
+    - npm install ionic cordova -g
+    - yes | sdkmanager "platforms;android-27"
+    - cd $TRAVIS_BUILD_DIR
+    - wget -c https://raw.githubusercontent.com/Pgyer/TravisFile/master/pgyer_upload.sh
+      -O pgyer_upload.sh
+    - chmod +x pgyer_upload.sh
+    - openssl aes-256-cbc -K $encrypted_fd699ad937e2_key -iv $encrypted_fd699ad937e2_iv
+      -in ./sh/release/certificates.tar.enc -out ./sh/release/certificates.tar -d
+    - tar xvf ./sh/release/certificates.tar -C ./sh/release/certificates
+    before_script:
+    - chmod 755 ./sh/*.sh
+    - chmod 777 ./config.xml
+    - chmod +x ./hooks/before_build/010_update_config.js
+    script:
+    - npm install
+    - "./sh/build-android.sh"
+    after_script:
+    - cp $TRAVIS_BUILD_DIR/sh/release/certificates/ionic4travis.jks $HOME
+    - cd platforms/android/app/build/outputs/apk/release/
+    - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/ionic4travis.jks
+      -storepass $storepass -keypass $keypass app-release-unsigned.apk ionic4travis
+    - jarsigner -verify app-release-unsigned.apk
+    - "${ANDROID_HOME}/build-tools/26.0.2/zipalign -v 4 app-release-unsigned.apk app-release-signed.apk"
+    - cd ${TRAVIS_BUILD_DIR}
+    - "./sh/package-android.sh"
+    - set -e
+    - $TRAVIS_BUILD_DIR/pgyer_upload.sh "${TRAVIS_BUILD_DIR}/output/tomato-ionic-release-signed.apk"
+      ${PGYER_APIKEY}
+  - os: osx
+    sudo: required
+    language: swift
+    cache:
+    - bundler
+    before_install:
+    - bundle install
+    - bundle update
+    - export LANG=en_US.UTF-8
+    - nvm install 8.9.0
+    - chmod 777 ./sh/release/*.sh
+    - chmod +x ./hooks/before_build/010_update_config.js
+    - chmod +x ./hooks/after_platform_add/update-release-xcconfig.js
+    - "./sh/release/decrypt-key.sh"
+    - tar xvf ./sh/release/certificates.tar -C ./sh/release/certificates
+    - npm install -g cordova ionic
+    - npm install
+    script:
+    - fastlane beta
+notifications:
+  email:
+  - yipeng.info@gmail.com
+env:
+  global:
+  - APP_NAME="tomato-ionic"
+  - DEVELOPER_NAME="iPhone Distribution: Shenzhen Cloud Facilities Network Company
+      Limited (CVU2X68836)"
+  - PROFILE_NAME="ionic4_Ad_Hoc_Profile"
+  - PROFILE_UUID="7e4556a6-395a-42bd-9ca1-fcb7230208ac"
+  - ION4_APP_UPLOAD_BRANCH="master"
+  - secure: vpbuGKJ8nglvA8wsxCeBwPQL3Z2dtoUWfGuEky6wfyK+I64Pmb4WWicJ2zUfMrFWQpb5BRelIy5u0LcjogLBEL+Fw6JWZWEGcmylwq6HdFk493aOwSjz7xihxh/DIK3ujz//BDVyCq/AjROGJGGgwicKJj5UlZ4B1Jon3gEUb3rd+SO/MiVWhNRC0yukvcVQk30f5zQPcnZUskAuLPIz06zBAYvnrfg/e6x8ajMSc2Chd5LN/74AlXB/ztz7IozZ0IOHpD0jXNPS/Kkn3bOGHTQ1s5CkyE9s+Z6MV6Eu/CyLssbalKoDBNw31LmQyFG6Rh/6xZrx1wwQc39UQDXIGu7z+1AyWnGqvaymZ1y0ffBohdQSwQlKDBYJ8LyCqL/c0mSrf+mAg+pe4mWg+DyO+rKLqlYtNdscWHOG97BpnCTeZ6ODDQY8/sN/5eJ8reoNJwV+ZttHbzh1x7T9u21aMhh6bbm5EBUQRWX3yMimrrX3YsLgIHQ7E1eWP2tc0rbrQ5nh14kpbSYsf81Yjn5rsno4H/a2RUeqroxtnLQ9hmLoJGFJLaFSRIoPYwwDL/42Wjt8s7/X8+6lwtemyZojE7rASn4kaj/VgIw/1OT7zZ+YYJBQvoSLOilqjMys/kw+NTiOuKfOeqEefY4l+vP6BqzpnIMksOupBMdc77uVRQg=
+  - secure: F17TDbbrfRU1qhtrspxnl9Knq9Gz8F6tOqOSmbsKBJtorimjP8AyRErqzukftfLRchb8+ZNcsP9G+CSy++nDOlgcEJSGN4+Bps/2KfcnNXTacBUmwAWhEb8CdAkX6iHI/sJ1KwKHY/OoQl8AwjxoAkXSaCxaULnb8FLMz1L5TiqI2Swhu0p8GkoAEDZaft9Vmbn+izsg6hHsXP9OLhWyZ9sCsWwz8TVNsKEIrEzU+faGyYkYMMrcWTCUDJ5Lgy5zUNkaKFstx2xMrOIfHV4+9XM80Rzigy5zQXcE5jiBVVriaO5d5poJ1x9Qa6XfqCRqoNQy46YTFyRdiCcFTfEoWJjJ/cjIK6/KKRGDW85uqaVppxcrxcC04BlSjpcWkwOk6zEm/JkVPs+qPtWmD0ZWKkGPQ5lcpmINtO7dDF1hRM3EG8cZUfMPPuWQI/8IdSlIIXmz1ZMwlraX5jmIAE3lRVtRXeCVdrcpEvvspsM/nkCzujkwpqe4mRhWc7uXcTdUQzKTMi1KqDQSPKcLEuCH4x4BGjaVge4gq1JAIvDorAwTq4WspxGcE6ds2taNOjfLP0bGxyTm9zf1+Uora9A5Oj1JKL6hB4pKBa0uFZwJThp6pl/TC36ONQcMIpq1EsGht9PrAZB/OMS5VDXdhHaksVyx+l0npgk7yPWryvodDCs=
+  - secure: giL8LqHQE0PLU36mGD9OP9mArH5MpyveU8iLYt7YQtH3xglCNMKMjtlCKSwffyrTjTbn5KTX2PGHp9LtCoZfwaKy5xePSdwYzXRTi/g5dCtgn5t0QNpEek2jsrboNB8VAm/+CFC69osqxHYVK/6B8B3LJkMJxpbpCGXb0XYdFS+3nN/RQ/YqyXwDLiJ3HwBof0g3MY6kNBjB57c2yTyEa2K6iiF9agR4yVk6dSKf7EpT/wwhLhXK4h5ccsCqa6TYIeuIT24uLkHYvpaa0N2D2fLGj9p7GUqgWJ3aQz5sb7py44/3qzIkzpXQlJ9DIsLZiaqEzAyy4HZgGO10eI4rCGxV04VV8kp6x+uH/cG8dgCvDNTXuFvbp1qRX/kv9rga26ocJ+w0rE0vskymifsAD0ppa3qMwMACn9cg5DNqtulnpqrb3J6FCdqijWNH4gmCF9CbuIQAOBAL6j4S4awPrDw1Bi39AeHtbvBJajM/JdP4CES0aB+IbEpEl7bAxU/iEzh0vx1ehPg9f16z2QxMni+o3gZOW2NbFaGxF6WNXPCMpwD8P6Kfe84ylEQ0/DFZWIulMwaaHX+EHeg6O/QgUBUjm1NSt2cxoG3txxHamYMoGIYHlD7TQkKdKO/aVslvhUa9SQSrXk+TwF31yqkbjdd1NBKhiyDdje6TdeFUFHs=
+  - secure: YvugMt6y6Wla+KtClWIe07tzVAsT3XCaxPJORzixVSHTjwOSz21km4QFoZTXRKciL50kVZIeARwKN+8sW+i8bSO0QrqqSMsINjizOeuWTVOn2iIyFoKTTfpqE8cSINOlJOwPBKgEgTmYR4bpco13AGeY1zgmHeo/DPT4LpLIUQAU/nPxl1zIajxCnor7w0Fm+POwEWlBz0vNvRk1s3nkvzPIThTcmVcv8koeBxwTq9C4orBkKelWAvNGGqcWscpQdR0CIApgVLpHrNvSmucx62lF6uHKBq2hUo7UU9vhHVLevgOWPBX+cfTp8tXuvl+ILheDACpZeF16IPofGrfhoVAb9OP4pDMZK1C+0+DfyKT/o4Zlm8/iV/I0LuOC/v0HD46bv4tIzLYzC7rhGl9FSAicg9wf7ALnvsOUIgGATkDZBuTJp5bUSlIzfPPJui0i5rz2TzCt84xznYUd1+9sC/bjxxC56WWNnEHBBOUGIQwY6DNHIWksvd3SsMFHOfXF7hLGwNd51an9eocckxE7QsY89SXmBr52wFkF69XsAEtk21jvaBi7mLUeZX6ZcsPHWF4RqXE5VpsIsBsuRWX0/jZTyDcK3rf7gKrg1+Zihvj1n84uyd2bAC3X9OVpRZAR5tYo9ORuoSjxcJXOyzDCwZliYufXwv58r/xykmkM63M=
+  - secure: F/HKOCoLbA4FWmCllFT33fw4IihZ+fDlMBbb/HuvUo6fZ7GVmHBt3RKlIdpwLRdzgT1c+utdFt9D98IH5aLjl9BXKVqOKYAEkbkN5kd7LGA8pbGZV/Kz1W15P4PUoZWKQWvEdLcyhlab2m3Hf/3tQVB/ygl/NECNBAi4X++FoG39oMwU5A8uwNtkZnJHynoHTq/bi/JVEFhhC8O+sxQrhlVzl8rog2rWy9SDl0lIVZhk/mktvfD8GNrypbkXwm0F7QX9I1Vn7ycpciSQn849d0ccQz78KNeL8gUySPHXbEYKU3qCSD4ypsNwefQoILljTSZGNYOKMj9VJKmdmkMbn0E1QHJwTUkBOdZa4fOHhjivSDvhcrgklSF7LZS78tXPJOFlPaD3TRBh5sEeK3fPQlpfK2kdisEIfIrComLFq8vkpJ2aekeNa1qkJxVRl/fF3YHNO7c/RkEpBJZ8YGn6lKjd0rZU/ZyuhLXRBk2ZkRv41s6xwpsq0J7PN0oabxzTJlB7kEt40kVJ/5P6YiZc48+8QkYeC+rcS2zpw2h+nacvU8gOMyUMEsHOb12BQWZcF8srKDKmY1k/dWDkFifpNLvDJq+TcE8saPN9cwwCidoEVW0E1BL2yZjJ86uWoJMDgQ9mqobkw0jt/8dUvtppf2yaTn1cDO92WOVzCj7GCuE=

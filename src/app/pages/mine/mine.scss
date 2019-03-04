@@ -1,0 +1,33 @@
+.username{
+    height: 48px;
+    line-height: 48px;
+    vertical-align: top;
+}
+
+.headImg{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.big-headImg{
+    text-align: center;
+    width: 100%;
+    img{
+        width: 148px;
+        height: 148px;
+        margin:auto;
+        border-radius: 50%;
+    }
+   
+}
+
+.setting-icon{
+    color:#F97271;
+}
+
+.mine-qr-icon{
+    float: right;
+    margin-top: 16px;
+    width: 16px;
+}

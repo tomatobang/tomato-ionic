@@ -1,0 +1,23 @@
+<footer id="footer" class="footer" *ngIf="showFooter" style="height:100px">
+  <span id="todo-count" class="todo-count">还剩 {{ countTodos }} 未完成</span>
+  <ul id="filters" class="filters">
+    <li>
+      <a [routerLink]="['./']" [class.selected]="currentFilter == 'SHOW_ALL'">
+        全部
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['./', 'active']" [class.selected]="currentFilter == 'SHOW_ACTIVE'">
+        进行中
+      </a>
+    </li>
+    <li>
+      <a [routerLink]="['./', 'completed']" [class.selected]="currentFilter == 'SHOW_COMPLETED'">
+        已完成
+      </a>
+    </li>
+  </ul>
+  <button id="clear-completed" class="clear-completed" (click)="clearCompleted()">
+    清除已完成
+  </button>
+</footer>

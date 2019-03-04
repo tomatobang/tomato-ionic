@@ -1,0 +1,59 @@
+<ion-content class="register-container" no-bounce>
+    <div class="register-logo">
+    </div>
+
+    <form [formGroup]="userForm" (ngSubmit)="doRegister()" novalidate class="form-horizontal tb-userform" role="form">
+
+        <ion-list>
+            <ion-item>
+                <ion-label color="primary">用户名</ion-label>
+                <ion-input required placeholder="用户名" [ngClass]="{' is-danger': formErrors.username }" formControlName="username"
+                    [(ngModel)]="user.username" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">邮箱</ion-label>
+                <ion-input required type="email" formControlName="email" class="input" [ngClass]="{' is-danger': formErrors.email }"
+                    placeholder="邮箱"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">密码</ion-label>
+                <ion-input formControlName="password" validateEqual="confirmPassword" reverse="true" [ngClass]="{' is-danger': formErrors.password }"
+                    formControlName="password" type="password" placeholder="密码"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary">确认密码</ion-label>
+                <ion-input [ngClass]="{' is-danger': formErrors.confirmPassword }" validateEqual="password"
+                    formControlName="confirmPassword" type="password" placeholder="确认密码"></ion-input>
+            </ion-item>
+
+        </ion-list>
+
+        <div *ngIf="formErrors.username" class="text-danger">
+            {{ formErrors.username }}
+        </div>
+        <div *ngIf="formErrors.email" class="text-danger">
+            {{ formErrors.email }}
+        </div>
+        <div *ngIf="formErrors.password" class="text-danger">
+            {{ formErrors.password }}
+        </div>
+        <div *ngIf="formErrors.confirmPassword" class="text-danger">
+            {{ formErrors.confirmPassword }}
+        </div>
+
+        <!-- 服务端错误信息显示 -->
+        <div *ngIf="error">{{ error }}</div>
+
+        <div class="register-button-area">
+            <ion-button [disabled]="userForm.invalid" type="submit" color="primary" expand="block" fill="outline">注册</ion-button>
+        </div>
+        <div class="register-button-area">
+            <ion-button type="button" color="light" expand="block" fill="outline" (click)="navToLogin()">登陆</ion-button>
+        </div>
+
+    </form>
+
+</ion-content>

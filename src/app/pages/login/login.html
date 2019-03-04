@@ -1,0 +1,40 @@
+<ion-content no-bounce>
+    <ion-slides pager="false" autoplay="3000" loop="true" speed="3000" effect="fade">
+        <ion-slide class="slide-background swiper-no-swiping" *ngFor="let background of backgrounds" [ngStyle]="{'background-image': 'url(' + background +')'}">
+        </ion-slide>
+    </ion-slides>
+    <div class="login-container">
+        <div class="login-logo"></div>
+        <form #form="ngForm" (ngSubmit)="form.form.valid && doLogin()" novalidate class="form-horizontal tb-userform"
+            role="form">
+            <ion-list>
+                <ion-item>
+                    <ion-label color="primary">用户名</ion-label>
+                    <ion-input required placeholder="请输入用户名..." [ngClass]="{'is-success': form.submitted && !userName.valid }"
+                        name="username" [(ngModel)]="user.username" #userName="ngModel" type="text"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="primary">密码</ion-label>
+                    <ion-input [ngClass]="{ 'is-success': form.submitted && !password.valid }" required minlength="6"
+                        [(ngModel)]="user.password" name="password" #password="ngModel" type="password" placeholder="请输入密码..."></ion-input>
+                </ion-item>
+
+            </ion-list>
+
+            <div *ngIf="form.submitted && !password.valid" class="text-danger">
+                密码必须输入,至少要6位！
+            </div>
+            <div *ngIf="form.submitted && !userName.valid" class="text-danger">
+                用户名必须输入！
+            </div>
+            <div *ngIf="error" class="text-danger">{{ error }}</div>
+            <div class="login-button-area">
+                <ion-button type="submit" color="primary" expand="block" fill="outline">登陆</ion-button>
+            </div>
+            <div class="login-button-area">
+                <ion-button type="button" color="light" expand="block" fill="outline" (click)="navToRegister()">注册</ion-button>
+            </div>
+        </form>
+    </div>
+</ion-content>

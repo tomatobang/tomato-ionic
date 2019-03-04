@@ -1,31 +1,26 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
     "declaration": false,
-    "skipLibCheck": true,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2015"],
-    "module": "es2015",
-    "moduleResolution": "node",
-    "sourceMap": true,
     "target": "es5",
-    "baseUrl": "./",
+    "lib": ["es2017", "dom"],
+    "baseUrl": "./src/",
     "paths": {
-      "@app/env": ["src/environments/environment"],
-      "@components/*": ["src/components/*"],
-      "@providers/*": ["src/providers/*"],
-      "@modals/*": ["src/modals/*"],
-      "@directives/*": ["src/directives/*"],
-      "@pipes/*": ["src/pipes/*"],
-      "@app/*": ["src/app/*"],
-      "@root/*": ["./*"]
-    }
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "src/**/*.spec.ts"],
-  "compileOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
+      "@app/env": ["environments/environment"],
+      "@components/*": ["app/components/*"],
+      "@services/*": ["app/services/*"],
+      "@modals/*": ["app/modals/*"],
+      "@directives/*": ["app/directives/*"],
+      "@pipes/*": ["app/pipes/*"],
+      "@app/*": ["app/*"],
+      "@root/*": ["./*"],
+      "echarts": ["../node_modules/echarts/dist/echarts.min.js"]
+    },
+    "types": ["cordova", "cordova-plugin-file", "jasmine"]
   }
 }

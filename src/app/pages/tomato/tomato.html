@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar no-border-bottom>
+        <ion-title>{{ page_title }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="addTask()">
+                <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+    <ion-refresher [enabled]="IsInTomatoTodaySlide" (ionRefresh)="doRefreshTodayTomato($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-slides #tomato_slides pager="false" (ionSlideDidChange)="slideChanged()" [options]="slideOpts">
+        <!-- 首页 -->
+        <ion-slide>
+            <cmp-index-index></cmp-index-index>
+        </ion-slide>
+
+        <!-- 今日番茄钟 -->
+        <ion-slide class="tomato-today-slide">
+            <todaylist></todaylist>
+        </ion-slide>
+    </ion-slides>
+
+</ion-content>

@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text=""></ion-back-button>
+        </ion-buttons>
+        <ion-title>用户查询</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+    <ion-searchbar #tomatoSearchbar (ionInput)="seachUsers($event)" placeholder="用户名 | 昵称 | Bio..." debounce="800"></ion-searchbar>
+    <ion-list class="tomato-history-list">
+        <ion-item *ngFor="let item of searchReturnItems; index as i;" class="tomato-today-list" track="tooling">
+            <ion-avatar item-start>
+                <img src="./assets/tomato.png">
+            </ion-avatar>
+            <h3>
+                <span>{{ item.username }} </span>
+                <div class="tomato-break-reason">(Bio:{{ item.Bio | StringTruncate: 20 }})</div>
+            </h3>
+            <ion-button class="message-agree" fill="outline" slot="end" (click)='requestFriend(item._id, i)' *ngIf="userid !== item._id && !item.hasAdd">
+                加为好友
+            </ion-button>
+            <ion-button class="message-agree" fill="outline" slot="end" *ngIf="userid !== item._id && item.hasAdd">
+                已发请求
+            </ion-button>
+            <ion-button class="message-agree" fill="outline" slot="end" *ngIf="userid === item._id">
+                自己
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>

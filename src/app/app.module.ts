@@ -1,89 +1,66 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { IonicStorageModule } from '@ionic/storage';
-import { FileTransfer } from '@ionic-native/file-transfer';
-import { FileOpener } from '@ionic-native/file-opener';
-import { File } from '@ionic-native/file';
-import { Insomnia } from '@ionic-native/insomnia';
-import { Network } from '@ionic-native/network';
-import { BackgroundMode } from '@ionic-native/background-mode';
-import { AppCenterCrashes } from '@ionic-native/app-center-crashes';
-import { AppCenterAnalytics } from '@ionic-native/app-center-analytics';
-import { JPush } from '@jiguang-ionic/jpush';
 
-import { RebirthStorageModule } from 'rebirth-storage';
-import { RebirthHttpModule } from 'rebirth-http';
-import { CoreModule } from '../core/core.module';
-import { SharedModule } from '../shared/shared.module';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { ErrorHandler, NgModule, Injectable } from '@angular/core';
+import * as Hammer from 'hammerjs';
 
-// see:https://www.npmjs.com/package/ng-socket-io
-import { SocketIoModule } from 'ng-socket-io';
-import { MyAppComponent } from './app.component';
+@Injectable()
+export class IonicGestureConfig extends HammerGestureConfig {
+  overrides = <any>{
+    'swipe': { direction: Hammer.DIRECTION_ALL }
+  };
+  buildHammer(element: HTMLElement) {
+    const mc = new (<any>window).Hammer(element);
+    for (const eventName of Object.keys(this.overrides)) {
+      mc.get(eventName).set(this.overrides[eventName]);
+    }
+    return mc;
+  }
+}
+
+import { RouteReuseStrategy } from '@angular/router';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/Storage';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { EFOSHttpInterceptor } from './providers/http.interceptor.service';
+
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { environment } from '../environments/environment';
+import { QRScannerModalModule } from './modals/qr-scanner/qr-scanner.module';
+import { QRImgModalModule } from './modals/qr-img/qr-img.module';
+
+import { MyApp } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+
+import { MyErrorHandler } from './error.handler';
+import { RavenErrorHandler } from './raven-error-handler.';
 
 @NgModule({
-  declarations: [MyAppComponent],
+  declarations: [MyApp],
   imports: [
-    RebirthStorageModule,
-    RebirthHttpModule,
-    BrowserModule,
+    AppRoutingModule,
     CoreModule,
     SharedModule,
-    IonicModule.forRoot(MyAppComponent, {
-      platforms: {
-        android: {
-          backButtonText: '',
-          tabsHideOnSubPages: true,
-          iconMode: 'md',
-          tabsLayout: 'icon-top',
-        },
-        ios: {
-          backButtonText: '返回',
-          tabsHideOnSubPages: true,
-          iconMode: 'ios',
-          swipeBackEnabled: false, // 禁用 IOS 手势滑动返回
-          tabsLayout: 'icon-top',
-        },
-      },
-    }),
-    SocketIoModule,
+    BrowserModule,
+    QRScannerModalModule,
+    QRImgModalModule,
     IonicStorageModule.forRoot({
       name: '__tomatobangdb',
       driverOrder: ['indexeddb', 'sqlite', 'websql'],
     }),
+    IonicModule.forRoot(),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [MyAppComponent],
+  bootstrap: [MyApp],
+  entryComponents: [MyApp],
   providers: [
-    StatusBar,
-    BackgroundMode,
-    SplashScreen,
-    File,
-    FileTransfer,
-    FileOpener,
-    Insomnia,
-    Network,
-    {
-      provide: ErrorHandler,
-      useClass: IonicErrorHandler,
-    },
-    JPush,
-    AppCenterCrashes,
-    AppCenterAnalytics,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: EFOSHttpInterceptor,
-      multi: true
-    }
+    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],
 })

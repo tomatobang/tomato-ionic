@@ -1,0 +1,16 @@
+  .button {
+      display: block;
+      z-index: 1001;
+      position: absolute;
+      top: 0.2em;
+      left: 0.2em;
+      opacity: 0.6;
+      background: transparent;
+  }
+
+  .icon {
+      font-size: 2.5rem;
+      &.large {
+          font-size: 3rem !important;
+      }
+  }

@@ -44,7 +44,7 @@ linters:
     style: same_line
 
   EmptyLineBetweenBlocks:
-    enabled: true
+    enabled: false
     ignore_single_line_blocks: true
 
   EmptyRule:
@@ -80,7 +80,7 @@ linters:
     filename_extension: false
 
   Indentation:
-    enabled: true
+    enabled: false
     allow_non_nested_indentation: true
     character: space
     width: 2
@@ -100,7 +100,7 @@ linters:
 
   NestingDepth:
     enabled: true
-    max_depth: 1
+    max_depth: 4
 
   PlaceholderInExtend:
     enabled: true
@@ -133,7 +133,7 @@ linters:
 
   SelectorDepth:
     enabled: true
-    max_depth: 3
+    max_depth: 4
 
   SelectorFormat:
     enabled: true
@@ -180,7 +180,7 @@ linters:
     spaces: 0
 
   StringQuotes:
-    enabled: true
+    enabled: false
     style: single_quotes
 
   TrailingSemicolon:
@@ -196,7 +196,7 @@ linters:
     enabled: true
 
   UnnecessaryParentReference:
-    enabled: true
+    enabled: false
 
   UrlFormat:
     enabled: false
