@@ -61,7 +61,7 @@
 
 
   <div class="big-headImg" *ngIf="showBigHeadImg">
-    <img [src]="headImg" />
+    <img [src]="headImg" onError="this.src='./assets/tomato-active.png';" />
   </div>
 
 </ion-content>

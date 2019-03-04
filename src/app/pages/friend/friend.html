@@ -51,7 +51,7 @@
             <ion-list class="rank-list">
                 <ion-item *ngFor="let item of rankList">
                     <div class="rank-statistics">
-                        <ion-avatar item-left class="item-rank">
+                        <ion-avatar slot="start" class="item-rank">
                             <span class="rank {{ item.class }}">
                                 <span>{{ item.rankText }}</span>
                             </span>
@@ -65,10 +65,11 @@
                                 {{ item.title }}
                             </p>
                         </div>
+                        <p class="rank-location">
+                            <ion-icon name="pin"></ion-icon> 深圳市南山区
+                        </p>
                     </div>
-                    <p class="rank-location">
-                        <ion-icon name="pin"></ion-icon> 深圳市南山区
-                    </p>
+
                 </ion-item>
             </ion-list>
         </ion-list>

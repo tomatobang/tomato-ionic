@@ -104,9 +104,6 @@ export class MinePage implements OnInit {
 
   statistics() {
     this.router.navigate(['tabs/me/statistics']);
-    // this.router.navigate(['statistics'],{
-    //   relativeTo:this.actrouter
-    // });
   }
 
   toGameBoard() {
