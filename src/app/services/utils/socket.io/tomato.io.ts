@@ -16,10 +16,10 @@ export class TomatoIOService {
    * 断线重连
    */
   reconnect() {
-    this.reconnect();
+    this.socket.connect();
     setTimeout(() => {
       if (!this.hasConnected) {
-        this.socket.connect();
+        this.reconnect();
       }
     }, 5000);
   }

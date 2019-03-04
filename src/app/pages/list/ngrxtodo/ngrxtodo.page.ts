@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './redux/ngrxtodo.reducer';
-import { Todo } from './redux/todo/todo.model';
 import * as TodoActions from './redux/todo/todo.actions';
 import { OnlineTodoService } from '@services/data.service';
 import {
@@ -25,10 +24,7 @@ export class NgRxTodoComponent {
   }
 
   private populateTodos() {
-    // const todos: Todo[] = JSON.parse(
-    //   localStorage.getItem('angular-ngrx-todos') ||
-    //   '[{"id":1,"completed":false,"text":"test"}]'
-    // );
+
     this.service.getTodos().subscribe(ret => {
       this.store.dispatch(new TodoActions.PopulateTodosAction(ret));
     });
@@ -36,11 +32,8 @@ export class NgRxTodoComponent {
   }
 
   private updateTodos() {
-    // select(getVisibleTodos)
     this.store.pipe(select(getTodos)).subscribe(todos => {
-      if (todos) {
-        localStorage.setItem('angular-ngrx-todos', JSON.stringify(todos));
-      }
+      // todo
     });
   }
 
