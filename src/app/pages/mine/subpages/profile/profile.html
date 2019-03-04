@@ -18,7 +18,7 @@
         <ion-item (click)="changeHeadImg()">
             <h2>头像</h2>
             <ion-note item-end>
-                <img [src]="headImg" class="headImg" />
+                <img [src]="headImg" class="headImg" onError="this.src='./assets/tomato-active.png';"/>
             </ion-note>
         </ion-item>
         <ion-item (click)="changeBio()">
