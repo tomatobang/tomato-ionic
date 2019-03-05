@@ -1,0 +1,33 @@
+.add-footprint-button-container {
+    width: 120px;
+    height: 120px;
+    border: solid 1px #f97271;
+    border-radius: 50%;
+    line-height: 120px;
+    padding-top: 10px;
+    vertical-align: middle;
+    margin: auto;
+    background-color: rgba(249, 114, 113, .3);
+    .add-footprint-button {
+        text-align: center;
+        color: #fff;
+        width: 100px;
+        height: 100px;
+        border: solid 1px #f97271;
+        border-radius: 50%;
+        line-height: 100px;
+        vertical-align: middle;
+        margin: auto;
+        background-color: rgba(249, 114, 113, .8);
+    }
+}
+
+ion-card {
+    margin: 0;
+    margin-top: 25px;
+}
+
+ion-textarea {
+    border: dashed 1px #777;
+    margin-bottom: 25px;
+}

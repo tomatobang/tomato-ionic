@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DateTransformPipe implements PipeTransform {
   transform(value?: Date, args?: any): any {
     const time = new Date(value).getTime();
-    const retTime = time + 8 * 1000 * 60 * 60;
+    const retTime = time;
     return new Date(retTime).toLocaleString();
   }
 }

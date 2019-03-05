@@ -5,14 +5,62 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-chip>
-    <ion-icon name="locate"></ion-icon>
+  <ion-chip color="primary">
+    <ion-icon name="locate" color="primary"></ion-icon>
     <ion-label>{{ this.location }}</ion-label>
   </ion-chip>
+  <br />
   <ion-chip>
-    <ion-icon name="time" color="primary"></ion-icon>
-    <ion-label>{{ this.time }}</ion-label>
+    <ion-icon name="time"></ion-icon>
+    <ion-label>{{ this.create_at }}</ion-label>
   </ion-chip>
-  <ion-input placeholder="备注" [(ngModel)]="notes"></ion-input>
-  <ion-button expand="block" fill="outline" (click)="addFootprint()">添加足跡</ion-button>
+
+  <ion-item>
+    <ion-label>标签</ion-label>
+    <ion-select slot="end" cancelText="取消" okText="确定" value="brown" multiple="true" interface="popover" placeholder="选择标签"
+      (ionChange)="tagChange($event)">
+      <ion-select-option value="上班">上班</ion-select-option>
+      <ion-select-option value="下班">下班</ion-select-option>
+      <ion-select-option value="吃饭">吃饭</ion-select-option>
+      <ion-select-option value="睡觉">睡觉</ion-select-option>
+      <ion-select-option value="出差">出差</ion-select-option>
+      <ion-select-option value="旅游">旅游</ion-select-option>
+    </ion-select>
+
+  </ion-item>
+
+  <ion-textarea placeholder="备注" [(ngModel)]="notes"></ion-textarea>
+
+  <div class="add-footprint-button-container">
+    <div class="add-footprint-button" (click)="addFootprint()">添加足跡</div>
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>今日足迹</ion-card-title>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="footprintlist">
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of footprintlist">
+          <ion-item>
+            <ion-label>
+              <h3>{{ item.position }}</h3>
+              <p>
+                {{ item.notes }}
+              </p>
+              <p>
+                {{ item.create_at | DateTransform}}
+              </p>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option (click)="deleteFootprint(item._id)" color="danger">删除</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
