@@ -1,4 +1,5 @@
-<div class="voice-recorder-container">
+<div class="voice-recorder-container" (press)="onHold()" (touchend)="onRecordEnd()" (touchcancel)="onRecordEnd()"
+    (pointerleave)="onRecordEnd()">
     <button #holdToVoice [ngClass]="{'active': isStartRecord}" class="hold-tips">
         <div class="voice-mock-img">
             <img *ngIf="isStartRecord" [(src)]="voice.ImgUrl">
