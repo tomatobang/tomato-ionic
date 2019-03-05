@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
+import { OnlineFootprintService } from '@services/data.service';
 
 @Component({
   selector: 'app-footprint',
@@ -9,8 +10,12 @@ import { BaiduLocationService } from '@services/baidulocation.service';
 export class FootprintPage implements OnInit {
   location = '中国广东省深圳市xx区xxxx路';
   time = '2019-03-05 09:05:59';
+  notes = '';
 
-  constructor(public baidu: BaiduLocationService) { }
+  constructor(
+    private baidu: BaiduLocationService,
+    private footprintserice: OnlineFootprintService
+  ) { }
 
   ngOnInit() {
     this.baidu.getCurrentLocation().then(val => {
@@ -20,6 +25,23 @@ export class FootprintPage implements OnInit {
       }
     }).catch(err => {
       console.error(err);
+    });
+  }
+
+  // 今日足迹列表
+  listFootprint() {
+    this.footprintserice.getFootprints().subscribe(ret => {
+
+    });
+  }
+
+  // 添加足迹
+  addFootprint() {
+    this.footprintserice.createFootprint({
+      position: this.location,
+      notes: this.notes
+    }).subscribe(ret => {
+
     });
   }
 

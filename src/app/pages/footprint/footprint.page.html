@@ -13,6 +13,6 @@
     <ion-icon name="time" color="primary"></ion-icon>
     <ion-label>{{ this.time }}</ion-label>
   </ion-chip>
-
-  <ion-button expand="block" fill="outline">添加足跡</ion-button>
+  <ion-input placeholder="备注" [(ngModel)]="notes"></ion-input>
+  <ion-button expand="block" fill="outline" (click)="addFootprint()">添加足跡</ion-button>
 </ion-content>

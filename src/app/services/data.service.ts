@@ -17,6 +17,7 @@ export * from './data/tomato';
 export * from './data/user';
 export * from './data/user_friend';
 export * from './data/todo';
+export * from './data/footprint';
 
 @Injectable()
 export class DataService {
