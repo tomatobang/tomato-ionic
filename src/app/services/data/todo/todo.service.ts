@@ -11,11 +11,12 @@ import {
   Body,
 } from 'rebirth-http';
 import { baseUrl } from '../../../config';
-
 import { TodoService } from './abstract/todo.abstract';
 import { Todo } from './model/todo.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class OnlineTodoService extends TodoService {
   constructor(
     protected http: HttpClient,

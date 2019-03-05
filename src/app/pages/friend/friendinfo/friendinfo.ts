@@ -83,7 +83,7 @@ export class FriendInfoPage {
    * 跳转至聊天页
    */
   toChatPage() {
-    this.router.navigate(['tabs/message/chat'], {
+    this.router.navigate(['tabs/friend/message/chat'], {
       queryParams: {
         toUserId: this.friendid,
         toUserName: this.friendName,

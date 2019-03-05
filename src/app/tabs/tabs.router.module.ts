@@ -46,16 +46,6 @@ const routes: Routes = [
           },
         ]
       },
-      // {
-      //   path: 'message',
-      //   children: [
-      //     {
-      //       path: '',
-      //       loadChildren: '../pages/message/message.module#MessagePageModule',
-
-      //     },
-      //   ]
-      // },
       {
         path: 'footprint',
         loadChildren: '../pages/footprint/footprint.module#FootprintPageModule'

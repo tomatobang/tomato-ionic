@@ -26,7 +26,11 @@ export const getTodos = createSelector(
 export const getStateCompleted = createSelector(
   getTodos,
   todos => {
-    return todos.every(todo => todo.completed);
+    if (!todos) {
+      return [];
+    } else {
+      return todos.every(todo => todo.completed);
+    }
   }
 );
 
