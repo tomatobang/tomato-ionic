@@ -8,7 +8,17 @@ declare var window;
 
 @Injectable()
 export class BaiduLocationService {
-  constructor(public plf: Platform) {}
+  constructor(public plf: Platform) { }
+
+  getCurrentLocation() {
+    window.baidumap_location.getCurrentPosition(function (result) {
+      console.log(JSON.stringify(result, null, 4));
+      alert(JSON.stringify(result, null, 4))
+    }, function (error) {
+      console.log(error);
+      alert(JSON.stringify(error));
+    });
+  }
 
   startLocation(callback): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -53,9 +63,9 @@ export class BaiduLocationService {
         position => {
           console.log(
             '(IOS)Latitude: ' +
-              position.coords.latitude +
-              'Longitude: ' +
-              position.coords.longitude
+            position.coords.latitude +
+            'Longitude: ' +
+            position.coords.longitude
           );
           // 坐标转换
           const point = new window.BMap.Point(

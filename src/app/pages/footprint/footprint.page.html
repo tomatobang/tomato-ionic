@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>足跡</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-chip>
+    <ion-icon name="locate"></ion-icon>
+    <ion-label>{{ this.location }}</ion-label>
+  </ion-chip>
+  <ion-chip>
+    <ion-icon name="time" color="primary"></ion-icon>
+    <ion-label>{{ this.time }}</ion-label>
+  </ion-chip>
+
+  <ion-button expand="block" fill="outline">添加足跡</ion-button>
+</ion-content>

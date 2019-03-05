@@ -23,7 +23,9 @@ import { File } from '@ionic-native/file/ngx';
 
 declare var window;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NativeService {
   headimgurl: String;
   toast: any;
