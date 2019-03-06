@@ -12,11 +12,19 @@ import { GlobalService } from '@services/global.service';
   styleUrls: ['./footprint.page.scss'],
 })
 export class FootprintPage implements OnInit {
-  location = '';
-  create_at = '';
+  location = '加载中...';
+  create_at = '2012-12-12 10:00';
   notes = '';
   tag = '';
-  footprintlist: Footprint[]
+  footprintlist: any;
+  mode = [
+    { index: 1, selected: true },
+    { index: 2, selected: true },
+    { index: 3, selected: true },
+    { index: 4, selected: false },
+    { index: 5, selected: false },
+  ];
+  modeIndex = 3;
 
   constructor(
     private baidu: BaiduLocationService,
@@ -26,6 +34,18 @@ export class FootprintPage implements OnInit {
     private loading: LoadingController
   ) {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
+  }
+
+  selectMode(index) {
+    this.modeIndex = index;
+    for (let i = 0; i < index; i++) {
+      const element = this.mode[i];
+      element.selected = true;
+    }
+    for (let j = index; j < this.mode.length; j++) {
+      const element = this.mode[j];
+      element.selected = false;
+    }
   }
 
   ngOnInit() {
@@ -61,7 +81,15 @@ export class FootprintPage implements OnInit {
     const loading = await this.createLoading();
     this.footprintserice.getFootprints().subscribe(ret => {
       if (ret) {
+
         this.footprintlist = ret;
+        this.footprintlist.sort(function (a, b) {
+
+          return new Date(a.create_at) < new Date(b.create_at) ? 1 : -1;
+        });
+        this.footprintlist.map(val => {
+          val.mode = new Array(parseInt(val.mode, 10));
+        });
       }
       loading.dismiss();
     });
@@ -71,12 +99,15 @@ export class FootprintPage implements OnInit {
    * 添加足迹
    */
   async addFootprint() {
-    const loading = await this.createLoading();
     if (this.location) {
+      const loading = await this.createLoading();
       this.footprintserice.createFootprint({
         position: this.location,
-        notes: this.notes
+        notes: this.notes,
+        tag: this.tag,
+        mode: this.modeIndex + ''
       }).subscribe(ret => {
+        ret.mode = new Array(parseInt(ret.mode, 10));
         this.footprintlist.unshift(ret);
         loading.dismiss();
       });
@@ -110,7 +141,7 @@ export class FootprintPage implements OnInit {
 
   tagChange(e) {
     let tag = e.detail.value;
-    this.tag = tag.join(':') + this.notes;
+    this.tag = tag.join(':');
   }
 
 }
