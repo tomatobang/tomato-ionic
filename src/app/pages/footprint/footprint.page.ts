@@ -1,3 +1,4 @@
+import { LoadingController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
@@ -11,7 +12,7 @@ import { GlobalService } from '@services/global.service';
   styleUrls: ['./footprint.page.scss'],
 })
 export class FootprintPage implements OnInit {
-  location = 'dsadasfefefefefefe';
+  location = '';
   create_at = '';
   notes = '';
   tag = '';
@@ -22,6 +23,7 @@ export class FootprintPage implements OnInit {
     private footprintserice: OnlineFootprintService,
     private globalservice: GlobalService,
     private rebirthProvider: RebirthHttpProvider,
+    private loading: LoadingController
   ) {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
@@ -39,39 +41,69 @@ export class FootprintPage implements OnInit {
     this.listFootprint();
   }
 
+  doRefresh(event) {
+    this.baidu.getCurrentLocation().then(val => {
+      if (val) {
+        this.location = val.addr + '(' + val.locationDescribe + ')';
+        this.create_at = val.time;
+      }
+      event.target.complete();
+    }).catch(err => {
+      event.target.complete();
+      console.error(err);
+    });
+  }
+
   /**
    * 今日足迹列表
    */
-  listFootprint() {
+  async listFootprint() {
+    const loading = await this.createLoading();
     this.footprintserice.getFootprints().subscribe(ret => {
       if (ret) {
         this.footprintlist = ret;
       }
+      loading.dismiss();
     });
   }
 
   /**
    * 添加足迹
    */
-  addFootprint() {
+  async addFootprint() {
+    const loading = await this.createLoading();
     if (this.location) {
       this.footprintserice.createFootprint({
         position: this.location,
         notes: this.notes
       }).subscribe(ret => {
         this.footprintlist.unshift(ret);
+        loading.dismiss();
       });
     }
   }
+
+  async createLoading() {
+    const loading = await this.loading.create({
+      spinner: 'bubbles',
+      message: '提交中...',
+      translucent: true,
+    });
+    await loading.present();
+    return loading;
+  }
+
 
   /**
    * 删除足迹
    * @param _id 编号
    */
-  deleteFootprint(_id) {
+  async deleteFootprint(_id) {
+    const loading = await this.createLoading();
     if (_id) {
       this.footprintserice.deleteFootprint(_id).subscribe(ret => {
         this.listFootprint();
+        loading.dismiss();
       });
     }
   }

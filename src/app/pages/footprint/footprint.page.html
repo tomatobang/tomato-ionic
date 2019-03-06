@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新地址" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-input placeholder="备注" [(ngModel)]="notes"></ion-input>
   <ion-chip color="primary">
     <ion-icon name="locate" color="primary"></ion-icon>
     <ion-label>{{ this.location }}</ion-label>
@@ -29,8 +34,6 @@
 
   </ion-item>
 
-  <ion-textarea placeholder="备注" [(ngModel)]="notes"></ion-textarea>
-
   <div class="add-footprint-button-container">
     <div class="add-footprint-button" (click)="addFootprint()">添加足跡</div>
   </div>
@@ -46,9 +49,9 @@
         <ion-item-sliding *ngFor="let item of footprintlist">
           <ion-item>
             <ion-label>
-              <h3>{{ item.position }}</h3>
+              <h3 style="white-space: pre-line">{{ item.notes }}</h3>
               <p>
-                {{ item.notes }}
+                {{ item.position }}
               </p>
               <p>
                 {{ item.create_at | DateTransform}}

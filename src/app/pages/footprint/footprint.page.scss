@@ -1,7 +1,6 @@
 .add-footprint-button-container {
     width: 120px;
     height: 120px;
-    border: solid 1px #f97271;
     border-radius: 50%;
     line-height: 120px;
     padding-top: 10px;
@@ -27,7 +26,12 @@ ion-card {
     margin-top: 25px;
 }
 
-ion-textarea {
+ion-input {
     border: dashed 1px #777;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+ion-item {
     margin-bottom: 25px;
 }

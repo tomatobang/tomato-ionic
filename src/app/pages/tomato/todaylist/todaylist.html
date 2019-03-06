@@ -16,7 +16,7 @@
 <timeline>
   <timeline-item [nzColor]="'red'" *ngFor="let tomato of historyTomatoes" class="tomato-today-list" track="tooling">
     <ng-template #custom>
-      <ion-avatar item-start>
+      <ion-avatar slot="start">
         <img src="assets/tomato.png">
       </ion-avatar>
     </ng-template>
