@@ -9,7 +9,7 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新地址" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-input placeholder="事件" [(ngModel)]="notes"></ion-input>
+  <ion-input placeholder="输入事件..." [(ngModel)]="notes"></ion-input>
 
   <ion-select cancelText="取消" okText="确定" value="brown" multiple="true" interface="popover" placeholder="选择标签"
     (ionChange)="tagChange($event)">

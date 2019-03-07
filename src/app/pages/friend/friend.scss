@@ -141,13 +141,13 @@ $gray: #aaa;
 }
 
 .tomatoNum {
-    font-size: 20px;
-    padding: 5px;
+    font-size: 32px;
+    padding: 2px;
     color: #f97271;
 }
 
 .minute {
-    font-size: 16px;
+    font-size: 24px;
     color: #f97271;
 }
 
@@ -158,6 +158,7 @@ $gray: #aaa;
         display: inline-block;
         vertical-align: middle;
         width: 75%;
+        font-size: 12px;
     }
 }
 
@@ -166,19 +167,17 @@ $gray: #aaa;
     width: 100%;
     color: #777;
     text-align: center;
-    padding: 2px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     ion-icon {
-        float: left;
-        margin-left: 4px;
         color: #777 !important;
     }
 }
 
 .rank-location {
-    margin-top: 10px;
+    margin-top: 0px;
+    font-size: 12px;
 }
 
 .rank-title,
@@ -204,4 +203,12 @@ ion-label.label-ios {
 
 .rank.gray {
     @include ribbonize($gray, black);
+}
+
+.rank-list {
+    ion-item {
+        .item-inner {
+            border: dashed 1px #f97271;
+        }
+    }
 }

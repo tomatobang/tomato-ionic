@@ -22,12 +22,13 @@ export class NgRxTodoComponent implements OnInit {
     private globalservice: GlobalService,
     private rebirthProvider: RebirthHttpProvider,
     private modalCtrl: ModalController
-  ) {
-    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
-  }
+  ) {}
 
   ngOnInit() {
-    this.populateTodos();
+    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
+    setTimeout(() => {
+      this.populateTodos();
+    }, 20);
   }
 
   private populateTodos() {
@@ -46,7 +47,7 @@ export class NgRxTodoComponent implements OnInit {
       component: RegularTodoComponent
     });
     modal.onDidDismiss().then(() => {
-      
+
     });
     await modal.present();
   }

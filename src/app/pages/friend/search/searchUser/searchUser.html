@@ -11,7 +11,7 @@
     <ion-searchbar #tomatoSearchbar (ionInput)="seachUsers($event)" placeholder="用户名 | 昵称 | Bio..." debounce="800"></ion-searchbar>
     <ion-list class="tomato-history-list">
         <ion-item *ngFor="let item of searchReturnItems; index as i;" class="tomato-today-list" track="tooling">
-            <ion-avatar item-start>
+            <ion-avatar slot="start">
                 <img src="./assets/tomato.png">
             </ion-avatar>
             <h3>
