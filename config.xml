@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tomatobang.ionic2" version="0.4.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tomatobang.ionic" version="0.4.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>番茄帮</name>
     <description>for your better work &amp; life.</description>
     <author email="yipeng.info@gmail.com" href="http://yipeng.info/">Create By pengkobe</author>
@@ -123,5 +123,10 @@
     </plugin>
     <plugin name="cordova-plugin-media" spec="^5.0.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <plugin name="cordova-plugin-baidumaplocation" spec="^4.0.2">
+        <variable name="ANDROID_KEY" value="pGMXz22S1XYcZHt0a5pVoCfM" />
+        <variable name="IOS_KEY" value="9kG4tIYIiI5ieGYnF0AaKydaAzHxYwRO" />
+        <variable name="IOS_LOCATION_DESC" value="请点击'好'以允许访问。" />
+    </plugin>
     <engine name="android" spec="7.1.4" />
 </widget>

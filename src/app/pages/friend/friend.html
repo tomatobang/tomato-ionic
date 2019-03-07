@@ -58,18 +58,35 @@
                             <img class="user-rank-header-img" [src]="item.image">
                         </ion-avatar>
                         <div class="item-desc">
-                            <span class="tomatoNum"> {{ item.tomatoNum }}</span> 番茄钟，专注
-                            <span class="minute"> {{ item.minute }}</span> 分钟
-                            <p class="rank-title">
-                                <ion-icon ios="ios-microphone" md="ios-microphone-outline"></ion-icon>
-                                {{ item.title }}
-                            </p>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="3">
+                                        <span class="tomatoNum"> {{ item.tomatoNum }}</span>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        番茄钟，专注
+                                    </ion-col>
+                                    <ion-col size="3">
+                                        <span class="minute"> {{ item.minute }}</span>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                        分钟
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row align-items-start class="rank-title">
+                                    <ion-col size="1">
+                                        <ion-icon ios="ios-microphone" md="ios-microphone-outline"></ion-icon>
+                                    </ion-col>
+                                    <ion-col size="4" style="text-align:left;font-size: 16px;">
+                                        {{ item.title }}
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
                         </div>
                         <p class="rank-location">
                             <ion-icon name="pin"></ion-icon> 深圳市南山区
                         </p>
                     </div>
-
                 </ion-item>
             </ion-list>
         </ion-list>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-
+import { Router } from '@angular/router';
 import { AppState } from './../redux/ngrxtodo.reducer';
 import * as TodoActions from './../redux/todo/todo.actions';
 import { getFilter, getTodos } from './../redux/todo/todo.selectors';
@@ -14,12 +14,12 @@ export class FooterComponent implements OnInit {
   currentFilter: string;
   showFooter: boolean;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.readFilterState();
     this.readTodosState();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   clearCompleted() {
     const action = new TodoActions.ClearCompletedAction();
@@ -42,5 +42,9 @@ export class FooterComponent implements OnInit {
     this.store.pipe(select(getFilter)).subscribe(fitler => {
       this.currentFilter = fitler;
     });
+  }
+
+  navigateTo(url) {
+    this.router.navigate(['tabs/list/' + url]);
   }
 }

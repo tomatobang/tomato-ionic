@@ -141,13 +141,14 @@ $gray: #aaa;
 }
 
 .tomatoNum {
-    font-size: 20px;
-    padding: 5px;
+    font-size: 32px;
+    padding: 2px;
     color: #f97271;
+    font-family: fantasy, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .minute {
-    font-size: 16px;
+    font-size: 24px;
     color: #f97271;
 }
 
@@ -158,27 +159,25 @@ $gray: #aaa;
         display: inline-block;
         vertical-align: middle;
         width: 75%;
+        font-size: 12px;
     }
 }
 
 .rank-title {
-    background: rgba(249, 114, 113, .1);
     width: 100%;
-    color: #777;
     text-align: center;
-    padding: 2px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     ion-icon {
-        float: left;
-        margin-left: 4px;
-        color: #777 !important;
+        color: #f97271 !important;
     }
 }
 
 .rank-location {
-    margin-top: 10px;
+    margin-top: 0px;
+    margin-bottom: 2px;
+    font-size: 12px;
 }
 
 .rank-title,
@@ -204,4 +203,11 @@ ion-label.label-ios {
 
 .rank.gray {
     @include ribbonize($gray, black);
+}
+
+.rank-list {
+    ion-item {
+        --border-style: dashed;
+        --border-color: #f97271;
+    }
 }

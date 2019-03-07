@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      常用 Todos
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        关闭
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of regularTodos">
+      <ion-item *ngIf="!item.added">
+        <ion-label>
+          <h3 style="white-space: pre-line">
+            {{ item.title }}
+          </h3>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="addTodo(item)" color="primary">添加</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

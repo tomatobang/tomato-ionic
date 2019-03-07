@@ -23,7 +23,9 @@ import { File } from '@ionic-native/file/ngx';
 
 declare var window;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NativeService {
   headimgurl: String;
   toast: any;
@@ -82,12 +84,12 @@ export class NativeService {
     }
   }
 
-  listenNetworkState() {
+  async listenNetworkState() {
     this.createToast();
-    const offlineOnlineThrottle = this.throttle(msg => {
+    const offlineOnlineThrottle = this.throttle(async msg => {
       if (this._isOffline === true) {
-        this.toast.setMessage(msg);
-        this.toast.present();
+        await this.toast.setMessage(msg);
+        await this.toast.present();
       }
     }, 2400);
     this.network.onDisconnect().subscribe(() => {
@@ -96,9 +98,9 @@ export class NativeService {
       offlineOnlineThrottle('OFFLINE！');
     });
 
-    this.network.onConnect().subscribe(() => {
+    this.network.onConnect().subscribe(async () => {
       this._isOffline = false;
-      this.toast.dismissAll();
+      await this.toast.dismissAll();
       setTimeout(() => {
         if (this.network.type === 'wifi') {
           console.log('got network:wifi!');

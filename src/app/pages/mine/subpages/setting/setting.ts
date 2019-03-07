@@ -21,8 +21,8 @@ export class SettingPage implements OnInit {
   constructor(
     public globalservice: GlobalService,
     private insomnia: Insomnia,
-    public storage: Storage
-  ) {}
+    public storage: Storage,
+  ) { }
 
   ngOnInit() {
     this.countdown = this.globalservice.countdown;
@@ -61,7 +61,7 @@ export class SettingPage implements OnInit {
     if (this.isAlwaysLight) {
       this.globalservice.isAlwaysLight = true;
       this.insomnia.keepAwake().then(
-        () => {},
+        () => { },
         e => {
           this.globalservice.isAlwaysLight = false;
           console.log('error', e);
@@ -70,7 +70,7 @@ export class SettingPage implements OnInit {
     } else {
       this.globalservice.isAlwaysLight = false;
       this.insomnia.allowSleepAgain().then(
-        () => {},
+        () => { },
         e => {
           this.globalservice.isAlwaysLight = true;
           console.log('error', e);
@@ -86,9 +86,9 @@ export class SettingPage implements OnInit {
     this.storage.clear();
   }
 
-  setLongbreakTomatoNum() {}
+  setLongbreakTomatoNum() { }
 
-  setLoopMode() {}
+  setLoopMode() { }
 
-  setWhiteNoiseType() {}
+  setWhiteNoiseType() { }
 }

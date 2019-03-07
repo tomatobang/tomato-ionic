@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, OnDestroy, Input } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { GestureController } from '@ionic/core/dist/collection/utils/gesture/gesture-controller';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
@@ -22,7 +21,6 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   uploadProgress = 0;
 
   element: HTMLElement;
-  pressGesture: GestureController;
   isStartRecord = false;
   recordWait = false;
   isStartedVoice = false;
@@ -79,30 +77,9 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.pressGesture = new GestureController(this.element, { time: 200 });
-    this.pressGesture.listen();
-
-    this.pressGesture.on('press', e => {
-      console.log('press');
-      this.onHold();
-    });
-    this.element.onpointerleave = () => {
-      console.log('onpointerleave');
-      this.onRecordEnd();
-    };
-
-    this.element.ontouchend = () => {
-      console.log('ontouchend');
-      this.onRecordEnd();
-    };
-    this.element.ontouchcancel = () => {
-      console.log('ontouchcancel');
-      this.onRecordEnd();
-    };
   }
 
   ngOnDestroy() {
-    this.pressGesture.destroy();
   }
 
   /**
@@ -272,10 +249,10 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
             .uploadLocFile(
               this.uploadMediaFilepath,
               this._postParams.userid +
-                '_' +
-                this._postParams.taskid +
-                '_' +
-                fileName
+              '_' +
+              this._postParams.taskid +
+              '_' +
+              fileName
             )
             .subscribe(ret => {
               if (ret.data) {

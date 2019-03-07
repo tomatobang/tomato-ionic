@@ -41,6 +41,15 @@ const routes: Routes = [
         path: 'historytomato',
         component: HistoryTomatoPage,
     },
+    {
+        path: 'message',
+        children: [
+            {
+                path: '',
+                loadChildren: '../message/message.module#MessagePageModule',
+            },
+        ]
+    },
 ];
 
 @NgModule({

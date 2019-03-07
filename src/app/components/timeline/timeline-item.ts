@@ -25,7 +25,7 @@ import {
           <ng-content></ng-content>
         </div>
       </li>`,
-  styleUrls: []
+  styleUrls: ['timeline.scss']
 })
 export class TimelineItemComponent implements OnInit {
   itemHeadClass = { 'tomatobang-timeline-item-head-blue': true };

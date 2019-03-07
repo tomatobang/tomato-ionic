@@ -4,11 +4,10 @@ import { TabsPageRoutingModule } from './tabs.router.module';
 
 import { SharedModule } from './../shared/shared.module';
 import { TabsPage } from './tabs.page';
-import { TestPage } from '../pages/test/test.page';
 
 @NgModule({
   imports: [IonicModule, SharedModule, TabsPageRoutingModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [TabsPage, TestPage],
+  declarations: [TabsPage],
 })
 export class TabsPageModule { }

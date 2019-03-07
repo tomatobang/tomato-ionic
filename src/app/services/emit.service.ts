@@ -8,7 +8,7 @@ export class EmitService implements OnInit {
   constructor() {
     console.log('Hello EmitService Provider');
     this.eventEmit = new EventEmitter();
-    this.theme = new BehaviorSubject('dark-theme');
+    this.theme = new BehaviorSubject('light-theme');
   }
 
   ngOnInit() {}
