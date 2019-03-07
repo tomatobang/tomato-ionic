@@ -33,12 +33,12 @@
   <div>
     <ion-chip color="primary">
       <ion-icon name="locate" color="primary"></ion-icon>
-      <ion-label>{{ this.location }}</ion-label>
+      <ion-label class="text-small">{{ this.location }}</ion-label>
     </ion-chip>
     <br />
     <ion-chip>
       <ion-icon name="time"></ion-icon>
-      <ion-label>{{ this.create_at }}</ion-label>
+      <ion-label class="text-small">{{ this.create_at }}</ion-label>
     </ion-chip>
 
   </div>
@@ -57,7 +57,7 @@
         <ion-item-sliding *ngFor="let item of footprintlist">
           <ion-item>
             <ion-label>
-              <h3 style="white-space: pre-line">
+              <h3 class="text-small">
                 {{ item.notes }}
                 <ion-chip color="primary" *ngIf="item.tag">
                   <ion-label>{{ item.tag }}</ion-label>
@@ -66,7 +66,7 @@
                   <ion-icon *ngFor="let i of item.mode" name="star" class="star"></ion-icon>
                 </ng-container>
               </h3>
-              <p style="white-space: pre-line">
+              <p class="text-small">
                 {{ item.position }}
               </p>
               <p>
