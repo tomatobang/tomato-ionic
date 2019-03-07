@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
-import { TestPage } from '../pages/test/test.page';
 
 const routes: Routes = [
   {
@@ -22,11 +21,6 @@ const routes: Routes = [
             loadChildren: '../pages/tomato/tomato.module#TomatoPageModule',
           },
         ]
-      },
-      {
-        path: 'test',
-        outlet: 'test',
-        component: TestPage,
       },
       {
         path: 'list',
