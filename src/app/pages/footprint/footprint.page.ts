@@ -117,7 +117,7 @@ export class FootprintPage implements OnInit {
   async createLoading() {
     const loading = await this.loading.create({
       spinner: 'bubbles',
-      message: '提交中...',
+      message: 'process...',
       translucent: true,
     });
     await loading.present();

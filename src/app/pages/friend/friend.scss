@@ -144,6 +144,7 @@ $gray: #aaa;
     font-size: 32px;
     padding: 2px;
     color: #f97271;
+    font-family: fantasy, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .minute {
@@ -163,15 +164,13 @@ $gray: #aaa;
 }
 
 .rank-title {
-    background: rgba(249, 114, 113, .1);
     width: 100%;
-    color: #777;
     text-align: center;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     ion-icon {
-        color: #777 !important;
+        color: #f97271 !important;
     }
 }
 
@@ -208,8 +207,7 @@ ion-label.label-ios {
 
 .rank-list {
     ion-item {
-        .item-inner {
-            border: dashed 1px #f97271;
-        }
+        --border-style: dashed;
+        --border-color: #f97271;
     }
 }
