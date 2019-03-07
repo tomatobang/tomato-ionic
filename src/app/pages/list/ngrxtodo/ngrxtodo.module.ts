@@ -1,6 +1,5 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -13,6 +12,8 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewTodoComponent } from './new-todo/new-todo.component';
 import { TodoEffects } from './redux/todo/todo.effect';
+import { RegularTodoComponent } from './regular-todo/regular-todo.component';
+import { SharedModule } from './../../../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -38,10 +39,10 @@ const routes: Routes = [
     TodoListComponent,
     FooterComponent,
     NewTodoComponent,
+    RegularTodoComponent,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('ngrxtodo', ngrxtodoReducer),
@@ -50,6 +51,7 @@ const routes: Routes = [
       maxAge: 15, //  Retains last 15 states
     }),
   ],
+  entryComponents: [RegularTodoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NgrxTodoPageModule { }

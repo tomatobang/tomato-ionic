@@ -1,3 +1,4 @@
+import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -6,6 +7,7 @@ import * as TodoActions from './redux/todo/todo.actions';
 import { OnlineTodoService } from '@services/data.service';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { GlobalService } from '@services/global.service';
+import { RegularTodoComponent } from './regular-todo/regular-todo.component';
 
 @Component({
   selector: 'page-ngrxtodo-module',
@@ -18,7 +20,8 @@ export class NgRxTodoComponent implements OnInit {
     private router: Router,
     private service: OnlineTodoService,
     private globalservice: GlobalService,
-    private rebirthProvider: RebirthHttpProvider
+    private rebirthProvider: RebirthHttpProvider,
+    private modalCtrl: ModalController
   ) {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
@@ -36,5 +39,15 @@ export class NgRxTodoComponent implements OnInit {
 
   backTolist() {
     this.router.navigateByUrl('tabs/list');
+  }
+
+  async showRegularTodos() {
+    const modal = await this.modalCtrl.create({
+      component: RegularTodoComponent
+    });
+    modal.onDidDismiss().then(() => {
+      
+    });
+    await modal.present();
   }
 }
