@@ -169,6 +169,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         tag: this.tag.join(','),
         mode: this.modeIndex + ''
       }).subscribe(ret => {
+        this.notes = '';
         ret.mode = new Array(parseInt(ret.mode, 10));
         this.footprintlist.unshift(ret);
         loading.dismiss();

@@ -74,8 +74,12 @@
       }
       ion-button {
           opacity: 0.8;
+          --ion-color-base: tomato;
       }
       ion-input {
           color: tomato;
+      }
+      ion-list {
+          --ion-background-color: transparent;
       }
   }
