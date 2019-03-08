@@ -1,5 +1,5 @@
 import { LoadingController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { Footprint } from '@services/data/footprint/model/footprint.model';
@@ -11,11 +11,11 @@ import { GlobalService } from '@services/global.service';
   templateUrl: './footprint.page.html',
   styleUrls: ['./footprint.page.scss'],
 })
-export class FootprintPage implements OnInit {
+export class FootprintPage implements OnInit, OnDestroy {
   location = '加载中...';
   create_at = '2012-12-12 10:00';
   notes = '';
-  tag = '';
+  tag = [];
   footprintlist: any;
   mode = [
     { index: 1, selected: true },
@@ -24,7 +24,39 @@ export class FootprintPage implements OnInit {
     { index: 4, selected: false },
     { index: 5, selected: false },
   ];
+
+  taglist = [
+    {
+      name: '起床', selected: false
+    },
+    {
+      name: '睡觉', selected: false
+    },
+    {
+      name: '上班', selected: false
+    },
+    {
+      name: '下班', selected: false
+    },
+    {
+      name: '吃饭', selected: false
+    },
+    {
+      name: '开会', selected: false
+    },
+    {
+      name: '活动', selected: false
+    },
+    {
+      name: '出差', selected: false
+    },
+    {
+      name: '旅游', selected: false
+    },
+  ];
   modeIndex = 3;
+  openTag = false;
+  timeInterval;
 
   constructor(
     private baidu: BaiduLocationService,
@@ -58,7 +90,37 @@ export class FootprintPage implements OnInit {
       console.error(err);
     });
 
+    this.refreshCreateAt();
+
     this.listFootprint();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timeInterval);
+  }
+
+  refreshCreateAt() {
+    this.timeInterval = setInterval(() => {
+      this.create_at = this.dateFtt("hh:mm:ss", new Date());
+    }, 1000);
+  }
+
+  dateFtt(fmt, date) {
+    var o = {
+      "M+": date.getMonth() + 1,
+      "d+": date.getDate(),
+      "h+": date.getHours(),
+      "m+": date.getMinutes(),
+      "s+": date.getSeconds(),
+      "q+": Math.floor((date.getMonth() + 3) / 3),
+      "S": date.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt))
+      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+      if (new RegExp("(" + k + ")").test(fmt))
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
   }
 
   doRefresh(event) {
@@ -104,7 +166,7 @@ export class FootprintPage implements OnInit {
       this.footprintserice.createFootprint({
         position: this.location,
         notes: this.notes,
-        tag: this.tag,
+        tag: this.tag.join(','),
         mode: this.modeIndex + ''
       }).subscribe(ret => {
         ret.mode = new Array(parseInt(ret.mode, 10));
@@ -139,9 +201,22 @@ export class FootprintPage implements OnInit {
     }
   }
 
-  tagChange(e) {
-    let tag = e.detail.value;
-    this.tag = tag.join(':');
+  openTagChooser() {
+    this.openTag = !this.openTag;
+  }
+
+  selectTag(item) {
+    item.selected = !item.selected;
+    if (item.selected) {
+      if (this.tag.indexOf(item.name) > -1) {
+      } else {
+        this.tag.push(item.name);
+      }
+    } else {
+      if (this.tag.indexOf(item.name) > -1) {
+        this.tag.splice(this.tag.indexOf(item.name), 1);
+      }
+    }
   }
 
 }

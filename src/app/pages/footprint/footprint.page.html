@@ -9,20 +9,30 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新地址" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-input placeholder="输入事件..." [(ngModel)]="notes"></ion-input>
 
-  <ion-select cancelText="取消" okText="确定" value="brown" multiple="true" interface="popover" placeholder="选择标签"
-    (ionChange)="tagChange($event)">
-    <ion-select-option value="吃饭">吃饭</ion-select-option>
-    <ion-select-option value="上班">上班</ion-select-option>
-    <ion-select-option value="下班">下班</ion-select-option>
-    <ion-select-option value="睡觉">睡觉</ion-select-option>
-    <ion-select-option value="活动">活动</ion-select-option>
-    <ion-select-option value="旅游">旅游</ion-select-option>
-    <ion-select-option value="出差">出差</ion-select-option>
-  </ion-select>
+  <ion-input placeholder="输入足迹..." [(ngModel)]="notes"></ion-input>
 
-  <div class="star-container">
+  <div class="tag-area">
+    <div class="tag-header" (click)="openTagChooser()">选择标签
+      <span class="choosed-tag" *ngFor="let item of tag">{{ item }} &nbsp;</span>
+      <div class="choosed-tag-icon">
+        <ion-icon name="arrow-dropright" *ngIf="!openTag"></ion-icon>
+        <ion-icon name="arrow-dropdown" *ngIf="openTag"></ion-icon>
+      </div>
+    </div>
+    <div class="tag-content" [ngClass]="{'open-tag': openTag}">
+      <ng-container *ngFor="let item of taglist" style="display: inline">
+        <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+          <ion-label class="text-small">{{ item.name }}</ion-label>
+        </ion-chip>
+        <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+          <ion-label class="text-small">{{ item.name }}</ion-label>
+        </ion-chip>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="star-container flex-layout">
     <ion-label>心情</ion-label>
     <ng-container *ngFor="let item of mode" style="display: inline">
       <ion-icon class="star" name="star" *ngIf="item.selected" (click)="selectMode(item.index, false)"></ion-icon>
@@ -30,20 +40,16 @@
     </ng-container>
   </div>
 
-  <div>
-    <ion-chip color="primary">
-      <ion-icon name="locate" color="primary"></ion-icon>
-      <ion-label class="text-small">{{ this.location }}</ion-label>
-    </ion-chip>
-    <br />
-    <ion-chip>
-      <ion-icon name="time"></ion-icon>
-      <ion-label class="text-small">{{ this.create_at }}</ion-label>
-    </ion-chip>
-
+  <div class="flex-layout">
+    <ion-icon name="locate" color="primary"></ion-icon>
+    <ion-label class="text-small">{{ this.location }}</ion-label>
   </div>
+
   <div class="add-footprint-button-container">
-    <div class="add-footprint-button" (click)="addFootprint()">添加足跡</div>
+    <div class="add-footprint-button" (click)="addFootprint()">
+      <div>添加足跡</div>
+      <div>{{ this.create_at }}</div>
+    </div>
   </div>
 
   <ion-card>
@@ -57,19 +63,19 @@
         <ion-item-sliding *ngFor="let item of footprintlist">
           <ion-item>
             <ion-label>
-              <h3 class="text-small">
-                {{ item.notes }}
+              <div class="text-small">
+                <span class="list-title">{{ item.notes }}</span>
                 <ion-chip color="primary" *ngIf="item.tag">
-                  <ion-label>{{ item.tag }}</ion-label>
+                  <ion-label style="font-size:12px">{{ item.tag }}</ion-label>
                 </ion-chip>
                 <ng-container *ngIf="item.mode">
                   <ion-icon *ngFor="let i of item.mode" name="star" class="star"></ion-icon>
                 </ng-container>
-              </h3>
+              </div>
               <p class="text-small">
                 {{ item.position }}
               </p>
-              <p>
+              <p class="text-small">
                 {{ item.create_at | DateTransform}}
               </p>
             </ion-label>
