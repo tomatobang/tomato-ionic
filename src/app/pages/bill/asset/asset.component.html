@@ -1,13 +1,78 @@
 <ion-header>
   <ion-toolbar no-border-bottom>
     <ion-title>我的资产</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button icon-only (click)="close()">
         <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button icon-only (click)="addAsset()">
+        <ion-icon name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content no-bounce>
+  <ion-card *ngIf="showAddForm">
+
+    <ion-card-header>
+      <ion-card-title>{{ cardTitle }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">名称</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">金额</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">备注</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-button shape="round" (click)="submitAsset()">提交</ion-button>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-list>
+
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>支付宝</ion-label>
+        <ion-note slot="end">888</ion-note>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="edit()">编辑</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>微信</ion-label>
+        <ion-note slot="end">888</ion-note>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="edit()">编辑</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>招商银行</ion-label>
+        <ion-note slot="end">888</ion-note>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="edit()">编辑</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
 </ion-content>

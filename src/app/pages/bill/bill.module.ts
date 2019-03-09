@@ -1,9 +1,9 @@
+
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import { CoreModule } from './../../core/core.module';
+import { SharedModule } from './../../shared/shared.module';
 
 import { BillPage } from './bill.page';
 import { AssetComponent } from './asset/asset.component';
@@ -17,9 +17,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
+    CoreModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
   entryComponents: [AssetComponent],

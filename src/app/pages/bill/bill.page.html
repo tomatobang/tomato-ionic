@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>bill</ion-title>
+    <ion-title>账单</ion-title>
     <ion-buttons slot="end">
       <ion-button icon-only (click)="toAssetManagement()">
         <ion-icon name="card"></ion-icon>
@@ -10,5 +10,58 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-button shape="round" fill="outline" expand="block" (click)="addBill()">
+    <ion-icon name="add"></ion-icon>记一笔
+  </ion-button>
+
+  <ion-card *ngIf="showAdd" class="add-bill-form-card">
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">日期</ion-label>
+        <ion-datetime display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">金额</ion-label>
+        <ion-input type="number" class="amount"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>支付方式</ion-label>
+        <ion-select placeholder="Select One">
+          <ion-select-option value="支付宝">支付宝</ion-select-option>
+          <ion-select-option value="微信">微信</ion-select-option>
+          <ion-select-option value="银行卡">银行卡</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+          <h1>
+            <ion-chip>
+              <ion-label color="secondary">吃饭</ion-label>
+            </ion-chip>
+          </h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>
+            <ion-chip>
+              <ion-label color="secondary">衣服</ion-label>
+            </ion-chip>
+          </h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>
+            <ion-chip>
+              <ion-label color="secondary">人情</ion-label>
+            </ion-chip>
+          </h1>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-button shape="round" (click)="submitBill()">提交</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+
+  </ion-list>
 
 </ion-content>

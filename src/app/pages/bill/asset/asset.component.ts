@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./asset.component.scss'],
 })
 export class AssetComponent implements OnInit {
+  showAddForm = false;
+  cardTitle = '';
 
   constructor(private modal: ModalController) { }
 
@@ -14,5 +16,20 @@ export class AssetComponent implements OnInit {
 
   close() {
     this.modal.dismiss();
+  }
+  addAsset() {
+    this.showAddForm = !this.showAddForm;
+    if (this.showAddForm) {
+      this.cardTitle = '新增';
+    }
+  }
+
+  submitAsset() {
+    this.showAddForm = false;
+  }
+
+  edit() {
+    this.cardTitle = '编辑';
+    this.showAddForm = true;
   }
 }

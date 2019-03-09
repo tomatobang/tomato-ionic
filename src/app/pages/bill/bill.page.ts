@@ -8,10 +8,15 @@ import { AssetComponent } from './asset/asset.component';
   styleUrls: ['./bill.page.scss'],
 })
 export class BillPage implements OnInit {
-
+  showAdd = false;
+  slideOpts = {
+    effect: 'flip'
+  };
+  date;
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {
+    this.date = new Date();
   }
 
   async toAssetManagement() {
@@ -20,6 +25,14 @@ export class BillPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  addBill() {
+    this.showAdd = !this.showAdd;
+  }
+
+  submitBill() {
+    this.showAdd = false;
   }
 
 }
