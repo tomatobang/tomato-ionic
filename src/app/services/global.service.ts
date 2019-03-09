@@ -146,7 +146,7 @@ export class GlobalService {
       return this._isFirstTimeOpen;
     } else {
       const isFirstTimeOpen = localStorage.getItem('isFirstTimeOpen');
-      if (isFirstTimeOpen === 'true') {
+      if (!isFirstTimeOpen || isFirstTimeOpen === 'true') {
         return true;
       } else {
         return false;

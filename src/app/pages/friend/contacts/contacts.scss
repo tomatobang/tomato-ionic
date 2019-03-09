@@ -1,7 +1,3 @@
-ion-content>.scroll-content {
-    padding: 0px 2px !important;
-}
-
 .contact-sticker {
     background: #F97271;
     color: #fff;
@@ -32,10 +28,7 @@ ion-content>.scroll-content {
 }
 
 .contact-scroll {
-    .scroll-content {
-        padding: 0px 2px !important;
-    }
-    .scroll-content::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none;
     }
 }
