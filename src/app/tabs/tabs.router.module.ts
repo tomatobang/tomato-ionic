@@ -23,6 +23,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'bill',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/bill/bill.module#BillPageModule'
+          },
+        ]
+      },
+      {
         path: 'list',
         children: [
           {
