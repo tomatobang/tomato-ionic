@@ -27,17 +27,20 @@ import { NativeService } from '@services/native.service';
 import { DataService } from '@services/data.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { EmitService } from '@services/emit.service';
+import { VoicePlayService } from '@services/utils/voiceplay.service';
+import { Helper } from '@services/utils/helper';
 
 import { InfoService } from '@services/info.service';
 import { CacheService } from '@services/cache.service';
 import { MessageService } from '@services/data/message/message.service';
+
 import { OnlineUserService } from '@services/data.service';
 import { OnlineTomatoService } from '@services/data.service';
 import { OnlineTaskService } from '@services/data.service';
 import { OnlineTodoService } from '@services/data.service';
 import { OnlineFootprintService } from '@services/data.service';
-import { VoicePlayService } from '@services/utils/voiceplay.service';
-import { Helper } from '@services/utils/helper';
+import { OnlineAssetService } from '@services/data.service';
+import { OnlineBillService } from '@services/data.service';
 
 import {
   TomatoIOService,
@@ -79,6 +82,8 @@ import { UserFriendService } from '@services/data/user_friend';
     OnlineTaskService,
     OnlineTodoService,
     OnlineFootprintService,
+    OnlineAssetService,
+    OnlineBillService,
     Helper,
     TomatoIOService,
     ChatIOService,
