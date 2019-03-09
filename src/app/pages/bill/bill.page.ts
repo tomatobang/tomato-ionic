@@ -1,4 +1,6 @@
+import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+import { AssetComponent } from './asset/asset.component';
 
 @Component({
   selector: 'app-bill',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BillPage implements OnInit {
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {
+  }
+
+  async toAssetManagement() {
+    const modal = await this.modalCtrl.create({
+      component: AssetComponent
+    });
+
+    await modal.present();
   }
 
 }
