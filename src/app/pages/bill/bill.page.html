@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-button shape="round" fill="outline" expand="block" (click)="addBill()">
+  <ion-button shape="round" fill="outline" expand="block" (click)="showBillForm()">
     <ion-icon name="add"></ion-icon>记一笔
   </ion-button>
 
@@ -18,18 +18,16 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">日期</ion-label>
-        <ion-datetime display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="date"></ion-datetime>
+        <ion-datetime display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">金额</ion-label>
-        <ion-input type="number" class="amount"></ion-input>
+        <ion-input type="number" class="amount" [(ngModel)]="newBill.amount"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>支付方式</ion-label>
-        <ion-select placeholder="Select One">
-          <ion-select-option value="支付宝">支付宝</ion-select-option>
-          <ion-select-option value="微信">微信</ion-select-option>
-          <ion-select-option value="银行卡">银行卡</ion-select-option>
+        <ion-select placeholder="支付方式" (ionChange)="changePayWay($event)">
+          <ion-select-option *ngFor="let item of assetList" value="{{ item._id }}">{{ item.name }}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-slides pager="true" [options]="slideOpts">
@@ -55,13 +53,32 @@
           </h1>
         </ion-slide>
       </ion-slides>
-
+      <ion-item>
+        <ion-label position="stacked">备注</ion-label>
+        <ion-input [(ngModel)]="newBill.note"></ion-input>
+      </ion-item>
       <ion-button shape="round" (click)="submitBill()">提交</ion-button>
     </ion-card-content>
   </ion-card>
 
   <ion-list>
-
+    <ion-item *ngFor="let item of billList">
+      <ion-text color="secondary" class="bill-note">
+        {{ item.note }}
+      </ion-text>
+      <ion-chip color="secondary" *ngIf="item.asset" class="bill-note">
+        <ion-label color="dark">{{ item.asset.name }}</ion-label>
+      </ion-chip>
+      <ion-chip color="primary" *ngIf="item.tag" class="bill-note">
+        <ion-label color="dark">{{ item.tag }}</ion-label>
+      </ion-chip>
+      <ion-label class="amount">
+        {{ item.amount }}
+      </ion-label>
+      <ion-text color="secondary" class="bill-note">
+        {{ item.create_at | DateTransform }}
+      </ion-text>
+    </ion-item>
   </ion-list>
 
 </ion-content>

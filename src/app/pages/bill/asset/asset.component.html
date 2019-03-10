@@ -16,7 +16,7 @@
 </ion-header>
 
 <ion-content no-bounce>
-  <ion-card *ngIf="showAddForm">
+  <ion-card *ngIf="showForm">
 
     <ion-card-header>
       <ion-card-title>{{ cardTitle }}</ion-card-title>
@@ -25,15 +25,15 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">名称</ion-label>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="asset.name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">金额</ion-label>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="asset.amount"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">备注</ion-label>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="asset.note"></ion-input>
       </ion-item>
       <ion-button shape="round" (click)="submitAsset()">提交</ion-button>
     </ion-card-content>
@@ -41,38 +41,16 @@
   </ion-card>
 
   <ion-list>
-
-
-    <ion-item-sliding>
+    <ion-item-sliding *ngFor="let item of assetList">
       <ion-item>
-        <ion-label>支付宝</ion-label>
-        <ion-note slot="end">888</ion-note>
+        <ion-label>{{ item.name }}</ion-label>
+        <ion-note slot="end">{{ item.amount }}</ion-note>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option (click)="edit()">编辑</ion-item-option>
+        <ion-item-option (click)="edit(item)">编辑</ion-item-option>
+        <ion-item-option (click)="delete(item)">删除</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label>微信</ion-label>
-        <ion-note slot="end">888</ion-note>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option (click)="edit()">编辑</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label>招商银行</ion-label>
-        <ion-note slot="end">888</ion-note>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option (click)="edit()">编辑</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
   </ion-list>
 
 </ion-content>

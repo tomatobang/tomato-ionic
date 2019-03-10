@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   mode: 'dev',
-  serverUrl: 'http://47.100.16.77:7002/'
-  // serverUrl: 'http://127.0.0.1:7001/'
+  // serverUrl: 'http://47.100.16.77:7002/'
+  serverUrl: 'http://127.0.0.1:7001/'
 };
 
 /*
