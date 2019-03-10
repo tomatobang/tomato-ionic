@@ -18,7 +18,7 @@
 
     <ion-card-header>
       <ion-card-title>
-        <ion-select placeholder="类别" (ionChange)="changeBillType($event)">
+        <ion-select okText="确认" cancelText="取消" placeholder="类别" (ionChange)="changeBillType($event)">
           <ion-select-option value="支出" selected>支出</ion-select-option>
           <ion-select-option value="收入">收入</ion-select-option>
         </ion-select>
@@ -27,7 +27,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">日期</ion-label>
-        <ion-datetime display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date"></ion-datetime>
+        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">金额</ion-label>
@@ -35,7 +35,7 @@
       </ion-item>
       <ion-item>
         <ion-label>支付方式</ion-label>
-        <ion-select placeholder="支付方式" (ionChange)="changePayWay($event)" [(ngModel)]="newBill.asset">
+        <ion-select okText="确认" cancelText="取消" placeholder="支付方式" (ionChange)="changePayWay($event)" [(ngModel)]="newBill.asset">
           <ion-select-option *ngFor="let item of assetList" value="{{ item._id }}">{{ item.name }}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -85,22 +85,28 @@
     <ion-item-sliding *ngFor="let item of billList;let i = index;">
       <ion-item>
         <ion-label>
-          <ion-text class="amount">
-            {{ item.amount }}
-          </ion-text>
-          <ion-text color="secondary" class="bill-note">
-            {{ item.note }}
-          </ion-text>
-          <ion-chip color="primary" *ngIf="item.type" class="bill-note">
-            <ion-label color="dark">{{ item.type }}</ion-label>
-          </ion-chip>
-          <ion-chip color="secondary" *ngIf="item.asset" class="bill-note">
-            <ion-label color="dark">{{ item.asset.name }}</ion-label>
-          </ion-chip>
-          <ion-chip color="primary" *ngIf="item.tag" class="bill-note">
-            <ion-label color="dark">{{ item.tag }}</ion-label>
-          </ion-chip>
           <p>
+            <ion-text *ngIf="item.type" class="bill-note">
+              {{ item.type }}:
+            </ion-text>
+            <ion-text class="list-amount">
+              {{ item.amount }}
+            </ion-text>
+            <ion-text class="bill-note">
+              {{ item.note }}
+            </ion-text>
+            <ion-chip color="tertiary" *ngIf="item.tag" class="bill-note">
+              <ion-label color="dark">{{ item.tag }}</ion-label>
+            </ion-chip>
+          </p>
+
+          <p>
+            <ion-text color="secondary" class="bill-note">
+              支付方式:
+            </ion-text>
+            <ion-chip color="warning" *ngIf="item.asset.name" class="bill-note">
+              <ion-label color="dark">{{ item.asset.name }}</ion-label>
+            </ion-chip>
             <ion-text color="secondary" class="bill-note">
               {{ item.create_at | DateTransform }}
             </ion-text>

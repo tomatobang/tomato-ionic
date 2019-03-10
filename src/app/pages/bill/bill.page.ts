@@ -19,7 +19,7 @@ export class BillPage implements OnInit {
 
   newBill = {
     date: new Date().toISOString(),
-    amount: 0,
+    amount: null,
     asset: '',
     tag: '',
     note: '',
@@ -50,12 +50,13 @@ export class BillPage implements OnInit {
     },
     {
       name: '理财', selected: false
-    }
-  ];
-  payTag2 = [
+    },
     {
       name: '书籍教育', selected: false
     },
+  ];
+  payTag2 = [
+
     {
       name: '运动', selected: false
     },
@@ -94,6 +95,8 @@ export class BillPage implements OnInit {
     }
   ];
 
+  dateStr;
+
 
   constructor(
     private modalCtrl: ModalController,
@@ -107,7 +110,7 @@ export class BillPage implements OnInit {
   }
 
   ngOnInit() {
-    this.newBill.date = new Date().toISOString();
+    this.newBill.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
     this.initAssetSelect();
     this.getBillList();
   }
@@ -163,9 +166,8 @@ export class BillPage implements OnInit {
       await toast.present();
       return;
     }
-
     this.billService.createBill({
-      create_at: this.newBill.date,
+      create_at: new Date(new Date(this.newBill.date).getTime() - 8 * 3600 * 1000).toISOString(),
       amount: this.newBill.amount,
       asset: this.newBill.asset,
       tag: this.tag.join(','),
@@ -173,7 +175,9 @@ export class BillPage implements OnInit {
       type: this.newBill.type
     }).subscribe(ret => {
       if (ret) {
-        ret.asset = this.findAssetName(ret.asset);
+        ret.asset = {
+          name: this.findAssetName(ret.asset)
+        };
         if (this.billList) {
           this.billList.unshift(ret);
         } else {

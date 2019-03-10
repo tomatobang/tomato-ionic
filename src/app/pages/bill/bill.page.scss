@@ -4,6 +4,17 @@ ion-slides {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        ion-chip {
+            height: 24px;
+            margin: 0 2px;
+        }
+    }
+}
+
+ion-item-sliding {
+    ion-chip {
+        height: 24px;
+        margin: 0 2px;
     }
 }
 
@@ -14,6 +25,13 @@ ion-slides {
 .amount {
     color: #ff8208;
     text-align: left;
+    font-size:24px;
+}
+
+.list-amount{
+    color: #ff8208;
+    text-align: left;
+    margin: 0 10px;
 }
 
 .bill-note {

@@ -21,6 +21,7 @@ export class AssetComponent implements OnInit {
     note: ''
   }
   editItem;
+  totalAmount = 0;
 
   constructor(
     private modal: ModalController,
@@ -38,7 +39,12 @@ export class AssetComponent implements OnInit {
   loadAssetList() {
     this.service.getAssets().subscribe(ret => {
       if (ret) {
+        this.totalAmount = 0;
         this.assetList = ret;
+        for (let index = 0; index < ret.length; index++) {
+          const element = ret[index];
+          this.totalAmount += element.amount;
+        }
       }
     });
   }
@@ -55,6 +61,7 @@ export class AssetComponent implements OnInit {
     if (this.cardTitle === '新增' && this.asset.name && this.asset.amount) {
       this.service.createAsset(this.asset).subscribe(ret => {
         if (this.addAsset) {
+          this.totalAmount += ret.amount;
           this.assetList.push(ret);
         } else {
           this.assetList = [ret];
@@ -74,8 +81,9 @@ export class AssetComponent implements OnInit {
   }
 
   delete(item) {
+    // TODO:
     this.service.deleteAsset(item._id).subscribe(ret => {
-
+      this.totalAmount -= item.amount;
     });
   }
 }
