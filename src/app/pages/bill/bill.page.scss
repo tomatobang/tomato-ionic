@@ -1,5 +1,10 @@
 ion-slides {
-    height: 120px;
+    height: 80px;
+    ion-slide {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
 }
 
 .add-bill-form-card {
@@ -8,10 +13,19 @@ ion-slides {
 
 .amount {
     color: #ff8208;
-    text-align: center;
+    text-align: left;
 }
 
 .bill-note {
     font-size: 12px;
     color: #777;
+}
+
+.tag-slide {
+    font-size: 12px;
+}
+
+.text-small {
+    font-size: 10px;
+    white-space: pre-line;
 }

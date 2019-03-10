@@ -5,6 +5,7 @@ export class Bill {
   asset?: string;
   tag?: string;
   note?: string;
+  type?: string;
   amount: Number;
   create_at?: string;
 }
