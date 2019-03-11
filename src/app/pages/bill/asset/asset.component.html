@@ -8,7 +8,7 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button icon-only (click)="addAsset()">
+      <ion-button icon-only (click)="showAssetForm()">
         <ion-icon name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -46,14 +46,14 @@
         <ion-note slot="end">{{ totalAmount | NumberFix:2}}</ion-note>
       </ion-label>
     </ion-list-header>
-    <ion-item-sliding *ngFor="let item of assetList">
+    <ion-item-sliding *ngFor="let item of assetList; let i = index;">
       <ion-item>
         <ion-label>{{ item.name }}</ion-label>
         <ion-note slot="end">{{ item.amount | NumberFix:2}}</ion-note>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="edit(item)">编辑</ion-item-option>
-        <ion-item-option (click)="delete(item)">删除</ion-item-option>
+        <ion-item-option (click)="delete(item, i)">删除</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

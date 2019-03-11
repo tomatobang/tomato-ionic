@@ -2,7 +2,7 @@ import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 import { OnlineAssetService } from '@services/data/asset/asset.service';
-
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'app-asset',
@@ -17,7 +17,7 @@ export class AssetComponent implements OnInit {
 
   asset = {
     name: '',
-    amount: 0,
+    amount: null,
     note: ''
   }
   editItem;
@@ -25,7 +25,8 @@ export class AssetComponent implements OnInit {
 
   constructor(
     private modal: ModalController,
-    private service: OnlineAssetService
+    private service: OnlineAssetService,
+    private emit: EmitService
   ) { }
 
   ngOnInit() {
@@ -49,7 +50,7 @@ export class AssetComponent implements OnInit {
     });
   }
 
-  addAsset() {
+  showAssetForm() {
     this.showForm = !this.showForm;
     if (this.showForm) {
       this.cardTitle = '新增';
@@ -63,12 +64,13 @@ export class AssetComponent implements OnInit {
     this.showForm = false;
     if (this.cardTitle === '新增' && this.asset.name && this.asset.amount) {
       this.service.createAsset(this.asset).subscribe(ret => {
-        if (this.addAsset) {
+        if (this.assetList) {
           this.totalAmount += ret.amount;
           this.assetList.push(ret);
         } else {
           this.assetList = [ret];
         }
+        this.emit.eventEmit.emit('assetChange');
       });
     }
 
@@ -77,6 +79,7 @@ export class AssetComponent implements OnInit {
         this.editItem.name = ret.name;
         this.editItem.amount = ret.amount;
         this.editItem.note = ret.note;
+        this.emit.eventEmit.emit('assetChange');
       });
     }
   }
@@ -98,10 +101,12 @@ export class AssetComponent implements OnInit {
    * 删除资产
    * @param item 
    */
-  delete(item) {
+  delete(item, index) {
     // TODO:
     this.service.deleteAsset(item._id).subscribe(ret => {
       this.totalAmount -= item.amount;
+      this.assetList.splice(index, 1);
+      this.emit.eventEmit.emit('assetChange');
     });
   }
 }

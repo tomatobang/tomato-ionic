@@ -5,6 +5,7 @@ import { GlobalService } from '@services/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { OnlineAssetService } from '@services/data/asset/asset.service';
 import { OnlineBillService } from '@services/data/bill/bill.service';
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'app-bill',
@@ -104,15 +105,30 @@ export class BillPage implements OnInit {
     private rebirthProvider: RebirthHttpProvider,
     private assetService: OnlineAssetService,
     private billService: OnlineBillService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private emit: EmitService
   ) {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
 
   ngOnInit() {
+    this.init();
+  }
+
+  doRefresh() {
+    this.init();
+  }
+
+  init() {
     this.newBill.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
     this.initAssetSelect();
     this.getBillList();
+
+    this.emit.eventEmit.subscribe(ret => {
+      if (ret === 'assetChange') {
+        this.initAssetSelect();
+      }
+    });
   }
 
   initAssetSelect() {
