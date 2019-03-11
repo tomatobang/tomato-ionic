@@ -115,14 +115,14 @@ export class BillPage implements OnInit {
     this.init();
   }
 
-  doRefresh() {
-    this.init();
+  doRefresh(event) {
+    this.init(event.target);
   }
 
-  init() {
+  init(refresher?) {
     this.newBill.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
     this.initAssetSelect();
-    this.getBillList();
+    this.getBillList(refresher);
 
     this.emit.eventEmit.subscribe(ret => {
       if (ret === 'assetChange') {
@@ -140,10 +140,13 @@ export class BillPage implements OnInit {
     });
   }
 
-  getBillList() {
+  getBillList(refresher?) {
     this.billService.getBills().subscribe(ret => {
       if (ret) {
         this.billList = ret;
+        if (refresher) {
+          refresher.complete();
+        }
       }
     });
   }
@@ -206,7 +209,7 @@ export class BillPage implements OnInit {
   findAssetName(assetid) {
     for (let index = 0; index < this.assetList.length; index++) {
       const element = this.assetList[index];
-      if (element._id = assetid) {
+      if (element._id === assetid) {
         return element.name;
       }
     }
