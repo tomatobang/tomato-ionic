@@ -28,7 +28,8 @@ export class BillPage implements OnInit {
   };
   billList;
   assetList = [];
-
+  totalCost;
+  totalIncome;
   tag = [];
   payTag1 = [
     {
@@ -47,7 +48,7 @@ export class BillPage implements OnInit {
       name: '衣服', selected: false
     },
     {
-      name: '人情红包', selected: false
+      name: '物业费', selected: false
     },
     {
       name: '理财', selected: false
@@ -57,7 +58,9 @@ export class BillPage implements OnInit {
     },
   ];
   payTag2 = [
-
+    {
+      name: '人情红包', selected: false
+    },
     {
       name: '运动', selected: false
     },
@@ -89,7 +92,13 @@ export class BillPage implements OnInit {
       name: '红包', selected: false
     },
     {
+      name: '过节费', selected: false
+    },
+    {
       name: '活动奖励', selected: false
+    },
+    {
+      name: '兼职', selected: false
     },
     {
       name: '其它', selected: false
@@ -144,6 +153,16 @@ export class BillPage implements OnInit {
     this.billService.getBills().subscribe(ret => {
       if (ret) {
         this.billList = ret;
+        this.totalCost = 0;
+        this.totalIncome = 0;
+        for (let index = 0; index < ret.length; index++) {
+          const element: any = ret[index];
+          if (element.type === "支出") {
+            this.totalCost += element.amount;
+          } else if (element.type === "收入") {
+            this.totalIncome += element.amount;
+          }
+        }
         if (refresher) {
           refresher.complete();
         }
@@ -197,6 +216,13 @@ export class BillPage implements OnInit {
         ret.asset = {
           name: this.findAssetName(ret.asset)
         };
+        if (ret.type === '支出') {
+          this.totalCost += ret.amount;
+        } else {
+          if (ret.type === '收入') {
+            this.totalIncome += ret.amount;
+          }
+        }
         if (this.billList) {
           this.billList.unshift(ret);
         } else {
@@ -218,6 +244,13 @@ export class BillPage implements OnInit {
 
   deleteBillRecord(item, index) {
     this.billService.deleteBill(item._id).subscribe(ret => {
+      if (ret.type === '支出') {
+        this.totalCost -= ret.amount;
+      } else {
+        if (ret.type === '收入') {
+          this.totalIncome -= ret.amount;
+        }
+      }
       this.billList.splice(index, 1);
     });
   }

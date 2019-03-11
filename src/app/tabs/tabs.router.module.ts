@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/tabs/tomato',
+        redirectTo: '/tabs/footprint',
         pathMatch: 'full',
       },
       {
@@ -66,7 +66,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/tomato',
+    redirectTo: '/tabs/footprint',
     pathMatch: 'full',
   },
 ];

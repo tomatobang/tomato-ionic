@@ -1,3 +1,18 @@
+.add-bill-button {
+    --ion-color-primary: #ff8208;
+    --border-color: #ff8208;
+}
+
+ion-chip {
+    --ion-color-warning: #ff8208;
+}
+
+.total-amount {
+    font-size: 24px;
+    color: #ff8208;
+    font-family: 'RobotoLight';
+}
+
 ion-slides {
     height: 80px;
     ion-slide {
