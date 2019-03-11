@@ -56,6 +56,9 @@ export class AssetComponent implements OnInit {
     }
   }
 
+  /**
+   * 提交修改
+   */
   submitAsset() {
     this.showForm = false;
     if (this.cardTitle === '新增' && this.asset.name && this.asset.amount) {
@@ -70,16 +73,31 @@ export class AssetComponent implements OnInit {
     }
 
     if (this.cardTitle === '编辑' && this.editItem) {
-      this.service.updateAsset(this.editItem._id, this.asset)
+      this.service.updateAsset(this.editItem._id, this.asset).subscribe(ret => {
+        this.editItem.name = ret.name;
+        this.editItem.amount = ret.amount;
+        this.editItem.note = ret.note;
+      });
     }
   }
 
+  /**
+   * 编辑资产
+   * @param item
+   */
   edit(item) {
     this.editItem = item;
+    this.asset.name = this.editItem.name;
+    this.asset.amount = this.editItem.amount;
+    this.asset.note = this.editItem.notes;
     this.cardTitle = '编辑';
     this.showForm = true;
   }
 
+  /**
+   * 删除资产
+   * @param item 
+   */
   delete(item) {
     // TODO:
     this.service.deleteAsset(item._id).subscribe(ret => {
