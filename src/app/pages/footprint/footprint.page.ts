@@ -91,7 +91,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     });
 
     this.refreshCreateAt();
-
     this.listFootprint();
   }
 
@@ -172,9 +171,22 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.notes = '';
         ret.mode = new Array(parseInt(ret.mode, 10));
         this.footprintlist.unshift(ret);
+        this.clearTags();
+        this.selectMode(3);
         loading.dismiss();
       });
     }
+  }
+
+  clearTags() {
+    for (let index = 0; index < this.taglist.length; index++) {
+      const element = this.taglist[index];
+      if (element.selected === true) {
+        element.selected = false;
+      }
+    }
+    this.tag = [];
+    this.openTag = false;
   }
 
   async createLoading() {
@@ -192,13 +204,17 @@ export class FootprintPage implements OnInit, OnDestroy {
    * 删除足迹
    * @param _id 编号
    */
-  async deleteFootprint(_id) {
+  async deleteFootprint(_id, index) {
     const loading = await this.createLoading();
     if (_id) {
       this.footprintserice.deleteFootprint(_id).subscribe(ret => {
-        this.listFootprint();
+        if (this.footprintlist && this.footprintlist.length > 0) {
+          this.footprintlist.splice(index, 1);
+        }
         loading.dismiss();
       });
+    } else {
+      loading.dismiss();
     }
   }
 

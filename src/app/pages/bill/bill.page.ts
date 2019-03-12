@@ -28,8 +28,8 @@ export class BillPage implements OnInit {
   };
   billList;
   assetList = [];
-  totalCost;
-  totalIncome;
+  totalCost = 0;
+  totalIncome = 0;
   tag = [];
   payTag1 = [
     {

@@ -34,7 +34,7 @@
         <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date"></ion-datetime>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">金额</ion-label>
+        <ion-label position="stacked">金额(<span class="rmb-sign">¥</span>)</ion-label>
         <ion-input type="number" class="amount" [(ngModel)]="newBill.amount"></ion-input>
       </ion-item>
       <ion-item>
@@ -88,11 +88,13 @@
 
   <ion-list>
     <ion-list-header>
-      <ion-label>总花费
-        <ion-note slot="end" class="total-amount">{{ totalCost | NumberFix:2}} </ion-note>元
+      <ion-label *ngIf="totalCost">总花费
+        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalCost | NumberFix:2}}
+        </ion-note>元
       </ion-label>
-      <ion-label>总收入
-        <ion-note slot="end" class="total-amount">{{ totalIncome | NumberFix:2}} </ion-note>元
+      <ion-label *ngIf="totalIncome">总收入
+        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalIncome | NumberFix:2}}
+        </ion-note>元
       </ion-label>
     </ion-list-header>
     <ion-item-sliding *ngFor="let item of billList;let i = index;">
@@ -103,13 +105,13 @@
               {{ item.type }}:
             </ion-text>
             <ion-text class="list-amount">
-              {{ item.amount }}
+              <span class="rmb-sign">¥</span>{{ item.amount }}
             </ion-text>
             <ion-text class="bill-note">
               {{ item.note }}
             </ion-text>
             <ion-chip color="primary" *ngIf="item.tag" class="bill-note">
-              <ion-label color="dark">{{ item.tag }}</ion-label>
+              <ion-label color="dark" class="text-small">{{ item.tag }}</ion-label>
             </ion-chip>
           </p>
 
@@ -118,9 +120,9 @@
               支付方式:
             </ion-text>
             <ion-chip color="warning" *ngIf="item.asset.name" class="bill-note">
-              <ion-label color="dark">{{ item.asset.name }}</ion-label>
+              <ion-label color="dark" class="text-small">{{ item.asset.name }}</ion-label>
             </ion-chip>
-            <ion-text color="secondary" class="bill-note">
+            <ion-text color="secondary" class="bill-note" class="text-small">
               {{ item.create_at | DateTransform }}
             </ion-text>
           </p>
