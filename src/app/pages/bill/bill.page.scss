@@ -21,6 +21,7 @@ ion-slides {
         flex-direction: row;
         ion-chip {
             height: 24px;
+            line-height: 24px;
             margin: 0 2px;
         }
     }
@@ -29,6 +30,7 @@ ion-slides {
 ion-item-sliding {
     ion-chip {
         height: 24px;
+        line-height: 24px;
         margin: 0 2px;
     }
 }
@@ -64,6 +66,7 @@ ion-item-sliding {
     font-size: 10px;
     white-space: pre-line;
 }
-.rmb-sign{
+
+.rmb-sign {
     font-size: 12px;
 }

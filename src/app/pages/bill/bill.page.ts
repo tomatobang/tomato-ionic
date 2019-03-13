@@ -228,8 +228,46 @@ export class BillPage implements OnInit {
         } else {
           this.billList = [ret];
         }
+        this.resetFormData();
       }
     });
+  }
+
+  resetFormData() {
+    this.newBill = {
+      date: new Date().toISOString(),
+      amount: null,
+      asset: '',
+      tag: '',
+      note: '',
+      type: '支出'
+    };
+    if (this.assetList && this.assetList.length > 0) {
+      this.newBill.asset = this.assetList[0]._id;
+    }
+    this.tag = [];
+    this.clearSelectedTag();
+  }
+
+  clearSelectedTag() {
+    this.payTag1.map(val => {
+      val.selected = false;
+    });
+    this.payTag2.map(val => {
+      val.selected = false;
+    });
+    this.payTag3.map(val => {
+      val.selected = false;
+    });
+  }
+
+  changePayWay(evt) {
+    this.newBill.asset = evt.detail.value;
+  }
+
+  changeBillType(evt) {
+    this.resetFormData();
+    this.newBill.type = evt.detail.value;
   }
 
   findAssetName(assetid) {
@@ -253,14 +291,6 @@ export class BillPage implements OnInit {
       }
       this.billList.splice(index, 1);
     });
-  }
-
-  changePayWay(evt) {
-    this.newBill.asset = evt.detail.value;
-  }
-
-  changeBillType(evt) {
-    this.newBill.type = evt.detail.value;
   }
 
   selectTag(item) {

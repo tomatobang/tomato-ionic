@@ -65,7 +65,7 @@
             <ion-label>
               <div class="text-small">
                 <span class="list-title">{{ item.notes }}</span>
-                <ion-chip color="primary" *ngIf="item.tag">
+                <ion-chip color="primary" *ngIf="item.tag" style="height:24px;line-height:24px;">
                   <ion-label style="font-size:10px">{{ item.tag }}</ion-label>
                 </ion-chip>
                 <ng-container *ngIf="item.mode">
