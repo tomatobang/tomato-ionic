@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { DebounceClickDirective } from '@directives/debounce-click.directive';
 import { TrackEventDirective } from '@directives/trackEvent.directive';
 
-import { CalendarModule } from './ion2-calendar';
+import { CalendarModule } from 'ion2-calendar';
 import { RebirthHttpModule } from 'rebirth-http';
 import { SocketIoModule } from 'ngx-socket-io';
 

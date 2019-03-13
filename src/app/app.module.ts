@@ -1,8 +1,7 @@
 
 import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { ErrorHandler, NgModule, Injectable } from '@angular/core';
+import { ErrorHandler, NgModule, Injectable, LOCALE_ID } from '@angular/core';
 import * as Hammer from 'hammerjs';
-
 @Injectable()
 export class IonicGestureConfig extends HammerGestureConfig {
   overrides = <any>{
@@ -60,6 +59,7 @@ import { RavenErrorHandler } from './raven-error-handler.';
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useValue: "zh-CN" }
     // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],
