@@ -1,36 +1,15 @@
-<ion-card>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-6>
-        <div>番茄钟数目</div>
-        <div class="today-tomatoCount">{{ tomatoCount }}</div>
-      </ion-col>
-      <ion-col col-6>
-        <div>番茄钟时长(min)</div>
-        <div class="today-tomatoCount">{{ tomatoCount_time }}</div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-card>
+<div class="calendar-nav">
+  <div class="left-nav">
+    <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft" (click)="monthDropleft()"></ion-icon>
+  </div>
+  <div class="year-month-block">
+    <h1 class="month-label">{{ monthlabel }}</h1>
+    <div class="year-label">{{ yearlabel }}</div>
+  </div>
+  <div class="right-nav">
+    <ion-icon ios="ios-arrow-dropright" md="md-arrow-dropright" (click)="monthDropright()"></ion-icon>
+  </div>
+</div>
 
-<timeline>
-  <timeline-item [nzColor]="'red'" *ngFor="let tomato of historyTomatoes" class="tomato-today-list" track="tooling">
-    <ng-template #custom>
-      <ion-avatar slot="start">
-        <img src="assets/tomato.png">
-      </ion-avatar>
-    </ng-template>
-    <div class="tomato-start-end-time-block">
-      <span class="tomato-start-end-time">{{ tomato.startTime | date:'shortTime' }} - {{ tomato.endTime | date:'shortTime' }}</span>
-    </div>
-    <h3>
-      <span [ngClass]="{'text-breaked':tomato.succeed==0}">{{ tomato.title | StringTruncate: 20 }}</span>
-      <img [src]="voicePlaySrc" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
-    </h3>
-    <div *ngIf="tomato.breakReason" class="tomato-break-reason">(中断原因:{{ tomato.breakReason }})</div>
-  </timeline-item>
-
-  <ng-template #pending>
-    <ion-icon ios="ios-bookmark" md="md-bookmark"></ion-icon>
-  </ng-template>
-</timeline>
+<div #divContainer class="divContainer">
+</div>

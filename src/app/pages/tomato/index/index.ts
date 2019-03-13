@@ -97,6 +97,7 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
       if (t && t !== 'null') {
         this.startTask(t, false);
       }
+      this.events.publish('tomatoio:load_tomato_succeed');
     });
     this.tomatoIO.other_end_start_tomato().subscribe(t => {
       if (t && t !== 'null') {
