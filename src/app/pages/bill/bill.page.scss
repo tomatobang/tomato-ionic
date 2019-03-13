@@ -50,6 +50,7 @@ ion-item-sliding {
     color: #ff8208;
     text-align: left;
     margin: 0 10px;
+    font-size: 18px;
     font-family: 'RobotoLight';
 }
 
@@ -69,4 +70,8 @@ ion-item-sliding {
 
 .rmb-sign {
     font-size: 12px;
+}
+
+.float-right {
+    float: right;
 }

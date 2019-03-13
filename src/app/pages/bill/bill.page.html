@@ -102,27 +102,22 @@
         <ion-label>
           <p>
             <ion-text *ngIf="item.type" class="bill-note">
-              {{ item.type }}:
+              {{ item.type }} <ion-text *ngIf="item.tag" class="bill-note">({{ item.tag }})</ion-text>:
             </ion-text>
             <ion-text class="list-amount">
               <span class="rmb-sign">¥</span>{{ item.amount }}
             </ion-text>
-            <ion-text class="bill-note">
+            <ion-text class="bill-note float-right">
               {{ item.note }}
             </ion-text>
-            <ion-chip color="primary" *ngIf="item.tag" class="bill-note">
-              <ion-label color="dark" class="text-small">{{ item.tag }}</ion-label>
-            </ion-chip>
           </p>
-
           <p>
-            <ion-text color="secondary" class="bill-note">
-              支付方式:
-            </ion-text>
+            <ion-text *ngIf="item.type==='收入'" class="bill-note">来源:</ion-text>
+            <ion-text *ngIf="item.type==='支出'" class="bill-note">支付方式:</ion-text>
             <ion-chip color="warning" *ngIf="item.asset.name" class="bill-note">
               <ion-label color="dark" class="text-small">{{ item.asset.name }}</ion-label>
             </ion-chip>
-            <ion-text color="secondary" class="bill-note" class="text-small">
+            <ion-text class="bill-note float-right text-small">
               {{ item.create_at | DateTransform }}
             </ion-text>
           </p>
