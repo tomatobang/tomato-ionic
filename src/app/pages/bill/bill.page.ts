@@ -282,10 +282,10 @@ export class BillPage implements OnInit {
 
   deleteBillRecord(item, index) {
     this.billService.deleteBill(item._id).subscribe(ret => {
-      if (ret.type === '支出') {
+      if (item.type === '支出') {
         this.totalCost -= ret.amount;
       } else {
-        if (ret.type === '收入') {
+        if (item.type === '收入') {
           this.totalIncome -= ret.amount;
         }
       }

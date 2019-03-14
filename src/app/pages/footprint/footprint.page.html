@@ -10,13 +10,15 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-input placeholder="输入足迹..." [(ngModel)]="notes"></ion-input>
+  <ion-input placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
 
   <div class="tag-area">
-    <div class="tag-header" (click)="openTagChooser()">选择标签
+    <div class="tag-header" (click)="openTagChooser()">标签
       <span class="choosed-tag" *ngFor="let item of tag">{{ item }} &nbsp;</span>
       <div class="choosed-tag-icon">
-        <ion-icon name="arrow-dropright" *ngIf="!openTag"></ion-icon>
+        <ion-icon name="arrow-dropright" *ngIf="!openTag">
+          展开
+        </ion-icon>
         <ion-icon name="arrow-dropdown" *ngIf="openTag"></ion-icon>
       </div>
     </div>
@@ -40,16 +42,16 @@
     </ng-container>
   </div>
 
-  <div class="flex-layout">
-    <ion-icon name="locate" color="primary"></ion-icon>
-    <ion-label class="text-small">{{ this.location }}</ion-label>
-  </div>
-
   <div class="add-footprint-button-container">
     <div class="add-footprint-button" (click)="addFootprint()">
       <div>添加足跡</div>
       <div>{{ this.create_at }}</div>
     </div>
+  </div>
+
+  <div class="position-area">
+    <ion-icon name="locate" color="primary"></ion-icon>
+    <ion-label>{{ this.location }}</ion-label>
   </div>
 
   <ion-card>
