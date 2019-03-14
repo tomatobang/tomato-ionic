@@ -7,6 +7,7 @@ export abstract class BillService extends RebirthHttp {
   abstract createBill(bill: Bill): Observable<any>;
 
   abstract getBills(
+    date:any,
     pageIndex: any,
     pageSize: any,
     keyword?: string

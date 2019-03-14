@@ -57,6 +57,14 @@ ion-app {
     font-style: normal;
 }
 
+ion-popover {
+    .popover-content {
+        --width: 80%;
+        top: 45px !important;
+        --min-width: 300px;
+    }
+}
+
 .date-square-style {
     small {
         font-family: 'RobotoLight';

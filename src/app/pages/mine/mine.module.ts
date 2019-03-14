@@ -18,11 +18,12 @@ import { StatisticsPage } from './subpages/statistics/statistics';
 import { SettingPage } from './subpages/setting/setting';
 import { ProfilePage } from './subpages/profile/profile';
 import { AboutPage } from './subpages/about/about';
+import { PopoverComponent } from './subpages/statistics/popover/popover.component';
 
 @NgModule({
-  declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage],
+  declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage, PopoverComponent],
   imports: [IonicModule, PipesModule, MinePageRoutingModule, CoreModule, SharedModule],
-  entryComponents: [MinePage, UpdatemodalPage],
+  entryComponents: [MinePage, UpdatemodalPage, PopoverComponent],
   providers: [
     FileTransfer,
     File,

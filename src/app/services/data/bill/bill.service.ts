@@ -31,6 +31,7 @@ export class OnlineBillService extends BillService {
 
   @GET(baseUrl + 'api/bill')
   getBills(
+    @Query('date') date = new Date(),
     @Query('pageIndex') pageIndex = 1,
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string

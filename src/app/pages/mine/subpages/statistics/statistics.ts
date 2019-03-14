@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarComponentOptions, DayConfig } from 'ion2-calendar';
 import { OnlineBillService } from '@services/data.service';
+import { PopoverComponent } from './/popover/popover.component';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'cmp-statistics',
@@ -14,6 +16,7 @@ export class StatisticsPage implements OnInit {
 
 
   constructor(
+    private popover: PopoverController,
     public billService: OnlineBillService
   ) {
   }
@@ -75,7 +78,7 @@ export class StatisticsPage implements OnInit {
       this.optionsMulti = {
         from: new Date(2019, 2, 9),
         to: new Date(),
-        pickMode: 'multi',
+        pickMode: 'single',
         daysConfig: result,
       };
     });
@@ -85,7 +88,20 @@ export class StatisticsPage implements OnInit {
     this.loadBillData(new Date($event.newMonth.string));
   }
 
-  selectDay($event) {
-    // debugger;
+  async selectDay($event) {
+    let datenow = new Date($event.time);
+    const dateStr =
+      datenow.getFullYear() +
+      '-' +
+      (datenow.getMonth() + 1) +
+      '-' +
+      datenow.getDate();
+    let popover = await this.popover.create({
+      component: PopoverComponent,
+      componentProps: {
+        time: dateStr
+      }
+    });
+    await popover.present();
   }
 }

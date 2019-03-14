@@ -1,0 +1,45 @@
+<p>
+  <ion-list>
+    <ion-list-header>
+      <ion-label *ngIf="totalCost">总支出
+        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalCost | NumberFix:2}}
+        </ion-note>元
+      </ion-label>
+      <ion-label *ngIf="totalIncome">总收入
+        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalIncome | NumberFix:2}}
+        </ion-note>元
+      </ion-label>
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let item of billList;let i = index;">
+      <ion-item>
+        <ion-label>
+          <p>
+            <ion-text *ngIf="item.type" class="bill-note">
+              {{ item.type }} <ion-text *ngIf="item.tag" class="bill-note">({{ item.tag }})</ion-text>:
+            </ion-text>
+            <ion-text class="list-amount">
+              <span class="rmb-sign">¥</span>{{ item.amount }}
+            </ion-text>
+            <ion-text class="bill-note float-right">
+              {{ item.note }}
+            </ion-text>
+          </p>
+          <p>
+            <ion-text *ngIf="item.type==='收入'" class="bill-note">来源:</ion-text>
+            <ion-text *ngIf="item.type==='支出'" class="bill-note">支付方式:</ion-text>
+            <ion-chip color="warning" *ngIf="item.asset.name" class="bill-note">
+              <ion-label color="dark" class="text-small">{{ item.asset.name }}</ion-label>
+            </ion-chip>
+            <ion-text class="bill-note float-right text-small">
+              {{ item.create_at | DateTransform:'withdate' }}
+            </ion-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-button (click)="clearDataAndReset()" color="primary" expand="block" fill="outline">
+    关闭</ion-button>
+</p>
