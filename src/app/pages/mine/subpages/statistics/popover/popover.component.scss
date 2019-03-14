@@ -1,0 +1,59 @@
+ion-chip {
+    --ion-color-warning: #ff8208;
+    height: 24px;
+    line-height: 24px;
+    margin: 0 2px;
+}
+
+.total-amount {
+    font-size: 24px;
+    color: #ff8208;
+    font-family: 'RobotoLight';
+}
+
+.amount {
+    color: #ff8208;
+    text-align: left;
+    font-size: 24px;
+    font-family: 'RobotoLight';
+}
+
+.list-amount {
+    color: #ff8208;
+    text-align: left;
+    margin: 0px 10px 0px 0px;
+    font-size: 18px;
+    font-family: 'RobotoLight';
+}
+
+.amount-tag-income {
+    padding: 2px 4px;
+    background: #32CD32;
+}
+
+.amount-tag-pay {
+    padding: 2px 4px;
+    background: #ff8208;
+}
+
+.bill-note {
+    font-size: 10px;
+    color: #777;
+}
+
+.tag-slide {
+    font-size: 12px;
+}
+
+.text-small {
+    font-size: 10px;
+    white-space: pre-line;
+}
+
+.rmb-sign {
+    font-size: 12px;
+}
+
+.float-right {
+    float: right;
+}

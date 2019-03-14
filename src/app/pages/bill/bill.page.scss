@@ -49,9 +49,21 @@ ion-item-sliding {
 .list-amount {
     color: #ff8208;
     text-align: left;
-    margin: 0 10px;
+    margin: 0px 10px 0px 0px;
     font-size: 18px;
     font-family: 'RobotoLight';
+}
+
+.amount-tag-income {
+    color: #fff !important;
+    padding: 2px 4px;
+    background: #32CD32;
+}
+
+.amount-tag-pay {
+    color: #fff !important;
+    padding: 2px 4px;
+    background: #ff8208;
 }
 
 .bill-note {

@@ -15,7 +15,10 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-button class="add-bill-button" shape="round" fill="outline" expand="block" (click)="showBillForm()">
-    <ion-icon name="add"></ion-icon>记一笔
+    <span *ngIf="!showAdd">
+      <ion-icon name="add"></ion-icon> 记一笔
+    </span>
+    <span *ngIf="showAdd">取消</span>
   </ion-button>
 
   <ion-card *ngIf="showAdd" class="add-bill-form-card">
@@ -101,19 +104,20 @@
       <ion-item>
         <ion-label>
           <p>
-            <ion-text *ngIf="item.type" class="bill-note">
-              {{ item.type }} <ion-text *ngIf="item.tag" class="bill-note">({{ item.tag }})</ion-text>:
-            </ion-text>
             <ion-text class="list-amount">
               <span class="rmb-sign">¥</span>{{ item.amount }}
             </ion-text>
             <ion-text class="bill-note float-right">
-              {{ item.note }}
+              <ion-text *ngIf="item.tag" class="bill-note">{{ item.tag }}</ion-text> ({{ item.note }})
             </ion-text>
           </p>
           <p>
-            <ion-text *ngIf="item.type==='收入'" class="bill-note">来源:</ion-text>
-            <ion-text *ngIf="item.type==='支出'" class="bill-note">支付方式:</ion-text>
+            <ion-text class="bill-note amount-tag-income" *ngIf="item.type==='收入'">
+              {{ item.type }}
+            </ion-text>
+            <ion-text class="bill-note amount-tag-pay" *ngIf="item.type==='支出'">
+              {{ item.type }}
+            </ion-text>
             <ion-chip color="warning" *ngIf="item.asset.name" class="bill-note">
               <ion-label color="dark" class="text-small">{{ item.asset.name }}</ion-label>
             </ion-chip>

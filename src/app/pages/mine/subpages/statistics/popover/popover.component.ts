@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PopoverController, Events } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { OnlineBillService } from '@services/data/bill/bill.service'
 
 @Component({
@@ -17,7 +17,6 @@ export class PopoverComponent implements OnInit {
 
   constructor(
     private popover: PopoverController,
-    private evts: Events,
     private billService: OnlineBillService
   ) { }
 
@@ -39,11 +38,6 @@ export class PopoverComponent implements OnInit {
         }
       });
     }
-  }
-
-  clearDataAndReset() {
-    this.evts.publish('clearDataAndReset');
-    this.popover.dismiss();
   }
 
 }

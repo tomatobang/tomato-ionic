@@ -60,7 +60,7 @@ ion-app {
 ion-popover {
     .popover-content {
         --width: 80%;
-        top: 45px !important;
+        top: 50px !important;
         --min-width: 300px;
     }
 }
@@ -69,7 +69,7 @@ ion-popover {
     small {
         font-family: 'RobotoLight';
         top: 15px;
-        --ion-color-primary: #F97271;
+        --ion-color-primary: #ff8208;
         font-size: 10px;
         text-align: left !important;
     }
@@ -77,11 +77,15 @@ ion-popover {
 
 .days {
     height: 60px !important;
+    font-size: 10px;
+    --ion-color-primary: rgba(200, 200, 200, .8);
     button.days-btn {
         p {
             position: absolute;
             top: 1px;
-            font-size: 12px;
+            width: 100%;
+            font-size: 14px !important;
+            text-align: center;
         }
         height: 60px !important;
     }
