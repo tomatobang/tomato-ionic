@@ -52,6 +52,11 @@ export class OnlineBillService extends BillService {
   deleteBill(@Path('id') id: string): Observable<any> {
     return null;
   }
+
+  @POST(baseUrl + 'api/bill/statistics')
+  statistics(@Body data: { date }): Observable<any> {
+    return null;
+  }
 }
 
 export const BILL_SERVICE_PROVIDERS: Array<any> = [

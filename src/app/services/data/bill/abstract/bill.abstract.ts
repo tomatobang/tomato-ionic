@@ -15,4 +15,6 @@ export abstract class BillService extends RebirthHttp {
   abstract updateBill(billUrl: string, bill: Bill): Observable<any>;
 
   abstract deleteBill(billUrl: string): Observable<any>;
+
+  abstract statistics(data: { date }): Observable<any>;
 }

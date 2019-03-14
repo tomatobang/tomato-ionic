@@ -56,3 +56,25 @@ ion-app {
     font-weight: 700;
     font-style: normal;
 }
+
+.date-square-style {
+    small {
+        font-family: 'RobotoLight';
+        top: 15px;
+        --ion-color-primary: #F97271;
+        font-size: 10px;
+        text-align: left !important;
+    }
+}
+
+.days {
+    height: 60px !important;
+    button.days-btn {
+        p {
+            position: absolute;
+            top: 1px;
+            font-size: 12px;
+        }
+        height: 60px !important;
+    }
+}
