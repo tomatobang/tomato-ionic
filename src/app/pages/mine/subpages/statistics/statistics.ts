@@ -41,7 +41,7 @@ export class StatisticsPage implements OnInit {
           if (iItem._id === pItem._id) {
             result.push({
               date: pItem._id,
-              subTitle: `支${pItem.total.toFixed(0)}收${iItem.total.toFixed(0)}`,
+              subTitle: `<div class="day-pay-label">支</div>${pItem.total.toFixed(0)}<div class="day-income-label">收</div>${iItem.total.toFixed(0)}`,
               cssClass: 'date-square-style'
             });
             iItem.selected = true;
@@ -56,7 +56,7 @@ export class StatisticsPage implements OnInit {
         if (!element.selected) {
           result.push({
             date: new Date(element._id),
-            subTitle: `收${element.total}`,
+            subTitle: `<div class="day-income-label">收</div>${element.total}`,
             cssClass: 'date-square-style',
             marked: true
           })
@@ -69,7 +69,7 @@ export class StatisticsPage implements OnInit {
         if (!element.selected) {
           result.push({
             date: new Date(element._id),
-            subTitle: `支${element.total}`,
+            subTitle: `<div class="day-pay-label">支</div>${element.total}`,
             cssClass: 'date-square-style'
           })
         }
