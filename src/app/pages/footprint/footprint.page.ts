@@ -87,7 +87,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.create_at = val.time;
       }
     }).catch(err => {
-      console.error(err);
+      console.warn(err);
     });
 
     this.refreshCreateAt();

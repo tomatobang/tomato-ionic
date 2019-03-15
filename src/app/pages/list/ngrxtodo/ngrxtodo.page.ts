@@ -18,11 +18,11 @@ export class NgRxTodoComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private router: Router,
-    private service: OnlineTodoService,
+    private todoservice: OnlineTodoService,
     private globalservice: GlobalService,
     private rebirthProvider: RebirthHttpProvider,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
@@ -32,7 +32,7 @@ export class NgRxTodoComponent implements OnInit {
   }
 
   private populateTodos() {
-    this.service.getTodos().subscribe(ret => {
+    this.todoservice.getTodos().subscribe(ret => {
       this.store.dispatch(new TodoActions.PopulateTodosAction(ret));
     });
 

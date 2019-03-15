@@ -14,6 +14,7 @@ import { NewTodoComponent } from './new-todo/new-todo.component';
 import { TodoEffects } from './redux/todo/todo.effect';
 import { RegularTodoComponent } from './regular-todo/regular-todo.component';
 import { SharedModule } from './../../../shared/shared.module';
+import { CoreModule } from './../../../core/core.module';
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
   ],
   imports: [
     SharedModule,
+    CoreModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('ngrxtodo', ngrxtodoReducer),

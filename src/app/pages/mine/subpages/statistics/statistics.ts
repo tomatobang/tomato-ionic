@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarComponentOptions, DayConfig } from 'ion2-calendar';
+import { CalendarComponentOptions, DayConfig } from '@components/ion2-calendar';
 import { OnlineBillService } from '@services/data.service';
 import { PopoverComponent } from './/popover/popover.component';
 import { PopoverController } from '@ionic/angular';
