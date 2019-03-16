@@ -74,6 +74,9 @@ export class BillPage implements OnInit {
       name: '公益', selected: false
     },
     {
+      name: '数据校正', selected: false
+    },
+    {
       name: '其它', selected: false
     }
   ];
@@ -86,7 +89,7 @@ export class BillPage implements OnInit {
       name: '理财', selected: false
     },
     {
-      name: '借款', selected: false
+      name: '数据校正', selected: false
     },
     {
       name: '红包', selected: false

@@ -1,3 +1,7 @@
+.index-page-container {
+    width: 100%;
+}
+
 .tomato-today-slide {
     align-items: flex-start;
 }
@@ -12,17 +16,32 @@ todaylist {
     width: 100%;
 }
 
-.tomato-today-slide {
-    overflow: auto;
-    .tomato-today-list h3 {
-        margin-bottom: 0;
-        text-align: left;
-        font-size: 18px;
+ion-avatar {
+    width: 24px;
+}
+
+.tomato-today-list h3 {
+    margin-bottom: 0;
+    text-align: left;
+    font-size: 18px;
+}
+
+timeline {
+    margin-top: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    ion-icon {
+        color: #F97271;
+        width: 26px;
+        text-align: center;
     }
-    .tomatobang-timeline {
-        margin-top: 25px;
-        margin-left: 10px;
-        margin-right: 10px;
+    .tomato-break-reason {
+        color: gray;
+        font-size: 12px;
+        text-align: left;
+    }
+    .tomato-start-end-time {
+        font-size: 12px;
     }
 }
 
@@ -33,6 +52,6 @@ todaylist {
 }
 
 .tomato-start-end-time-block {
-    text-align: center;
-    background: #eee;
+    text-align: left;
+    color: #f97271;
 }
