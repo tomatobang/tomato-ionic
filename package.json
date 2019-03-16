@@ -64,6 +64,8 @@
     "@ngrx/store-devtools": "^6.1.2",
     "@ngx-translate/core": "^10.0.2",
     "@ngx-translate/http-loader": "^3.0.1",
+    "alloytouch": "^0.2.5",
+    "alloytouch-transformjs": "^0.1.0",
     "cordova-android": "7.1.4",
     "cordova-android-support-gradle-release": "^2.0.1",
     "cordova-hot-code-push-plugin": "^1.5.3",
