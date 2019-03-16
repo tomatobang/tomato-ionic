@@ -2,7 +2,6 @@ import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
-import { Footprint } from '@services/data/footprint/model/footprint.model';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { GlobalService } from '@services/global.service';
 
