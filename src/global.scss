@@ -101,3 +101,21 @@ ion-popover {
         height: 67px !important;
     }
 }
+
+.ion-alpha-letter-indicator {
+    -webkit-transition: opacity 150ms ease-in-out;
+    transition: opacity 150ms ease-in-out;
+    opacity: 1;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    color: white;
+    display: flex;
+    visibility: hidden;
+    justify-content: center;
+    align-items: center;
+    font-size: 5em;
+    z-index: 999;
+}

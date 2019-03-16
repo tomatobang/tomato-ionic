@@ -5,6 +5,7 @@ import { RelativeTimemPipe } from './relative-time.pipe';
 import { StringTruncatemPipe } from './stringTruncate.pipe';
 import { TaskPipe } from './task.pipe';
 import { NumberFixPipe } from './numberFix.pipe';
+import { OrderBy } from './orderBy.pipe';
 
 export const pipes = [
   DateTransformPipe,
@@ -12,6 +13,7 @@ export const pipes = [
   StringTruncatemPipe,
   TaskPipe,
   NumberFixPipe,
+  OrderBy,
 ];
 
 @NgModule({

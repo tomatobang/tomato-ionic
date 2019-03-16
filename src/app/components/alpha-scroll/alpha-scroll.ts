@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 
 import { OrderBy } from '@pipes/orderBy.pipe';
-
 import * as AlloyTouch from 'alloytouch';
 import * as Transform from 'alloytouch-transformjs';
 
@@ -22,12 +21,12 @@ import * as Transform from 'alloytouch-transformjs';
 	  <ion-list class="ion-alpha-list" #listalpha>
 		<ion-item-divider id="scroll-letter-↑" style="display:none" *ngIf="headerTemplate!=null">↑</ion-item-divider>
 		<ng-template [ngTemplateOutlet]="headerTemplate" ></ng-template>
-	      <div *ngFor="let item of sortedItems">
-	        <ion-item-divider id="scroll-letter-{{item.letter}}" *ngIf="item.isDivider">{{item.letter}}</ion-item-divider>
-	        <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext ]="{'item': item, 'currentPageClass': currentPageClass}" *ngIf="!item.isDivider">
-	        </ng-template>
-	      </div>
-	    </ion-list>
+	  <div *ngFor="let item of sortedItems">
+	    <ion-item-divider id="scroll-letter-{{item.letter}}" *ngIf="item.isDivider">{{item.letter}}</ion-item-divider>
+	    <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item, currentPageClass: currentPageClass}" *ngIf="!item.isDivider">
+	    </ng-template>
+	  </div>
+	  </ion-list>
     </section>
     <ul class="ion-alpha-sidebar" [ngStyle]="calculateDimensionsForSidebar()" #sidebar>
       <li *ngFor="let alpha of alphabet" [hidden]="!alpha.isActive" [class]="setAlphaClass(alpha)">
@@ -44,9 +43,9 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 	@Input() key: string;
 	@Input() itemTemplate: TemplateRef<Object>;
 	@Input() currentPageClass: any;
+
 	/**
 	 * 头部区域模板
-	 *
 	 * @type {TemplateRef<Object>}
 	 * @memberof AlphaScroll
 	 */
@@ -58,6 +57,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 	private sidebarTouch: any;
 	sortedItems: any = [];
 	alphabet: any = [];
+
 	constructor(
 		private elementRef: ElementRef,
 		private orderBy: OrderBy
@@ -67,8 +67,8 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 		let body = document.getElementsByTagName('body')[0];
 		body.appendChild(this.letterIndicatorEle);
 	}
+
 	ngOnInit() {
-		debugger;
 		console.log(this.elementRef.nativeElement.offsetHeight);
 		console.log(this.listalpha.el.offsetHeight);
 		setTimeout(() => {
@@ -77,6 +77,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 			this.setTouchHandlers();
 		});
 	}
+
 	ngOnChanges() {
 		// 先对传入的listData排序 避免结果顺序乱掉
 		let sortedListData: Array<any> = this.orderBy.transform(_.orderBy(this.listData, x => x.initial), [this.key]);
@@ -107,6 +108,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 			height: this.mainWrapper.nativeElement.clientHeight + 'px'
 		};
 	}
+
 	private setTouchHandlers() {
 		let sidebarEle: HTMLElement = this.elementRef.nativeElement.querySelector('.ion-alpha-sidebar');
 		if (!sidebarEle) return;
@@ -174,6 +176,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 			Transform(this.listalpha.el, true);
 		});
 	}
+
 	private unwindGroup(groupItems: any): Array<any> {
 		let result: Array<any> = [];
 		for (let letter in groupItems) {
@@ -181,6 +184,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 		}
 		return result;
 	}
+
 	private iterateAlphabet(alphabet: any): Array<any> {
 		let str: string;
 		if (this.headerTemplate != null || this.headerTemplate != undefined) {
