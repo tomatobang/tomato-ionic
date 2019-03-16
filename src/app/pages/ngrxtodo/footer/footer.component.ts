@@ -45,6 +45,6 @@ export class FooterComponent implements OnInit {
   }
 
   navigateTo(url) {
-    this.router.navigate(['tabs/list/' + url]);
+    this.router.navigate(['tabs/ngrxtodo/' + url]);
   }
 }

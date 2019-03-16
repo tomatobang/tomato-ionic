@@ -13,8 +13,8 @@ import { FooterComponent } from './footer/footer.component';
 import { NewTodoComponent } from './new-todo/new-todo.component';
 import { TodoEffects } from './redux/todo/todo.effect';
 import { RegularTodoComponent } from './regular-todo/regular-todo.component';
-import { SharedModule } from './../../../shared/shared.module';
-import { CoreModule } from './../../../core/core.module';
+import { SharedModule } from './../../shared/shared.module';
+import { CoreModule } from './../../core/core.module';
 
 const routes: Routes = [
   {

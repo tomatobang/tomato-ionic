@@ -56,7 +56,7 @@ export class StatisticsPage implements OnInit {
         if (!element.selected) {
           result.push({
             date: new Date(element._id),
-            subTitle: `<div class="day-income-label">收</div>${element.total}`,
+            subTitle: `<div class="day-income-label">收</div>${element.total.toFixed(2)}`,
             cssClass: 'date-square-style',
             marked: true
           })
@@ -69,7 +69,7 @@ export class StatisticsPage implements OnInit {
         if (!element.selected) {
           result.push({
             date: new Date(element._id),
-            subTitle: `<div class="day-pay-label">支</div>${element.total}`,
+            subTitle: `<div class="day-pay-label">支</div>${element.total.toFixed(2)}`,
             cssClass: 'date-square-style'
           })
         }

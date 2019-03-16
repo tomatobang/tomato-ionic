@@ -32,11 +32,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'list',
+        path: 'ngrxtodo',
         children: [
           {
             path: '',
-            loadChildren: '../pages/list/list.module#ListPageModule',
+            loadChildren: '../pages/ngrxtodo/ngrxtodo.module#NgrxTodoPageModule',
           },
         ]
       },

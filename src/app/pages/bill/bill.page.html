@@ -107,8 +107,9 @@
             <ion-text class="list-amount">
               <span class="rmb-sign">¥</span>{{ item.amount }}
             </ion-text>
-            <ion-text class="bill-note float-right">
-              <ion-text *ngIf="item.tag" class="bill-note">{{ item.tag }}</ion-text> ({{ item.note }})
+            <ion-text class="float-right">
+              <ion-text *ngIf="item.tag" class="bill-note">{{ item.tag }}</ion-text>
+              <ion-text *ngIf="item.note" class="bill-note">({{ item.note }})</ion-text>
             </ion-text>
           </p>
           <p>

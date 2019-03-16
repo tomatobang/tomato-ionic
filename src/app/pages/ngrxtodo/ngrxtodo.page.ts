@@ -37,11 +37,7 @@ export class NgRxTodoComponent implements OnInit {
     });
 
   }
-
-  backTolist() {
-    this.router.navigateByUrl('tabs/list');
-  }
-
+  
   async showRegularTodos() {
     const modal = await this.modalCtrl.create({
       component: RegularTodoComponent
