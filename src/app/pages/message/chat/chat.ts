@@ -50,7 +50,7 @@ export class ChatPage {
           const newMsg: ChatMessage = {
             messageId: messages[index].create_at,
             userId: messages[index].from ? messages[index].from : this.toUserId,
-            userName: this.toUserName,
+            userName: messages[index].from ? this.userName : this.toUserName,
             userImgUrl: './assets/tomato-active.png',
             toUserId: messages[index].to ? messages[index].to : this.userId,
             time: messages[index].create_at,

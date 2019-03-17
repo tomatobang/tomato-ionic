@@ -15,7 +15,7 @@
     [currentPageClass]="currentPageClass"></ion-alpha-scroll>
 
   <ng-template #alphaScrollItemTemplate let-item="item" let-currentPageClass="currentPageClass">
-    <ion-item (click)="currentPageClass.toFriendInfo(item.id, item.name)">
+    <ion-item (click)="currentPageClass.toFriendInfo(item.id, item.disPlayName)">
       <img class="contact-headImg" [src]="item.headImg?item.headImg:'./assets/tomato-active.png'" />
       <div>{{item?.disPlayName}}</div>
       <div class="contact-friend-onlinestate" [ngClass]="{'online': friendOnlineState[item.id]}"></div>

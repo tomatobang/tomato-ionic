@@ -1,6 +1,6 @@
 $userBackgroundColor: #387ef5;
 $toUserBackgroundColor: #fff;
-ion-content .scroll-content {
+ion-content {
     background-color: #f5f5f5;
 }
 
@@ -60,7 +60,6 @@ ion-footer {
             .msg-content {
                 position: relative;
                 margin-top: 5px;
-                background-color: #fff;
                 border-radius: 5px;
                 padding: 8px;
                 border: 1px solid #ddd;
