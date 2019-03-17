@@ -43,13 +43,17 @@
   <ion-list>
     <ion-list-header>
       <ion-label>总资产
-        <ion-note slot="end"><span class="rmb-sign">¥</span>{{ totalAmount | NumberFix:2}}</ion-note>
+        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalAmount | NumberFix:2}}</ion-note>
       </ion-label>
     </ion-list-header>
     <ion-item-sliding *ngFor="let item of assetList; let i = index;">
       <ion-item>
-        <ion-label>{{ item.name }}</ion-label>
-        <ion-note slot="end"><span class="rmb-sign">¥</span>{{ item.amount | NumberFix:2}}</ion-note>
+          <ion-card>
+            <ion-card-content>
+              <span class="label">{{ item.name }}</span>
+              <ion-note slot="end"><span class="rmb-sign">¥</span>{{ item.amount | NumberFix:2}}</ion-note>
+            </ion-card-content>
+          </ion-card>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="edit(item)">编辑</ion-item-option>

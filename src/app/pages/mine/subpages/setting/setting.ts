@@ -10,14 +10,19 @@ import { Storage } from '@ionic/Storage';
   styleUrls: ['./setting.scss']
 })
 export class SettingPage implements OnInit {
-  resttime: number;
-  countdown: number;
   isAlwaysLight = false;
 
-  longbreakTomatoNum: number;
-  longresttime: number;
+  longbreakTomatoNum: string;
+  longresttime: string;
   IsLoopMode = false;
   whiteNoiseType: string;
+
+  settingModel = {
+    resttime: '5',
+    countdown: '25',
+    isAlwaysLight: true
+  }
+
   constructor(
     public globalservice: GlobalService,
     private insomnia: Insomnia,
@@ -25,32 +30,32 @@ export class SettingPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.countdown = this.globalservice.countdown;
-    this.resttime = this.globalservice.resttime;
-    this.isAlwaysLight = this.globalservice.isAlwaysLight;
+    this.settingModel.countdown = this.globalservice.countdown + '';
+    this.settingModel.resttime = this.globalservice.resttime + '';
+    this.settingModel.isAlwaysLight = this.globalservice.isAlwaysLight;
   }
 
   /**
    * 番茄钟时长
    * @param value 时长
    */
-  setCountdown(value: number) {
-    this.globalservice.countdown = value;
+  setCountdown(value: string) {
+    this.globalservice.countdown = parseInt(value,10);
   }
 
   /**
    * 短休息间隔
    * @param value 休息时长
    */
-  setResttime(value: number) {
-    this.globalservice.resttime = value;
+  setResttime(value: string) {
+    this.globalservice.resttime = parseInt(value,10);
   }
 
   /**
    * 长休息间隔
    * @param value 休息时长
    */
-  setLongResttime(value: number) {
+  setLongResttime(value: string) {
     this.longresttime = value;
   }
 
