@@ -36,14 +36,14 @@ export class FriendInfoPage {
       this.friendid = queryParams["userid"];
       this.friendName = queryParams["friendname"];
       this.loadUserInfo(this.friendid);
+      if (this.friendid && !this.friendName) {
+        this.isFriend = false;
+      } else {
+        this.isFriend = true;
+      }
     });
-
-    if (this.friendid && !this.friendName) {
-      this.isFriend = false;
-    } else {
-      this.isFriend = true;
-    }
   }
+
 
   loadUserInfo(friendid) {
     this.userservice.getUserByID(friendid).subscribe(data => {
@@ -105,7 +105,7 @@ export class FriendInfoPage {
     this.ref.detectChanges();
   }
 
-  toMore(){
-    
+  toMore() {
+
   }
 }

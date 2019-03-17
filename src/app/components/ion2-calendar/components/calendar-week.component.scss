@@ -1,0 +1,63 @@
+:host {
+  .toolbar-background-md,
+  .toolbar-background-ios {
+    background: transparent;
+  }
+
+  .week-toolbar {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-bottom: 0;
+    --padding-top: 0;
+
+    &.primary {
+      --background: var(--ion-color-primary);
+    }
+    &.secondary {
+      --background: var(--ion-color-secondary);
+    }
+    &.danger {
+      --background: var(--ion-color-danger);
+    }
+    &.dark {
+      --background: var(--ion-color-dark);
+    }
+    &.light {
+      --background: var(--ion-color-light);
+    }
+    &.transparent {
+      --background: transparent;
+    }
+
+    &.toolbar-md {
+      min-height: 44px;
+    }
+  }
+
+  .week-title {
+    margin: 0;
+    height: 44px;
+    width: 100%;
+    padding: 15px 0;
+    color: #fff;
+    font-size: 0.9em;
+
+    &.light,
+    &.transparent {
+      color: #9e9e9e;
+    }
+
+    li {
+      list-style-type: none;
+      display: block;
+      float: left;
+      width: 14%;
+      text-align: center;
+    }
+
+    li:nth-of-type(7n),
+    li:nth-of-type(7n + 1) {
+      width: 15%;
+    }
+  }
+}

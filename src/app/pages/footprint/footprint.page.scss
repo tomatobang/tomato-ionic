@@ -27,6 +27,18 @@
     }
 }
 
+.position-area {
+    margin-bottom: 10px;
+    text-align: center;
+    ion-label {
+        color: #888;
+        font-size: 10px;
+    }
+    ion-icon {
+        vertical-align: bottom;
+    }
+}
+
 ion-card {
     margin: 0;
     margin-top: 25px;
@@ -37,7 +49,7 @@ ion-input {
     position: relative;
     margin: 0;
     width: 100%;
-    font-size: 24px;
+    font-size: 22px;
     font-family: inherit;
     font-weight: inherit;
     line-height: 1.4em;
@@ -50,10 +62,16 @@ ion-input {
     background: rgba(0, 0, 0, 0.003);
     box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
     --padding-start: 0;
+    text-align: left;
     input::-webkit-input-placeholder {
         color: #888;
         font-size: 14px;
     }
+}
+
+.tag-header {
+    color: #888;
+    font-size: 12px;
 }
 
 ion-select {
@@ -69,6 +87,8 @@ ion-select {
     margin-bottom: 15px;
     ion-label {
         margin-right: 15px;
+        color: #888;
+        font-size: 12px;
     }
     ion-icon.star {
         font-size: 32px;
@@ -116,5 +136,6 @@ ion-icon.star {
     .choosed-tag-icon {
         float: right;
         font-size: 24px;
+        color: #888;
     }
 }

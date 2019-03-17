@@ -1,0 +1,89 @@
+.add-bill-button {
+    --ion-color-primary: #ff8208;
+    --border-color: #ff8208;
+}
+
+ion-chip {
+    --ion-color-warning: #ff8208;
+}
+
+.total-amount {
+    font-size: 24px;
+    color: #ff8208;
+    font-family: 'RobotoLight';
+}
+
+ion-slides {
+    height: 80px;
+    ion-slide {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        ion-chip {
+            height: 24px;
+            line-height: 24px;
+            margin: 0 2px;
+        }
+    }
+}
+
+ion-item-sliding {
+    ion-chip {
+        height: 24px;
+        line-height: 24px;
+        margin: 0 2px;
+    }
+}
+
+.add-bill-form-card {
+    text-align: center;
+}
+
+.amount {
+    color: #ff8208;
+    text-align: left;
+    font-size: 24px;
+    font-family: 'RobotoLight';
+}
+
+.list-amount {
+    color: #ff8208;
+    text-align: left;
+    margin: 0px 10px 0px 0px;
+    font-size: 18px;
+    font-family: 'RobotoLight';
+}
+
+.amount-tag-income {
+    color: #fff !important;
+    padding: 2px 4px;
+    background: #32CD32;
+}
+
+.amount-tag-pay {
+    color: #fff !important;
+    padding: 2px 4px;
+    background: #ff8208;
+}
+
+.bill-note {
+    font-size: 10px;
+    color: #777;
+}
+
+.tag-slide {
+    font-size: 12px;
+}
+
+.text-small {
+    font-size: 10px;
+    white-space: pre-line;
+}
+
+.rmb-sign {
+    font-size: 12px;
+}
+
+.float-right {
+    float: right;
+}

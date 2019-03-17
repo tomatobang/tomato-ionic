@@ -1,0 +1,27 @@
+ion-list {
+    ion-note {
+        font-size: 28px;
+        color: #ff8208;
+        font-family: 'RobotoLight';
+    }
+    ion-card {
+        width: 100%;
+    }
+    .label{
+        position: absolute;
+        left: 2px;
+        top:2px;
+    }
+}
+.total-amount{
+    font-size: 32px !important;
+    font-family: 'RobotoLight';
+}
+
+ion-card {
+    text-align: center;
+}
+
+.rmb-sign{
+    font-size: 12px;
+}

@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Events } from '@ionic/angular';
 import { OnlineTomatoService } from '@services/data.service';
-import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { GlobalService } from '@services/global.service';
 import { TomatoIOService } from '@services/utils/socket.io.service';
-import { Helper } from '@services/utils/helper';
+import * as echarts from 'echarts';
+declare var window;
 
 @Component({
   selector: 'todaylist',
@@ -13,108 +12,227 @@ import { Helper } from '@services/utils/helper';
   styleUrls: ['./todaylist.scss']
 })
 export class TodaylistComponent implements OnInit {
-  historyTomatoes: Array<any> = [];
-  tomatoCount = 0;
-  tomatoCount_time = 0;
-  voicePlaySrc = './assets/voice/voice.png';
+  @ViewChild('divContainer') divContainer;
+  yearMonth: Date;
+  monthlabel: Number;
+  yearlabel: Number;
+  myChart: any;
+
+  /**
+   * 日期空格大小
+   */
+  cellSize = [45, 45];
 
   constructor(
     public tomatoIO: TomatoIOService,
-    private helper: Helper,
     public globalservice: GlobalService,
     public tomatoservice: OnlineTomatoService,
-    public voiceService: VoicePlayService,
-    public events: Events
+    public events: Events,
   ) {
     console.log('Hello TodaylistComponent Component');
+    this.setLabel(0);
   }
 
   ngOnInit() {
-    this.loadTomatoes();
-    this.initTomatoIO();
+    this.divContainer.nativeElement.style.width = window.screen.width;
+    if (window.screen.width < 350) {
+      this.divContainer.nativeElement.style.height = window.screen.width + 'px';
+    } else {
+      this.divContainer.nativeElement.style.height = '350px';
+    }
+    this.cellSize = [
+      (window.screen.width - 10) / 7,
+      (window.screen.width - 10) / 7,
+    ];
+    setTimeout(() => {
+      this.myChart = echarts.init(this.divContainer.nativeElement);
+      this.refreshData();
+    }, 10);
 
-    this.events.subscribe('tomato:added', tomato => {
-      this.historyTomatoes.unshift(tomato);
-      this.tomatoCount += 1;
-      const minutes = this.helper.minuteSpan(tomato.startTime, new Date());
-      this.tomatoCount_time += minutes;
-    });
+    // let scatterData = this.getVirtulData();
+  }
 
-    this.events.subscribe('tomato:refreshTodayTomato', refresher => {
-      this.loadTomatoes(refresher);
+
+
+  /**
+   * 设置日历标题
+   * @param offset 偏移量
+   */
+  setLabel(offset) {
+    if (!this.yearMonth) {
+      this.yearMonth = new Date();
+    } else {
+      const month = this.yearMonth.getMonth() + offset;
+      this.yearMonth.setMonth(month);
+    }
+    this.monthlabel = this.yearMonth.getMonth() + 1;
+    this.yearlabel = this.yearMonth.getFullYear();
+    this.refreshData();
+  }
+
+  /**
+   * 加载数据
+   */
+  loadData(date) {
+    return new Promise((resolve, reject) => {
+      this.tomatoservice.statistics({ isSuccess: 1, date: date }).subscribe(
+        data => {
+          const ret = [];
+          for (let i = 0; i < data.length; i += 1) {
+            ret.push([data[i]._id, data[i].count]);
+          }
+          resolve(ret);
+        },
+        err => {
+          reject(err);
+        }
+      );
     });
   }
 
-  initTomatoIO() {
-    this.tomatoIO.new_tomate_added().subscribe(t => {
-      if (t && t !== 'null') {
-        this.historyTomatoes.unshift(t);
-        this.tomatoCount += 1;
-        const minutes = this.helper.minuteSpan(t.startTime, t.endTime);
-        this.tomatoCount_time += minutes;
-      } else {
-        this.loadTomatoes();
+  /**
+   * 模拟数据
+   */
+  getVirtulData() {
+    const date = +echarts.number.parseDate('2017-11-4');
+    const end = +echarts.number.parseDate('2017-11-22');
+    const dayTime = 3600 * 24 * 1000;
+    const data = [];
+    for (let time = date; time < end; time += dayTime) {
+      data.push([
+        echarts.format.formatTime('yyyy-MM-dd', time),
+        Math.floor(Math.random() * 1),
+      ]);
+    }
+    return data;
+  }
+
+  /**
+   * 数据刷新
+   */
+  refreshData() {
+    this.loadData(this.yearMonth).then((scatterData: any) => {
+      let max_count = 0;
+      for (let i = 0; i < scatterData.length; i++) {
+        if (scatterData[i][1] > max_count) {
+          max_count = scatterData[i][1];
+        }
+      }
+      for (let i = 0; i < scatterData.length; i++) {
+        const t_data = scatterData[i];
+        const value = t_data[1];
+        if (max_count !== 0) {
+          let color_tmp = value / max_count;
+          if (color_tmp < 0.3) {
+            color_tmp = 0.3;
+          }
+          const itemStyle = {
+            normal: { color: 'rgba(249,114,113,' + color_tmp + ')' },
+          };
+          scatterData[i] = {
+            value: t_data,
+            itemStyle,
+          };
+        }
+      }
+      const range =
+        this.yearMonth.getFullYear() + '-' + (this.yearMonth.getMonth() + 1);
+      const option = {
+        tooltip: {
+          formatter(dd) {
+            return `${dd.value[0]}<br/>番茄钟:${dd.value[1]}`;
+          },
+        },
+        legend: {
+          data: ['完成', '中断'],
+          bottom: 20,
+        },
+        calendar: {
+          top: 'middle',
+          left: 0,
+          orient: 'vertical',
+          cellSize: this.cellSize,
+          splitLine: {
+            lineStyle: {
+              color: '#8c8c8c',
+              type: 'dashed',
+              opacity: 0,
+            },
+          },
+          itemStyle: {
+            normal: {
+              borderWidth: 0,
+            },
+          },
+          yearLabel: {
+            show: false,
+            textStyle: {
+              fontSize: 30,
+              color: '#8c8c8c',
+            },
+          },
+          dayLabel: {
+            show: true,
+            margin: 5,
+            firstDay: 1,
+            color: '#8c8c8c',
+            nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+          },
+          monthLabel: {
+            show: false,
+            nameMap: 'cn',
+          },
+          range: range,
+        },
+        series: [
+          {
+            id: 'label',
+            type: 'scatter',
+            coordinateSystem: 'calendar',
+            symbol: 'roundRect',
+            label: {
+              normal: {
+                show: true,
+                formatter(params) {
+                  return echarts.format.formatTime('dd', params.value[0]);
+                },
+                offset: [-this.cellSize[0] / 2 + 6, -this.cellSize[1] / 2 + 5],
+                textStyle: {
+                  color: '#8c8c8c',
+                  fontSize: 10,
+                },
+              },
+            },
+            markLine: {},
+            data: scatterData,
+            animationEasing: 'bounceInOut',
+            animationDelay: function (idx) {
+              return idx * 50;
+            },
+            symbolSize: function (val) {
+              return 25;
+            },
+          },
+        ],
+      };
+
+      if (option && typeof option === 'object') {
+        this.myChart.setOption(option, true);
       }
     });
   }
 
   /**
-   * 刷新今日番茄
-   * @param refresher
+   * 上一月
    */
-  doRefreshTodayTomato(refresher) {
-    this.loadTomatoes(refresher);
+  monthDropleft() {
+    this.setLabel(-1);
   }
 
-  loadTomatoes(refresher?) {
-    this.tomatoservice.getTodayTomatos(this.globalservice.token).subscribe(
-      data => {
-        if (refresher) {
-          refresher.target.complete();
-        }
-        const list = data;
-        if (Array.isArray(list)) {
-          this.historyTomatoes = list;
-          this.tomatoCount = list.length;
-          this.tomatoCount_time = 0;
-          for (let i = 0; i < list.length; i++) {
-            if (list[i].startTime && list[i].endTime) {
-              const minutes = this.helper.minuteSpan(
-                list[i].startTime,
-                list[i].endTime
-              );
-              this.tomatoCount_time += minutes;
-            }
-          }
-        }
-      },
-      err => {
-        console.error(err);
-        if (refresher) {
-          alert(err);
-          refresher.target.complete();
-        }
-      }
-    );
-  }
-
-  playVoiceRecord(tomato) {
-    if (tomato.voiceUrl) {
-      const fileNamePart = this.helper.getFileName(tomato.voiceUrl);
-      this.voiceService
-        .downloadVoiceFile(
-          fileNamePart,
-          this.globalservice.qiniuDomain + fileNamePart
-        )
-        .then(filename => {
-          this.voicePlaySrc = './assets/voice/voice_play_me.gif';
-          this.voiceService.play(filename).then(() => {
-            this.voicePlaySrc = './assets/voice/voice.png';
-          });
-        })
-        .catch(e => { });
-    } else {
-      alert('此番茄钟无音频记录！');
-    }
+  /**
+   * 下一月
+   */
+  monthDropright() {
+    this.setLabel(1);
   }
 }

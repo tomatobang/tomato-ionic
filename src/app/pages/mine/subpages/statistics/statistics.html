@@ -10,19 +10,7 @@
 </ion-header>
 
 <ion-content class="statistics-container">
-    <div class="calendar-nav">
-        <div class="left-nav">
-            <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft" (click)="monthDropleft()"></ion-icon>
-        </div>
-        <div class="year-month-block">
-            <h1 class="month-label">{{ monthlabel }}</h1>
-            <div class="year-label">{{ yearlabel }}</div>
-        </div>
-        <div class="right-nav">
-            <ion-icon ios="ios-arrow-dropright" md="md-arrow-dropright" (click)="monthDropright()"></ion-icon>
-        </div>
-    </div>
-
-    <div #divContainer class="divContainer">
-    </div>
+    <ion-calendar [(ngModel)]="dateMulti" [options]="optionsMulti" [type]="type" [format]="'YYYY-MM-DD'"
+    (monthChange)="changeMonth($event)" (select)="selectDay($event)">
+    </ion-calendar>
 </ion-content>

@@ -12,14 +12,17 @@ export class BaiduLocationService {
 
   getCurrentLocation(): Promise<any> {
     return new Promise((resolve, reject) => {
-      window.baidumap_location.getCurrentPosition(function (result) {
-        console.log(JSON.stringify(result, null, 4));
-        resolve(result);
-      }, function (error) {
-        console.log(error);
-        reject(error);
-      });
-
+      if (window.baidumap_location) {
+        window.baidumap_location.getCurrentPosition(function (result) {
+          console.log(JSON.stringify(result, null, 4));
+          resolve(result);
+        }, function (error) {
+          console.log(error);
+          reject(error);
+        });
+      } else {
+        reject('your are dev in web enviroment!');
+      }
     });
   }
 

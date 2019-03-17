@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
     <div padding>
       <ion-segment [(ngModel)]="showType">
         <ion-segment-button value="msg">
@@ -19,28 +22,32 @@
     <ion-list *ngSwitchCase="'msg'">
       <!-- 消息 -->
       <ion-item *ngFor="let m of newMessages" (click)="toChatPage(m.fid,m.name)">
-        <ion-avatar item-left>
+        <ion-avatar slot="start">
           <img src="./assets/tomato-active.png">
         </ion-avatar>
-        <h2>{{ m.name }}</h2>
-        <p>{{ m.content }}</p>
-        <ion-badge item-end color="danger" *ngIf="m.count !==0">{{ m.count }}</ion-badge>
+        <ion-label>
+          <h2>{{ m.name }}</h2>
+          <p>{{ m.content }}</p>
+        </ion-label>
+        <ion-badge slot="end" color="danger" *ngIf="m.count !==0">{{ m.count }}</ion-badge>
       </ion-item>
     </ion-list>
 
     <ion-list *ngSwitchCase="'info'">
       <!-- 好友请求 -->
       <ion-item class="item-remove-animate item-avatar item-icon-right message-requst-item" *ngFor="let message of messageList">
-        <ion-avatar item-start>
+        <ion-avatar slot="start">
           <img src="{{ message.portrait || './assets/tomato-grey.png' }}" class="message-request-img">
         </ion-avatar>
-        <h2 class="message-requst-title">{{ message.name }}</h2>
-        <h3> {{ message.info }}</h3>
-        <p>2018-01-31 12:20</p>
-        <ion-button class="message-agree" *ngIf="message.state===1" outline item-end (click)='responseReq(message.id, message.friendid)'>
+        <ion-label>
+          <h2 class="message-requst-title">{{ message.name }}</h2>
+          <h3> {{ message.info }}</h3>
+          <p>2018-01-31 12:20</p>
+        </ion-label>
+        <ion-button class="message-agree" *ngIf="message.state===1" outline slot="end" (click)='responseReq(message.id, message.friendid)'>
           添加
         </ion-button>
-        <ion-button *ngIf="message.state===2" class="message-overtime" color="light" outline item-end disabled>
+        <ion-button *ngIf="message.state===2" class="message-overtime" color="light" outline slot="end" disabled>
           已添加
         </ion-button>
       </ion-item>

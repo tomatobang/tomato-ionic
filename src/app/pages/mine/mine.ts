@@ -98,6 +98,10 @@ export class MinePage implements OnInit {
     this.router.navigate(['tabs/me/about']);
   }
 
+  toMessage() {
+    this.router.navigate(['tabs/me/message']);
+  }
+
   profile() {
     this.router.navigate(['tabs/me/profile']);
   }

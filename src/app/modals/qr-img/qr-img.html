@@ -1,18 +1,22 @@
 <div>
   <close-popup color="dark" large="true" (closePopUp)="dismiss()"></close-popup>
   <ion-card>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img [src]="headImg">
-      </ion-avatar>
-      <h2>{{ username }}</h2>
-      <p>{{ bio }}</p>
-    </ion-item>
+    <ion-card-content>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="headImg" onError="this.src='./assets/tomato-active.png';">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ username }}</h2>
+          <p>{{ bio }}</p>
+        </ion-label>
+      </ion-item>
 
-    <img class="qr-placeholder" [src]="qrcodeUrl">
+      <img class="qr-placeholder" [src]="qrcodeUrl" onError="this.src='./assets/qr-icon.png';">
 
-    <ion-item>
-      <p>扫一扫上面的二维码图案，加我好友</p>
-    </ion-item>
+      <ion-item>
+        <p>扫一扫上面的二维码图案，加我好友</p>
+      </ion-item>
+    </ion-card-content>
   </ion-card>
 </div>

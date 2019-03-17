@@ -9,7 +9,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 @import '~todomvc-common/base.css';
-@import '~todomvc-app-css/index.css';
+// @import '~todomvc-app-css/index.css';
+@import './todomvc.scss';
 @import "./theme/theme.dark.scss";
 @import "./theme/theme.light.scss";
 // ion-content {
@@ -17,14 +18,104 @@
 // }
 ion-app.transparent {
     background: none transparent;
+    font-family: 'RobotoLight';
+}
+
+body,
+ion-app {
+    font-family: 'RobotoLight', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
 
 .my-toast-style .toast-wrapper {
     background: #F97271;
-    font-family: "Hosted Noto Sans Regular";
+    font-family: 'Hosted Noto Sans Regular', 'RobotoLight';
 }
 
 .transparent {
     visibility: hidden;
     background: transparent !important;
+}
+
+@font-face {
+    font-family: 'RobotoLight';
+    src: url('./assets/fonts/Roboto-Light.ttf') format('TrueType');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoRegular';
+    src: url('./assets/fonts/Roboto-Regular.ttf') format('TrueType');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Medium.ttf') format('TrueType');
+    font-weight: 700;
+    font-style: normal;
+}
+
+ion-popover {
+    .popover-content {
+        --width: 80%;
+        top: 50px !important;
+        --min-width: 300px;
+    }
+}
+
+.date-square-style {
+    small {
+        font-family: 'RobotoLight';
+        top: 15px;
+        --ion-color-primary: #ff8208;
+        font-size: 10px;
+        text-align: left !important;
+        .day-pay-label {
+            background: #ff8208;
+            padding: 1px 2px;
+            color: #fff;
+        }
+        .day-income-label {
+            padding: 1px 2px;
+            background: #32CD32;
+            color: #fff;
+        }
+    }
+}
+
+.days {
+    height: 62px !important;
+    font-size: 10px;
+    --ion-color-primary: rgba(200, 200, 200, .8);
+    button.days-btn {
+        p {
+            position: absolute;
+            top: 1px;
+            width: 100%;
+            font-size: 14px !important;
+            text-align: center;
+        }
+        border-radius:2px !important;
+        height: 67px !important;
+    }
+}
+
+.ion-alpha-letter-indicator {
+    -webkit-transition: opacity 150ms ease-in-out;
+    transition: opacity 150ms ease-in-out;
+    opacity: 1;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    color: white;
+    display: flex;
+    visibility: hidden;
+    justify-content: center;
+    align-items: center;
+    font-size: 5em;
+    z-index: 999;
 }

@@ -2,7 +2,6 @@ import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
-import { Footprint } from '@services/data/footprint/model/footprint.model';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { GlobalService } from '@services/global.service';
 
@@ -87,11 +86,10 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.create_at = val.time;
       }
     }).catch(err => {
-      console.error(err);
+      console.warn(err);
     });
 
     this.refreshCreateAt();
-
     this.listFootprint();
   }
 
@@ -142,8 +140,8 @@ export class FootprintPage implements OnInit, OnDestroy {
   async listFootprint() {
     const loading = await this.createLoading();
     this.footprintserice.getFootprints().subscribe(ret => {
+      loading.dismiss();
       if (ret) {
-
         this.footprintlist = ret;
         this.footprintlist.sort(function (a, b) {
 
@@ -153,6 +151,7 @@ export class FootprintPage implements OnInit, OnDestroy {
           val.mode = new Array(parseInt(val.mode, 10));
         });
       }
+    }, () => {
       loading.dismiss();
     });
   }
@@ -169,12 +168,27 @@ export class FootprintPage implements OnInit, OnDestroy {
         tag: this.tag.join(','),
         mode: this.modeIndex + ''
       }).subscribe(ret => {
+        loading.dismiss();
         this.notes = '';
         ret.mode = new Array(parseInt(ret.mode, 10));
         this.footprintlist.unshift(ret);
+        this.clearTags();
+        this.selectMode(3);
+      }, () => {
         loading.dismiss();
       });
     }
+  }
+
+  clearTags() {
+    for (let index = 0; index < this.taglist.length; index++) {
+      const element = this.taglist[index];
+      if (element.selected === true) {
+        element.selected = false;
+      }
+    }
+    this.tag = [];
+    this.openTag = false;
   }
 
   async createLoading() {
@@ -192,13 +206,19 @@ export class FootprintPage implements OnInit, OnDestroy {
    * 删除足迹
    * @param _id 编号
    */
-  async deleteFootprint(_id) {
+  async deleteFootprint(_id, index) {
     const loading = await this.createLoading();
     if (_id) {
       this.footprintserice.deleteFootprint(_id).subscribe(ret => {
-        this.listFootprint();
+        loading.dismiss();
+        if (this.footprintlist && this.footprintlist.length > 0) {
+          this.footprintlist.splice(index, 1);
+        }
+      }, () => {
         loading.dismiss();
       });
+    } else {
+      loading.dismiss();
     }
   }
 

@@ -132,6 +132,7 @@ export class MessagePage implements OnInit {
    */
   toChatPage(fid, fname) {
     console.log('toChatPage!');
+    debugger;
     this.router.navigate(['tabs/friend/message/chat'], {
       queryParams: {
         toUserId: fid,

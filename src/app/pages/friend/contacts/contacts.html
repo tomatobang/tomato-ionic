@@ -3,23 +3,23 @@
     <ion-buttons slot="start">
       <ion-back-button text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>通讯录</ion-title>
+    <ion-title>通讯录(敬请期待)</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <div class="contact-sticker contact-nav-char">{{ stickerChar }}</div>
+  <!-- TODO: add sticker-->
+  <!--  <div class="contact-sticker contact-nav-char">{{ stickerChar }}</div>-->
 
-  <wave-side-bar (scrollHandler)="OnNavcScroll($event)" [wavadata]="newFriendList"></wave-side-bar>
+  <ion-alpha-scroll *ngIf="bindItems.length>0" [listData]="bindItems" key="firstCode" [itemTemplate]="alphaScrollItemTemplate"
+    [currentPageClass]="currentPageClass"></ion-alpha-scroll>
 
-  <div scrollHeight #scrollMe scrollX="true" scrollY="true" class="contact-scroll">
-    <div *ngFor="let friendgroup of newFriendList" class="contact-list">
-      <a class="contact-nav-char" href="javascript:void(0)" id="{{friendgroup.id}}">{{ friendgroup.firstCode }}</a>
-      <ion-item class="contact-friend-item" *ngFor="let friend of friendgroup.data" (click)="toFriendInfo(friend.id, friend.name)">
-        <img class="contact-headImg" [src]="friend.headImg?friend.headImg:'./assets/tomato-active.png'" />
-        <span class="contact-friend-name">{{ friend.name }}</span>
-        <div class="contact-friend-onlinestate" [ngClass]="{'online': friendOnlineState[friend.id]}"></div>
-      </ion-item>
-    </div>
-  </div>
+  <ng-template #alphaScrollItemTemplate let-item="item" let-currentPageClass="currentPageClass">
+    <ion-item (click)="currentPageClass.toFriendInfo(item.id, item.disPlayName)">
+      <img class="contact-headImg" [src]="item.headImg?item.headImg:'./assets/tomato-active.png'" />
+      <div>{{item?.disPlayName}}</div>
+      <div class="contact-friend-onlinestate" [ngClass]="{'online': friendOnlineState[item.id]}"></div>
+    </ion-item>
+  </ng-template>
+
 </ion-content>

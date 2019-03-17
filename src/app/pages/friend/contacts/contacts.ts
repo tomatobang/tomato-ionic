@@ -27,9 +27,11 @@ export class ContactsPage implements OnInit {
   friendlist = [];
   newFriendList = [];
   friendOnlineState = {};
+  bindItems = [];
 
   stickerChar = '';
-
+  contacts: Array<any> = [];
+  currentPageClass = this;
   constructor(
     private pinyinUtil: PinyinService,
     private http: HttpClient,
@@ -42,28 +44,29 @@ export class ContactsPage implements OnInit {
 
   ngOnInit() {
     this.getAgreedUserFriend();
-    const event$ = fromEvent(
-      this.myScrollContainer.nativeElement,
-      'scroll'
-    ).pipe(
-      debounceTime(100),
-      distinctUntilChanged()
-    );
+    // const event$ = fromEvent(
+    //   this.myScrollContainer.nativeElement,
+    //   'scroll'
+    // ).pipe(
+    //   debounceTime(100),
+    //   distinctUntilChanged()
+    // );
 
-    event$.subscribe(event => {
-      if (this.navChars) {
-        const ctSrollTop = this.myScrollContainer.nativeElement
-          .scrollTop;
-        let target = this.navChars[0];
-        this.navChars.forEach(element => {
-          if (element.offsetTop - ctSrollTop <= 0) {
-            target = element;
-          }
-          this.stickerChar = target.textContent;
-          console.log(element.textContent, element.offsetTop);
-        });
-      }
-    });
+    // event$.subscribe(event => {
+    //   if (this.navChars) {
+    //     const ctSrollTop = this.myScrollContainer.nativeElement
+    //       .scrollTop;
+    //     let target = this.navChars[0];
+    //     this.navChars.forEach(element => {
+    //       if (element.offsetTop - ctSrollTop <= 0) {
+    //         target = element;
+    //       }
+    //       this.stickerChar = target.textContent;
+    //       console.log(element.textContent, element.offsetTop);
+    //     });
+    //   }
+    // });
+    this.mock();
   }
 
   /**
@@ -156,6 +159,18 @@ export class ContactsPage implements OnInit {
         'name'
       );
 
+      for (let index = 0; index < this.newFriendList.length; index++) {
+        const element = this.newFriendList[index];
+        let firstCode = element.firstCode;
+        for (let i = 0; i < element.data.length; i++) {
+          const friend = element.data[i];
+          this.bindItems.push({
+            id: friend.id,
+            firstCode: firstCode,
+            disPlayName: friend.name,
+          });
+        }
+      }
       setTimeout(() => {
         this.navChars = this.el.nativeElement.querySelectorAll(
           'a.contact-nav-char'

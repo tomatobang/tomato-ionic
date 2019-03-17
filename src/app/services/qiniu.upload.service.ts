@@ -101,7 +101,7 @@ export class QiniuUploadService {
     this.getUploadToken().subscribe(
       data => {
         console.log('qiniutoken:', data);
-        this._qiuniutokeninfo = data.uploadToken;
+        this._qiuniutokeninfo = new Date();
         this.init(data.uploadToken).subscribe(d => {
           observer.next(true);
         });

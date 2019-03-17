@@ -4,7 +4,6 @@ import { FriendPage } from './friend';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 import { ContactsPage } from './contacts/contacts';
-import { WaveSideBarComponentModule } from '@components/wave-side-bar/wave-side-bar.module';
 import { ScrollHeightDirective } from '@directives/scroll-height.directive';
 import { CoreModule } from '../../core/core.module';
 import { SharedModule } from '../../shared/shared.module';
@@ -15,7 +14,8 @@ import { PopOverPage } from './popover/popover';
 import { SearchUserPage } from './search/searchUser/searchUser';
 import { HistoryTomatoPage } from './search/historyTomato/historyTomato';
 import { FriendPageRoutingModule } from './friend.router.module';
-
+import { ScrollModule } from '@components/alpha-scroll/alpha-scroll.module';
+import { PinyinService } from '@services/utils/pinyin.service';
 
 @NgModule({
   declarations: [
@@ -31,11 +31,12 @@ import { FriendPageRoutingModule } from './friend.router.module';
   ],
   imports: [
     IonicModule,
-    WaveSideBarComponentModule,
-    CoreModule, SharedModule,
-    FriendPageRoutingModule
+    CoreModule,
+    SharedModule,
+    FriendPageRoutingModule,
+    ScrollModule
   ],
   entryComponents: [PopOverPage],
-  providers: [QRScanner],
+  providers: [QRScanner, PinyinService],
 })
 export class FriendPageModule { }

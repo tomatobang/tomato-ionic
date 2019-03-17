@@ -1,81 +1,82 @@
 .tomato-user-bio {
-  background: #eee;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  padding: 10px 5px;
-  text-align: center;
-  width: 100%;
-  color: #f97271;
-  font-family: 'Hosted Source Han Sans Normal';
+    background: #eee;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 10px 5px;
+    text-align: center;
+    width: 100%;
+    color: #f97271;
+    font-family: 'Hosted Source Han Sans Normal';
 }
-.tomato-clock-block{
-  margin-top:50px;
+
+.tomato-clock-block {
+    margin-top: 100px;
 }
+
 img.play-icon {
-  width: 25px;
+    width: 25px;
 }
-.tomato-break-reason {
-  color: gray;
-  font-size: 12px;
-  text-align: left;
-}
-.tomato-start-end-time {
-  font-size: 12px;
-}
+
+
 .tomato-canvas-style {
-  width: 240px;
-  height: 240px;
+    width: 240px;
+    height: 240px;
 }
+
 .text-breaked {
-  color: #f97271 !important;
+    color: #f97271 !important;
 }
 
 .white-noise-tag-icon {
-  position: absolute;
-  right: 15px;
-  top: 25px;
-
-  ion-icon::before,
-  .white-noise-tag-icon ion-icon::before {
-    font-size: 36px;
-  }
+    position: absolute;
+    right: 15px;
+    top: 25px;
+    ion-icon::before,
+    .white-noise-tag-icon ion-icon::before {
+        font-size: 36px;
+    }
 }
 
 .white-noise-icon-label {
-  font-size: 12px;
-  vertical-align: text-top;
-  margin-left: 3px;
-}
-.start-old-task {
-  label {
     font-size: 12px;
-    color: #aaa;
-  }
-  span {
-    color: #12eeb9;
-    font-size: 18px;
-  }
+    vertical-align: text-top;
+    margin-left: 3px;
 }
+
+.start-old-task {
+    margin-top: 45px;
+    label {
+        font-size: 12px;
+        color: #aaa;
+    }
+    span {
+        color: #12eeb9;
+        font-size: 18px;
+    }
+}
+
 .tomato-replay-icon {
-  font-size: 50px;
-  color: #f97271;
+    font-size: 50px;
+    color: #f97271;
 }
 
 .active-task-title {
-  font-size: 27px;
-  color: #12eeb9;
+    font-size: 27px;
+    color: #12eeb9;
 }
+
 .rest-title {
-  color: grey;
+    color: grey;
 }
+
 .break-tomato {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
 }
 
 .break-tomato span {
-  border-color: #f97271;
-  color: #f97271;
+    border-color: #f97271;
+    color: #f97271;
 }

@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/tabs/tomato',
+        redirectTo: '/tabs/footprint',
         pathMatch: 'full',
       },
       {
@@ -23,11 +23,20 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'list',
+        path: 'bill',
         children: [
           {
             path: '',
-            loadChildren: '../pages/list/list.module#ListPageModule',
+            loadChildren: '../pages/bill/bill.module#BillPageModule'
+          },
+        ]
+      },
+      {
+        path: 'ngrxtodo',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/ngrxtodo/ngrxtodo.module#NgrxTodoPageModule',
           },
         ]
       },
@@ -57,7 +66,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/tomato',
+    redirectTo: '/tabs/footprint',
     pathMatch: 'full',
   },
 ];

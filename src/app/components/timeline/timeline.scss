@@ -6,11 +6,6 @@ $timeline-color: #F97271;
     padding: 0;
     &-pending {
         text-align: left;
-        ion-icon {
-            color: #F97271;
-            width: 32px;
-            text-align: center;
-        }
     }
     &-item {
         position: relative;
@@ -19,8 +14,8 @@ $timeline-color: #F97271;
         margin: 0;
         &-tail {
             position: absolute;
-            left: 15px;
-            top: 10px;
+            left: 12px;
+            top: 0px;
             height: 100%;
             border-left: 2px solid $timeline-color;
         }

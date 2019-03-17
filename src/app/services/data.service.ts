@@ -18,6 +18,8 @@ export * from './data/user';
 export * from './data/user_friend';
 export * from './data/todo';
 export * from './data/footprint';
+export * from './data/bill';
+export * from './data/asset';
 
 @Injectable()
 export class DataService {
