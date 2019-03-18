@@ -16,6 +16,7 @@ import { HistoryTomatoPage } from './search/historyTomato/historyTomato';
 import { FriendPageRoutingModule } from './friend.router.module';
 import { ScrollModule } from '@components/alpha-scroll/alpha-scroll.module';
 import { PinyinService } from '@services/utils/pinyin.service';
+import { QRScannerModalModule } from '@modals/qr-scanner/qr-scanner.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PinyinService } from '@services/utils/pinyin.service';
     CoreModule,
     SharedModule,
     FriendPageRoutingModule,
-    ScrollModule
+    ScrollModule,
+    QRScannerModalModule
   ],
   entryComponents: [PopOverPage],
   providers: [QRScanner, PinyinService],

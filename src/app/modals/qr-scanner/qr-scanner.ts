@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import {
   ModalController,
-  Events,
 } from '@ionic/angular';
 
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
-
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'modal-qr-scanner',
@@ -18,10 +17,10 @@ export class QRScannerModal {
   private ionApp: HTMLElement;
 
   constructor(
-    private events: Events,
     private qrScanner: QRScanner,
     private modalCtrl: ModalController,
-    private vibration: Vibration
+    private vibration: Vibration,
+    public emitservice: EmitService,
   ) {
     this.scanQrCode();
   }
@@ -31,7 +30,7 @@ export class QRScannerModal {
       .prepare()
       .then((status: QRScannerStatus) => {
         this.ionApp = <HTMLElement>document.getElementsByTagName(
-          'ion-split-pane'
+          'ion-app'
         )[0];
         if (status.authorized) {
           const scanSub = this.qrScanner.scan().subscribe((qrCode: string) => {
@@ -65,13 +64,14 @@ export class QRScannerModal {
   }
 
   private showCamera() {
+    this.emitservice.qrcodeEmit.emit('qrScanner:show');
     this.qrScanner.show();
-    this.events.publish('qrScanner:show');
+
   }
 
   private hideCamera() {
+    this.emitservice.qrcodeEmit.emit('qrScanner:hide');
     this.qrScanner.hide();
-    this.events.publish('qrScanner:hide');
   }
 
   public dismiss(qrCode: object = null) {

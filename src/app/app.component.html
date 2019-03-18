@@ -1,13 +1,13 @@
-<ion-app>
-  <ion-split-pane
-    [ngClass]="{
+<ion-app [ngClass]="{'hide-app':hideNav}">
+  <ion-split-pane [ngClass]="{
       'dark-theme': selectedTheme === 'dark-theme',
       'light-theme': selectedTheme !== 'dark-theme'
-    }"
-  >
+    }">
     <ion-menu>
       <ion-header>
-        <ion-toolbar> <ion-title> {{ 'HOME.Menu' | translate }} </ion-title> </ion-toolbar>
+        <ion-toolbar>
+          <ion-title> {{ 'HOME.Menu' | translate }} </ion-title>
+        </ion-toolbar>
       </ion-header>
       <ion-content>
         居然被你发现了... 这里是蛮荒之地，待开发哦！

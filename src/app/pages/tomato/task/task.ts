@@ -41,7 +41,7 @@ export class TaskPage implements OnInit {
     public globalservice: GlobalService,
     public platform: Platform,
     public helper: Helper
-  ) {}
+  ) { }
 
   @ViewChild(VoiceRecorderComponent) voiceRecordCMP: VoiceRecorderComponent;
 
@@ -98,10 +98,6 @@ export class TaskPage implements OnInit {
     }
   }
 
-  /**
-   * TODO:
-   * 考虑是否有必要: 点击正在播放的音频时可以暂停与继续
-   */
   stopPlayVoiceRecord() {
     this.voiceService.stop_local_voice();
   }
@@ -116,7 +112,7 @@ export class TaskPage implements OnInit {
     };
   }
 
-  addTask = function(isActive: any) {
+  addTask = function (isActive: any) {
     const task = this.newTask;
     task.isActive = true;
     task.voiceUrl = '';

@@ -101,11 +101,12 @@ export class MyApp {
       }
     });
 
-    this.events.subscribe('qrScanner:show', () => {
-      this.hideNav = true;
-    });
-    this.events.subscribe('qrScanner:hide', () => {
-      this.hideNav = false;
+    this.emitservice.qrcodeEmit.subscribe((ret) => {
+      if (ret === 'qrScanner:show') {
+        this.hideNav = true;
+      } else if (ret === 'qrScanner:hide') {
+        this.hideNav = false;
+      }
     });
 
   }

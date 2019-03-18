@@ -16,10 +16,6 @@
 // ion-content {
 //     height: 100vh !important;
 // }
-ion-app.transparent {
-    background: none transparent;
-    font-family: 'RobotoLight';
-}
 
 body,
 ion-app {
@@ -32,8 +28,14 @@ ion-app {
 }
 
 .transparent {
-    visibility: hidden;
-    background: transparent !important;
+    ion-split-pane {
+        visibility: hidden;
+        background: transparent !important;
+    }
+    .modal-wrapper.sc-ion-modal-md {
+        background: transparent !important;
+        --background: transparent !important;
+    }
 }
 
 @font-face {
@@ -55,6 +57,10 @@ ion-app {
     src: url('./assets/fonts/Roboto-Medium.ttf') format('TrueType');
     font-weight: 700;
     font-style: normal;
+}
+
+.hide-app {
+    display: none;
 }
 
 ion-popover {
