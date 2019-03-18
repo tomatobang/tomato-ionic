@@ -10,6 +10,8 @@ import { OnlineBillService } from '@services/data/bill/bill.service'
 export class PopoverComponent implements OnInit {
   @Input()
   time;
+  @Input()
+  type;
 
   billList;
   totalCost = 0;

@@ -11,14 +11,43 @@ import { PopoverController } from '@ionic/angular';
 })
 export class StatisticsPage implements OnInit {
   dateMulti: string[];
-  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
+  type: 'string';
   optionsMulti: CalendarComponentOptions;
+  customActionSheetOptions: any = {
+    header: '选择统计类型',
+    subHeader: ''
+  };
 
+  selectedType = {
+    value: 'bill'
+  }
 
   constructor(
     private popover: PopoverController,
     public billService: OnlineBillService
   ) {
+  }
+
+  triggerTypeChange(evt) {
+    let type = evt.detail.value;
+    if (this.selectedType.value === type) {
+      return;
+    } else {
+      this.selectedType.value = type;
+      switch (type) {
+        case 'footprint':
+          alert('TODO');
+          break;
+        case 'bill':
+          this.loadBillData(new Date());
+          break;
+        case 'todo':
+          alert('TODO');
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   ngOnInit() {
@@ -50,7 +79,6 @@ export class StatisticsPage implements OnInit {
         }
       }
 
-
       for (let index = 0; index < income.length; index++) {
         const element = income[index];
         if (!element.selected) {
@@ -61,7 +89,6 @@ export class StatisticsPage implements OnInit {
             marked: true
           })
         }
-
       }
 
       for (let index = 0; index < pay.length; index++) {
@@ -99,7 +126,8 @@ export class StatisticsPage implements OnInit {
     let popover = await this.popover.create({
       component: PopoverComponent,
       componentProps: {
-        time: dateStr
+        time: dateStr,
+        type: this.selectedType.value
       }
     });
     await popover.present();

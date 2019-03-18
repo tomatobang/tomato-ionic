@@ -4,13 +4,18 @@
             <ion-back-button text=""></ion-back-button>
         </ion-buttons>
         <ion-title>
-            统计
+            <ion-select (ionChange)="triggerTypeChange($event)" [interfaceOptions]="customActionSheetOptions" interface="action-sheet"
+                placeholder="选择类别" cancelText="取消">
+                <ion-select-option value="bill" selected>账单</ion-select-option>
+                <ion-select-option value="footprint">足迹</ion-select-option>
+                <ion-select-option value="todo">TODO</ion-select-option>
+            </ion-select>
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="statistics-container">
-    <ion-calendar [(ngModel)]="dateMulti" [options]="optionsMulti" [type]="type" [format]="'YYYY-MM-DD'"
-    (monthChange)="changeMonth($event)" (select)="selectDay($event)">
+    <ion-calendar [(ngModel)]="dateMulti" [options]="optionsMulti" [type]="type" [format]="'YYYY-MM-DD'" (monthChange)="changeMonth($event)"
+        (select)="selectDay($event)">
     </ion-calendar>
 </ion-content>
