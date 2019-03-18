@@ -31,6 +31,7 @@ export class OnlineFootprintService extends FootprintService {
 
   @GET(baseUrl + 'api/footprint')
   getFootprints(
+    @Query('date') date = new Date(),
     @Query('pageIndex') pageIndex = 1,
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string
@@ -57,8 +58,14 @@ export class OnlineFootprintService extends FootprintService {
   toggelAllFootprint(@Body data): Observable<any> {
     return null;
   }
+
   @POST(baseUrl + 'api/footprint/deletecomplete')
   deleteAllCompletedFootprint(): Observable<any> {
+    return null;
+  }
+
+  @POST(baseUrl + 'api/footprint/statistics')
+  statistics(@Body data: { date }): Observable<any> {
     return null;
   }
 }

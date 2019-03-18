@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarComponentOptions, DayConfig } from '@components/ion2-calendar';
-import { OnlineBillService } from '@services/data.service';
+import { OnlineBillService, OnlineFootprintService } from '@services/data.service';
 import { PopoverComponent } from './/popover/popover.component';
 import { PopoverController } from '@ionic/angular';
 
@@ -24,7 +24,8 @@ export class StatisticsPage implements OnInit {
 
   constructor(
     private popover: PopoverController,
-    public billService: OnlineBillService
+    public billService: OnlineBillService,
+    public footPrintService: OnlineFootprintService
   ) {
   }
 
@@ -36,7 +37,7 @@ export class StatisticsPage implements OnInit {
       this.selectedType.value = type;
       switch (type) {
         case 'footprint':
-          alert('TODO');
+          this.loadFootprintData(new Date());
           break;
         case 'bill':
           this.loadBillData(new Date());
@@ -52,6 +53,30 @@ export class StatisticsPage implements OnInit {
 
   ngOnInit() {
     this.loadBillData(new Date());
+  }
+
+  loadFootprintData(date) {
+    this.footPrintService.statistics({
+      date: date
+    }).subscribe(ret => {
+      let result: DayConfig[] = [];
+      let data = ret.data;
+      for (let i = 0; i < data.length; i++) {
+        let item = data[i];
+        result.push({
+          date: item._id,
+          subTitle: `<div class="day-pay-label">足迹</div>${item.count}`,
+          cssClass: 'date-square-style'
+        });
+      }
+
+      this.optionsMulti = {
+        from: new Date(2019, 2, 1),
+        to: new Date(),
+        pickMode: 'single',
+        daysConfig: result,
+      };
+    });
   }
 
   loadBillData(date) {

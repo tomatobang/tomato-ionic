@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { OnlineBillService } from '@services/data/bill/bill.service'
-
+import { OnlineBillService, } from '@services/data/bill/bill.service'
+import { OnlineFootprintService } from '@services/data/footprint/footprint.service'
 @Component({
   selector: 'app-popover',
   templateUrl: './popover.component.html',
@@ -17,29 +17,62 @@ export class PopoverComponent implements OnInit {
   totalCost = 0;
   totalIncome = 0;
 
+  footprintlist;
+
   constructor(
     private popover: PopoverController,
-    private billService: OnlineBillService
+    private billService: OnlineBillService,
+    private footprintserice: OnlineFootprintService,
   ) { }
 
   ngOnInit() {
     if (this.time) {
-      this.billService.getBills(this.time).subscribe(ret => {
-        if (ret) {
-          this.billList = ret;
-          this.totalCost = 0;
-          this.totalIncome = 0;
-          for (let index = 0; index < ret.length; index++) {
-            const element: any = ret[index];
-            if (element.type === "支出") {
-              this.totalCost += element.amount;
-            } else if (element.type === "收入") {
-              this.totalIncome += element.amount;
-            }
+      if (this.type === 'bill') {
+        this.loadBillList();
+      }
+      if (this.type === 'footprint') {
+        this.loadFootprintList();
+      }
+    }
+  }
+
+  /**
+   * 账单列表
+   */
+  loadBillList() {
+    this.billService.getBills(this.time).subscribe(ret => {
+      if (ret) {
+        this.billList = ret;
+        this.totalCost = 0;
+        this.totalIncome = 0;
+        for (let index = 0; index < ret.length; index++) {
+          const element: any = ret[index];
+          if (element.type === "支出") {
+            this.totalCost += element.amount;
+          } else if (element.type === "收入") {
+            this.totalIncome += element.amount;
           }
         }
-      });
-    }
+      }
+    });
+  }
+
+  /**
+   * 足迹列表
+   */
+  loadFootprintList() {
+    this.footprintserice.getFootprints(this.time).subscribe(ret => {
+      if (ret) {
+        this.footprintlist = ret;
+        this.footprintlist.sort(function (a, b) {
+          return new Date(a.create_at) < new Date(b.create_at) ? 1 : -1;
+        });
+        this.footprintlist.map(val => {
+          val.mode = new Array(parseInt(val.mode, 10));
+        });
+      }
+    }, () => {
+    });
   }
 
 }

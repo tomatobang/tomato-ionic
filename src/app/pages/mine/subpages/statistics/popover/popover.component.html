@@ -1,4 +1,5 @@
-<ion-list>
+<!-- 账单 -->
+<ion-list *ngIf="type==='bill'">
   <ion-list-header>
     <ion-label>
       <p *ngIf="totalCost"> 总支出
@@ -42,4 +43,29 @@
     </ion-item>
   </ion-item-sliding>
 
+</ion-list>
+
+<!-- 足迹 -->
+<ion-list *ngIf="type==='footprint'">
+  <ion-item-sliding *ngFor="let item of footprintlist; let i = index;">
+    <ion-item>
+      <ion-label>
+        <div class="text-small">
+          <span class="list-title">{{ item.notes }}</span>
+          <ion-chip color="primary" *ngIf="item.tag" style="height:24px;line-height:24px;">
+            <ion-label style="font-size:10px">{{ item.tag }}</ion-label>
+          </ion-chip>
+          <ng-container *ngIf="item.mode">
+            <ion-icon *ngFor="let i of item.mode" name="star" class="star"></ion-icon>
+          </ng-container>
+        </div>
+        <p class="text-small">
+          {{ item.position }}
+        </p>
+        <p class="text-small">
+          {{ item.create_at | DateTransform:'withdate'}}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-item-sliding>
 </ion-list>
