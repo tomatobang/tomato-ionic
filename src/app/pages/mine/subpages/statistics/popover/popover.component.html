@@ -69,3 +69,14 @@
     </ion-item>
   </ion-item-sliding>
 </ion-list>
+
+
+<div *ngIf="type==='todo'" class="todo-list">
+  <li *ngFor="let todo of todolist" [class.completed]="todo.completed">
+    <div class="view">
+      <label>
+        {{ todo.title }}
+      </label>
+    </div>
+  </li>
+</div>

@@ -7,6 +7,7 @@ export abstract class TodoService extends RebirthHttp {
   abstract createTodo(todo: Todo): Observable<any>;
 
   abstract getTodos(
+    date:any,
     pageIndex: any,
     pageSize: any,
     keyword?: string
@@ -19,4 +20,6 @@ export abstract class TodoService extends RebirthHttp {
   abstract toggelAllTodo(data: any): Observable<any>;
 
   abstract deleteAllCompletedTodo(): Observable<any>;
+
+  abstract statistics(data: { date }): Observable<any>;
 }

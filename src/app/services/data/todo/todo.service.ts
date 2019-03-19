@@ -32,6 +32,7 @@ export class OnlineTodoService extends TodoService {
 
   @GET(baseUrl + 'api/todo')
   getTodos(
+    @Query('date') date = new Date(),
     @Query('pageIndex') pageIndex = 1,
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string
@@ -58,8 +59,14 @@ export class OnlineTodoService extends TodoService {
   toggelAllTodo(@Body data): Observable<any> {
     return null;
   }
+
   @POST(baseUrl + 'api/todo/deletecomplete')
   deleteAllCompletedTodo(): Observable<any> {
+    return null;
+  }
+
+  @POST(baseUrl + 'api/todo/statistics')
+  statistics(@Body data: { date }): Observable<any> {
     return null;
   }
 }

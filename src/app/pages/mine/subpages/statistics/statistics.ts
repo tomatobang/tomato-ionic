@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarComponentOptions, DayConfig } from '@components/ion2-calendar';
-import { OnlineBillService, OnlineFootprintService } from '@services/data.service';
+import { OnlineBillService, OnlineFootprintService, OnlineTodoService } from '@services/data.service';
 import { PopoverComponent } from './/popover/popover.component';
 import { PopoverController } from '@ionic/angular';
 
@@ -24,8 +24,9 @@ export class StatisticsPage implements OnInit {
 
   constructor(
     private popover: PopoverController,
-    public billService: OnlineBillService,
-    public footPrintService: OnlineFootprintService
+    private billService: OnlineBillService,
+    private footPrintService: OnlineFootprintService,
+    private todoService: OnlineTodoService
   ) {
   }
 
@@ -43,7 +44,7 @@ export class StatisticsPage implements OnInit {
           this.loadBillData(new Date());
           break;
         case 'todo':
-          alert('TODO');
+          this.loadTodoData(new Date());
           break;
         default:
           break;
@@ -53,6 +54,62 @@ export class StatisticsPage implements OnInit {
 
   ngOnInit() {
     this.loadBillData(new Date());
+  }
+
+  loadTodoData(date) {
+    this.todoService.statistics({
+      date: date
+    }).subscribe(ret => {
+      let completed = ret.completed;
+      let imcompleted = ret.imcompleted;
+      let result: DayConfig[] = [];
+      for (let i = 0; i < completed.length; i++) {
+        let completedItem = completed[i];
+        for (let j = 0; j < imcompleted.length; j++) {
+          let imcompletedItem = imcompleted[j];
+          // 同一天
+          if (completedItem._id === imcompletedItem._id) {
+            result.push({
+              date: imcompletedItem._id,
+              subTitle: `<div class="day-pay-label">未完</div>${imcompletedItem.count}<div class="day-income-label">完成</div>${completedItem.count}`,
+              cssClass: 'date-square-style'
+            });
+            completedItem.selected = true;
+            imcompletedItem.selected = true;
+          }
+        }
+      }
+
+      for (let index = 0; index < imcompleted.length; index++) {
+        const element = imcompleted[index];
+        if (!element.selected) {
+          result.push({
+            date: new Date(element._id),
+            subTitle: `<div class="day-income-label">未完</div>${element.count}`,
+            cssClass: 'date-square-style',
+            marked: true
+          })
+        }
+      }
+
+      for (let index = 0; index < completed.length; index++) {
+        const element = completed[index];
+        if (!element.selected) {
+          result.push({
+            date: new Date(element._id),
+            subTitle: `<div class="day-pay-label">完成</div>${element.count}`,
+            cssClass: 'date-square-style'
+          })
+        }
+      }
+
+      this.optionsMulti = {
+        from: new Date(2019, 2, 1),
+        to: new Date(),
+        pickMode: 'single',
+        daysConfig: result,
+      };
+    });
   }
 
   loadFootprintData(date) {

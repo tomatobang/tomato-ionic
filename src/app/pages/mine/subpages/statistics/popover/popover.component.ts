@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { OnlineBillService, } from '@services/data/bill/bill.service'
-import { OnlineFootprintService } from '@services/data/footprint/footprint.service'
+import { OnlineBillService, OnlineFootprintService, OnlineTodoService } from '@services/data.service';
 @Component({
   selector: 'app-popover',
   templateUrl: './popover.component.html',
@@ -19,10 +18,13 @@ export class PopoverComponent implements OnInit {
 
   footprintlist;
 
+  todolist;
+
   constructor(
     private popover: PopoverController,
     private billService: OnlineBillService,
-    private footprintserice: OnlineFootprintService,
+    private footprintService: OnlineFootprintService,
+    private toodoService: OnlineTodoService
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,12 @@ export class PopoverComponent implements OnInit {
       }
       if (this.type === 'footprint') {
         this.loadFootprintList();
+      }
+      if (this.type === 'bill') {
+        this.loadBillList();
+      }
+      if (this.type === 'todo') {
+        this.loadTodoList();
       }
     }
   }
@@ -61,7 +69,7 @@ export class PopoverComponent implements OnInit {
    * 足迹列表
    */
   loadFootprintList() {
-    this.footprintserice.getFootprints(this.time).subscribe(ret => {
+    this.footprintService.getFootprints(this.time).subscribe(ret => {
       if (ret) {
         this.footprintlist = ret;
         this.footprintlist.sort(function (a, b) {
@@ -69,6 +77,21 @@ export class PopoverComponent implements OnInit {
         });
         this.footprintlist.map(val => {
           val.mode = new Array(parseInt(val.mode, 10));
+        });
+      }
+    }, () => {
+    });
+  }
+
+  /**
+ * todo 列表
+ */
+  loadTodoList() {
+    this.toodoService.getTodos(this.time).subscribe(ret => {
+      if (ret) {
+        this.todolist = ret;
+        this.todolist.sort(function (a, b) {
+          return new Date(a.create_at) < new Date(b.create_at) ? 1 : -1;
         });
       }
     }, () => {
