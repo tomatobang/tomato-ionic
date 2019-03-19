@@ -21,7 +21,7 @@
         <ion-item>
             <ion-icon name="sync" slot="start" color="primary"></ion-icon>
             <ion-label>长休息间隔番茄钟数</ion-label>
-            <ion-select [(ngModel)]="longbreakTomatoNum" (ngModelChange)="setLongbreakTomatoNum($event)" cancelText="取消"
+            <ion-select [(ngModel)]="longbreakTomatoNum" (ngModelChange)="setLongbreakTomatoNum()" cancelText="取消"
                 okText="确定!">
                 <ion-select-option value="2">2</ion-select-option>
                 <ion-select-option value="4" selected="true">4</ion-select-option>
@@ -79,7 +79,7 @@
         <ion-item>
             <ion-icon name="musical-notes" slot="start" color="primary"></ion-icon>
             <ion-label>白噪音效</ion-label>
-            <ion-select [(ngModel)]="whiteNoiseType" (ngModelChange)="setWhiteNoiseType($event)" cancelText="取消" okText="确定!">
+            <ion-select [(ngModel)]="whiteNoiseType" (ngModelChange)="setWhiteNoiseType()" cancelText="取消" okText="确定!">
                 <ion-select-option value="1">雨声</ion-select-option>
                 <ion-select-option value="2">瀑布</ion-select-option>
                 <ion-select-option value="3" selected="true">海浪</ion-select-option>

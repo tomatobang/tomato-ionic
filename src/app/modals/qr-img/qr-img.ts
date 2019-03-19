@@ -17,7 +17,7 @@ export class QRImgModal {
 
   constructor(
     private modalCtrl: ModalController,
-    public globalservice: GlobalService,
+    private globalservice: GlobalService,
   ) {
     const userid = this.globalservice.userinfo._id;
     const username = this.globalservice.userinfo.username;
@@ -34,7 +34,7 @@ export class QRImgModal {
       username;
   }
 
-  private dismiss() {
+  dismiss() {
     this.modalCtrl.dismiss();
   }
 

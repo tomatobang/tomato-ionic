@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content padding no-bounce>
-  <div class="container" (swipeleft)="onSwipeLeft($event)" (swiperight)="onSwipeRight($event)" (swipeup)="onSwipeUp($event)"
-    (swipedown)="onSwipeDown($event)">
+  <div class="container" (swipeleft)="onSwipeLeft()" (swiperight)="onSwipeRight()" (swipeup)="onSwipeUp()"
+    (swipedown)="onSwipeDown()">
 
     <div class="scores-container">
       <div class="score-container">{{ game.currentScore | async }}</div>
