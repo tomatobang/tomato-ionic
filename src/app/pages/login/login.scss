@@ -2,8 +2,15 @@
       ion-item {
           border-top: none !important;
           border-bottom: none !important;
+          box-shadow: none !important;
+          color: white !important;
+          padding-left: 0px !important;
+          margin-bottom: 0px;
+          background-color: transparent !important;
+          font-size: 12px;
           .item-inner {
-              border-bottom: 1px solid tomato !important;
+              box-shadow: none !important;
+              border-bottom: 1px solid rgba(232, 232, 232, 0.65) !important;
           }
       }
   }
@@ -53,8 +60,8 @@
           margin-bottom: 40px;
       }
       .login-logo {
-          width: 150px;
-          height: 150px;
+          width: 120px;
+          height: 120px;
           background-size: contain;
           background-image: url(/assets/tomatobang.jpg);
           margin: auto;
@@ -64,14 +71,25 @@
       }
       .login-button-area {
           text-align: center;
-          margin: 10px 0px;
-      }
-      .login-button-area button {
-          width: 80%;
-      }
-      .login-button-area .button-outline {
-          color: #bbb;
-          border-color: tomato;
+          margin-top: 40px;
+          button.login {
+              background: rgba(24, 144, 255, 1);
+              width: 250px;
+              height: 40px;
+              border-radius: 5px;
+              color: white;
+              font-size: 18px;
+          }
+          button.register {
+              background: transparent;
+              border: 1px solid rgba(24, 144, 255, 1);
+              width: 250px;
+              height: 40px;
+              border-radius: 5px;
+              color: white;
+              font-size: 18px;
+              margin-top: 15px;
+          }
       }
       ion-button {
           opacity: 0.8;

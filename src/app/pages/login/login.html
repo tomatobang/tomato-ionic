@@ -9,31 +9,29 @@
             role="form">
             <ion-list>
                 <ion-item>
-                    <ion-label color="primary">用户名</ion-label>
-                    <ion-input required placeholder="请输入用户名..." [ngClass]="{'is-success': form.submitted && !userName.valid }"
-                        name="username" [(ngModel)]="user.username" #userName="ngModel" type="text"></ion-input>
-                </ion-item>
+                    <ion-label color="primary"><img src='./assets/imgs/username.svg' style="width:18px" /></ion-label>
+                    <ion-input required placeholder="请输入账号" [ngClass]="{'is-success': form.submitted && !userName.valid }"
+                        name="username" [(ngModel)]="user.username" #userName="ngModel" type="text" (keydown)='onKeyPressed()'></ion-input>
 
+                </ion-item>
+                <div *ngIf="form.submitted && !userName.valid" class="text-danger">
+                    用户名必须输入！
+                </div>
                 <ion-item>
-                    <ion-label color="primary">密码</ion-label>
-                    <ion-input [ngClass]="{ 'is-success': form.submitted && !password.valid }" required minlength="6"
-                        [(ngModel)]="user.password" name="password" #password="ngModel" type="password" placeholder="请输入密码..."></ion-input>
+                    <ion-label color="primary"><img src='./assets/imgs/password.svg' style="width:18px" /></ion-label>
+                    <ion-input [ngClass]="{ 'is-success': form.submitted && !password.valid }" required [(ngModel)]="user.password"
+                        name="password" #password="ngModel" type="password" placeholder="请输入密码" (keydown)='onKeyPressed()'></ion-input>
                 </ion-item>
-
+                <div *ngIf="form.submitted && !password.valid" class="text-danger">
+                    密码必须输入,至少要6位！
+                </div>
             </ion-list>
-
-            <div *ngIf="form.submitted && !password.valid" class="text-danger">
-                密码必须输入,至少要6位！
-            </div>
-            <div *ngIf="form.submitted && !userName.valid" class="text-danger">
-                用户名必须输入！
-            </div>
             <div *ngIf="error" class="text-danger">{{ error }}</div>
             <div class="login-button-area">
-                <ion-button type="submit" color="primary" expand="block" fill="outline">登陆</ion-button>
             </div>
             <div class="login-button-area">
-                <ion-button type="button" color="light" expand="block" fill="outline" (click)="navToRegister()">注册</ion-button>
+                <button type="submit" class="login">登录</button>
+                <button (click)="navToRegister()" class="register">注册</button>
             </div>
         </form>
     </div>

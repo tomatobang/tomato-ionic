@@ -49,11 +49,8 @@
 
         <div class="register-button-area">
             <ion-button [disabled]="userForm.invalid" type="submit" color="primary" expand="block" fill="outline">注册</ion-button>
+            <ion-button class="to-login" type="button" color="light" expand="block" fill="outline" (click)="navToLogin()">登陆</ion-button>
         </div>
-        <div class="register-button-area">
-            <ion-button type="button" color="light" expand="block" fill="outline" (click)="navToLogin()">登陆</ion-button>
-        </div>
-
     </form>
 
 </ion-content>
