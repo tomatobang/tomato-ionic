@@ -35,9 +35,6 @@ export class PopoverComponent implements OnInit {
       if (this.type === 'footprint') {
         this.loadFootprintList();
       }
-      if (this.type === 'bill') {
-        this.loadBillList();
-      }
       if (this.type === 'todo') {
         this.loadTodoList();
       }

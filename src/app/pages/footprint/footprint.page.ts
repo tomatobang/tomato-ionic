@@ -83,7 +83,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.baidu.getCurrentLocation().then(val => {
       if (val) {
         this.location = val.addr + '(' + val.locationDescribe + ')';
-        this.create_at = val.time;
+        this.create_at = this.dateFtt("hh:mm:ss", new Date(val.time));
       }
     }).catch(err => {
       console.warn(err);
@@ -125,7 +125,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.baidu.getCurrentLocation().then(val => {
       if (val) {
         this.location = val.addr + '(' + val.locationDescribe + ')';
-        this.create_at = val.time;
+        this.create_at = this.dateFtt("hh:mm:ss", new Date(val.time));
       }
       event.target.complete();
     }).catch(err => {

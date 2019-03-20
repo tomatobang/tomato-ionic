@@ -91,13 +91,15 @@
 
   <ion-list>
     <ion-list-header>
-      <ion-label *ngIf="totalCost">总支出
+      <ion-label *ngIf="totalCost">
+        <span class="rmb-sign">总支出</span>
         <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalCost | NumberFix:2}}
-        </ion-note>元
+        </ion-note><span class="rmb-sign">元</span>
       </ion-label>
-      <ion-label *ngIf="totalIncome">总收入
+      <ion-label *ngIf="totalIncome">
+        <span class="rmb-sign">总收入</span>
         <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalIncome | NumberFix:2}}
-        </ion-note>元
+        </ion-note><span class="rmb-sign">元</span>
       </ion-label>
     </ion-list-header>
     <ion-item-sliding *ngFor="let item of billList;let i = index;">
