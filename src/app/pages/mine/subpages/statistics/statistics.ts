@@ -102,13 +102,7 @@ export class StatisticsPage implements OnInit {
           })
         }
       }
-
-      this.optionsMulti = {
-        from: new Date(2019, 2, 1),
-        to: new Date(),
-        pickMode: 'single',
-        daysConfig: result,
-      };
+      this.setOptionMulti(result);
     });
   }
 
@@ -126,13 +120,7 @@ export class StatisticsPage implements OnInit {
           cssClass: 'date-square-style'
         });
       }
-
-      this.optionsMulti = {
-        from: new Date(2019, 2, 1),
-        to: new Date(),
-        pickMode: 'single',
-        daysConfig: result,
-      };
+      this.setOptionMulti(result);
     });
   }
 
@@ -183,14 +171,21 @@ export class StatisticsPage implements OnInit {
           })
         }
       }
-
-      this.optionsMulti = {
-        from: new Date(2019, 2, 9),
-        to: new Date(),
-        pickMode: 'single',
-        daysConfig: result,
-      };
+      this.setOptionMulti(result);
     });
+  }
+
+  setOptionMulti(result) {
+    this.optionsMulti = {
+      from: new Date(2019, 2, 1),
+      to: new Date(),
+      pickMode: 'single',
+      weekdays: ['天', '一', '二', '三', '四', '五', '六'],
+      monthFormat: 'YYYY 年 MM 月 ',
+      weekStart: 1,
+      daysConfig: result,
+      monthPickerFormat: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+    };
   }
 
   changeMonth($event) {
