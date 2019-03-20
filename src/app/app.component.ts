@@ -199,7 +199,7 @@ export class MyApp {
       // close side menua
       try {
         const element = await this.menuCtrl.getOpen();
-        if (element !== null) {
+        if (element) {
           this.menuCtrl.close();
           return;
         }
@@ -208,7 +208,7 @@ export class MyApp {
       this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
         if (outlet && outlet.canGoBack()) {
           outlet.pop();
-        } else if (this.router.url === '/home') {
+        } else { //  if (this.router.url === 'tabs/footprint') 
           if (
             new Date().getTime() - this.lastTimeBackPress <
             this.timePeriodToExit
