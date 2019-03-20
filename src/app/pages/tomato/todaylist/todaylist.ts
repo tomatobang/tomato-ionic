@@ -17,7 +17,9 @@ export class TodaylistComponent implements OnInit {
   monthlabel: Number;
   yearlabel: Number;
   myChart: any;
-
+  showFullEvents = {
+    val: false
+  };
   /**
    * 日期空格大小
    */
@@ -73,9 +75,9 @@ export class TodaylistComponent implements OnInit {
   /**
    * 加载数据
    */
-  loadData(date) {
+  loadData(date, isSuccess) {
     return new Promise((resolve, reject) => {
-      this.tomatoservice.statistics({ isSuccess: 1, date: date }).subscribe(
+      this.tomatoservice.statistics({ isSuccess: isSuccess, date: date }).subscribe(
         data => {
           const ret = [];
           for (let i = 0; i < data.length; i += 1) {
@@ -111,7 +113,8 @@ export class TodaylistComponent implements OnInit {
    * 数据刷新
    */
   refreshData() {
-    this.loadData(this.yearMonth).then((scatterData: any) => {
+    const isSuccess = this.showFullEvents.val ? 1 : 0;
+    this.loadData(this.yearMonth, isSuccess).then((scatterData: any) => {
       let max_count = 0;
       for (let i = 0; i < scatterData.length; i++) {
         if (scatterData[i][1] > max_count) {

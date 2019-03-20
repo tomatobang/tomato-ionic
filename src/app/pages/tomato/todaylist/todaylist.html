@@ -1,3 +1,9 @@
+<ion-list>
+  <ion-item>
+    <ion-label> 显示已完成 </ion-label>
+    <ion-checkbox slot="end" [(ngModel)]="showFullEvents.val" (ionChange)="refreshData()"></ion-checkbox>
+  </ion-item>
+</ion-list>
 <div class="calendar-nav">
   <div class="left-nav">
     <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft" (click)="monthDropleft()"></ion-icon>
@@ -9,6 +15,8 @@
   <div class="right-nav">
     <ion-icon ios="ios-arrow-dropright" md="md-arrow-dropright" (click)="monthDropright()"></ion-icon>
   </div>
+
+
 </div>
 
 <div #divContainer class="divContainer">
