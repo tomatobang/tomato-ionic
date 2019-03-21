@@ -18,6 +18,16 @@ todaylist {
 
 ion-avatar {
     width: 24px;
+    img {
+        width: 24px;
+    }
+}
+
+img.play-icon {
+    width: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
 }
 
 .tomato-today-list h3 {
@@ -41,7 +51,7 @@ timeline {
         text-align: left;
     }
     .tomato-start-end-time {
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 

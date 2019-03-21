@@ -83,7 +83,7 @@ export class MyApp {
       this.splashScreen.hide();
       this.statusBar.styleDefault();
       this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString('#f8f8f8');
+      this.statusBar.backgroundColorByHexString('#f4f5f8');
       if (window.cordova) {
         this.native.initNativeService();
         this.updateService.checkUpdate();
