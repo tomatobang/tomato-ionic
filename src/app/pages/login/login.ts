@@ -22,6 +22,12 @@ export class LoginPage implements OnInit {
   remeberMe = {
     selected: false,
   };
+  slideOpts = {
+    effect: 'fade',
+    autoplay: {
+      delay: 4000
+    },
+  }
   backgrounds = [
     'assets/imgs/background/background-1.jpg',
     'assets/imgs/background/background-2.jpg',

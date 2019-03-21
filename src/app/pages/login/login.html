@@ -1,5 +1,5 @@
 <ion-content no-bounce>
-    <ion-slides pager="false" autoplay="3000" loop="true" speed="3000" effect="fade">
+    <ion-slides pager="false" [options]="slideOpts">
         <ion-slide class="slide-background swiper-no-swiping" *ngFor="let background of backgrounds" [ngStyle]="{'background-image': 'url(' + background +')'}">
         </ion-slide>
     </ion-slides>
