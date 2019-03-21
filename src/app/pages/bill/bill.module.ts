@@ -7,6 +7,7 @@ import { SharedModule } from './../../shared/shared.module';
 
 import { BillPage } from './bill.page';
 import { AssetComponent } from './asset/asset.component';
+import { BillformComponent } from './billform/billform.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes)
   ],
-  entryComponents: [AssetComponent],
-  declarations: [BillPage, AssetComponent]
+  entryComponents: [AssetComponent, BillformComponent],
+  declarations: [BillPage, AssetComponent, BillformComponent]
 })
 export class BillPageModule { }

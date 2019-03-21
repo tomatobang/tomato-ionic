@@ -14,80 +14,11 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新信息" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-button class="add-bill-button" shape="round" fill="outline" expand="block" (click)="showBillForm()">
-    <span *ngIf="!showAdd">
+  <ion-button class="add-bill-button" shape="round" fill="outline" expand="block" (click)="addBill()">
+    <span>
       <ion-icon name="add"></ion-icon> 记一笔
     </span>
-    <span *ngIf="showAdd">取消</span>
   </ion-button>
-
-  <ion-card *ngIf="showAdd" class="add-bill-form-card">
-
-    <ion-card-header>
-      <ion-card-title>
-        <ion-select okText="确认" cancelText="取消" placeholder="类别" (ionChange)="changeBillType($event)" [(ngModel)]="newBill.type">
-          <ion-select-option value="支出">支出</ion-select-option>
-          <ion-select-option value="收入">收入</ion-select-option>
-        </ion-select>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label position="stacked">日期</ion-label>
-        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">金额(<span class="rmb-sign">¥</span>)</ion-label>
-        <ion-input type="number" class="amount" [(ngModel)]="newBill.amount"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label *ngIf="newBill.type==='收入'">来源</ion-label>
-        <ion-label *ngIf="newBill.type==='支出'">支付方式</ion-label>
-        <ion-select okText="确认" cancelText="取消" (ionChange)="changePayWay($event)" [(ngModel)]="newBill.asset">
-          <ion-select-option *ngFor="let item of assetList" value="{{ item._id }}">{{ item.name }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='收入'">
-        <ion-slide>
-          <ng-container *ngFor="let item of payTag3">
-            <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-            <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-          </ng-container>
-        </ion-slide>
-      </ion-slides>
-      <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='支出'">
-        <ion-slide>
-          <ng-container *ngFor="let item of payTag1">
-            <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-            <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-          </ng-container>
-        </ion-slide>
-        <ion-slide>
-          <ng-container *ngFor="let item of payTag2">
-            <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-            <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-          </ng-container>
-        </ion-slide>
-      </ion-slides>
-      <ion-item>
-        <ion-label position="stacked">备注</ion-label>
-        <ion-input [(ngModel)]="newBill.note"></ion-input>
-      </ion-item>
-      <ion-button shape="round" (click)="submitBill()">提交</ion-button>
-    </ion-card-content>
-  </ion-card>
 
   <ion-list>
     <ion-list-header>
@@ -131,6 +62,7 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
+        <ion-item-option (click)="editBill(item,i)" color="primary">编辑</ion-item-option>
         <ion-item-option (click)="deleteBillRecord(item,i)" color="danger">删除</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>

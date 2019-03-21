@@ -1,0 +1,42 @@
+ion-chip {
+    --ion-color-warning: #ff8208;
+}
+
+ion-slides {
+    height: 80px;
+    ion-slide {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        ion-chip {
+            height: 24px;
+            line-height: 24px;
+            margin: 0 2px;
+        }
+    }
+}
+
+.amount {
+    color: #ff8208;
+    text-align: left;
+    font-size: 24px;
+    font-family: 'RobotoLight';
+}
+
+.bill-note {
+    font-size: 10px;
+    color: #777;
+}
+
+.tag-slide {
+    font-size: 12px;
+}
+
+.text-small {
+    font-size: 10px;
+    white-space: pre-line;
+}
+
+.rmb-sign {
+    font-size: 12px;
+}

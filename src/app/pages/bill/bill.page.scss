@@ -7,26 +7,6 @@ ion-chip {
     --ion-color-warning: #ff8208;
 }
 
-.total-amount {
-    font-size: 24px;
-    color: #ff8208;
-    font-family: 'RobotoLight';
-}
-
-ion-slides {
-    height: 80px;
-    ion-slide {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        ion-chip {
-            height: 24px;
-            line-height: 24px;
-            margin: 0 2px;
-        }
-    }
-}
-
 ion-item-sliding {
     ion-chip {
         height: 24px;
@@ -35,15 +15,14 @@ ion-item-sliding {
     }
 }
 
-.add-bill-form-card {
-    text-align: center;
+.total-amount {
+    font-size: 24px;
+    color: #ff8208;
+    font-family: 'RobotoLight';
 }
 
-.amount {
-    color: #ff8208;
-    text-align: left;
-    font-size: 24px;
-    font-family: 'RobotoLight';
+.add-bill-form-card {
+    text-align: center;
 }
 
 .list-amount {
