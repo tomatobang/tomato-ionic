@@ -42,6 +42,9 @@ import { OnlineFootprintService } from '@services/data.service';
 import { OnlineAssetService } from '@services/data.service';
 import { OnlineBillService } from '@services/data.service';
 
+import { TabsService } from '@services/tab.service';
+
+
 import {
   TomatoIOService,
   ChatIOService,
@@ -89,6 +92,7 @@ import { UserFriendService } from '@services/data/user_friend';
     ChatIOService,
     UserFriendService,
     VoicePlayService,
+    TabsService
   ],
 })
 export class CoreModule { }
