@@ -26,6 +26,7 @@
     <preference name="APPCENTER_CRASHES_ALWAYS_SEND" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="StatusBarBackgroundColor" value="" />
         <preference name="APP_SECRET" value="85a61209-7bb7-4692-9649-77907e85cdf9" />
         <preference name="APP_SECRET" value="81ca54a1-bb60-484c-9494-ff0192db42fc" />
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
@@ -128,5 +129,6 @@
         <variable name="IOS_KEY" value="9kG4tIYIiI5ieGYnF0AaKydaAzHxYwRO" />
         <variable name="IOS_LOCATION_DESC" value="请点击'好'以允许访问。" />
     </plugin>
+    <plugin name="cordova-plugin-transparent-status-bar" spec="https://github.com/csi00153/cordova-plugin-transparent-status-bar" />
     <engine name="android" spec="7.1.4" />
 </widget>

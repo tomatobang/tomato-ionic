@@ -25,6 +25,8 @@ import { EmitService } from '@services/emit.service';
 import { OnlineUserService } from '@services/data.service';
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
+import { TabsService } from '@services/tab.service';
+declare var window: any;
 
 @Component({
   selector: 'app-root',
@@ -33,6 +35,7 @@ import { ChatIOService } from '@services/utils/socket.io.service';
 export class MyApp {
   backButtonPressed = false;
   hideNav = false;
+  statubarHeight = '0px';
 
   pages: Array<{ title: string; component: any }>;
 
@@ -47,6 +50,10 @@ export class MyApp {
   constructor(
     private jPush: JPush,
     private backgroundMode: BackgroundMode,
+    private menuCtrl: MenuController,
+    private actionSheetCtrl: ActionSheetController,
+    private popoverCtrl: PopoverController,
+    private router: Router,
     public rebirthProvider: RebirthHttpProvider,
     public info: InfoService,
     public chatIO: ChatIOService,
@@ -63,10 +70,7 @@ export class MyApp {
     public emitservice: EmitService,
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
-    private menuCtrl: MenuController,
-    private actionSheetCtrl: ActionSheetController,
-    private popoverCtrl: PopoverController,
-    private router: Router
+    public tabService: TabsService
   ) {
     this.emitservice.getActiveTheme().subscribe(val => {
       if (val) {
@@ -82,14 +86,17 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.splashScreen.hide();
       this.statusBar.styleDefault();
-      this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString('#f4f5f8');
+      // this.statusBar.backgroundColorByHexString('#00f4f5f8');
       if (window.cordova) {
+        window.Transparentstatusbar.init(result => {
+          if (result > 0) {
+            this.statubarHeight = result + 'px';
+          }
+        });
         this.native.initNativeService();
         this.updateService.checkUpdate();
         this.registerBackButtonAction();
         this.native.initAppCenter();
-
         if (this.global.userinfo) {
           this.jPush.init();
           this.jPush.setAlias({
