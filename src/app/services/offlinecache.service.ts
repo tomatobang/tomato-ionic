@@ -229,7 +229,9 @@ export class MemoryStorage implements IStorage {
   }
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class StorageService {
   sessionStorage: Storage;
   localStorage: Storage;

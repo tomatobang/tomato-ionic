@@ -12,7 +12,9 @@ import { Helper } from './helper';
 import { Observable } from 'rxjs';
 declare var window;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class VoicePlayService {
   mediaRec: MediaObject;
   isPlaying = false;

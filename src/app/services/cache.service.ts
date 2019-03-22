@@ -6,7 +6,9 @@ import { UserFriendService } from '@services/data/user_friend';
 import { UserFriendState } from '@services/data/user_friend/model/state.enum';
 import { Storage } from '@ionic/Storage';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CacheService {
   userid;
   friendlist;

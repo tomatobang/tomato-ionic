@@ -15,7 +15,9 @@ import { baseUrl } from '../../../config';
 import { TaskService } from './abstract/task.abstract';
 import { Task } from './model/task.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OnlineTaskService extends TaskService {
   constructor(
     protected http: HttpClient,

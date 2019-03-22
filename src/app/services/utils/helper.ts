@@ -7,7 +7,9 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Platform } from '@ionic/angular';
 declare var window;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class Helper {
   constructor(public platform: Platform, private sanitizer: DomSanitizer) { }
 

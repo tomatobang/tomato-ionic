@@ -15,7 +15,9 @@ import { baseUrl } from '../../../config';
 import { FootprintService } from './abstract/footprint.abstract';
 import { Footprint } from './model/footprint.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OnlineFootprintService extends FootprintService {
   constructor(
     protected http: HttpClient,

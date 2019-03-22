@@ -12,7 +12,9 @@ import { MessageService } from './data/message/message.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { CacheService } from '@services/cache.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class InfoService {
   unreadMsgCount = 0;
   chatingNow;

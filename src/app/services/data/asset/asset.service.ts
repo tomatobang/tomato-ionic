@@ -15,7 +15,9 @@ import { baseUrl } from '../../../config';
 import { AssetService } from './abstract/asset.abstract';
 import { Asset } from './model/asset.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OnlineAssetService extends AssetService {
   constructor(
     protected http: HttpClient,

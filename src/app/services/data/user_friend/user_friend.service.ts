@@ -14,7 +14,9 @@ import { baseUrl } from '../../../config';
 
 import { UserFriend } from './model/user_friend.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserFriendService extends RebirthHttp {
   constructor(
     protected http: HttpClient,

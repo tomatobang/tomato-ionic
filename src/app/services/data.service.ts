@@ -21,7 +21,9 @@ export * from './data/footprint';
 export * from './data/bill';
 export * from './data/asset';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DataService {
   baseUrl: string = baseUrl;
   headers: HttpHeaders = new HttpHeaders({

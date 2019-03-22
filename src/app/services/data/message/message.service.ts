@@ -14,7 +14,9 @@ import { baseUrl } from '../../../config';
 
 import { UnreadMessageRet } from './message.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MessageService extends RebirthHttp {
   constructor(
     protected http: HttpClient,

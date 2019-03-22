@@ -17,7 +17,9 @@ import { EmailUserName } from './model/email-username.model';
 import { User } from './model/user.model';
 import { SearchResult } from './model/search-result.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OnlineUserService extends UserService {
   constructor(
     protected http: HttpClient,

@@ -1,6 +1,9 @@
-import { EventEmitter, OnInit } from '@angular/core';
+import { EventEmitter, OnInit, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class EmitService implements OnInit {
   public eventEmit: EventEmitter<any>;
   public qrcodeEmit: EventEmitter<any>;

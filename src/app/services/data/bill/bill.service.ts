@@ -15,7 +15,9 @@ import { baseUrl } from '../../../config';
 import { BillService } from './abstract/bill.abstract';
 import { Bill } from './model/bill.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OnlineBillService extends BillService {
   constructor(
     protected http: HttpClient,

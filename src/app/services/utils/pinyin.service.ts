@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 declare let pinyin: any;
-@Injectable()
+
+@Injectable({
+  providedIn: 'root',
+})
 export class PinyinService {
   getFromList(list, key, v) {
     if (list instanceof Array) {

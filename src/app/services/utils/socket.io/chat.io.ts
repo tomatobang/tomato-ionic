@@ -4,7 +4,9 @@ import { GlobalService } from '@services/global.service';
 import { chatSocketUrl } from '../../../config';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ChatIOService {
   socket: Socket;
   hasConnected = false;

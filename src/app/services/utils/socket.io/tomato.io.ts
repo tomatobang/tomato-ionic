@@ -5,7 +5,9 @@ import { tomatoSocketUrl } from '../../../config';
 import { Tomato } from '../../data/tomato';
 import { Socket } from 'ngx-socket-io';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TomatoIOService {
   socket: Socket;
   hasConnected = false;

@@ -16,7 +16,9 @@ import { baseUrl } from '../../../config';
 import { TomatoService } from './abstract/tomato.abstract';
 import { Tomato } from './model/tomato.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OnlineTomatoService extends TomatoService {
   constructor(
     protected http: HttpClient,
