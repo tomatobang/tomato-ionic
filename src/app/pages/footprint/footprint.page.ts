@@ -80,10 +80,14 @@ export class FootprintPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.baidu.getCurrentLocation().then(val => {
-      if (val) {
-        this.location = val.addr + '(' + val.locationDescribe + ')';
+      if (val && val.time) {
         this.create_at = this.dateFtt("hh:mm:ss", new Date(val.time));
+        this.location = val.addr + '(' + val.locationDescribe + ')';
+      }else{
+        this.create_at = this.dateFtt("hh:mm:ss", new Date());
+        this.location = '网络问题，定位失败!';
       }
     }).catch(err => {
       console.warn(err);

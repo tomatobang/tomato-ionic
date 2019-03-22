@@ -19,65 +19,77 @@
 
     <ion-card-header>
       <ion-card-title>
-        <ion-select okText="确认" cancelText="取消" placeholder="类别" (ionChange)="changeBillType($event)" [(ngModel)]="newBill.type">
+        <ion-select okText="确认" interface="popover" cancelText="取消" placeholder="类别" (ionChange)="changeBillType($event)"
+          [(ngModel)]="newBill.type">
           <ion-select-option value="支出">支出</ion-select-option>
           <ion-select-option value="收入">收入</ion-select-option>
         </ion-select>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
+
       <ion-item>
         <ion-label position="stacked">日期</ion-label>
         <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date"></ion-datetime>
       </ion-item>
+
       <ion-item>
         <ion-label position="stacked">金额(<span class="rmb-sign">¥</span>)</ion-label>
         <ion-input type="number" class="amount" [(ngModel)]="newBill.amount"></ion-input>
       </ion-item>
+
       <ion-item>
-        <ion-label *ngIf="newBill.type==='收入'">来源</ion-label>
-        <ion-label *ngIf="newBill.type==='支出'">支付方式</ion-label>
-        <ion-select okText="确认" cancelText="取消" (ionChange)="changePayWay($event)" [(ngModel)]="newBill.asset">
+        <ion-label position="stacked" *ngIf="newBill.type==='收入'">来源</ion-label>
+        <ion-label position="stacked" *ngIf="newBill.type==='支出'">支付方式</ion-label>
+        <ion-select interface="popover" (ionChange)="changePayWay($event)" [(ngModel)]="newBill.asset">
           <ion-select-option *ngFor="let item of assetList" value="{{ item._id }}">{{ item.name }}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='收入'">
-        <ion-slide>
-          <ng-container *ngFor="let item of payTag3">
-            <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-            <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-          </ng-container>
-        </ion-slide>
-      </ion-slides>
-      <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='支出'">
-        <ion-slide>
-          <ng-container *ngFor="let item of payTag1">
-            <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-            <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-          </ng-container>
-        </ion-slide>
-        <ion-slide>
-          <ng-container *ngFor="let item of payTag2">
-            <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-            <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-              <ion-label class="text-small">{{ item.name }}</ion-label>
-            </ion-chip>
-          </ng-container>
-        </ion-slide>
-      </ion-slides>
+
       <ion-item>
         <ion-label position="stacked">备注</ion-label>
         <ion-input [(ngModel)]="newBill.note"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <div>
+          <ion-label position="stacked" style="margin:10px 0px;">标签</ion-label>
+          <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='收入'">
+            <ion-slide>
+              <ng-container *ngFor="let item of payTag3">
+                <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+                  <ion-label class="text-small">{{ item.name }}</ion-label>
+                </ion-chip>
+                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+                  <ion-label class="text-small">{{ item.name }}</ion-label>
+                </ion-chip>
+              </ng-container>
+            </ion-slide>
+          </ion-slides>
+          <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='支出'">
+            <ion-slide>
+              <ng-container *ngFor="let item of payTag1">
+                <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+                  <ion-label class="text-small">{{ item.name }}</ion-label>
+                </ion-chip>
+                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+                  <ion-label class="text-small">{{ item.name }}</ion-label>
+                </ion-chip>
+              </ng-container>
+            </ion-slide>
+            <ion-slide>
+              <ng-container *ngFor="let item of payTag2">
+                <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+                  <ion-label class="text-small">{{ item.name }}</ion-label>
+                </ion-chip>
+                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+                  <ion-label class="text-small">{{ item.name }}</ion-label>
+                </ion-chip>
+              </ng-container>
+            </ion-slide>
+          </ion-slides>
+        </div>
+
       </ion-item>
 
     </ion-card-content>

@@ -204,8 +204,9 @@ export class StatisticsPage implements OnInit {
       component: PopoverComponent,
       componentProps: {
         time: dateStr,
-        type: this.selectedType.value
-      }
+        type: this.selectedType.value,
+      },
+      cssClass: 'statistic-popover'
     });
     await popover.present();
   }

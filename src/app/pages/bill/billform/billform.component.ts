@@ -49,6 +49,9 @@ export class BillformComponent implements OnInit {
       name: '衣服', selected: false
     },
     {
+      name: '文娱', selected: false
+    },
+    {
       name: '物业费', selected: false
     },
     {

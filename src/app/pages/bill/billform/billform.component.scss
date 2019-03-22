@@ -3,7 +3,7 @@ ion-chip {
 }
 
 ion-slides {
-    height: 80px;
+    margin: 5px 0px;
     ion-slide {
         display: flex;
         flex-wrap: wrap;
@@ -11,7 +11,7 @@ ion-slides {
         ion-chip {
             height: 24px;
             line-height: 24px;
-            margin: 0 2px;
+            margin: 2px 2px;
         }
     }
 }
