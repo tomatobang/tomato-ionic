@@ -29,7 +29,9 @@
 
 .position-area {
     margin-bottom: 10px;
+    margin-top: 10px;
     text-align: center;
+    position: relative;
     ion-label {
         color: #888;
         font-size: 10px;
@@ -37,6 +39,14 @@
     ion-icon {
         vertical-align: bottom;
     }
+}
+.position-select-list{
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top:0;
+    bottom: 0;
 }
 
 ion-card {
@@ -72,15 +82,6 @@ ion-input {
 .tag-header {
     color: #888;
     font-size: 12px;
-}
-
-ion-select {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    color: #f97271;
-    .select-text {
-        --background: #111;
-    }
 }
 
 .star-container {

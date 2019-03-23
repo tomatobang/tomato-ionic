@@ -26,6 +26,7 @@
     <preference name="APPCENTER_CRASHES_ALWAYS_SEND" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="KeyboardResize" value="true" />
         <preference name="StatusBarBackgroundColor" value="" />
         <preference name="APP_SECRET" value="85a61209-7bb7-4692-9649-77907e85cdf9" />
         <preference name="APP_SECRET" value="81ca54a1-bb60-484c-9494-ff0192db42fc" />
@@ -124,11 +125,10 @@
     </plugin>
     <plugin name="cordova-plugin-media" spec="^5.0.2" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
-    <plugin name="cordova-plugin-baidumaplocation" spec="^4.0.2">
+    <plugin name="cordova-plugin-transparent-status-bar" spec="https://github.com/csi00153/cordova-plugin-transparent-status-bar" />
+    <plugin name="cordova-plugin-baidumaplocation" spec="https://github.com/pengkobe/cordova-plugin-baidumaplocation">
         <variable name="ANDROID_KEY" value="pGMXz22S1XYcZHt0a5pVoCfM" />
         <variable name="IOS_KEY" value="9kG4tIYIiI5ieGYnF0AaKydaAzHxYwRO" />
-        <variable name="IOS_LOCATION_DESC" value="请点击'好'以允许访问。" />
     </plugin>
-    <plugin name="cordova-plugin-transparent-status-bar" spec="https://github.com/csi00153/cordova-plugin-transparent-status-bar" />
     <engine name="android" spec="7.1.4" />
 </widget>

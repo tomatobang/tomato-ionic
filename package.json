@@ -75,7 +75,7 @@
     "cordova-plugin-appcenter-shared": "^0.2.0",
     "cordova-plugin-background-mode": "git+https://github.com/katzer/cordova-plugin-background-mode.git",
     "cordova-plugin-badge": "^0.8.7",
-    "cordova-plugin-baidumaplocation": "^4.0.2",
+    "cordova-plugin-baidumaplocation": "git+https://github.com/pengkobe/cordova-plugin-baidumaplocation.git",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.1",
@@ -180,13 +180,12 @@
       },
       "cordova-plugin-media": {},
       "cordova-plugin-camera": {},
+      "cordova-plugin-qiniu": {},
+      "cordova-plugin-transparent-status-bar": {},
       "cordova-plugin-baidumaplocation": {
         "ANDROID_KEY": "pGMXz22S1XYcZHt0a5pVoCfM",
-        "IOS_KEY": "9kG4tIYIiI5ieGYnF0AaKydaAzHxYwRO",
-        "IOS_LOCATION_DESC": "请点击'好'以允许访问。"
-      },
-      "cordova-plugin-qiniu": {},
-      "cordova-plugin-transparent-status-bar": {}
+        "IOS_KEY": "9kG4tIYIiI5ieGYnF0AaKydaAzHxYwRO"
+      }
     },
     "platforms": [
       "android"

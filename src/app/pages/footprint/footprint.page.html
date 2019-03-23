@@ -51,7 +51,10 @@
 
   <div class="position-area">
     <ion-icon name="locate" color="primary"></ion-icon>
-    <ion-label>{{ this.location }}</ion-label>
+    <ion-label>{{ location }}</ion-label>
+    <ion-select class="position-select-list" interface="popover" [(ngModel)]="location">
+      <ion-select-option *ngFor="let item of locationList" value="{{ item.name }}">{{ item.name }}</ion-select-option>
+    </ion-select>
   </div>
 
   <ion-card>

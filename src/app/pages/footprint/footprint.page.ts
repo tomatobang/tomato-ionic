@@ -24,6 +24,8 @@ export class FootprintPage implements OnInit, OnDestroy {
     { index: 5, selected: false },
   ];
 
+  locationList = [];
+
   taglist = [
     {
       name: '起床', selected: false
@@ -85,7 +87,10 @@ export class FootprintPage implements OnInit, OnDestroy {
       if (val && val.time) {
         this.create_at = this.dateFtt("hh:mm:ss", new Date(val.time));
         this.location = val.addr + '(' + val.locationDescribe + ')';
-      }else{
+        if (val.pois) {
+          this.locationList = val.pois;
+        }
+      } else {
         this.create_at = this.dateFtt("hh:mm:ss", new Date());
         this.location = '网络问题，定位失败!';
       }

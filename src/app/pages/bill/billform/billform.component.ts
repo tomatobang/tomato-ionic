@@ -63,6 +63,9 @@ export class BillformComponent implements OnInit {
   ];
   payTag2 = [
     {
+      name: '通讯', selected: false
+    },
+    {
       name: '人情红包', selected: false
     },
     {
