@@ -30,7 +30,6 @@ import { EmitService } from '@services/emit.service';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { Helper } from '@services/utils/helper';
 
-import { InfoService } from '@services/info.service';
 import { CacheService } from '@services/cache.service';
 import { MessageService } from '@services/data/message/message.service';
 
@@ -43,12 +42,6 @@ import { OnlineAssetService } from '@services/data.service';
 import { OnlineBillService } from '@services/data.service';
 
 import { TabsService } from '@services/tab.service';
-
-
-import {
-  TomatoIOService,
-  ChatIOService,
-} from '@services/utils/socket.io.service';
 import { UserFriendService } from '@services/data/user_friend';
 
 @NgModule({
@@ -77,7 +70,6 @@ import { UserFriendService } from '@services/data/user_friend';
     DataService,
     BaiduLocationService,
     EmitService,
-    InfoService,
     CacheService,
     MessageService,
     OnlineUserService,
@@ -88,8 +80,6 @@ import { UserFriendService } from '@services/data/user_friend';
     OnlineAssetService,
     OnlineBillService,
     Helper,
-    TomatoIOService,
-    ChatIOService,
     UserFriendService,
     VoicePlayService,
     TabsService

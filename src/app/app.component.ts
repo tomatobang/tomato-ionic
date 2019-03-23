@@ -131,7 +131,7 @@ export class MyApp {
 
         this.userService.auth().subscribe(data => {
           if (data && data.status && data.status !== 'fail') {
-            this.chatIO.login(this.global.userinfo._id);
+            this.chatIO.login(this.global.userinfo._id, this.global.token);
             this.info.init();
             this.router.navigate(['tabs']);
           } else {

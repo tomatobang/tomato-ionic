@@ -1,40 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { GlobalService } from '@services/global.service';
 import { chatSocketUrl } from '../../../config';
 import { map } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ChatIOService {
   socket: Socket;
   hasConnected = false;
   userid;
 
-  constructor(public g: GlobalService) {
-    if (!this.socket) {
-      this.socket = new Socket({
-        url: chatSocketUrl,
-        options: {
-          query: 'token=' + this.g.token,
-        },
-      });
-      this.socket.on('connect', () => {
-        this.hasConnected = true;
-        if (this.userid) {
-          this.login(this.userid);
-        }
-      });
-      this.socket.on('disconnect', () => {
-        this.hasConnected = false;
-        this.reconnect();
-      });
-      this.socket.on('verify_failed', () => {
-      });
-    }
-
-  }
+  constructor() {}
 
   /**
    * 断线重连
@@ -51,19 +26,19 @@ export class ChatIOService {
   /**
    * 登录
    */
-  login(userid: string) {
+  login(userid: string, token) {
     this.userid = userid;
     if (!this.socket) {
       this.socket = new Socket({
         url: chatSocketUrl,
         options: {
-          query: 'token=' + this.g.token,
+          query: 'token=' + token,
         },
       });
       this.socket.on('connect', () => {
         this.hasConnected = true;
         if (this.userid) {
-          this.login(this.userid);
+          this.login(this.userid, token);
         }
       });
       this.socket.on('disconnect', () => {

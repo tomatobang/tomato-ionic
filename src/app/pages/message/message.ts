@@ -41,6 +41,7 @@ export class MessagePage implements OnInit {
   ngOnInit(): void {
     // 获取通知列表
     this.getReqFriendList();
+    this.info.init();
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = data.length - 1; index >= 0; index--) {
         const element = data[index];
@@ -132,7 +133,6 @@ export class MessagePage implements OnInit {
    */
   toChatPage(fid, fname) {
     console.log('toChatPage!');
-    debugger;
     this.router.navigate(['tabs/friend/message/chat'], {
       queryParams: {
         toUserId: fid,
@@ -148,22 +148,25 @@ export class MessagePage implements OnInit {
     this.userFriendService
       .getFriends(UserFriendState.SendRequest)
       .subscribe(data => {
-        for (let index = 0; index < data.length; index++) {
-          const element = data[index];
-          if (element.to._id === this.userid) {
-            this.messageList.push({
-              id: element._id,
-              state: element.state,
-              name: element.from.displayName
-                ? element.from.displayName
-                : element.from.username,
-              friendid: element.from._id,
-              info: element.info ? element.info : '',
-              portrait: '',
-            });
+        if (data) {
+          this.messageList = [];
+          for (let index = 0; index < data.length; index++) {
+            const element = data[index];
+            if (element.to._id === this.userid) {
+              this.messageList.push({
+                id: element._id,
+                state: element.state,
+                name: element.from.displayName
+                  ? element.from.displayName
+                  : element.from.username,
+                friendid: element.from._id,
+                info: element.info ? element.info : '',
+                portrait: '',
+              });
+            }
           }
+          console.log(data);
         }
-        console.log(data);
       });
   }
 
@@ -176,6 +179,7 @@ export class MessagePage implements OnInit {
     this.chatIO.response_friend_request(id, friendid, this.userid, 2);
     this.chatIO.responseAddFriendSuccess().subscribe(data => {
       console.log('responseAddFriendSuccess', data);
+      this.getReqFriendList();
     });
   }
 }

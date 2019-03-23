@@ -36,6 +36,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { MyErrorHandler } from './error.handler';
 import { RavenErrorHandler } from './raven-error-handler.';
 
+import {
+  ChatIOService,
+} from '@services/utils/socket.io.service';
+declare var window;
+window.appChatIOService = new ChatIOService();
+
 @NgModule({
   declarations: [MyApp],
   imports: [
@@ -59,7 +65,8 @@ import { RavenErrorHandler } from './raven-error-handler.';
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: LOCALE_ID, useValue: "zh-CN" }
+    { provide: LOCALE_ID, useValue: "zh-CN" },
+    { provide: ChatIOService, useValue: window.appChatIOService }
     // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],

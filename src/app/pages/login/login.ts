@@ -96,7 +96,7 @@ export class LoginPage implements OnInit {
     this.jPushService.init()
     this.jPushService.setAlias(jpushAlias);
 
-    this.chatIO.login(this.globalservice.userinfo._id);
+    this.chatIO.login(this.globalservice.userinfo._id, this.globalservice.token);
     this.info.init();
     this.router.navigate(['tabs']);
   }

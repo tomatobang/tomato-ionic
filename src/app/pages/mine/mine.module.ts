@@ -20,6 +20,11 @@ import { ProfilePage } from './subpages/profile/profile';
 import { AboutPage } from './subpages/about/about';
 import { PopoverComponent } from './subpages/statistics/popover/popover.component';
 
+import {
+  ChatIOService,
+} from '@services/utils/socket.io.service';
+declare var window;
+
 @NgModule({
   declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage, PopoverComponent],
   imports: [IonicModule, PipesModule, MinePageRoutingModule, CoreModule, SharedModule],
@@ -30,8 +35,9 @@ import { PopoverComponent } from './subpages/statistics/popover/popover.componen
     Camera,
     Helper,
     NativeService,
-    OnlineUserService
+    OnlineUserService,
+    { provide: ChatIOService, useValue: window.appChatIOService }
   ],
-  exports: [MinePage]
+  exports: [MinePage,]
 })
 export class MinePageModule { }

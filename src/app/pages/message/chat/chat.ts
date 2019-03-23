@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Events } from '@ionic/angular';
-
+import { RebirthHttpProvider } from 'rebirth-http';
 import { ChatMessage } from './providers/chat-message.model';
 import { ChatService } from './providers/chat-service';
 import { GlobalService } from '@services/global.service';
@@ -9,6 +9,8 @@ import { CacheService } from '@services/cache.service';
 import { InfoService } from '@services/info.service';
 import { MessageService } from '@services//data/message/message.service';
 import { ActivatedRoute } from '@angular/router';
+import { ChatIOService } from '@services/utils/socket.io.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'page-chat',
@@ -18,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ChatPage {
   @ViewChild('chat_content') content;
   @ViewChild('chat_input') messageInput;
+
   msgList: ChatMessage[] = [];
   userId: string;
   userName: string;
@@ -26,17 +29,23 @@ export class ChatPage {
   toUserName: string;
   editorMsg = '';
   isOpenEmojiPicker = false;
+  IOSubscribe: Subscription;
+
   constructor(
-    public navCtrl: NavController,
     private actrouter: ActivatedRoute,
+    public navCtrl: NavController,
     public chatService: ChatService,
     public events: Events,
     public ref: ChangeDetectorRef,
     public globalService: GlobalService,
     public info: InfoService,
     public cache: CacheService,
-    public messageService: MessageService
+    public chatIO: ChatIOService,
+    public messageService: MessageService,
+    public globalservice: GlobalService,
+    public rebirthProvider: RebirthHttpProvider,
   ) {
+    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.toUserId = queryParams["toUserId"];
       this.toUserName = queryParams["toUserName"];
@@ -68,9 +77,8 @@ export class ChatPage {
           this.info.updateMessageState(this.toUserId);
         }
       });
-
       // 监听实时消息
-      this.info.realtimeMsgMonitor.subscribe(data => {
+      this.IOSubscribe = this.chatIO.receive_message().subscribe(data => {
         if (data) {
           if (this.toUserId !== data.from) {
             return;
@@ -95,8 +103,6 @@ export class ChatPage {
         }
       });
     });
-
-
   }
 
   /**
@@ -140,6 +146,11 @@ export class ChatPage {
    */
   sendMsg() {
     if (!this.editorMsg.trim()) {
+      alert('消息不能为空');
+      return;
+    }
+    if (!this.userId || !this.toUserId) {
+      alert('用户不存在，怎么能发消息呢?');
       return;
     }
     this.chatService.sendMessage(this.userId, this.toUserId, this.editorMsg);
@@ -198,17 +209,16 @@ export class ChatPage {
     return this.msgList.findIndex(e => e.messageId === id);
   }
 
-  ionViewDidLoad() {
-    // this.switchEmojiPicker();
-  }
-
   ionViewWillLeave() {
     // unsubscribe
-    this.info.registerChatMsg(null);
+    if (this.IOSubscribe) {
+      this.IOSubscribe.unsubscribe();
+    }
+    // this.info.registerChatMsg(null);
   }
 
   ionViewDidEnter() {
-    this.info.registerChatMsg(this.toUserId);
+    // this.info.registerChatMsg(this.toUserId);
   }
 
   _focus() {

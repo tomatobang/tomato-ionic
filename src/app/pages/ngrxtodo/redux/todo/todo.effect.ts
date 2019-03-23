@@ -111,7 +111,6 @@ export class TodoEffects {
         map((action: ClearCompletedAction) => action),
         mergeMap(async action => {
             this.apiService.deleteAllCompletedTodo().subscribe(ret => {
-                debugger;
                 this.store$.dispatch({
                     type: CLEAR_COMPLETED_TODO_SUCCEED,
                 });
