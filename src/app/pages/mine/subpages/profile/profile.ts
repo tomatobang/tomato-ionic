@@ -240,8 +240,9 @@ export class ProfilePage implements OnInit {
               destinationType: this.camera.DestinationType.FILE_URI,
               encodingType: this.camera.EncodingType.PNG,
               mediaType: this.camera.MediaType.PICTURE,
-              targetWidth: 180,
-              targetHeight: 180,
+              targetWidth: 360,
+              targetHeight: 360,
+              allowEdit: true
             };
 
             this.camera.getPicture(options).then(
@@ -300,8 +301,9 @@ export class ProfilePage implements OnInit {
               destinationType: this.camera.DestinationType.FILE_URI,
               encodingType: this.camera.EncodingType.PNG,
               mediaType: this.camera.MediaType.PICTURE,
-              targetWidth: 180,
-              targetHeight: 180,
+              targetWidth: 360,
+              targetHeight: 360,
+              allowEdit: true
             };
 
             this.camera.getPicture(options).then(
