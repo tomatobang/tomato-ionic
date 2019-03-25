@@ -22,6 +22,16 @@ export class StatisticsPage implements OnInit {
     value: 'bill'
   }
 
+  showFinancing = {
+    val: true
+  }
+
+  total = 0;
+  totalCost = 0;
+  totalIncome = 0;
+
+  selectedMonth;
+
   constructor(
     private popover: PopoverController,
     private billService: OnlineBillService,
@@ -42,6 +52,7 @@ export class StatisticsPage implements OnInit {
           break;
         case 'bill':
           this.loadBillData(new Date());
+          this.loadMonthData(new Date());
           break;
         case 'todo':
           this.loadTodoData(new Date());
@@ -54,6 +65,7 @@ export class StatisticsPage implements OnInit {
 
   ngOnInit() {
     this.loadBillData(new Date());
+    this.loadMonthData(new Date());
   }
 
   loadTodoData(date) {
@@ -124,9 +136,11 @@ export class StatisticsPage implements OnInit {
     });
   }
 
-  loadBillData(date) {
+  loadBillData(date, excludeTag?) {
     this.billService.statistics({
-      date: date
+      date: date,
+      type: 'day',
+      excludeTag: excludeTag
     }).subscribe(ret => {
       // 合并支出与收入
       let income = ret.income;
@@ -175,6 +189,25 @@ export class StatisticsPage implements OnInit {
     });
   }
 
+  loadMonthData(date, excludeTag?) {
+    this.billService.statistics({
+      date: date,
+      type: 'month',
+      excludeTag: excludeTag
+    }).subscribe(ret => {
+      this.total = 0;
+      this.totalCost = 0;
+      this.totalIncome = 0;
+      if (ret.income && ret.income.length > 0) {
+        this.totalIncome = ret.income[0].total;
+      }
+      if (ret.pay && ret.pay.length > 0) {
+        this.totalCost = ret.pay[0].total;
+      }
+      this.total = this.totalIncome - this.totalCost;
+    });
+  }
+
   setOptionMulti(result) {
     this.optionsMulti = {
       from: new Date(2019, 2, 1),
@@ -189,7 +222,31 @@ export class StatisticsPage implements OnInit {
   }
 
   changeMonth($event) {
+    this.selectedMonth = $event.newMonth.string;
     this.loadBillData(new Date($event.newMonth.string));
+    this.loadMonthData(new Date($event.newMonth.string));
+  }
+
+  refreshBillInfo() {
+    debugger;
+    if (!this.showFinancing.val) {
+      if (this.selectedMonth) {
+        this.loadBillData(new Date(this.selectedMonth), '理财');
+        this.loadMonthData(new Date(this.selectedMonth), '理财');
+      } else {
+        this.loadBillData(new Date(), '理财');
+        this.loadMonthData(new Date(), '理财');
+      }
+    } else {
+      if (this.selectedMonth) {
+        this.loadBillData(new Date(this.selectedMonth));
+        this.loadMonthData(new Date(this.selectedMonth));
+      } else {
+        this.loadBillData(new Date());
+        this.loadMonthData(new Date());
+      }
+    }
+
   }
 
   async selectDay($event) {

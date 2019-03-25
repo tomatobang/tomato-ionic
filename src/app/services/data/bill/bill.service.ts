@@ -57,7 +57,7 @@ export class OnlineBillService extends BillService {
   }
 
   @POST(baseUrl + 'api/bill/statistics')
-  statistics(@Body data: { date }): Observable<any> {
+  statistics(@Body data: { date, type, excludeTag }): Observable<any> {
     return null;
   }
 }
