@@ -21,6 +21,15 @@ ion-app {
     font-family: 'RobotoLight', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
 
+:root {
+    --ion-color-primary: #f97271;
+    --ion-color-primary-rgb: 249, 114, 113;
+    --ion-color-primary-contrast: #000000;
+    --ion-color-primary-contrast-rgb: 0, 0, 0;
+    --ion-color-primary-shade: #db6463;
+    --ion-color-primary-tint: #fa807f;
+}
+
 .my-toast-style .toast-wrapper {
     background: #F97271;
     font-family: 'Hosted Noto Sans Regular', 'RobotoLight';
