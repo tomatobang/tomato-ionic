@@ -10,7 +10,12 @@ export class DateTransformPipe implements PipeTransform {
     if (args && args === 'withdate') {
       return new Date(retTime).toLocaleString();
     } else {
-      return new Date(retTime).toLocaleTimeString();
+      const isToday = new Date().getTime() - new Date(retTime).getTime() < 86400000;
+      if (isToday) {
+        return new Date(retTime).toLocaleTimeString();
+      } else {
+        return new Date(retTime).toLocaleString();
+      }
     }
   }
 }

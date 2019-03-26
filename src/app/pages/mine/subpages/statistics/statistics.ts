@@ -146,46 +146,54 @@ export class StatisticsPage implements OnInit {
       let income = ret.income;
       let pay = ret.pay;
       let result: DayConfig[] = [];
-      for (let i = 0; i < income.length; i++) {
-        let iItem = income[i];
-        for (let j = 0; j < pay.length; j++) {
-          let pItem = pay[j];
-          // 同一天
-          if (iItem._id === pItem._id) {
+      if (income) {
+        for (let i = 0; i < income.length; i++) {
+          let iItem = income[i];
+          for (let j = 0; j < pay.length; j++) {
+            let pItem = pay[j];
+            // 同一天
+            if (iItem._id === pItem._id) {
+              result.push({
+                date: pItem._id,
+                subTitle: `<div class="day-pay-label">支</div>${pItem.total.toFixed(0)}<div class="day-income-label">收</div>${iItem.total.toFixed(0)}`,
+                cssClass: 'date-square-style'
+              });
+              iItem.selected = true;
+              pItem.selected = true;
+            }
+          }
+        }
+
+        for (let index = 0; index < income.length; index++) {
+          const element = income[index];
+          if (!element.selected) {
             result.push({
-              date: pItem._id,
-              subTitle: `<div class="day-pay-label">支</div>${pItem.total.toFixed(0)}<div class="day-income-label">收</div>${iItem.total.toFixed(0)}`,
-              cssClass: 'date-square-style'
-            });
-            iItem.selected = true;
-            pItem.selected = true;
+              date: new Date(element._id),
+              subTitle: `<div class="day-income-label">收</div>${element.total.toFixed(2)}`,
+              cssClass: 'date-square-style',
+              marked: true
+            })
           }
         }
       }
 
-      for (let index = 0; index < income.length; index++) {
-        const element = income[index];
-        if (!element.selected) {
-          result.push({
-            date: new Date(element._id),
-            subTitle: `<div class="day-income-label">收</div>${element.total.toFixed(2)}`,
-            cssClass: 'date-square-style',
-            marked: true
-          })
+      if (pay) {
+        for (let index = 0; index < pay.length; index++) {
+          const element = pay[index];
+          if (!element.selected) {
+            result.push({
+              date: new Date(element._id),
+              subTitle: `<div class="day-pay-label">支</div>${element.total.toFixed(2)}`,
+              cssClass: 'date-square-style'
+            })
+          }
         }
       }
 
-      for (let index = 0; index < pay.length; index++) {
-        const element = pay[index];
-        if (!element.selected) {
-          result.push({
-            date: new Date(element._id),
-            subTitle: `<div class="day-pay-label">支</div>${element.total.toFixed(2)}`,
-            cssClass: 'date-square-style'
-          })
-        }
+      if (income || pay) {
+        this.setOptionMulti(result);
       }
-      this.setOptionMulti(result);
+
     });
   }
 
