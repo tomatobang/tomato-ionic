@@ -34,15 +34,6 @@ const routes: Routes = [
     path: 'game',
     loadChildren: '../game//twoZeroFourEight/twoZeroFourEight.module#TwoZeroFourEightPageModule',
   },
-  {
-    path: 'message',
-    children: [
-      {
-        path: '',
-        loadChildren: '../message/message.module#MessagePageModule',
-      },
-    ]
-  },
 ];
 
 @NgModule({

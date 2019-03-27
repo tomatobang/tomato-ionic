@@ -19,6 +19,13 @@
 </ion-header>
 
 <ion-content>
+    <ion-list>
+        <ion-item (click)="toMessagePage()">
+            <ion-icon name="notifications-outline" slot="start" class="setting-icon"></ion-icon>
+            消息
+        </ion-item>
+    </ion-list>
+
     <div [ngSwitch]="showType">
         <ion-list *ngSwitchCase="'hot'" class="friend-working-on-list">
             <div class="tomato-friend-task-list" (click)="toFriendInfo()">
