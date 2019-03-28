@@ -90,11 +90,15 @@ export class LoginPage implements OnInit {
     this.rebirthProvider.headers({ Authorization: token }, true);
     const jpushAlias = {
       sequence: Math.random(),
-      alias: this.user.username,
+      alias: this.globalservice.userinfo._id,
     };
     this.globalservice.jpushAlias = JSON.stringify(jpushAlias);
     this.jPushService.init()
-    this.jPushService.setAlias(jpushAlias);
+    this.jPushService.setAlias(jpushAlias).then((args) => {
+      console.log('jpush setAlias succeed:', args);
+    }).catch(err => {
+      console.log('jpush setAlias error:', err);
+    });;
 
     this.chatIO.login(this.globalservice.userinfo._id, this.globalservice.token);
     this.info.init();

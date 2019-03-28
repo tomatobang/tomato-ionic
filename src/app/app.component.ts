@@ -99,10 +99,17 @@ export class MyApp {
         this.native.initAppCenter();
         if (this.global.userinfo) {
           this.jPush.init();
-          this.jPush.setAlias({
+          this.jPush.setDebugMode(true);
+          let jpushAlias = {
             sequence: new Date().getTime(),
-            alias: this.global.userinfo.username,
-          });
+            alias: this.global.userinfo._id,
+          };
+          this.globalservice.jpushAlias = JSON.stringify(jpushAlias);
+          this.jPush.setAlias(jpushAlias).then((args) => {
+            console.log('jpush setAlias succeed:', args);
+          }).catch(err => {
+            console.log('jpush setAlias error:', err);
+          });;
         }
         this.backgroundMode.disable();
       }

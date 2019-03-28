@@ -81,7 +81,11 @@ export class MinePage implements OnInit {
         this.tomatoIO.logout(this.globalservice.userinfo.username);
         this.globalservice.userinfo = '';
         this.globalservice.token = '';
-        this.jPushService.deleteAlias(this.globalservice.jpushAlias);
+        this.jPushService.deleteAlias(this.globalservice.jpushAlias).then((args) => {
+          console.log('jpush deleteAlias succeed:', args);
+        }).catch(err => {
+          console.log('jpush deleteAlias error:', err);
+        });;
         this.cache.clearCache();
       });
     });
