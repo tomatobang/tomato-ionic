@@ -63,13 +63,16 @@ export class BillformComponent implements OnInit {
   ];
   payTag2 = [
     {
-      name: '通讯', selected: false
-    },
-    {
       name: '人情红包', selected: false
     },
     {
+      name: '通讯', selected: false
+    },
+    {
       name: '运动', selected: false
+    },
+    {
+      name: '房租', selected: false
     },
     {
       name: '旅游', selected: false

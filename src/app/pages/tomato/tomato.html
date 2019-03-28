@@ -34,7 +34,7 @@
         <ion-slide>
             <div class="index-page-container">
                 <cmp-index-index></cmp-index-index>
-                <ion-card>
+                <ion-card *ngIf="historyTomatoes.length > 0">
                     <ion-card-content>
                         <timeline>
                             <timeline-item [nzColor]="'red'" *ngFor="let tomato of historyTomatoes" class="tomato-today-list"
@@ -45,17 +45,19 @@
                                     </ion-avatar>
                                 </ng-template>
                                 <div class="tomato-start-end-time-block">
-                                    <span class="tomato-start-end-time">{{ tomato.startTime | DateTransform }} -
-                                        {{ tomato.endTime | DateTransform }}</span>
+                                    <span class="tomato-start-end-time">
+                                        {{ tomato.startTime | DateTransform }} - {{ tomato.endTime | DateTransform }}
+                                    </span>
                                 </div>
                                 <h3>
-                                    <span [ngClass]="{'text-breaked':tomato.succeed==0}">{{ tomato.title |
-                                        StringTruncate:
-                                        20 }}</span>
+                                    <span [ngClass]="{'text-breaked':tomato.succeed==0}">
+                                        {{ tomato.title | StringTruncate:20 }}
+                                    </span>
                                     <img [src]="voicePlaySrc" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
                                 </h3>
-                                <div *ngIf="tomato.breakReason" class="tomato-break-reason">(中断原因:{{ tomato.breakReason
-                                    }})</div>
+                                <div *ngIf="tomato.breakReason" class="tomato-break-reason">
+                                    (中断原因:{{ tomato.breakReason }})
+                                </div>
                             </timeline-item>
 
                             <ng-template #pending>

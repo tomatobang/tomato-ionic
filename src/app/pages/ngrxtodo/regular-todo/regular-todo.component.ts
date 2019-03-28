@@ -12,14 +12,14 @@ import * as TodoActions from './../redux/todo/todo.actions';
 export class RegularTodoComponent implements OnInit {
 
   regularTodos = [
-    { title: '早上三杯水', added:false },
-    { title: '下午三杯水', added:false },
-    { title: '上午运动 20 min', added:false },
-    { title: '下午运动 20 min', added:false },
-    { title: '提纲运动', added:false },
-    { title: '眼保健操', added:false },
-    { title: '站立办公', added:false },
-    { title: '家人电话', added:false },
+    { title: '上午三杯下午四杯水', added: false },
+    { title: '上午运动 20 min', added: false },
+    { title: '下午运动 20 min', added: false },
+    { title: '日常肩颈活动', added: false },
+    { title: '提纲运动', added: false },
+    { title: '眼保健操', added: false },
+    { title: '站立办公', added: false },
+    { title: '家人电话', added: false },
   ];
 
   constructor(private modal: ModalController, private store: Store<AppState>) {
