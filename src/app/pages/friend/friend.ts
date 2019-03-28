@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
-import { ChatIOService } from '@services/utils/socket.io.service';
-import { GlobalService } from '@services/global.service';
+import { Component, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { PopOverPage } from './popover/popover';
+import { InfoService } from '@services/info.service';
+import { ChatIOService } from '@services/utils/socket.io.service';
+import { GlobalService } from '@services/global.service';
 
 @Component({
   selector: 'cmp-friend',
   templateUrl: 'friend.html',
   styleUrls: ['./friend.scss']
 })
-export class FriendPage {
+export class FriendPage implements OnInit {
 
   pullingIcon = false;
   isShowMenuCard = true;
@@ -69,15 +71,29 @@ export class FriendPage {
   showType = 'hot';
   isPullToShow = false;
   ionApp: HTMLElement;
+  messsageBadge = '';
 
   constructor(
     public chatIO: ChatIOService,
     public globalservice: GlobalService,
     public rebirthProvider: RebirthHttpProvider,
     private router: Router,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    public info: InfoService
   ) {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
+  }
+
+  ngOnInit() {
+    this.info.messageCountMonitor.subscribe(data => {
+      if (data !== undefined && data !== null) {
+        if (data === 0) {
+          this.messsageBadge = '';
+        } else {
+          this.messsageBadge = data;
+        }
+      }
+    });
   }
 
   async presentPopover(ev: any) {

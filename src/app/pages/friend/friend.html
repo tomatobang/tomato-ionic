@@ -21,8 +21,11 @@
 <ion-content>
     <ion-list>
         <ion-item (click)="toMessagePage()">
-            <ion-icon name="notifications-outline" slot="start" class="setting-icon"></ion-icon>
-            消息
+            <ion-label>
+                <ion-icon name="notifications-outline" slot="start" class="setting-icon"></ion-icon>
+                消息
+            </ion-label>
+            <ion-badge color="danger" slot="end">{{ messsageBadge }}</ion-badge>
         </ion-item>
     </ion-list>
 

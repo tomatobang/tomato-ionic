@@ -5,7 +5,6 @@ import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 import { ContactsPage } from './contacts/contacts';
 import { ScrollHeightDirective } from '@directives/scroll-height.directive';
-import { CoreModule } from '../../core/core.module';
 import { SharedModule } from '../../shared/shared.module';
 import { FriendInfoPage } from './friendinfo/friendinfo';
 import { FriendTomatoesPage } from './friendinfo/friend-tomatoes/friend-tomatoes';
@@ -32,7 +31,6 @@ import { QRScannerModalModule } from '@modals/qr-scanner/qr-scanner.module';
   ],
   imports: [
     IonicModule,
-    CoreModule,
     SharedModule,
     FriendPageRoutingModule,
     ScrollModule,

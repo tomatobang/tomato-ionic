@@ -3,13 +3,15 @@ import { Socket } from 'ngx-socket-io';
 import { chatSocketUrl } from '../../../config';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ChatIOService {
   socket: Socket;
   hasConnected = false;
   userid;
 
-  constructor() {}
+  constructor() { }
 
   /**
    * 断线重连

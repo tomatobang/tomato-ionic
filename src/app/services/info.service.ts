@@ -3,11 +3,9 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { Observable } from 'rxjs';
-import { ReplaySubject, Subject } from 'rxjs';
-
 import { MessageService } from './data/message/message.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { CacheService } from '@services/cache.service';
@@ -16,6 +14,7 @@ import { CacheService } from '@services/cache.service';
   providedIn: 'root',
 })
 export class InfoService {
+  private static instance: InfoService = null;
   unreadMsgCount = 0;
   chatingNow;
   unreadMessage = [];
@@ -28,7 +27,25 @@ export class InfoService {
     public messageService: MessageService,
     public chatIO: ChatIOService,
     public cache: CacheService
-  ) {}
+  ) { }
+
+
+  /**
+   * Return the instance of the service
+   * @param http 
+   * @param messageService 
+   * @param chatIO 
+   * @param cache 
+   */
+  public static getInstance(http: HttpClient,
+    messageService: MessageService,
+    chatIO: ChatIOService,
+    cache: CacheService): InfoService {
+    if (InfoService.instance === null) {
+      InfoService.instance = new InfoService(http, messageService, chatIO, cache);
+    }
+    return InfoService.instance;
+  }
 
   public messageSubject: Subject<any> = new ReplaySubject<any>(2);
   public get newMessagesMonitor(): Observable<any> {

@@ -3,7 +3,6 @@ import { TomatoPage } from './tomato';
 import { IndexIndexPage } from './index/index';
 import { TodaylistComponent } from './todaylist/todaylist';
 import { IonicModule } from '@ionic/angular';
-import { CoreModule } from '../../core/core.module';
 import { SharedModule } from '../../shared/shared.module';
 
 import { AngularRoundProgressDirective } from '@directives/angular-round-progress.directive';
@@ -28,7 +27,6 @@ import { TomatoPageRoutingModule } from './tomato.router.module'
     IonicModule,
     TimelineModule,
     SharedModule,
-    CoreModule,
     TomatoPageRoutingModule,
   ],
   providers: [],

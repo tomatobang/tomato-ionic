@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavController } from '@ionic/angular';
 import { UserFriendState } from '@services/data/user_friend/model/state.enum';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { GlobalService } from '@services/global.service';
@@ -25,7 +24,6 @@ export class MessagePage implements OnInit {
   messageList = [];
 
   constructor(
-    public navCtrl: NavController,
     public userFriendService: UserFriendService,
     public globalservice: GlobalService,
     public rebirthProvider: RebirthHttpProvider,
@@ -41,7 +39,6 @@ export class MessagePage implements OnInit {
   ngOnInit(): void {
     // 获取通知列表
     this.getReqFriendList();
-    this.info.init();
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = data.length - 1; index >= 0; index--) {
         const element = data[index];

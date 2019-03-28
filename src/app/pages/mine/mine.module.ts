@@ -11,7 +11,6 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { PipesModule } from '@pipes/pipes.module';
 import { UpdatemodalPage } from './subpages/updatemodal/updatemodal';
 import { MinePageRoutingModule } from './mine.router.module'
-import { CoreModule } from '../../core/core.module';
 import { SharedModule } from '../../shared/shared.module';
 
 import { StatisticsPage } from './subpages/statistics/statistics';
@@ -20,14 +19,9 @@ import { ProfilePage } from './subpages/profile/profile';
 import { AboutPage } from './subpages/about/about';
 import { PopoverComponent } from './subpages/statistics/popover/popover.component';
 
-import {
-  ChatIOService,
-} from '@services/utils/socket.io.service';
-declare var window;
-
 @NgModule({
   declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage, PopoverComponent],
-  imports: [IonicModule, PipesModule, MinePageRoutingModule, CoreModule, SharedModule],
+  imports: [IonicModule, PipesModule, MinePageRoutingModule, SharedModule],
   entryComponents: [MinePage, UpdatemodalPage, PopoverComponent],
   providers: [
     FileTransfer,
@@ -36,7 +30,6 @@ declare var window;
     Helper,
     NativeService,
     OnlineUserService,
-    { provide: ChatIOService, useValue: window.appChatIOService }
   ],
   exports: [MinePage,]
 })

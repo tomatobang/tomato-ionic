@@ -10,7 +10,6 @@ import { InfoService } from '@services/info.service';
 import { MessageService } from '@services//data/message/message.service';
 import { ActivatedRoute } from '@angular/router';
 import { ChatIOService } from '@services/utils/socket.io.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'page-chat',
@@ -29,7 +28,6 @@ export class ChatPage {
   toUserName: string;
   editorMsg = '';
   isOpenEmojiPicker = false;
-  IOSubscribe: Subscription;
 
   constructor(
     private actrouter: ActivatedRoute,
@@ -77,8 +75,9 @@ export class ChatPage {
           this.info.updateMessageState(this.toUserId);
         }
       });
+
       // 监听实时消息
-      this.IOSubscribe = this.chatIO.receive_message().subscribe(data => {
+      this.info.realtimeMsgMonitor.subscribe(data => {
         if (data) {
           if (this.toUserId !== data.from) {
             return;
@@ -210,20 +209,16 @@ export class ChatPage {
   }
 
   ionViewWillLeave() {
-    // unsubscribe
-    if (this.IOSubscribe) {
-      this.IOSubscribe.unsubscribe();
-    }
-    // this.info.registerChatMsg(null);
+    this.info.registerChatMsg(null);
   }
 
   ionViewDidEnter() {
-    // this.info.registerChatMsg(this.toUserId);
+    this.info.registerChatMsg(this.toUserId);
   }
 
   _focus() {
     this.isOpenEmojiPicker = false;
-    // this.content.resize();
+    this.content.resize();
     this.scrollToBottom();
   }
 
@@ -232,15 +227,15 @@ export class ChatPage {
     if (!this.isOpenEmojiPicker) {
       this.messageInput.setFocus();
     }
-    // this.content.resize();
+    this.content.resize();
     this.scrollToBottom();
   }
 
   scrollToBottom() {
     setTimeout(() => {
-      // if (this.content._scroll) {
-      this.content.scrollToBottom();
-      // }
+      if (this.content._scroll) {
+        this.content.scrollToBottom();
+      }
     }, 400);
   }
 }
