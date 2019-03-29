@@ -86,13 +86,15 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.splashScreen.hide();
       this.statusBar.styleDefault();
-      // this.statusBar.backgroundColorByHexString('#00f4f5f8');
+      // 为 ture 时会有 bug, see: https://github.com/apache/cordova-plugin-statusbar/pull/128
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString('#BFf4f5f8');
       if (window.cordova) {
-        window.Transparentstatusbar.init(result => {
-          if (result > 0) {
-            this.statubarHeight = result + 'px';
-          }
-        });
+        // window.Transparentstatusbar.init(result => {
+        //   if (result > 0) {
+        //     this.statubarHeight = result + 'px';
+        //   }
+        // });
         this.native.initNativeService();
         this.updateService.checkUpdate();
         this.registerBackButtonAction();
