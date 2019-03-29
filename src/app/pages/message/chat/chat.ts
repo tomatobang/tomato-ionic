@@ -218,7 +218,6 @@ export class ChatPage {
 
   _focus() {
     this.isOpenEmojiPicker = false;
-    this.content.resize();
     this.scrollToBottom();
   }
 
@@ -227,15 +226,13 @@ export class ChatPage {
     if (!this.isOpenEmojiPicker) {
       this.messageInput.setFocus();
     }
-    this.content.resize();
     this.scrollToBottom();
   }
 
   scrollToBottom() {
     setTimeout(() => {
-      if (this.content._scroll) {
-        this.content.scrollToBottom();
-      }
-    }, 400);
+      this.content.el.scrollToBottom();
+      this.content.scrollTop = this.content.scrollHeight;
+    }, 300);
   }
 }
