@@ -222,7 +222,7 @@ export class BillformComponent implements OnInit {
       await toast.present();
       return;
     }
-    if (!this.tag) {
+    if (!this.tag || this.tag.length <= 0) {
       let toast = await this.toastCtrl.create({
         message: '请先选择标签',
         duration: 2500

@@ -5,10 +5,13 @@ ion-chip {
 ion-slides {
     margin: 5px 0px;
     height: 90px;
+    width: 100% !important;
     ion-slide {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        width: 100% !important;
+
         ion-chip {
             height: 24px;
             line-height: 24px;

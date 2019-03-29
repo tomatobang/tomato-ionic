@@ -14,6 +14,7 @@ li.completed label {
     margin: 0;
     padding: 0;
     list-style: none;
+
     li {
         position: relative;
         font-size: 16px;
@@ -52,8 +53,16 @@ li.completed label {
 }
 
 .amount-tag-pay {
+    color: #fff !important;
     padding: 2px 4px;
     background: #ff8208;
+}
+
+.asset-tag {
+    margin-left: 5px;
+    color: #fff !important;
+    padding: 2px 4px;
+    background: #f97271;
 }
 
 .bill-note {

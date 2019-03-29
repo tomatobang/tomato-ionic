@@ -35,9 +35,9 @@
           <ion-text class="bill-note amount-tag-pay" *ngIf="item.type==='支出'">
             {{ item.type }}
           </ion-text>
-          <ion-chip color="warning" *ngIf="item.asset.name" class="bill-note">
-            <ion-label color="dark" class="text-small">{{ item.asset.name }}</ion-label>
-          </ion-chip>
+          <ion-text class="bill-note asset-tag" *ngIf="item.asset.name">
+            {{ item.asset.name }}
+          </ion-text>
           <ion-text class="bill-note float-right text-small">
             {{ item.create_at | DateTransform:'withdate' }}
           </ion-text>

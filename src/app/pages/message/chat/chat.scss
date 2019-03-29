@@ -1,5 +1,6 @@
 $userBackgroundColor: #387ef5;
 $toUserBackgroundColor: #fff;
+
 ion-content {
     background-color: #f5f5f5;
 }
@@ -10,7 +11,8 @@ ion-footer {
     background-color: #fff;
     height: 255px;
 }
-.message-input-panel{
+
+.message-input-panel {
     width: 100%;
     position: absolute;
     bottom: 0px;
@@ -24,16 +26,20 @@ ion-footer {
     ion-textarea {
         position: static;
     }
+
     padding: 0 5px;
+
     ion-col.col {
         padding: 0;
     }
+
     button {
         width: 100%;
         height: 55px;
         font-size: 1.3em;
         margin: 0;
     }
+
     textarea {
         border-bottom: 1px #387ef5;
         border-style: solid;
@@ -42,40 +48,46 @@ ion-footer {
 
 .message-wrap {
     padding: 0 10px;
+
     .message {
         position: relative;
         padding: 10px 0;
+
         .user-img {
             border-radius: 45px;
             width: 45px;
             height: 45px;
             box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
         }
+
         .msg-detail {
             width: 100%;
             min-height: 60px;
+
             p {
                 margin: 0;
             }
+
             .msg-info {
                 p {
                     font-size: .8em;
                     color: #888;
                 }
             }
+
             .msg-content {
                 position: relative;
                 margin-top: 5px;
                 border-radius: 5px;
                 padding: 8px;
                 border: 1px solid #ddd;
+
                 span.triangle {
                     border-radius: 2px;
                     height: 8px;
                     width: 8px;
                     display: block;
-                    border-style: solid;
-                    border-color: #ddd;
+
                     -webkit-transform: rotate(45deg);
                     transform: rotate(45deg);
                     position: absolute;
@@ -83,6 +95,7 @@ ion-footer {
             }
         }
     }
+
     .message.left {
         .msg-content {
             background-color: $toUserBackgroundColor;
@@ -90,15 +103,20 @@ ion-footer {
             float: left;
             max-width: 240px;
         }
+
         .msg-detail {
             padding-left: 60px;
         }
+
         .user-img {
             position: absolute;
             left: 0;
         }
+
         .msg-content {
             span.triangle {
+                border-style: solid;
+                border-color: #ddd;
                 border-top-width: 0;
                 border-right-width: 0;
                 left: -5px;
@@ -106,33 +124,41 @@ ion-footer {
             }
         }
     }
+
     .message.right {
         .msg-detail {
             padding-right: 60px;
+
             .msg-info {
                 text-align: right;
             }
         }
+
         .user-img {
             position: absolute;
             right: 0;
         }
+
         ion-spinner {
             position: absolute;
             right: 10px;
             top: 50px;
         }
+
         .msg-content {
             background-color: $userBackgroundColor;
             color: #fff;
             width: auto;
             float: right;
             max-width: 240px;
+
             span.triangle {
+                border-style: solid;
+                border-color: $userBackgroundColor;
                 background-color: $userBackgroundColor;
                 border-bottom-width: 0;
                 border-left-width: 0;
-                right: -5px;
+                right: -4px;
                 top: 12px;
             }
         }
