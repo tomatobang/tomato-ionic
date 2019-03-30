@@ -17,7 +17,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AppCenterAnalytics } from '@ionic-native/app-center-analytics/ngx';
 import { AppCenterCrashes } from '@ionic-native/app-center-crashes/ngx';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { JPush } from '../../nativewrapper/jpush/ngx';
+import { JPush } from '@jiguang-ionic/jpush/ngx'
 import { GlobalService } from '@services/global.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { UpdateService } from '@services/update.service';

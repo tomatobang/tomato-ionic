@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
-import { JPush } from '../nativewrapper/jpush/ngx';
+import { JPush } from '@jiguang-ionic/jpush/ngx'
 import { RebirthHttpProvider } from 'rebirth-http';
 
 import { GlobalService } from '@services/global.service';

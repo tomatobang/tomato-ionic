@@ -3,7 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { User } from '@services/data.service';
 import { GlobalService } from '@services/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { JPush } from '../../../nativewrapper/jpush/ngx';
+import { JPush } from '@jiguang-ionic/jpush/ngx'
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { Store } from '@ngrx/store';
