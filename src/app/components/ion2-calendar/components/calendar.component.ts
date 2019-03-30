@@ -172,7 +172,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   prevYear(): void {
-    if (moment(this.monthOpt.original.time).year() === 1970) return;
+    if (moment(this.monthOpt.original.time).year() === 1970) { return; }
     const backTime = moment(this.monthOpt.original.time)
       .subtract(1, 'year')
       .valueOf();
@@ -198,7 +198,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   canNext(): boolean {
-    if (!this._d.to || this._view !== 'days') return true;
+    if (!this._d.to || this._view !== 'days') { return true; }
     return this.monthOpt.original.time < moment(this._d.to).valueOf();
   }
 
@@ -214,7 +214,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   canBack(): boolean {
-    if (!this._d.from || this._view !== 'days') return true;
+    if (!this._d.from || this._view !== 'days') { return true; }
     return this.monthOpt.original.time > moment(this._d.from).valueOf();
   }
 

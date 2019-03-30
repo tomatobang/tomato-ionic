@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { PipesModule } from '@pipes/pipes.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { DebounceClickDirective } from '@directives/debounce-click.directive';
 import { TrackEventDirective } from '@directives/trackEvent.directive';
@@ -28,6 +28,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     PipesModule,
     CalendarModule,
+    HttpClientModule,
     RebirthHttpModule,
     SocketIoModule,
     TranslateModule.forRoot({
@@ -50,6 +51,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     CalendarModule,
     SocketIoModule,
+    HttpModule,
+    HttpClientModule,
+    RebirthHttpModule
   ],
 })
 export class SharedModule { }

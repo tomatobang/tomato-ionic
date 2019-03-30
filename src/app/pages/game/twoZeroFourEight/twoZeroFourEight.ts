@@ -16,9 +16,11 @@ import { Events } from '@ionic/angular';
 })
 
 export class TwoZeroFourEightPage implements OnInit {
-  @ViewChild('gameContainer') gameContainer: ElementRef;
 
   constructor(public game: GameService, public events: Events) { }
+  @ViewChild('gameContainer') gameContainer: ElementRef;
+
+  key = '';
 
   public newGame(): void {
     this.game.newGame();
@@ -31,8 +33,6 @@ export class TwoZeroFourEightPage implements OnInit {
 
   ionViewDidEnter() {
   }
-
-  key = '';
   onSwipeLeft() {
     console.log('swipeleft');
     this.key = DIRECTIONS[37];

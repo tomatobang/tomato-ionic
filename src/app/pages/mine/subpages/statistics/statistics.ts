@@ -20,11 +20,11 @@ export class StatisticsPage implements OnInit {
 
   selectedType = {
     value: 'bill'
-  }
+  };
 
   showFinancing = {
     val: true
-  }
+  };
 
   total = 0;
   totalCost = 0;
@@ -41,7 +41,7 @@ export class StatisticsPage implements OnInit {
   }
 
   triggerTypeChange(evt) {
-    let type = evt.detail.value;
+    const type = evt.detail.value;
     if (this.selectedType.value === type) {
       return;
     } else {
@@ -72,13 +72,13 @@ export class StatisticsPage implements OnInit {
     this.todoService.statistics({
       date: date
     }).subscribe(ret => {
-      let completed = ret.completed;
-      let imcompleted = ret.imcompleted;
-      let result: DayConfig[] = [];
+      const completed = ret.completed;
+      const imcompleted = ret.imcompleted;
+      const result: DayConfig[] = [];
       for (let i = 0; i < completed.length; i++) {
-        let completedItem = completed[i];
+        const completedItem = completed[i];
         for (let j = 0; j < imcompleted.length; j++) {
-          let imcompletedItem = imcompleted[j];
+          const imcompletedItem = imcompleted[j];
           // 同一天
           if (completedItem._id === imcompletedItem._id) {
             result.push({
@@ -100,7 +100,7 @@ export class StatisticsPage implements OnInit {
             subTitle: `<div class="day-income-label">未完</div>${element.count}`,
             cssClass: 'date-square-style',
             marked: true
-          })
+          });
         }
       }
 
@@ -111,7 +111,7 @@ export class StatisticsPage implements OnInit {
             date: new Date(element._id),
             subTitle: `<div class="day-pay-label">完成</div>${element.count}`,
             cssClass: 'date-square-style'
-          })
+          });
         }
       }
       this.setOptionMulti(result);
@@ -122,10 +122,10 @@ export class StatisticsPage implements OnInit {
     this.footPrintService.statistics({
       date: date
     }).subscribe(ret => {
-      let result: DayConfig[] = [];
-      let data = ret.data;
+      const result: DayConfig[] = [];
+      const data = ret.data;
       for (let i = 0; i < data.length; i++) {
-        let item = data[i];
+        const item = data[i];
         result.push({
           date: item._id,
           subTitle: `<div class="day-pay-label">足迹</div>${item.count}`,
@@ -143,14 +143,14 @@ export class StatisticsPage implements OnInit {
       excludeTag: excludeTag
     }).subscribe(ret => {
       // 合并支出与收入
-      let income = ret.income;
-      let pay = ret.pay;
-      let result: DayConfig[] = [];
+      const income = ret.income;
+      const pay = ret.pay;
+      const result: DayConfig[] = [];
       if (income) {
         for (let i = 0; i < income.length; i++) {
-          let iItem = income[i];
+          const iItem = income[i];
           for (let j = 0; j < pay.length; j++) {
-            let pItem = pay[j];
+            const pItem = pay[j];
             // 同一天
             if (iItem._id === pItem._id) {
               result.push({
@@ -172,7 +172,7 @@ export class StatisticsPage implements OnInit {
               subTitle: `<div class="day-income-label">收</div>${element.total.toFixed(2)}`,
               cssClass: 'date-square-style',
               marked: true
-            })
+            });
           }
         }
       }
@@ -185,7 +185,7 @@ export class StatisticsPage implements OnInit {
               date: new Date(element._id),
               subTitle: `<div class="day-pay-label">支</div>${element.total.toFixed(2)}`,
               cssClass: 'date-square-style'
-            })
+            });
           }
         }
       }
@@ -258,14 +258,14 @@ export class StatisticsPage implements OnInit {
   }
 
   async selectDay($event) {
-    let datenow = new Date($event.time);
+    const datenow = new Date($event.time);
     const dateStr =
       datenow.getFullYear() +
       '-' +
       (datenow.getMonth() + 1) +
       '-' +
       datenow.getDate();
-    let popover = await this.popover.create({
+    const popover = await this.popover.create({
       component: PopoverComponent,
       componentProps: {
         time: dateStr,

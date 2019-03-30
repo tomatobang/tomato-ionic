@@ -33,8 +33,8 @@ export class FriendInfoPage {
   ) {
     this.userid = this.global.userinfo._id;
     this.actrouter.queryParams.subscribe((queryParams) => {
-      this.friendid = queryParams["userid"];
-      this.friendName = queryParams["friendname"];
+      this.friendid = queryParams['userid'];
+      this.friendName = queryParams['friendname'];
       this.loadUserInfo(this.friendid);
       if (this.friendid && !this.friendName) {
         this.isFriend = false;
@@ -88,7 +88,7 @@ export class FriendInfoPage {
         toUserId: this.friendid,
         toUserName: this.friendName,
       }
-    })
+    });
   }
 
   onScroll($event: any) {

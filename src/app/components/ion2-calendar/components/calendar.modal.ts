@@ -115,7 +115,7 @@ export class CalendarModal implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.findCssClass();
-    if (this._d.canBackwardsSelected) this.backwardsMonth();
+    if (this._d.canBackwardsSelected) { this.backwardsMonth(); }
     this.scrollToDefaultDate();
   }
 
@@ -166,7 +166,7 @@ export class CalendarModal implements OnInit, AfterViewInit {
     const { cssClass } = this._d;
     if (cssClass) {
       cssClass.split(' ').forEach((_class: string) => {
-        if (_class.trim() !== '') this._renderer.addClass(this._elementRef.nativeElement, _class);
+        if (_class.trim() !== '') { this._renderer.addClass(this._elementRef.nativeElement, _class); }
       });
     }
   }
@@ -266,7 +266,7 @@ export class CalendarModal implements OnInit, AfterViewInit {
   }
 
   onScroll($event: any): void {
-    if (!this._d.canBackwardsSelected) return;
+    if (!this._d.canBackwardsSelected) { return; }
 
     const { detail } = $event;
 
@@ -307,7 +307,7 @@ export class CalendarModal implements OnInit, AfterViewInit {
     let startDate = this.actualFirstTime ? moment(this.actualFirstTime) : moment(this._d.from);
     const defaultScrollTo = moment(date);
     const isAfter: boolean = defaultScrollTo.isAfter(startDate);
-    if (!isAfter) return -1;
+    if (!isAfter) { return -1; }
 
     if (this.showYearPicker) {
       startDate = moment(new Date(this.year, 0, 1));

@@ -14,6 +14,28 @@ import { CacheService } from '@services/cache.service';
   providedIn: 'root',
 })
 export class InfoService {
+
+  constructor(
+    public http: HttpClient,
+    public messageService: MessageService,
+    public chatIO: ChatIOService,
+    public cache: CacheService
+  ) { }
+  public get newMessagesMonitor(): Observable<any> {
+    return this.messageSubject.asObservable();
+  }
+  public get messageCountMonitor(): Observable<any> {
+    return this.messagCountSubject.asObservable();
+  }
+  public get singleMessageCountMonitor(): Observable<any> {
+    return this.singleMessagCountSubject.asObservable();
+  }
+  public get realtimeMsgListMonitor(): Observable<any> {
+    return this.realtimeMsgListSubject.asObservable();
+  }
+  public get realtimeMsgMonitor(): Observable<any> {
+    return this.realtimeMsgSubject.asObservable();
+  }
   private static instance: InfoService = null;
   unreadMsgCount = 0;
   chatingNow;
@@ -22,20 +44,23 @@ export class InfoService {
     'Content-Type': 'application/x-www-form-urlencoded',
   });
 
-  constructor(
-    public http: HttpClient,
-    public messageService: MessageService,
-    public chatIO: ChatIOService,
-    public cache: CacheService
-  ) { }
+  public messageSubject: Subject<any> = new ReplaySubject<any>(2);
+
+  public messagCountSubject: Subject<any> = new ReplaySubject<any>(null);
+
+  public singleMessagCountSubject: Subject<any> = new ReplaySubject<any>(null);
+
+  public realtimeMsgListSubject: Subject<any> = new ReplaySubject<any>();
+
+  public realtimeMsgSubject: Subject<any> = new Subject<any>();
 
 
   /**
    * Return the instance of the service
-   * @param http 
-   * @param messageService 
-   * @param chatIO 
-   * @param cache 
+   * @param http
+   * @param messageService
+   * @param chatIO
+   * @param cache
    */
   public static getInstance(http: HttpClient,
     messageService: MessageService,
@@ -45,31 +70,6 @@ export class InfoService {
       InfoService.instance = new InfoService(http, messageService, chatIO, cache);
     }
     return InfoService.instance;
-  }
-
-  public messageSubject: Subject<any> = new ReplaySubject<any>(2);
-  public get newMessagesMonitor(): Observable<any> {
-    return this.messageSubject.asObservable();
-  }
-
-  public messagCountSubject: Subject<any> = new ReplaySubject<any>(null);
-  public get messageCountMonitor(): Observable<any> {
-    return this.messagCountSubject.asObservable();
-  }
-
-  public singleMessagCountSubject: Subject<any> = new ReplaySubject<any>(null);
-  public get singleMessageCountMonitor(): Observable<any> {
-    return this.singleMessagCountSubject.asObservable();
-  }
-
-  public realtimeMsgListSubject: Subject<any> = new ReplaySubject<any>();
-  public get realtimeMsgListMonitor(): Observable<any> {
-    return this.realtimeMsgListSubject.asObservable();
-  }
-
-  public realtimeMsgSubject: Subject<any> = new Subject<any>();
-  public get realtimeMsgMonitor(): Observable<any> {
-    return this.realtimeMsgSubject.asObservable();
   }
 
   /**

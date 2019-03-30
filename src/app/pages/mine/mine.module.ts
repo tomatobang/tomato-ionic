@@ -10,7 +10,7 @@ import { Helper } from '@services/utils/helper';
 import { Camera } from '@ionic-native/camera/ngx';
 import { PipesModule } from '@pipes/pipes.module';
 import { UpdatemodalPage } from './subpages/updatemodal/updatemodal';
-import { MinePageRoutingModule } from './mine.router.module'
+import { MinePageRoutingModule } from './mine.router.module';
 import { SharedModule } from '../../shared/shared.module';
 
 import { StatisticsPage } from './subpages/statistics/statistics';
@@ -31,6 +31,6 @@ import { PopoverComponent } from './subpages/statistics/popover/popover.componen
     NativeService,
     OnlineUserService,
   ],
-  exports: [MinePage,]
+  exports: [MinePage, ]
 })
 export class MinePageModule { }

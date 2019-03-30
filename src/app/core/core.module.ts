@@ -3,8 +3,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
 import { Media } from '@ionic-native/media/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
@@ -45,7 +43,6 @@ import { TabsService } from '@services/tab.service';
 import { UserFriendService } from '@services/data/user_friend';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
   exports: [],
   declarations: [],
   providers: [

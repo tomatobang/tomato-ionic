@@ -46,9 +46,9 @@ export class BillPage implements OnInit {
         this.totalIncome = 0;
         for (let index = 0; index < ret.length; index++) {
           const element: any = ret[index];
-          if (element.type === "支出") {
+          if (element.type === '支出') {
             this.totalCost += element.amount;
-          } else if (element.type === "收入") {
+          } else if (element.type === '收入') {
             this.totalIncome += element.amount;
           }
         }
@@ -68,14 +68,14 @@ export class BillPage implements OnInit {
   }
 
   async addBill() {
-    let modal = await this.modalCtrl.create({
+    const modal = await this.modalCtrl.create({
       component: BillformComponent,
       componentProps: {
         edit: false
       }
     });
     modal.onDidDismiss().then(ret => {
-      let data = ret.data;
+      const data = ret.data;
       if (data) {
         if (data.type === '支出') {
           this.totalCost += data.amount;
@@ -91,7 +91,7 @@ export class BillPage implements OnInit {
   }
 
   async editBill(item) {
-    let modal = await this.modalCtrl.create({
+    const modal = await this.modalCtrl.create({
       component: BillformComponent,
       componentProps: {
         edit: true,

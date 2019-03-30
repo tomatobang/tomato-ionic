@@ -64,7 +64,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 	) {
 		this.letterIndicatorEle = document.createElement('div');
 		this.letterIndicatorEle.className = 'ion-alpha-letter-indicator';
-		let body = document.getElementsByTagName('body')[0];
+		const body = document.getElementsByTagName('body')[0];
 		body.appendChild(this.letterIndicatorEle);
 	}
 
@@ -80,13 +80,13 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 
 	ngOnChanges() {
 		// 先对传入的listData排序 避免结果顺序乱掉
-		let sortedListData: Array<any> = this.orderBy.transform(_.orderBy(this.listData, x => x.initial), [this.key]);
-		let groupItems: any = _.groupBy(sortedListData, item => {
-			let letter: any = _.get(item, this.key);
+		const sortedListData: Array<any> = this.orderBy.transform(_.orderBy(this.listData, x => x.initial), [this.key]);
+		const groupItems: any = _.groupBy(sortedListData, item => {
+			const letter: any = _.get(item, this.key);
 			return letter.toUpperCase().charAt(0);
 		});
-		//根据头部模板是否为null 添加字符
-		if (this.headerTemplate != null || this.headerTemplate != undefined) {
+		// 根据头部模板是否为null 添加字符
+		if (this.headerTemplate !== null || this.headerTemplate !== undefined) {
 			groupItems['↑'] = [];
 		}
 		this.sortedItems = this.unwindGroup(groupItems);
@@ -110,53 +110,53 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 	}
 
 	private setTouchHandlers() {
-		let sidebarEle: HTMLElement = this.elementRef.nativeElement.querySelector('.ion-alpha-sidebar');
-		if (!sidebarEle) return;
+		const sidebarEle: HTMLElement = this.elementRef.nativeElement.querySelector('.ion-alpha-sidebar');
+		if (!sidebarEle) { return; }
 		this.elementRef.nativeElement.addEventListener('touchmove', function (evt) {
 			evt.preventDefault();
 		}, false);
 		setTimeout(() => {
-			let min = this.elementRef.nativeElement.offsetHeight - this.listalpha.el.offsetHeight;
+			const min = this.elementRef.nativeElement.offsetHeight - this.listalpha.el.offsetHeight;
 			this.alloyTouch = new AlloyTouch({
-				touch: this.mainWrapper.nativeElement,//反馈触摸的dom
-				vertical: true,//不必需，默认是true代表监听竖直方向touch
-				target: this.listalpha.el, //运动的对象
-				property: "translateY",  //被运动的属性
+				touch: this.mainWrapper.nativeElement, // 反馈触摸的dom
+				vertical: true, // 不必需，默认是true代表监听竖直方向touch
+				target: this.listalpha.el, // 运动的对象
+				property: 'translateY',  // 被运动的属性
 				min: min,
-				max: 0, //不必需,滚动属性的最大值
-				sensitivity: 1,//不必需,触摸区域的灵敏度，默认值为1，可以为负数
-				factor: 1,//不必需,表示触摸位移与被运动属性映射关系，默认值是1
-				step: 45,//用于校正到step的整数倍
+				max: 0, // 不必需,滚动属性的最大值
+				sensitivity: 1, // 不必需,触摸区域的灵敏度，默认值为1，可以为负数
+				factor: 1, // 不必需,表示触摸位移与被运动属性映射关系，默认值是1
+				step: 45, // 用于校正到step的整数倍
 				bindSelf: false,
-				maxSpeed: 2, //不必需，触摸反馈的最大速度限制
+				maxSpeed: 2, // 不必需，触摸反馈的最大速度限制
 				initialValue: 0
 			});
-			let chooseEle = (evt) => {
-				let closestEle: any = evt.type == 'touchend' ? document.elementFromPoint(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY) : document.elementFromPoint(evt.targetTouches[0].pageX, evt.targetTouches[0].pageY);
+			const chooseEle = (evt) => {
+				const closestEle: any = evt.type === 'touchend' ? document.elementFromPoint(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY) : document.elementFromPoint(evt.targetTouches[0].pageX, evt.targetTouches[0].pageY);
 				// // console.log(closestEle);
 				if (closestEle && ['LI', 'A'].indexOf(closestEle.tagName) > -1) {
-					let letter = closestEle.innerText;
+					const letter = closestEle.innerText;
 					this.letterIndicatorEle.innerText = letter;
 					this.letterIndicatorEle.style.visibility = 'visible';
-					let letterDivider: any = this.elementRef.nativeElement.querySelector(`#scroll-letter-${letter}`);
-					let letterTop: number = letterDivider.offsetTop;
+					const letterDivider: any = this.elementRef.nativeElement.querySelector(`#scroll-letter-${letter}`);
+					const letterTop: number = letterDivider.offsetTop;
 					if (letterDivider) {
 						this.alloyTouch.to(-letterTop < min ? min : -letterTop, 0);
 					}
 				}
-			}
+			};
 			this.sidebarTouch = new AlloyTouch({
-				touch: this.sidebar.nativeElement,//反馈触摸的dom
-				vertical: true,//不必需，默认是true代表监听竖直方向touch
-				target: this.sidebar.nativeElement, //运动的对象
-				property: "translateY",  //被运动的属性
+				touch: this.sidebar.nativeElement, // 反馈触摸的dom
+				vertical: true, // 不必需，默认是true代表监听竖直方向touch
+				target: this.sidebar.nativeElement, // 运动的对象
+				property: 'translateY',  // 被运动的属性
 				min: 0,
-				max: 0, //不必需,滚动属性的最大值
-				sensitivity: 1,//不必需,触摸区域的灵敏度，默认值为1，可以为负数
-				factor: 1,//不必需,表示触摸位移与被运动属性映射关系，默认值是1
-				step: 45,//用于校正到step的整数倍
+				max: 0, // 不必需,滚动属性的最大值
+				sensitivity: 1, // 不必需,触摸区域的灵敏度，默认值为1，可以为负数
+				factor: 1, // 不必需,表示触摸位移与被运动属性映射关系，默认值是1
+				step: 45, // 用于校正到step的整数倍
 				bindSelf: false,
-				maxSpeed: 2, //不必需，触摸反馈的最大速度限制
+				maxSpeed: 2, // 不必需，触摸反馈的最大速度限制
 				initialValue: 0,
 				touchStart: () => {
 					this.alloyTouch.stop();
@@ -179,7 +179,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 
 	private unwindGroup(groupItems: any): Array<any> {
 		let result: Array<any> = [];
-		for (let letter in groupItems) {
+		for (const letter in groupItems) {
 			result = result.concat([{ isDivider: true, letter: letter }].concat(groupItems[letter]));
 		}
 		return result;
@@ -192,10 +192,10 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 		} else {
 			str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		}
-		let result: Array<any> = [];
+		const result: Array<any> = [];
 		for (let i = 0; i < str.length; i++) {
-			let letter = str.charAt(i);
-			let isActive = alphabet[letter] ? true : false;
+			const letter = str.charAt(i);
+			const isActive = alphabet[letter] ? true : false;
 			result.push({ letter: letter, isActive: isActive });
 		}
 		return result;

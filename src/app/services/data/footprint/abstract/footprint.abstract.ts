@@ -7,7 +7,7 @@ export abstract class FootprintService extends RebirthHttp {
   abstract createFootprint(footprint: Footprint): Observable<any>;
 
   abstract getFootprints(
-    date:any,
+    date: any,
     pageIndex: any,
     pageSize: any,
     keyword?: string

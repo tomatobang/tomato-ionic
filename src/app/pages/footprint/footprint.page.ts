@@ -85,13 +85,13 @@ export class FootprintPage implements OnInit, OnDestroy {
 
     this.baidu.getCurrentLocation().then(val => {
       if (val && val.time) {
-        this.create_at = this.dateFtt("hh:mm:ss", new Date(val.time));
+        this.create_at = this.dateFtt('hh:mm:ss', new Date(val.time));
         this.location = val.addr + '(' + val.locationDescribe + ')';
         if (val.pois) {
           this.locationList = val.pois;
         }
       } else {
-        this.create_at = this.dateFtt("hh:mm:ss", new Date());
+        this.create_at = this.dateFtt('hh:mm:ss', new Date());
         this.location = '网络问题，定位失败!';
       }
     }).catch(err => {
@@ -108,25 +108,28 @@ export class FootprintPage implements OnInit, OnDestroy {
 
   refreshCreateAt() {
     this.timeInterval = setInterval(() => {
-      this.create_at = this.dateFtt("hh:mm:ss", new Date());
+      this.create_at = this.dateFtt('hh:mm:ss', new Date());
     }, 1000);
   }
 
   dateFtt(fmt, date) {
-    var o = {
-      "M+": date.getMonth() + 1,
-      "d+": date.getDate(),
-      "h+": date.getHours(),
-      "m+": date.getMinutes(),
-      "s+": date.getSeconds(),
-      "q+": Math.floor((date.getMonth() + 3) / 3),
-      "S": date.getMilliseconds()
+    let o = {
+      'M+': date.getMonth() + 1,
+      'd+': date.getDate(),
+      'h+': date.getHours(),
+      'm+': date.getMinutes(),
+      's+': date.getSeconds(),
+      'q+': Math.floor((date.getMonth() + 3) / 3),
+      'S': date.getMilliseconds()
     };
-    if (/(y+)/.test(fmt))
-      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-      if (new RegExp("(" + k + ")").test(fmt))
-        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (let k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+      }
+    }
     return fmt;
   }
 
@@ -134,7 +137,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.baidu.getCurrentLocation().then(val => {
       if (val) {
         this.location = val.addr + '(' + val.locationDescribe + ')';
-        this.create_at = this.dateFtt("hh:mm:ss", new Date(val.time));
+        this.create_at = this.dateFtt('hh:mm:ss', new Date(val.time));
       }
       event.target.complete();
     }).catch(err => {

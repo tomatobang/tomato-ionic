@@ -139,7 +139,7 @@ export class ContactsPage implements OnInit {
 
       for (let index = 0; index < this.newFriendList.length; index++) {
         const element = this.newFriendList[index];
-        let firstCode = element.firstCode;
+        const firstCode = element.firstCode;
         for (let i = 0; i < element.data.length; i++) {
           const friend = element.data[i];
           this.bindItems.push({

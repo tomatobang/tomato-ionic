@@ -29,7 +29,7 @@ export class CalendarService {
   safeOpt(calendarOptions: any = {}): CalendarModalOptions {
     const _disableWeeks: number[] = [];
     const _daysConfig: DayConfig[] = [];
-    let {
+    const {
       from = new Date(),
       to = 0,
       weekStart = 0,
@@ -105,19 +105,19 @@ export class CalendarService {
   }
 
   findDayConfig(day: any, opt: CalendarModalOptions): any {
-    if (opt.daysConfig.length <= 0) return null;
+    if (opt.daysConfig.length <= 0) { return null; }
     return opt.daysConfig.find(n => day.isSame(n.date, 'day'));
   }
 
   createCalendarDay(time: number, opt: CalendarModalOptions, month?: number): CalendarDay {
-    let _time = moment(time);
-    let date = moment(time);
-    let isToday = moment().isSame(_time, 'days');
-    let dayConfig = this.findDayConfig(_time, opt);
-    let _rangeBeg = moment(opt.from).valueOf();
-    let _rangeEnd = moment(opt.to).valueOf();
+    const _time = moment(time);
+    const date = moment(time);
+    const isToday = moment().isSame(_time, 'days');
+    const dayConfig = this.findDayConfig(_time, opt);
+    const _rangeBeg = moment(opt.from).valueOf();
+    const _rangeEnd = moment(opt.to).valueOf();
     let isBetween = true;
-    let disableWee = opt.disableWeeks.indexOf(_time.toDate().getDay()) !== -1;
+    const disableWee = opt.disableWeeks.indexOf(_time.toDate().getDay()) !== -1;
     if (_rangeBeg > 0 && _rangeEnd > 0) {
       if (!opt.canBackwardsSelected) {
         isBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
@@ -126,7 +126,7 @@ export class CalendarService {
       }
     } else if (_rangeBeg > 0 && _rangeEnd === 0) {
       if (!opt.canBackwardsSelected) {
-        let _addTime = _time.add(1, 'day');
+        const _addTime = _time.add(1, 'day');
         isBetween = !_addTime.isAfter(_rangeBeg);
       } else {
         isBetween = false;
@@ -171,14 +171,14 @@ export class CalendarService {
   }
 
   createCalendarMonth(original: CalendarOriginal, opt: CalendarModalOptions): CalendarMonth {
-    let days: Array<CalendarDay> = new Array(6).fill(null);
-    let len = original.howManyDays;
+    const days: Array<CalendarDay> = new Array(6).fill(null);
+    const len = original.howManyDays;
     for (let i = original.firstWeek; i < len + original.firstWeek; i++) {
-      let itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
+      const itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
       days[i] = this.createCalendarDay(itemTime, opt);
     }
 
-    let weekStart = opt.weekStart;
+    const weekStart = opt.weekStart;
 
     if (weekStart === 1) {
       if (days[0] === null) {
@@ -217,16 +217,16 @@ export class CalendarService {
   }
 
   createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarModalOptions): Array<CalendarMonth> {
-    let _array: Array<CalendarMonth> = [];
+    const _array: Array<CalendarMonth> = [];
 
-    let _start = new Date(startTime);
-    let _startMonth = new Date(_start.getFullYear(), _start.getMonth(), 1).getTime();
+    const _start = new Date(startTime);
+    const _startMonth = new Date(_start.getFullYear(), _start.getMonth(), 1).getTime();
 
     for (let i = 0; i < monthsNum; i++) {
-      let time = moment(_startMonth)
+      const time = moment(_startMonth)
         .add(i, 'M')
         .valueOf();
-      let originalCalendar = this.createOriginalCalendar(time);
+      const originalCalendar = this.createOriginalCalendar(time);
       _array.push(this.createCalendarMonth(originalCalendar, opt));
     }
 

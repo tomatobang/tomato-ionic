@@ -19,7 +19,7 @@ export class BillformComponent implements OnInit {
     effect: 'flip'
   };
 
-  title = "";
+  title = '';
 
   newBill = {
     _id: '',
@@ -144,7 +144,7 @@ export class BillformComponent implements OnInit {
       this.title = '编辑账单';
       setTimeout(() => {
         this.initSelectedTag(this.newBill.tag, this.newBill.type);
-      }, 10)
+      }, 10);
     } else {
       this.title = '新增账单';
       this.newBill.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
@@ -206,7 +206,7 @@ export class BillformComponent implements OnInit {
 
   async submitBill() {
     if (!this.newBill.amount) {
-      let toast = await this.toastCtrl.create({
+      const toast = await this.toastCtrl.create({
         message: '请输入金额',
         duration: 2500
       });
@@ -215,7 +215,7 @@ export class BillformComponent implements OnInit {
     }
 
     if (!this.newBill.asset) {
-      let toast = await this.toastCtrl.create({
+      const toast = await this.toastCtrl.create({
         message: '请填写支付方式',
         duration: 2500
       });
@@ -223,7 +223,7 @@ export class BillformComponent implements OnInit {
       return;
     }
     if (!this.tag || this.tag.length <= 0) {
-      let toast = await this.toastCtrl.create({
+      const toast = await this.toastCtrl.create({
         message: '请先选择标签',
         duration: 2500
       });
@@ -252,7 +252,7 @@ export class BillformComponent implements OnInit {
         ret.asset = {
           name: this.findAssetName(ret.asset)
         };
-        this.modalCtrl.dismiss(ret)
+        this.modalCtrl.dismiss(ret);
         this.resetFormData();
       }
     });
@@ -271,7 +271,7 @@ export class BillformComponent implements OnInit {
         ret.asset = {
           name: this.findAssetName(ret.asset)
         };
-        this.modalCtrl.dismiss(ret)
+        this.modalCtrl.dismiss(ret);
         this.resetFormData();
       }
     });

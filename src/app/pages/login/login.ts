@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
     autoplay: {
       delay: 4000
     },
-  }
+  };
   backgrounds = [
     'assets/imgs/background/background-1.jpg',
     'assets/imgs/background/background-2.jpg',
@@ -48,8 +48,8 @@ export class LoginPage implements OnInit {
     private store$: Store<State>
   ) {
     this.actrouter.queryParams.subscribe((queryParams) => {
-      this.user.username = queryParams["username"];
-      this.user.password = queryParams["password"];
+      this.user.username = queryParams['username'];
+      this.user.password = queryParams['password'];
     });
   }
 
@@ -93,12 +93,12 @@ export class LoginPage implements OnInit {
       alias: this.globalservice.userinfo._id,
     };
     this.globalservice.jpushAlias = JSON.stringify(jpushAlias);
-    this.jPushService.init()
+    this.jPushService.init();
     this.jPushService.setAlias(jpushAlias).then((args) => {
       console.log('jpush setAlias succeed:', args);
     }).catch(err => {
       console.log('jpush setAlias error:', err);
-    });;
+    });
 
     this.chatIO.login(this.globalservice.userinfo._id, this.globalservice.token);
     this.info.init();

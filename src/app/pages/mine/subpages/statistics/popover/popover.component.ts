@@ -52,9 +52,9 @@ export class PopoverComponent implements OnInit {
         this.totalIncome = 0;
         for (let index = 0; index < ret.length; index++) {
           const element: any = ret[index];
-          if (element.type === "支出") {
+          if (element.type === '支出') {
             this.totalCost += element.amount;
-          } else if (element.type === "收入") {
+          } else if (element.type === '收入') {
             this.totalIncome += element.amount;
           }
         }

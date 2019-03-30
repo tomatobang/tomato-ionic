@@ -15,7 +15,7 @@ export class FriendTomatoesPage implements OnInit {
   ngOnInit() {
 
     this.actrouter.queryParams.subscribe((queryParams) => {
-      this.title = queryParams["friendName"];
+      this.title = queryParams['friendName'];
       this.tomatoes = new Array(10).fill('');
     });
   }

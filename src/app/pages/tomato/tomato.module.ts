@@ -11,7 +11,7 @@ import { VoiceRecorderComponent } from '@components/voice-recorder/';
 import { AutosizeDirective } from '@directives/autosize.directive';
 import { TaskPage } from './task/task';
 
-import { TomatoPageRoutingModule } from './tomato.router.module'
+import { TomatoPageRoutingModule } from './tomato.router.module';
 
 @NgModule({
   declarations: [

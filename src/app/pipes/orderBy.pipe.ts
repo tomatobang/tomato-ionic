@@ -13,8 +13,8 @@ export class OrderBy implements PipeTransform {
     }
 
     if (this.isSingle(orderConfigs)) {
-      let orderConfig: string = !Array.isArray(orderConfigs) ? orderConfigs : orderConfigs[0];
-      let config = this.parseProperty(orderConfig);
+      const orderConfig: string = !Array.isArray(orderConfigs) ? orderConfigs : orderConfigs[0];
+      const config = this.parseProperty(orderConfig);
 
       // Basic array
       if (config.property === '') {
@@ -24,7 +24,7 @@ export class OrderBy implements PipeTransform {
       return _.orderBy(input, [config.property], [config.order]);
     }
 
-    let configs = this.parseProperties(<string[]>orderConfigs);
+    const configs = this.parseProperties(<string[]>orderConfigs);
     return _.orderBy(input, configs.properties, configs.orders);
   }
 
@@ -33,16 +33,16 @@ export class OrderBy implements PipeTransform {
   }
 
   private parseProperty(config: string): { order: string, property: string } {
-    let orderChar = config.substr(0, 1);
-    let isDesc = orderChar === '-';
-    let hasOrder = orderChar || orderChar === '+';
+    const orderChar = config.substr(0, 1);
+    const isDesc = orderChar === '-';
+    const hasOrder = orderChar || orderChar === '+';
     return { order: isDesc ? 'desc' : 'asc', property: hasOrder ? config.substr(1) : config };
   }
 
   private parseProperties(configs: Array<string>): { orders: Array<string>, properties: Array<string> } {
-    let result = { orders: [], properties: [] };
+    const result = { orders: [], properties: [] };
     configs.forEach(configStr => {
-      let config = this.parseProperty(configStr);
+      const config = this.parseProperty(configStr);
       result.orders.push(config.order);
       result.properties.push(config.property);
     });

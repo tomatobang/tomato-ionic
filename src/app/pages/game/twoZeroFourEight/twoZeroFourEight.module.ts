@@ -14,7 +14,7 @@ import { UniqueIdService } from './services/uniqueId.service';
 import { GameService } from './services/game.service';
 import { GridService } from './services/grid.service';
 
-import { TwoZeroFourEightPageRoutingModule } from './twoZeroFourEight.router.module'
+import { TwoZeroFourEightPageRoutingModule } from './twoZeroFourEight.router.module';
 
 @NgModule({
   declarations: [

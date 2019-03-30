@@ -102,7 +102,7 @@ export class MyApp {
         if (this.global.userinfo) {
           this.jPush.init();
           this.jPush.setDebugMode(true);
-          let jpushAlias = {
+          const jpushAlias = {
             sequence: new Date().getTime(),
             alias: this.global.userinfo._id,
           };
@@ -111,7 +111,7 @@ export class MyApp {
             console.log('jpush setAlias succeed:', args);
           }).catch(err => {
             console.log('jpush setAlias error:', err);
-          });;
+          });
         }
         this.backgroundMode.disable();
       }
@@ -224,7 +224,7 @@ export class MyApp {
       this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
         if (outlet && outlet.canGoBack()) {
           outlet.pop();
-        } else { //  if (this.router.url === 'tabs/footprint') 
+        } else { //  if (this.router.url === 'tabs/footprint')
           if (
             new Date().getTime() - this.lastTimeBackPress <
             this.timePeriodToExit

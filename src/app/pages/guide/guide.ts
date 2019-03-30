@@ -25,7 +25,7 @@ export class GuidePage {
 
   startApp() {
     this.storage.set('hasSeenGuide', 'true');
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
   }
 
   onSlideChangeStart(slider) {

@@ -19,7 +19,7 @@ export class AssetComponent implements OnInit {
     name: '',
     amount: null,
     note: ''
-  }
+  };
   editItem;
   totalAmount = 0;
 
@@ -99,7 +99,7 @@ export class AssetComponent implements OnInit {
 
   /**
    * 删除资产
-   * @param item 
+   * @param item
    */
   delete(item, index) {
     // TODO:

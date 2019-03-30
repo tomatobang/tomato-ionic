@@ -7,7 +7,7 @@ export abstract class TodoService extends RebirthHttp {
   abstract createTodo(todo: Todo): Observable<any>;
 
   abstract getTodos(
-    date:any,
+    date: any,
     pageIndex: any,
     pageSize: any,
     keyword?: string

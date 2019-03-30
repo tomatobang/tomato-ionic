@@ -132,7 +132,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   isEndSelection(day: CalendarDay): boolean {
-    if (!day) return false;
+    if (!day) { return false; }
     if (this.pickMode !== pickModes.RANGE || !this._isInit || this._date[1] === null) {
       return false;
     }
@@ -141,7 +141,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   isBetween(day: CalendarDay): boolean {
-    if (!day) return false;
+    if (!day) { return false; }
 
     if (this.pickMode !== pickModes.RANGE || !this._isInit) {
       return false;
@@ -158,7 +158,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   isStartSelection(day: CalendarDay): boolean {
-    if (!day) return false;
+    if (!day) { return false; }
     if (this.pickMode !== pickModes.RANGE || !this._isInit || this._date[0] === null) {
       return false;
     }
@@ -185,7 +185,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   onSelected(item: CalendarDay): void {
-    if (this.readonly) return;
+    if (this.readonly) { return; }
     item.selected = true;
     this.select.emit(item);
     if (this.pickMode === pickModes.SINGLE) {

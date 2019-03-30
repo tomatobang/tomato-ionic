@@ -21,7 +21,7 @@ export class SettingPage implements OnInit {
     resttime: '5',
     countdown: '25',
     isAlwaysLight: true
-  }
+  };
 
   constructor(
     public globalservice: GlobalService,
@@ -40,7 +40,7 @@ export class SettingPage implements OnInit {
    * @param value 时长
    */
   setCountdown(value: string) {
-    this.globalservice.countdown = parseInt(value,10);
+    this.globalservice.countdown = parseInt(value, 10);
   }
 
   /**
@@ -48,7 +48,7 @@ export class SettingPage implements OnInit {
    * @param value 休息时长
    */
   setResttime(value: string) {
-    this.globalservice.resttime = parseInt(value,10);
+    this.globalservice.resttime = parseInt(value, 10);
   }
 
   /**

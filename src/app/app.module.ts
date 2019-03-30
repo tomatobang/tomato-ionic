@@ -59,7 +59,7 @@ import { RavenErrorHandler } from './raven-error-handler.';
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: LOCALE_ID, useValue: "zh-CN" },
+    { provide: LOCALE_ID, useValue: 'zh-CN' },
     // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],

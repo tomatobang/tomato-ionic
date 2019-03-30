@@ -85,7 +85,7 @@ export class MinePage implements OnInit {
           console.log('jpush deleteAlias succeed:', args);
         }).catch(err => {
           console.log('jpush deleteAlias error:', err);
-        });;
+        });
         this.cache.clearCache();
       });
     });

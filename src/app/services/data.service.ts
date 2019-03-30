@@ -25,12 +25,22 @@ export * from './data/asset';
   providedIn: 'root',
 })
 export class DataService {
+
+  constructor(public http: HttpClient, public native: NativeService) { }
+  public get TasksMonitor(): Observable<any> {
+    return this.taskSubject.asObservable();
+  }
+  public get TomatoesMonitor(): Observable<any> {
+    return this.tomatoesSubject.asObservable();
+  }
   baseUrl: string = baseUrl;
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
   });
 
-  constructor(public http: HttpClient, public native: NativeService) { }
+  public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
+
+  public tomatoesSubject: Subject<any> = new BehaviorSubject<any>(null);
 
   amapHttpUtil(url: string, options: Object): Observable<Object> {
     const params = new HttpParams({
@@ -56,16 +66,6 @@ export class DataService {
       })
     );
     return obs;
-  }
-
-  public taskSubject: Subject<any> = new BehaviorSubject<any>(null);
-  public get TasksMonitor(): Observable<any> {
-    return this.taskSubject.asObservable();
-  }
-
-  public tomatoesSubject: Subject<any> = new BehaviorSubject<any>(null);
-  public get TomatoesMonitor(): Observable<any> {
-    return this.tomatoesSubject.asObservable();
   }
 
   taskChange(obj) {
