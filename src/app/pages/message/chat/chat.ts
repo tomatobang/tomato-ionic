@@ -45,8 +45,8 @@ export class ChatPage {
   ) {
     this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
     this.actrouter.queryParams.subscribe((queryParams) => {
-      this.toUserId = queryParams["toUserId"];
-      this.toUserName = queryParams["toUserName"];
+      this.toUserId = queryParams['toUserId'];
+      this.toUserName = queryParams['toUserName'];
 
       this.userId = this.globalService.userinfo._id;
       this.userName = this.globalService.userinfo.username;
@@ -56,8 +56,8 @@ export class ChatPage {
         for (let index = 0; index < messages.length; index++) {
           const newMsg: ChatMessage = {
             messageId: messages[index].create_at,
-            userId: messages[index].from ? messages[index].from : this.toUserId,
-            userName: messages[index].from ? this.userName : this.toUserName,
+            userId: messages[index].from === this.toUserId ? this.toUserId : this.userId,
+            userName: messages[index].from === this.toUserId ? this.toUserName : this.userName,
             userImgUrl: './assets/tomato-active.png',
             toUserId: messages[index].to ? messages[index].to : this.userId,
             time: messages[index].create_at,
