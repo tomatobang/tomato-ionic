@@ -51,7 +51,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     CalendarModule,
     SocketIoModule,
-    HttpModule,
     HttpClientModule,
     RebirthHttpModule
   ],
