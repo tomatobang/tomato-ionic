@@ -26,6 +26,10 @@ import { OnlineUserService } from '@services/data.service';
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { TabsService } from '@services/tab.service';
+
+import { CodePush } from '@ionic-native/code-push/ngx';
+import { DEBUG, CODE_PUSH_DEPLOYMENT_KEY } from './Constants';
+
 declare var window: any;
 
 @Component({
@@ -49,6 +53,7 @@ export class MyApp {
 
   constructor(
     private jPush: JPush,
+    private codePush: CodePush,
     private backgroundMode: BackgroundMode,
     private menuCtrl: MenuController,
     private actionSheetCtrl: ActionSheetController,
@@ -80,6 +85,7 @@ export class MyApp {
     this.initializeApp();
     this.initTranslate();
     this.initRoute();
+    this.codeSync();
   }
 
   initializeApp() {
@@ -244,7 +250,45 @@ export class MyApp {
     });
   }
 
-  navigate(url) {
-    return this.router.navigateByUrl(url);
+  /**
+   * 代码热更新
+   */
+  codeSync() {
+    if (!this.isMobile()) {
+      return
+    }
+    let deploymentKey = '';
+    if (this.isAndroid() && DEBUG.IS_DEBUG) {
+      deploymentKey = CODE_PUSH_DEPLOYMENT_KEY.ANDROID.Staging;
+    }
+    if (this.isAndroid() && !DEBUG.IS_DEBUG) {
+      deploymentKey = CODE_PUSH_DEPLOYMENT_KEY.ANDROID.Production;
+    }
+    if (this.isIos() && DEBUG.IS_DEBUG) {
+      deploymentKey = CODE_PUSH_DEPLOYMENT_KEY.IOS.Staging;
+    }
+    if (this.isIos() && !DEBUG.IS_DEBUG) {
+      deploymentKey = CODE_PUSH_DEPLOYMENT_KEY.IOS.Production;
+    }
+    this.codePush.sync({
+      deploymentKey: deploymentKey
+    }).subscribe((syncStatus) => {
+      console.log('code syncStatus', syncStatus);
+      if (syncStatus === 1) {
+        this.codePush.restartApplication();
+      }
+    });
+  }
+
+  isMobile(): boolean {
+    return this.platform.is("mobile") && !this.platform.is("mobileweb");
+  }
+
+  isAndroid(): boolean {
+    return this.isMobile() && this.platform.is("android");
+  }
+
+  isIos(): boolean {
+    return this.isMobile && (this.platform.is("ios") || this.platform.is("ipad") || this.platform.is("iphone"));
   }
 }

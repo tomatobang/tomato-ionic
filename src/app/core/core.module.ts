@@ -4,6 +4,7 @@
 
 import { NgModule } from '@angular/core';
 
+import { CodePush } from '@ionic-native/code-push/ngx';
 import { Media } from '@ionic-native/media/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
@@ -56,6 +57,7 @@ import { UserFriendService } from '@services/data/user_friend';
     FileOpener,
     Insomnia,
     Network,
+    CodePush,
     AppCenterAnalytics,
     AppCenterCrashes,
     LocalNotifications,
