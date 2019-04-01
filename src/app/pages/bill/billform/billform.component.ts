@@ -155,7 +155,7 @@ export class BillformComponent implements OnInit {
 
   initSelectedTag(tags, type) {
     if (tags && tags.length > 0) {
-
+      this.tag = [];
       for (let index = 0; index < tags.length; index++) {
         const tag = tags[index];
         if (type === '支出') {
@@ -163,6 +163,7 @@ export class BillformComponent implements OnInit {
             const tag1 = this.payTag1[index];
             if (tag === tag1.name) {
               tag1.selected = true;
+              this.tag.push(tag1.name);
             }
           }
 
@@ -170,6 +171,7 @@ export class BillformComponent implements OnInit {
             const tag2 = this.payTag2[index];
             if (tag === tag2.name) {
               tag2.selected = true;
+              this.tag.push(tag2.name);
             }
           }
         } else if (type === '收入') {
@@ -177,6 +179,7 @@ export class BillformComponent implements OnInit {
             const tag3 = this.payTag3[index];
             if (tag === tag3.name) {
               tag3.selected = true;
+              this.tag.push(tag3.name);
             }
           }
         }
@@ -192,7 +195,7 @@ export class BillformComponent implements OnInit {
         if (this.newBill._id) {
           for (let index = 0; index < this.assetList.length; index++) {
             const element = this.assetList[index];
-            if (element._id === this.newBill._id) {
+            if (element._id === this.newBill.asset) {
               this.newBill.asset = element._id;
               return;
             }
@@ -250,6 +253,7 @@ export class BillformComponent implements OnInit {
     }).subscribe(ret => {
       if (ret) {
         ret.asset = {
+          _id: ret.asset,
           name: this.findAssetName(ret.asset)
         };
         this.modalCtrl.dismiss(ret);
@@ -269,6 +273,7 @@ export class BillformComponent implements OnInit {
     }).subscribe(ret => {
       if (ret) {
         ret.asset = {
+          _id: ret.asset,
           name: this.findAssetName(ret.asset)
         };
         this.modalCtrl.dismiss(ret);
