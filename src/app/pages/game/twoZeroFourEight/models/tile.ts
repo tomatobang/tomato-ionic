@@ -1,25 +1,25 @@
 import { IPosition, ITile } from '../interfaces/index';
-import { uniqueIdService } from '../services/index';
+import { uniqueIdService } from '../services/uniqueId.service';
 
 export class Tile implements ITile {
-  originalX:  number;
-  originalY:  number;
-  x:          number;
-  y:          number;
-  value:      number;
-  id:         string;
-  merged:     boolean;
+  originalX: number;
+  originalY: number;
+  x: number;
+  y: number;
+  value: number;
+  id: string;
+  merged: boolean;
 
   constructor(position: IPosition, value: number) {
-    this.x      = position.x;
-    this.y      = position.y;
-    this.value  = value || 2;
+    this.x = position.x;
+    this.y = position.y;
+    this.value = value || 2;
     this.id = uniqueIdService.generate();
     this.merged = false;
   }
 
   get position(): IPosition {
-    return <IPosition>{x: this.x, y: this.y};
+    return <IPosition>{ x: this.x, y: this.y };
   }
 
   savePosition?(): void {
