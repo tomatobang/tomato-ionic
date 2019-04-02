@@ -1,7 +1,6 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Events } from '@ionic/angular';
-import { RebirthHttpProvider } from 'rebirth-http';
 import { ChatMessage } from './providers/chat-message.model';
 import { ChatService } from './providers/chat-service';
 import { GlobalService } from '@services/global.service';
@@ -40,10 +39,7 @@ export class ChatPage {
     public cache: CacheService,
     public chatIO: ChatIOService,
     public messageService: MessageService,
-    public globalservice: GlobalService,
-    public rebirthProvider: RebirthHttpProvider,
   ) {
-    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.toUserId = queryParams['toUserId'];
       this.toUserName = queryParams['toUserName'];

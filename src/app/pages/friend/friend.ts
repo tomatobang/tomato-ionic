@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { RebirthHttpProvider } from 'rebirth-http';
 import { PopOverPage } from './popover/popover';
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
-import { GlobalService } from '@services/global.service';
 
 @Component({
   selector: 'cmp-friend',
@@ -75,13 +73,10 @@ export class FriendPage implements OnInit {
 
   constructor(
     public chatIO: ChatIOService,
-    public globalservice: GlobalService,
-    public rebirthProvider: RebirthHttpProvider,
     private router: Router,
     private popoverController: PopoverController,
     public info: InfoService
   ) {
-    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
 
   ngOnInit() {

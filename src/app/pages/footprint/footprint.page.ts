@@ -2,8 +2,6 @@ import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
-import { RebirthHttpProvider } from 'rebirth-http';
-import { GlobalService } from '@services/global.service';
 
 @Component({
   selector: 'app-footprint',
@@ -62,11 +60,8 @@ export class FootprintPage implements OnInit, OnDestroy {
   constructor(
     private baidu: BaiduLocationService,
     private footprintserice: OnlineFootprintService,
-    private globalservice: GlobalService,
-    private rebirthProvider: RebirthHttpProvider,
     private loading: LoadingController
   ) {
-    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
 
   selectMode(index) {
@@ -144,6 +139,7 @@ export class FootprintPage implements OnInit, OnDestroy {
       event.target.complete();
       console.error(err);
     });
+    this.listFootprint();
   }
 
   /**

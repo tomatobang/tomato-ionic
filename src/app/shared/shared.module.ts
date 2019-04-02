@@ -13,7 +13,6 @@ import { DebounceClickDirective } from '@directives/debounce-click.directive';
 import { TrackEventDirective } from '@directives/trackEvent.directive';
 
 import { CalendarModule } from '../components/ion2-calendar';
-import { RebirthHttpModule } from 'rebirth-http';
 import { SocketIoModule } from 'ngx-socket-io';
 
 // AoT requires an exported function for factories
@@ -29,7 +28,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PipesModule,
     CalendarModule,
     HttpClientModule,
-    RebirthHttpModule,
     SocketIoModule,
     TranslateModule.forRoot({
       loader: {
@@ -52,7 +50,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CalendarModule,
     SocketIoModule,
     HttpClientModule,
-    RebirthHttpModule
   ],
 })
 export class SharedModule { }

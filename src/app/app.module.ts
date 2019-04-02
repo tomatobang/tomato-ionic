@@ -26,6 +26,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { RebirthHttpModule } from 'rebirth-http';
 import { environment } from '../environments/environment';
 import { QRScannerModalModule } from './modals/qr-scanner/qr-scanner.module';
 import { QRImgModalModule } from './modals/qr-img/qr-img.module';
@@ -45,6 +46,7 @@ import { RavenErrorHandler } from './raven-error-handler.';
     BrowserModule,
     QRScannerModalModule,
     QRImgModalModule,
+    RebirthHttpModule,
     IonicStorageModule.forRoot({
       name: '__tomatobangdb',
       driverOrder: ['indexeddb', 'sqlite', 'websql'],

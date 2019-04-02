@@ -102,7 +102,9 @@ export class LoginPage implements OnInit {
 
     this.chatIO.login(this.globalservice.userinfo._id, this.globalservice.token);
     this.info.init();
-    this.router.navigate(['tabs']);
+    this.router.navigate(['tabs'], {
+      replaceUrl: true
+    });
   }
 
   loginFailed(retOBJ) {

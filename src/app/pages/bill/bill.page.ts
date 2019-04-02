@@ -1,8 +1,6 @@
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { AssetComponent } from './asset/asset.component';
-import { GlobalService } from '@services/global.service';
-import { RebirthHttpProvider } from 'rebirth-http';
 import { OnlineBillService } from '@services/data/bill/bill.service';
 import { BillformComponent } from './billform/billform.component';
 
@@ -19,11 +17,8 @@ export class BillPage implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private globalservice: GlobalService,
-    private rebirthProvider: RebirthHttpProvider,
     private billService: OnlineBillService,
   ) {
-    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
 
   ngOnInit() {

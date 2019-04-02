@@ -59,7 +59,9 @@ export class TomatoIOService {
    * 登出
    */
   logout(userid: string) {
-    this.socket.emit('logout', { userid, endname: 'ionic' });
+    if (this.socket) {
+      this.socket.emit('logout', { userid, endname: 'ionic' });
+    }
   }
 
   load_tomato_succeed() {

@@ -3,7 +3,6 @@ import {
   ModalController,
   Events,
 } from '@ionic/angular';
-import { RebirthHttpProvider } from 'rebirth-http';
 import { GlobalService } from '@services/global.service';
 import { TaskPage } from './task/task';
 
@@ -34,14 +33,12 @@ export class TomatoPage implements OnInit {
   constructor(
     public events: Events,
     public modalCtrl: ModalController,
-    public rebirthProvider: RebirthHttpProvider,
     public globalservice: GlobalService,
     public tomatoIO: TomatoIOService,
     private helper: Helper,
     public tomatoservice: OnlineTomatoService,
     public voiceService: VoicePlayService,
   ) {
-    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
 
   ngOnInit() {

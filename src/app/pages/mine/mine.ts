@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, Platform, ModalController } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
-import { RebirthHttpProvider } from 'rebirth-http';
 import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { NativeService } from '@services/native.service';
 import { CacheService } from '@services/cache.service';
@@ -37,14 +36,12 @@ export class MinePage implements OnInit {
     public userService: OnlineUserService,
     private helper: Helper,
     private router: Router,
-    public rebirthProvider: RebirthHttpProvider,
   ) { }
 
   public ngOnInit(): void {
     this.username = this.globalservice.userinfo.username;
     this.bio = this.globalservice.userinfo.bio;
     this.userid = this.globalservice.userinfo._id;
-    this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
   }
 
   ionViewDidEnter() {
