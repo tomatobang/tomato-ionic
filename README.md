@@ -22,9 +22,11 @@ $ npm i
 
 To serve in the browser
 
-```sh
+```bash
+
 $ ionic serve
 ```
+
 
 now you can see tomatobang running at your browser
 
@@ -34,24 +36,37 @@ now you can see tomatobang running at your browser
 
 to add platform
 
-```sh
+```bash
+
 $ ionic cordova platform add android
 $ ionic cordova platform add ios
+
 ```
 
 To run
 
-```sh
+```bash
+
 $ ionic cordova run android
 $ ionic cordova run ios
+
 ```
 
 ### Build Android APK File
 
 To build APK file to output folder
 
-```sh
+```bash
 $ ionic cordova build android
+```
+
+### Hot Push
+
+```bash
+# android
+$ code-push release-cordova tomatobang android
+# ios
+$ code-push release-cordova tomatobang ios
 ```
 
 ### Related Repo

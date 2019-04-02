@@ -107,7 +107,7 @@ export class LoginPage implements OnInit {
     // 新用戶登录
     this.emitService.setActiveUser(userinfo);
     this.router.navigate(['tabs'], {
-      replaceUrl: true
+      // replaceUrl: true
     });
   }
 

@@ -100,7 +100,9 @@ export class NativeService {
 
     this.network.onConnect().subscribe(async () => {
       this._isOffline = false;
-      await this.toast.dismissAll();
+      if (this.toast) {
+        await this.toast.dismissAll();
+      }
       setTimeout(() => {
         if (this.network.type === 'wifi') {
           console.log('got network:wifi!');

@@ -8,6 +8,7 @@ import {
   PopoverController,
   IonRouterOutlet,
   MenuController,
+  LoadingController
 } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -27,7 +28,7 @@ import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { TabsService } from '@services/tab.service';
 
-import { CodePush } from '@ionic-native/code-push/ngx';
+import { CodePush, SyncStatus } from '@ionic-native/code-push/ngx';
 import { DEBUG, CODE_PUSH_DEPLOYMENT_KEY } from './Constants';
 
 declare var window: any;
@@ -73,6 +74,7 @@ export class MyApp {
     public globalservice: GlobalService,
     public emitservice: EmitService,
     public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public tabService: TabsService
   ) {
@@ -252,6 +254,7 @@ export class MyApp {
   /**
    * 代码热更新
    */
+  loading: any;
   codeSync() {
     if (!this.isMobile()) {
       return
@@ -270,11 +273,33 @@ export class MyApp {
       deploymentKey = CODE_PUSH_DEPLOYMENT_KEY.IOS.Production;
     }
     this.codePush.sync({
-      deploymentKey: deploymentKey
-    }).subscribe((syncStatus) => {
+      deploymentKey: deploymentKey,
+      updateDialog: {
+        optionalUpdateMessage: '应用有更新哦！',
+        updateTitle: '提示',
+        optionalInstallButtonLabel: '立即更新',
+        optionalIgnoreButtonLabel: '取消',
+      }
+    }, (progress) => { // download progress
+      const downloadProgress = window.parseInt(
+        (progress.receivedBytes / progress.totalBytes) * 100,
+        10
+      );
+      console.log(`Downloaded ${downloadProgress} %`);
+      if (this.loading) {
+        this.loading.message = `已下载${downloadProgress}%`;
+      }
+    }).subscribe(async (syncStatus: SyncStatus) => {
       console.log('code syncStatus', syncStatus);
-      if (syncStatus === 1) {
-        this.codePush.restartApplication();
+      if (syncStatus === SyncStatus.DOWNLOADING_PACKAGE) {
+
+        this.loading = await this.loadingCtrl.create({
+          message: `下载中...`,
+        });
+        await this.loading.present();
+      }
+      if (syncStatus === SyncStatus.UPDATE_INSTALLED) {
+        await this.codePush.restartApplication();
       }
     });
   }
