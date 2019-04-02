@@ -75,7 +75,7 @@ export class FriendPage implements OnInit {
     public chatIO: ChatIOService,
     private router: Router,
     private popoverController: PopoverController,
-    public info: InfoService
+    public info: InfoService,
   ) {
   }
 

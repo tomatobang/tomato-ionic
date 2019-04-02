@@ -26,11 +26,14 @@ export class AssetComponent implements OnInit {
   constructor(
     private modal: ModalController,
     private service: OnlineAssetService,
-    private emit: EmitService
+    private emitService: EmitService
   ) { }
 
   ngOnInit() {
     this.loadAssetList();
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.loadAssetList();
+    });
   }
 
   close() {
@@ -70,7 +73,7 @@ export class AssetComponent implements OnInit {
         } else {
           this.assetList = [ret];
         }
-        this.emit.eventEmit.emit('assetChange');
+        this.emitService.eventEmit.emit('assetChange');
       });
     }
 
@@ -79,7 +82,7 @@ export class AssetComponent implements OnInit {
         this.editItem.name = ret.name;
         this.editItem.amount = ret.amount;
         this.editItem.note = ret.note;
-        this.emit.eventEmit.emit('assetChange');
+        this.emitService.eventEmit.emit('assetChange');
       });
     }
   }
@@ -106,7 +109,7 @@ export class AssetComponent implements OnInit {
     this.service.deleteAsset(item._id).subscribe(ret => {
       this.totalAmount -= item.amount;
       this.assetList.splice(index, 1);
-      this.emit.eventEmit.emit('assetChange');
+      this.emitService.eventEmit.emit('assetChange');
     });
   }
 }

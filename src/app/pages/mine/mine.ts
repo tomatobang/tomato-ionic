@@ -10,6 +10,7 @@ import { OnlineUserService } from '@services/data.service';
 import { SafeUrl } from '@angular/platform-browser';
 import { Helper } from '@services/utils/helper';
 import { QRImgModal } from '@modals/qr-img/qr-img';
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'cmp-mine',
@@ -36,15 +37,28 @@ export class MinePage implements OnInit {
     public userService: OnlineUserService,
     private helper: Helper,
     private router: Router,
+    private emitService: EmitService,
   ) { }
 
   public ngOnInit(): void {
+    this.setUserInfo();
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.setUserInfo();
+      this.setHeadImg();
+    });
+  }
+
+  ionViewDidEnter() {
+    this.setHeadImg();
+  }
+
+  setUserInfo() {
     this.username = this.globalservice.userinfo.username;
     this.bio = this.globalservice.userinfo.bio;
     this.userid = this.globalservice.userinfo._id;
   }
 
-  ionViewDidEnter() {
+  setHeadImg() {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
         if (readySource === 'cordova') {
@@ -52,7 +66,7 @@ export class MinePage implements OnInit {
             this.headImg = this.helper.dealWithLocalUrl(url);
           });
         } else {
-          this.headImg = this.helper.dealWithLocalUrl('./assets/tomato-active.png');
+          this.headImg = this.helper.dealWithLocalUrl(this.globalservice.qiniuDomain + this.globalservice.userinfo.img);
         }
       });
     }

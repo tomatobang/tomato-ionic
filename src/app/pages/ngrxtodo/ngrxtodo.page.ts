@@ -5,6 +5,7 @@ import { AppState } from './redux/ngrxtodo.reducer';
 import * as TodoActions from './redux/todo/todo.actions';
 import { OnlineTodoService } from '@services/data.service';
 import { RegularTodoComponent } from './regular-todo/regular-todo.component';
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'page-ngrxtodo-module',
@@ -15,13 +16,17 @@ export class NgRxTodoComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private todoservice: OnlineTodoService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private emitService: EmitService,
   ) { }
 
   ngOnInit() {
     setTimeout(() => {
       this.populateTodos();
     }, 20);
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.populateTodos();
+    });
   }
 
   private populateTodos() {

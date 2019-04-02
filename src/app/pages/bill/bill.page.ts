@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AssetComponent } from './asset/asset.component';
 import { OnlineBillService } from '@services/data/bill/bill.service';
 import { BillformComponent } from './billform/billform.component';
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'app-bill',
@@ -18,11 +19,15 @@ export class BillPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private billService: OnlineBillService,
+    private emitService: EmitService,
   ) {
   }
 
   ngOnInit() {
     this.init();
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.getBillList();
+    });
   }
 
   doRefresh(event) {

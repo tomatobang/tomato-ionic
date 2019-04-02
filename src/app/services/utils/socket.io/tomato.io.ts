@@ -61,6 +61,7 @@ export class TomatoIOService {
   logout(userid: string) {
     if (this.socket) {
       this.socket.emit('logout', { userid, endname: 'ionic' });
+      this.socket = null;
     }
   }
 

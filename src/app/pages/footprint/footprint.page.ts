@@ -2,6 +2,7 @@ import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'app-footprint',
@@ -60,7 +61,8 @@ export class FootprintPage implements OnInit, OnDestroy {
   constructor(
     private baidu: BaiduLocationService,
     private footprintserice: OnlineFootprintService,
-    private loading: LoadingController
+    private loading: LoadingController,
+    private emitService: EmitService,
   ) {
   }
 
@@ -95,6 +97,10 @@ export class FootprintPage implements OnInit, OnDestroy {
 
     this.refreshCreateAt();
     this.listFootprint();
+
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.listFootprint();
+    });
   }
 
   ngOnDestroy() {

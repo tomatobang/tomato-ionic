@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Events } from '@ionic/angular';
 import { OnlineTomatoService } from '@services/data.service';
 import { GlobalService } from '@services/global.service';
+import { EmitService } from '@services/emit.service';
 import { TomatoIOService } from '@services/utils/socket.io.service';
 import * as echarts from 'echarts';
 declare var window;
@@ -28,6 +29,7 @@ export class TodaylistComponent implements OnInit {
   constructor(
     public tomatoIO: TomatoIOService,
     public globalservice: GlobalService,
+    private emitService: EmitService,
     public tomatoservice: OnlineTomatoService,
     public events: Events,
   ) {
@@ -52,6 +54,10 @@ export class TodaylistComponent implements OnInit {
     }, 10);
 
     // let scatterData = this.getVirtulData();
+
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.refreshData();
+    });
   }
 
 

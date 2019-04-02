@@ -5,15 +5,14 @@ import {
   QueryList,
   ElementRef,
 } from '@angular/core';
-import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PinyinService } from '@services/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
 import { GlobalService } from '@services/global.service';
 import { CacheService } from '@services/cache.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { EmitService } from '@services/emit.service';
 
 @Component({
   selector: 'cmp-contacts',
@@ -21,7 +20,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./contacts.scss']
 })
 export class ContactsPage implements OnInit {
+
   @ViewChild('scrollMe') private myScrollContainer;
+
   private navChars: QueryList<HTMLLinkElement>;
   userid;
   friendlist = [];
@@ -40,10 +41,14 @@ export class ContactsPage implements OnInit {
     public cache: CacheService,
     public chatIO: ChatIOService,
     public router: Router,
+    private emitService: EmitService
   ) { }
 
   ngOnInit() {
     this.getAgreedUserFriend();
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.getAgreedUserFriend();
+    });
     // this.mock();
   }
 
@@ -106,30 +111,6 @@ export class ContactsPage implements OnInit {
     });
   }
 
-  mock() {
-    this.getFriendlist()
-      .then(res => {
-        this.friendlist = res;
-        this.getSortedFriendlist();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  getFriendlist(): Promise<Friendinfo[]> {
-    const msgListUrl = './assets/mock/contacts.json';
-
-    return this.http
-      .get(msgListUrl)
-      .toPromise()
-      .then(response => {
-        const res: any = response;
-        return res.data as Friendinfo[];
-      })
-      .catch(err => Promise.reject(err || 'err'));
-  }
-
   getSortedFriendlist() {
     if (this.friendlist instanceof Array && this.friendlist.length > 0) {
       this.newFriendList = this.pinyinUtil.sortByFirstCode(
@@ -158,5 +139,29 @@ export class ContactsPage implements OnInit {
         }
       });
     }
+  }
+
+  mock() {
+    this.getFriendlist()
+      .then(res => {
+        this.friendlist = res;
+        this.getSortedFriendlist();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  getFriendlist(): Promise<Friendinfo[]> {
+    const msgListUrl = './assets/mock/contacts.json';
+
+    return this.http
+      .get(msgListUrl)
+      .toPromise()
+      .then(response => {
+        const res: any = response;
+        return res.data as Friendinfo[];
+      })
+      .catch(err => Promise.reject(err || 'err'));
   }
 }

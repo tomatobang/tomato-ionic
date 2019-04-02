@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { User } from '@services/data.service';
 import { GlobalService } from '@services/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
+import { EmitService } from '@services/emit.service';
 import { JPush } from '@jiguang-ionic/jpush/ngx'
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
@@ -38,6 +39,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private globalservice: GlobalService,
+    private emitService: EmitService,
     private rebirthProvider: RebirthHttpProvider,
     private toastCtrl: ToastController,
     private jPushService: JPush,
@@ -102,6 +104,8 @@ export class LoginPage implements OnInit {
 
     this.chatIO.login(this.globalservice.userinfo._id, this.globalservice.token);
     this.info.init();
+    // 新用戶登录
+    this.emitService.setActiveUser(userinfo);
     this.router.navigate(['tabs'], {
       replaceUrl: true
     });

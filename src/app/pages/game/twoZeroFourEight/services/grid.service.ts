@@ -4,7 +4,7 @@ import {
   IGridPositions,
   IGridPositionTransition,
 } from '../interfaces/index';
-import { Tile } from '../models/tile';
+import { Tile } from '../models/index';
 import { VECTORS } from '../enums/index';
 
 @Injectable()

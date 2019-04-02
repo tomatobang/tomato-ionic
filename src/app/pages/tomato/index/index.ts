@@ -3,8 +3,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { AlertController, Events } from '@ionic/angular';
 import { AngularRoundProgressDirective } from '@directives/angular-round-progress.directive';
-
 import { GlobalService } from '@services/global.service';
+import { EmitService } from '@services/emit.service';
 import { TomatoIOService } from '@services/utils/socket.io.service';
 import { Helper } from '@services/utils/helper';
 
@@ -55,23 +55,15 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     public alertCtrl: AlertController,
     public voiceService: VoicePlayService,
     private localNotifications: LocalNotifications,
-    private helper: Helper
+    private helper: Helper,
+    private emitService: EmitService,
   ) { }
 
   ngOnInit() {
-    this.username = this.globalservice.userinfo.username;
-    if (this.globalservice.userinfo.bio) {
-      this.userBio = this.globalservice.userinfo.bio;
-    } else {
-      this.userBio = '';
-    }
+    this.setUserInfo();
     this.events.subscribe('bio:update', bio => {
       this.userBio = bio;
     });
-    this.countdown = this.globalservice.countdown;
-    this.timerStatus.countdown = this.countdown;
-    this.timerStatus.label = this.countdown + ':00';
-    this.resttime = this.globalservice.resttime;
     this.globalservice.settingState.subscribe(settings => {
       this.countdown = settings.countdown;
       this.timerStatus.label = this.countdown + ':00';
@@ -81,10 +73,27 @@ export class IndexIndexPage implements OnInit, AfterViewInit {
     });
 
     this.initTomatoIO();
-
     this.events.subscribe('tomato:startTask', task => {
       this.startTask(task, true);
     });
+
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.setUserInfo();
+      this.initTomatoIO();
+    });
+  }
+
+  setUserInfo() {
+    this.username = this.globalservice.userinfo.username;
+    if (this.globalservice.userinfo.bio) {
+      this.userBio = this.globalservice.userinfo.bio;
+    } else {
+      this.userBio = '';
+    }
+    this.countdown = this.globalservice.countdown;
+    this.timerStatus.countdown = this.countdown;
+    this.timerStatus.label = this.countdown + ':00';
+    this.resttime = this.globalservice.resttime;
   }
 
   ngAfterViewInit() {

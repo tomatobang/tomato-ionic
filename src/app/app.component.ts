@@ -67,7 +67,6 @@ export class MyApp {
     public events: Events,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public global: GlobalService,
     public native: NativeService,
     public updateService: UpdateService,
     public translateservice: TranslateService,
@@ -105,12 +104,12 @@ export class MyApp {
         this.updateService.checkUpdate();
         this.registerBackButtonAction();
         this.native.initAppCenter();
-        if (this.global.userinfo) {
+        if (this.globalservice.userinfo) {
           this.jPush.init();
           this.jPush.setDebugMode(true);
           const jpushAlias = {
             sequence: new Date().getTime(),
-            alias: this.global.userinfo._id,
+            alias: this.globalservice.userinfo._id,
           };
           this.globalservice.jpushAlias = JSON.stringify(jpushAlias);
           this.jPush.setAlias(jpushAlias).then((args) => {
@@ -134,26 +133,26 @@ export class MyApp {
   }
 
   initRoute() {
-    if (this.global.isFirstTimeOpen) {
-      this.global.isFirstTimeOpen = false;
+    if (this.globalservice.isFirstTimeOpen) {
+      this.globalservice.isFirstTimeOpen = false;
       this.router.navigate(['guide']);
     } else {
-      if (this.global.userinfo) {
-        this.rebirthProvider.headers({ Authorization: this.global.token }, true);
+      if (this.globalservice.userinfo) {
+        this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
         this.rebirthProvider.addResponseErrorInterceptor(err => {
           console.error('请求错误！', err);
         });
 
         this.userService.auth().subscribe(data => {
           if (data && data.status && data.status !== 'fail') {
-            this.chatIO.login(this.global.userinfo._id, this.global.token);
+            this.chatIO.login(this.globalservice.userinfo._id, this.globalservice.token);
             this.info.init();
             this.router.navigate(['tabs']);
           } else {
             this.router.navigate(['login'], {
               queryParams: {
-                username: this.global.userinfo.username,
-                password: this.global.userinfo.password,
+                username: this.globalservice.userinfo.username,
+                password: this.globalservice.userinfo.password,
               }
             });
           }

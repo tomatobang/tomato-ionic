@@ -5,7 +5,7 @@ import {
 } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { TaskPage } from './task/task';
-
+import { EmitService } from '@services/emit.service';
 import { OnlineTomatoService } from '@services/data.service';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { TomatoIOService } from '@services/utils/socket.io.service';
@@ -38,6 +38,7 @@ export class TomatoPage implements OnInit {
     private helper: Helper,
     public tomatoservice: OnlineTomatoService,
     public voiceService: VoicePlayService,
+    private emitService: EmitService,
   ) {
   }
 
@@ -53,6 +54,10 @@ export class TomatoPage implements OnInit {
 
     this.events.subscribe('tomatoio:load_tomato_succeed', () => {
       this.initTomatoIO();
+    });
+
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.loadTomatoes();
     });
   }
 

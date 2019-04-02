@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserFriendState } from '@services/data/user_friend/model/state.enum';
 import { GlobalService } from '@services/global.service';
+import { EmitService } from '@services/emit.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { UserFriendService } from '@services/data/user_friend';
 import { InfoService } from '@services/info.service';
@@ -29,6 +30,7 @@ export class MessagePage implements OnInit {
     public info: InfoService,
     public cache: CacheService,
     public router: Router,
+    private emitService: EmitService,
   ) {
     this.userid = globalservice.userinfo._id;
   }
@@ -97,6 +99,10 @@ export class MessagePage implements OnInit {
       if (i >= 0) {
         this.newMessages[i].count = 0;
       }
+    });
+
+    this.emitService.getActiveUser().subscribe(ret => {
+      this.getReqFriendList();
     });
   }
 
