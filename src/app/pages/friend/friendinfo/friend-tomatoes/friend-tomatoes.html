@@ -10,7 +10,7 @@
 <ion-content class="content">
   <div class="tomatoes">
     <div class="tomato-item" *ngFor=" let i of tomatoes">
-      <img src="assets/tomato-active.png" alt="">
+      <img [src]="headImg" onError="this.src='./assets/tomato-active.png';">
       <div class="friend-info-tomato-title">
         常规任务
       </div>

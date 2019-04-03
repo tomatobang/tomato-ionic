@@ -22,6 +22,8 @@ export class ChatPage {
   msgList: ChatMessage[] = [];
   userId: string;
   userName: string;
+  myHeadImg: string;
+  friendHeadImg: string;
   userImgUrl: string;
   toUserId: string;
   toUserName: string;
@@ -43,10 +45,10 @@ export class ChatPage {
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.toUserId = queryParams['toUserId'];
       this.toUserName = queryParams['toUserName'];
-
+      this.friendHeadImg = queryParams['friendHeadImg'];
       this.userId = this.globalService.userinfo._id;
       this.userName = this.globalService.userinfo.username;
-
+      this.myHeadImg = this.globalService.qiniuDomain + this.globalService.userinfo.img;
       this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
         let minusCount = 0;
         for (let index = 0; index < messages.length; index++) {
@@ -54,7 +56,7 @@ export class ChatPage {
             messageId: messages[index].create_at,
             userId: messages[index].from === this.toUserId ? this.toUserId : this.userId,
             userName: messages[index].from === this.toUserId ? this.toUserName : this.userName,
-            userImgUrl: './assets/tomato-active.png',
+            userImgUrl: messages[index].from === this.toUserId ? this.friendHeadImg : this.myHeadImg,
             toUserId: messages[index].to ? messages[index].to : this.userId,
             time: messages[index].create_at,
             message: messages[index].content,
@@ -83,7 +85,7 @@ export class ChatPage {
               messageId: data.create_at,
               userId: data.from,
               userName: name,
-              userImgUrl: './assets/tomato-active.png',
+              userImgUrl: this.friendHeadImg,
               toUserId: data.to,
               time: data.create_at,
               message: data.content,
@@ -163,7 +165,7 @@ export class ChatPage {
       messageId: Date.now().toString(),
       userId: this.userId,
       userName: this.userName,
-      userImgUrl: './assets/tomato-grey.png',
+      userImgUrl: this.myHeadImg,
       toUserId: this.toUserId,
       time: Date.now(),
       message: this.editorMsg,

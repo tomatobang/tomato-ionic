@@ -52,11 +52,13 @@ export class MessagePage implements OnInit {
             name: name,
             content: element.messages[element.messages.length - 1].content,
             count: element.count,
+            headImg: ''
           });
           this.userSet.set(element._id, index);
-          this.getFriendName(element._id).then(name => {
+          this.getFriendName(element._id).then(item => {
             const i = this.userSet.get(element._id);
-            this.newMessages[i].name = name;
+            this.newMessages[i].name = item.name;
+            this.newMessages[i].headImg = item.headImg;
           });
         }
       }
@@ -83,12 +85,14 @@ export class MessagePage implements OnInit {
             name: '',
             content: data.content,
             count: count,
+            headImg: ''
           });
           this.userSet.set(fid, this.newMessages.length - 1);
 
-          this.getFriendName(fid).then(name => {
+          this.getFriendName(fid).then(item => {
             const i = this.userSet.get(fid);
-            this.newMessages[i].name = name;
+            this.newMessages[i].name = item.name;
+            this.newMessages[i].headImg = item.headImg;
           });
         }
       }
@@ -117,7 +121,7 @@ export class MessagePage implements OnInit {
           for (let index = 0; index < friendList.length; index++) {
             const element = friendList[index];
             if (element.id === id) {
-              resolve(element.name);
+              resolve(element);
             }
           }
         }
@@ -131,12 +135,13 @@ export class MessagePage implements OnInit {
    * @param fid 好友编号
    * @param fname 好友名称
    */
-  toChatPage(fid, fname) {
+  toChatPage(fid, fname, friendHeadImg) {
     console.log('toChatPage!');
     this.router.navigate(['tabs/friend/message/chat'], {
       queryParams: {
         toUserId: fid,
         toUserName: fname,
+        friendHeadImg: friendHeadImg
       }
     });
   }

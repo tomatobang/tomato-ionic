@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class FriendInfoPage {
   friendid;
   friendName = '';
+  headImg;
   userid;
   bio = '';
   isFriend = false;
@@ -35,6 +36,7 @@ export class FriendInfoPage {
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.friendid = queryParams['userid'];
       this.friendName = queryParams['friendname'];
+      this.headImg = queryParams['headImg'];
       this.loadUserInfo(this.friendid);
       if (this.friendid && !this.friendName) {
         this.isFriend = false;
@@ -63,6 +65,7 @@ export class FriendInfoPage {
     this.router.navigate(['tabs/friend/friendtomato'], {
       queryParams: {
         friendName: this.friendName,
+        headImg: this.headImg
       }
     });
   }
@@ -87,6 +90,7 @@ export class FriendInfoPage {
       queryParams: {
         toUserId: this.friendid,
         toUserName: this.friendName,
+        friendHeadImg: this.headImg
       }
     });
   }

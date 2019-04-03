@@ -22,7 +22,7 @@ export class QRImgModal {
     const userid = this.globalservice.userinfo._id;
     const username = this.globalservice.userinfo.username;
     this.bio = this.globalservice.userinfo.bio;
-    this.headImg = this.globalservice.userinfo.img;
+    this.headImg = this.globalservice.qiniuDomain + this.globalservice.userinfo.img;
     if (!this.headImg) {
       this.headImg = '/assets/imgs/logo.png';
     }

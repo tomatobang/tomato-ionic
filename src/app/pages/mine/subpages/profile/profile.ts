@@ -74,7 +74,7 @@ export class ProfilePage implements OnInit {
               this.headImg = this.helper.dealWithLocalUrl(url);
             });
         } else {
-          this.headImg = this.helper.dealWithLocalUrl('./assets/tomato-active.png');
+          this.headImg = this.helper.dealWithLocalUrl(this.globalservice.qiniuDomain + this.globalservice.userinfo.img);
         }
       });
     }

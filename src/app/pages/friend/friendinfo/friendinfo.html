@@ -10,7 +10,7 @@
 <ion-content #friendinfo_content class="content" (ionScroll)="onScroll($event)" [class.transition]="transition"
   [style.background-size]="headerImgSize" [style.background-image]="'url('+ headerImgUrl+ ')'">
   <div class="user-info">
-    <img src="assets/tomato-grey.png" alt="">
+    <img [src]="headImg" onError="this.src='./assets/tomato-active.png';">
     <h4>{{ friendName }}</h4>
     <p>{{ bio }}</p>
   </div>

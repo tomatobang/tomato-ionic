@@ -21,9 +21,9 @@
   <div [ngSwitch]="showType">
     <ion-list *ngSwitchCase="'msg'">
       <!-- 消息 -->
-      <ion-item *ngFor="let m of newMessages" (click)="toChatPage(m.fid,m.name)">
+      <ion-item *ngFor="let m of newMessages" (click)="toChatPage(m.fid,m.name,m.headImg)">
         <ion-avatar slot="start">
-          <img src="./assets/tomato-active.png">
+          <img [src]="m.headImg" onError="this.src='./assets/tomato-active.png';">
         </ion-avatar>
         <ion-label>
           <h2>{{ m.name }}</h2>

@@ -6,5 +6,6 @@ export class User {
   email: string;
   confirmPassword: string;
   bio: string;
+  img;
 }
 

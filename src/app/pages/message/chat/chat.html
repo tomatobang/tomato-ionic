@@ -10,7 +10,7 @@
 <ion-content #chat_content>
   <div class="message-wrap">
     <div *ngFor="let msg of msgList" class="message" [ngClass]="{'left': msg.userId === toUserId,'right': msg.userId === userId}">
-      <img class="user-img" [src]="msg.userImgUrl" alt="">
+      <img class="user-img" [src]="msg.userImgUrl" onError="this.src='./assets/tomato-active.png';">
       <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
       <div class="msg-detail">
         <div class="msg-info">

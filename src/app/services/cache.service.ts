@@ -5,7 +5,6 @@ import { GlobalService } from './global.service';
 import { UserFriendService } from '@services/data/user_friend';
 import { UserFriendState } from '@services/data/user_friend/model/state.enum';
 import { Storage } from '@ionic/Storage';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -16,8 +15,8 @@ export class CacheService {
   constructor(
     public globalService: GlobalService,
     public userFriendService: UserFriendService,
-    public storage: Storage
-  ) {}
+    public storage: Storage,
+  ) { }
 
   /**
    * 清除缓存
@@ -46,12 +45,14 @@ export class CacheService {
             for (let index = 0; index < data.length; index++) {
               const element = data[index];
               if (element.to._id === this.userid) {
+
                 this.friendlist.push({
                   id: element.from._id,
                   name: element.from.displayName
                     ? element.from.displayName
                     : element.from.username,
-                  headImg: './assets/tomato-active.png',
+                  headImg: element.from.img
+                  ,
                 });
               } else {
                 this.friendlist.push({
@@ -59,7 +60,7 @@ export class CacheService {
                   name: element.to.displayName
                     ? element.to.displayName
                     : element.to.username,
-                  headImg: './assets/tomato-active.png',
+                  headImg: element.to.img
                 });
               }
             }

@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FriendTomatoesPage implements OnInit {
   title = '';
+  headImg;
   tomatoes: Array<any>;
 
   constructor(public actrouter: ActivatedRoute) { }
@@ -16,6 +17,7 @@ export class FriendTomatoesPage implements OnInit {
 
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.title = queryParams['friendName'];
+      this.headImg = queryParams['headImg'];
       this.tomatoes = new Array(10).fill('');
     });
   }

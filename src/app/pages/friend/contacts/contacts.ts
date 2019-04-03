@@ -13,6 +13,8 @@ import { CacheService } from '@services/cache.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { Router } from '@angular/router';
 import { EmitService } from '@services/emit.service';
+import { Helper } from '@services/utils/helper';
+import { NativeService } from '@services/native.service';
 
 @Component({
   selector: 'cmp-contacts',
@@ -37,11 +39,13 @@ export class ContactsPage implements OnInit {
     private pinyinUtil: PinyinService,
     private http: HttpClient,
     private el: ElementRef,
+    private emitService: EmitService,
+    private helper: Helper,
+    public native: NativeService,
     public globalService: GlobalService,
     public cache: CacheService,
     public chatIO: ChatIOService,
     public router: Router,
-    private emitService: EmitService
   ) { }
 
   ngOnInit() {
@@ -57,9 +61,15 @@ export class ContactsPage implements OnInit {
    */
   getAgreedUserFriend() {
     this.cache.getFriendList().subscribe(data => {
-      this.friendlist = data;
-      this.getSortedFriendlist();
-      this.loadOnlineFriendList();
+      if (data && data.length > 0) {
+
+        this.friendlist = data;
+        this.friendlist.map((val) => {
+          this.setHeadImg(val);
+        })
+        this.getSortedFriendlist();
+        this.loadOnlineFriendList();
+      }
     });
   }
 
@@ -68,6 +78,16 @@ export class ContactsPage implements OnInit {
       this.myScrollContainer.nativeElement
     );
     element.scrollTop = evt;
+  }
+
+  setHeadImg(friend) {
+    if (window.cordova) {
+      this.native.downloadHeadImg(this.userid, false, this.globalService.qiniuDomain + friend.headImg).then(url => {
+        friend.headImg = this.helper.dealWithLocalUrl(url);
+      });
+    } else {
+      friend.headImg = this.helper.dealWithLocalUrl(this.globalService.qiniuDomain + friend.headImg);
+    }
   }
 
   /**
@@ -102,11 +122,12 @@ export class ContactsPage implements OnInit {
    * @param userid 好友编号
    * @param friendname 好友名称
    */
-  toFriendInfo(userid, friendname) {
+  toFriendInfo(item) {
     this.router.navigate(['tabs/friend/friendinfo'], {
       queryParams: {
-        userid: userid,
-        friendname: friendname,
+        userid: item.id,
+        friendname: item.disPlayName,
+        headImg: item.headImg
       }
     });
   }
@@ -127,6 +148,7 @@ export class ContactsPage implements OnInit {
             id: friend.id,
             firstCode: firstCode,
             disPlayName: friend.name,
+            headImg: friend.headImg,
           });
         }
       }

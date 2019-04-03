@@ -49,7 +49,7 @@ export class MinePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.setHeadImg();
+    this.initHeadImg();
   }
 
   setUserInfo() {
@@ -58,17 +58,21 @@ export class MinePage implements OnInit {
     this.userid = this.globalservice.userinfo._id;
   }
 
-  setHeadImg() {
+  initHeadImg() {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
-        if (readySource === 'cordova') {
-          this.native.downloadHeadImg(this.userid, false, this.globalservice.qiniuDomain + this.globalservice.userinfo.img).then(url => {
-            this.headImg = this.helper.dealWithLocalUrl(url);
-          });
-        } else {
-          this.headImg = this.helper.dealWithLocalUrl(this.globalservice.qiniuDomain + this.globalservice.userinfo.img);
-        }
+        this.setHeadImg()
       });
+    }
+  }
+
+  setHeadImg() {
+    if (window.cordova) {
+      this.native.downloadHeadImg(this.userid, false, this.globalservice.qiniuDomain + this.globalservice.userinfo.img).then(url => {
+        this.headImg = this.helper.dealWithLocalUrl(url);
+      });
+    } else {
+      this.headImg = this.helper.dealWithLocalUrl(this.globalservice.qiniuDomain + this.globalservice.userinfo.img);
     }
   }
 
