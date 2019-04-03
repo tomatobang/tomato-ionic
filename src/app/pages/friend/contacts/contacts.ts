@@ -62,7 +62,6 @@ export class ContactsPage implements OnInit {
   getAgreedUserFriend() {
     this.cache.getFriendList().subscribe(data => {
       if (data && data.length > 0) {
-
         this.friendlist = data;
         this.friendlist.map((val) => {
           this.setHeadImg(val);
@@ -82,11 +81,11 @@ export class ContactsPage implements OnInit {
 
   setHeadImg(friend) {
     if (window.cordova) {
-      this.native.downloadHeadImg(this.userid, false, this.globalService.qiniuDomain + friend.headImg).then(url => {
+      this.native.downloadHeadImg(this.userid, false, friend.headImg).then(url => {
         friend.headImg = this.helper.dealWithLocalUrl(url);
       });
     } else {
-      friend.headImg = this.helper.dealWithLocalUrl(this.globalService.qiniuDomain + friend.headImg);
+      friend.headImg = friend.headImg;
     }
   }
 
@@ -126,7 +125,7 @@ export class ContactsPage implements OnInit {
     this.router.navigate(['tabs/friend/friendinfo'], {
       queryParams: {
         userid: item.id,
-        friendname: item.disPlayName,
+        friendname: item.displayName,
         headImg: item.headImg
       }
     });
@@ -147,7 +146,7 @@ export class ContactsPage implements OnInit {
           this.bindItems.push({
             id: friend.id,
             firstCode: firstCode,
-            disPlayName: friend.name,
+            displayName: friend.name,
             headImg: friend.headImg,
           });
         }

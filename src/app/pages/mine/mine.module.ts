@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 import { MinePage } from './mine';
 
 import { NativeService } from '@services/native.service';
-import { OnlineUserService } from '@services/data.service';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Helper } from '@services/utils/helper';
@@ -29,7 +28,6 @@ import { PopoverComponent } from './subpages/statistics/popover/popover.componen
     Camera,
     Helper,
     NativeService,
-    OnlineUserService,
   ],
   exports: [MinePage, ]
 })

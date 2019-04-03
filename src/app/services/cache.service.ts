@@ -51,7 +51,7 @@ export class CacheService {
                   name: element.from.displayName
                     ? element.from.displayName
                     : element.from.username,
-                  headImg: element.from.img
+                  headImg: this.globalService.qiniuDomain + element.from.img
                   ,
                 });
               } else {
@@ -60,7 +60,7 @@ export class CacheService {
                   name: element.to.displayName
                     ? element.to.displayName
                     : element.to.username,
-                  headImg: element.to.img
+                  headImg: this.globalService.qiniuDomain + element.to.img
                 });
               }
             }

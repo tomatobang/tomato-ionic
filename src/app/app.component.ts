@@ -29,7 +29,7 @@ import { ChatIOService } from '@services/utils/socket.io.service';
 import { TabsService } from '@services/tab.service';
 
 import { CodePush, SyncStatus } from '@ionic-native/code-push/ngx';
-import { DEBUG, CODE_PUSH_DEPLOYMENT_KEY } from './Constants';
+import { DEBUG, CODE_PUSH_DEPLOYMENT_KEY } from './constants';
 
 declare var window: any;
 

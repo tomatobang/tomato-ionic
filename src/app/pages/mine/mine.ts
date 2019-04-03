@@ -20,6 +20,7 @@ import { EmitService } from '@services/emit.service';
 export class MinePage implements OnInit {
   userid = '';
   username = '';
+  displayName = '';
   bio = '';
   headImg: SafeUrl;
   showBigHeadImg = false;
@@ -54,6 +55,7 @@ export class MinePage implements OnInit {
 
   setUserInfo() {
     this.username = this.globalservice.userinfo.username;
+    this.displayName = this.globalservice.userinfo.displayName;
     this.bio = this.globalservice.userinfo.bio;
     this.userid = this.globalservice.userinfo._id;
   }
