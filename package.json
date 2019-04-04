@@ -14,8 +14,10 @@
     "scss-lint": "scss-lint",
     "commitmsg": "commitlint -e",
     "release": "standard-version  --no-verify",
-    "hp_android": "code-push release-cordova tomatobang android",
-    "hp_ios": "code-push release-cordova tomatobang ios"
+    "hp_android": "code-push release-cordova tomatobang android -v",
+    "hp_android_prod": "code-push release-cordova tomatobang android --deploymentName Production",
+    "hp_ios": "code-push release-cordova tomatobang ios",
+    "hp_ios_prod": "code-push release-cordova tomatobang ios -d Production -v"
   },
   "husky": {
     "hooks": {

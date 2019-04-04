@@ -3,6 +3,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
+import { FootprintformComponent } from './footprintform/footprintform.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-footprint',
@@ -53,6 +55,12 @@ export class FootprintPage implements OnInit, OnDestroy {
     {
       name: '旅游', selected: false
     },
+    {
+      name: '运动', selected: false
+    },
+    {
+      name: '其它', selected: false
+    },
   ];
   modeIndex = 3;
   openTag = false;
@@ -63,6 +71,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     private footprintserice: OnlineFootprintService,
     private loading: LoadingController,
     private emitService: EmitService,
+    private modalCtrl: ModalController,
   ) {
   }
 
@@ -252,6 +261,22 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.tag.splice(this.tag.indexOf(item.name), 1);
       }
     }
+  }
+
+  async toFootprintForm() {
+    const modal = await this.modalCtrl.create({
+      component: FootprintformComponent,
+      componentProps: {
+        edit: false
+      }
+    });
+    modal.onDidDismiss().then(ret => {
+      const data = ret.data;
+      if (data) {
+        this.footprintlist.unshift(data);
+      }
+    });
+    await modal.present();
   }
 
 }

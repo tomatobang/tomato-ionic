@@ -1,0 +1,113 @@
+.position-area {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
+
+    ion-label {
+        color: #888;
+        font-size: 10px;
+    }
+
+    ion-icon {
+        vertical-align: bottom;
+    }
+}
+
+.position-select-list {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+ion-input {
+    font-size: 18px;
+    position: relative;
+    margin: 0;
+    width: 100%;
+    font-size: 22px;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: 1.4em;
+    color: inherit;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 16px 16px 16px 60px;
+    border: none;
+    background: rgba(0, 0, 0, 0.003);
+    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+    --padding-start: 0;
+    text-align: left;
+
+    input::-webkit-input-placeholder {
+        color: #888;
+        font-size: 14px;
+    }
+}
+
+.tag-header {
+    color: #888;
+    font-size: 12px;
+}
+
+.star-container {
+    margin-bottom: 15px;
+
+    ion-label {
+        margin-right: 15px;
+        color: #888;
+        font-size: 12px;
+    }
+
+    ion-icon.star {
+        font-size: 32px;
+    }
+}
+
+.flex-layout {
+    display: flex;
+    align-items: center;
+}
+
+ion-icon.star {
+    color: #FACE02;
+    font-size: 16px;
+}
+
+.text-small {
+    font-size: 10px;
+    white-space: pre-line;
+}
+
+.tag-area {
+    margin-top: 15px;
+
+    .tag-content {
+        margin: 10px auto;
+        height: 0;
+        overflow: hidden;
+        transition: height ease-in-out 500ms;
+        -o-transition: height ease-in-out 500ms;
+        -moz-transition: height ease-in-out 500ms;
+        -webkit-transition: height ease-in-out 500ms;
+    }
+
+    .tag-content.open-tag {
+        height: 80px;
+    }
+
+    .choosed-tag {
+        font-weight: bold;
+        color: #f97271;
+    }
+
+    .choosed-tag-icon {
+        float: right;
+        font-size: 24px;
+        color: #888;
+    }
+}

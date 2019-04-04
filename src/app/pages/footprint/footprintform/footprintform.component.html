@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar no-border-bottom>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button shape="round" color="primary" (click)="submit()">提交</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-input placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
+
+      <div class="tag-area">
+        <div class="tag-header" (click)="openTagChooser()">标签
+          <span class="choosed-tag" *ngFor="let item of tag">{{ item }} &nbsp;</span>
+          <div class="choosed-tag-icon">
+            <ion-icon name="arrow-dropright" *ngIf="!openTag">
+              展开
+            </ion-icon>
+            <ion-icon name="arrow-dropdown" *ngIf="openTag"></ion-icon>
+          </div>
+        </div>
+        <div class="tag-content" [ngClass]="{'open-tag': openTag}">
+          <ng-container *ngFor="let item of taglist" style="display: inline">
+            <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+              <ion-label class="text-small">{{ item.name }}</ion-label>
+            </ion-chip>
+
+            <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+              <ion-label class="text-small">{{ item.name }}</ion-label>
+            </ion-chip>
+          </ng-container>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">心情</ion-label>
+        <div class="star-container flex-layout">
+          <ng-container *ngFor="let item of mode" style="display: inline">
+            <ion-icon class="star" name="star" *ngIf="item.selected" (click)="selectMode(item.index, false)"></ion-icon>
+            <ion-icon class="star" name="star-outline" *ngIf="!item.selected" (click)="selectMode(item.index, true)"></ion-icon>
+          </ng-container>
+        </div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">时间</ion-label>
+        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="create_at"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">地点</ion-label>
+        <ion-input placeholder="地点..." [(ngModel)]="location"></ion-input>
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
