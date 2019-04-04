@@ -48,14 +48,13 @@ export class StatisticsPage implements OnInit {
       this.selectedType.value = type;
       switch (type) {
         case 'footprint':
-          this.loadFootprintData(new Date());
+          this.refreshFootprint();
           break;
         case 'bill':
-          this.loadBillData(new Date());
-          this.loadMonthData(new Date());
+          this.refreshBillInfo();
           break;
         case 'todo':
-          this.loadTodoData(new Date());
+          this.refreshTodo();
           break;
         default:
           break;
@@ -65,7 +64,7 @@ export class StatisticsPage implements OnInit {
 
   ngOnInit() {
     this.loadBillData(new Date());
-    this.loadMonthData(new Date());
+    this.loadBillMonthData(new Date());
   }
 
   loadTodoData(date) {
@@ -197,7 +196,7 @@ export class StatisticsPage implements OnInit {
     });
   }
 
-  loadMonthData(date, excludeTag?) {
+  loadBillMonthData(date, excludeTag?) {
     this.billService.statistics({
       date: date,
       type: 'month',
@@ -231,27 +230,57 @@ export class StatisticsPage implements OnInit {
 
   changeMonth($event) {
     this.selectedMonth = $event.newMonth.string;
-    this.loadBillData(new Date($event.newMonth.string));
-    this.loadMonthData(new Date($event.newMonth.string));
+    this.refreshData();
+  }
+
+  refreshData() {
+    switch (this.selectedType.value) {
+      case 'footprint':
+        this.refreshFootprint();
+        break;
+      case 'bill':
+        this.refreshBillInfo();
+        break;
+      case 'todo':
+        this.refreshTodo();
+        break;
+      default:
+        break;
+    }
+  }
+
+  refreshFootprint() {
+    if (this.selectedMonth) {
+      this.loadFootprintData(new Date(this.selectedMonth));
+    } else {
+      this.loadFootprintData(new Date());
+    }
+  }
+
+  refreshTodo() {
+    if (this.selectedMonth) {
+      this.loadTodoData(new Date(this.selectedMonth));
+    } else {
+      this.loadTodoData(new Date());
+    }
   }
 
   refreshBillInfo() {
-    debugger;
     if (!this.showFinancing.val) {
       if (this.selectedMonth) {
         this.loadBillData(new Date(this.selectedMonth), '理财');
-        this.loadMonthData(new Date(this.selectedMonth), '理财');
+        this.loadBillMonthData(new Date(this.selectedMonth), '理财');
       } else {
         this.loadBillData(new Date(), '理财');
-        this.loadMonthData(new Date(), '理财');
+        this.loadBillMonthData(new Date(), '理财');
       }
     } else {
       if (this.selectedMonth) {
         this.loadBillData(new Date(this.selectedMonth));
-        this.loadMonthData(new Date(this.selectedMonth));
+        this.loadBillMonthData(new Date(this.selectedMonth));
       } else {
         this.loadBillData(new Date());
-        this.loadMonthData(new Date());
+        this.loadBillMonthData(new Date());
       }
     }
 
