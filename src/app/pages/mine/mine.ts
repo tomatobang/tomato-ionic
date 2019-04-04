@@ -45,7 +45,7 @@ export class MinePage implements OnInit {
     this.setUserInfo();
     this.emitService.getActiveUser().subscribe(ret => {
       this.setUserInfo();
-      this.setHeadImg();
+      this.setHeadImg(true);
     });
   }
 
@@ -63,14 +63,14 @@ export class MinePage implements OnInit {
   initHeadImg() {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
-        this.setHeadImg()
+        this.setHeadImg(false)
       });
     }
   }
 
-  setHeadImg() {
+  setHeadImg(change) {
     if (window.cordova) {
-      this.native.downloadHeadImg(this.userid, false, this.globalservice.qiniuDomain + this.globalservice.userinfo.img).then(url => {
+      this.native.downloadHeadImg(this.userid, change, this.globalservice.qiniuDomain + this.globalservice.userinfo.img).then(url => {
         this.headImg = this.helper.dealWithLocalUrl(url);
       });
     } else {

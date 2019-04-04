@@ -67,7 +67,7 @@ export class ProfilePage implements OnInit {
           this.native
             .downloadHeadImg(
               this.userid,
-              false,
+              true,
               this.globalservice.qiniuDomain + this.headImgQiniu
             )
             .then(url => {

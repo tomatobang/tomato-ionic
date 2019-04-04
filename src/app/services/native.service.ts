@@ -27,7 +27,7 @@ declare var window;
   providedIn: 'root'
 })
 export class NativeService {
-  headimgurl: String;
+  headimgurl = {};
   toast: any;
 
   private _isOffline = false;
@@ -164,9 +164,9 @@ export class NativeService {
     const targetPath = this.getBasePath() + 'headimg/';
     const targetPathWithFileName =
       this.getBasePath() + 'headimg/' + filename + '.png';
-    if (this.headimgurl && !change) {
+    if (this.headimgurl && this.headimgurl[filename] && !change) {
       return new Promise((resolve, reject) => {
-        resolve(this.headimgurl);
+        resolve(this.headimgurl[filename]);
       });
     }
 
@@ -179,7 +179,7 @@ export class NativeService {
             this.file.removeFile(targetPath, filename + '.png').then(() => {
               this.filedownload(remotepath, targetPathWithFileName).then(
                 (file: any) => {
-                  this.headimgurl = file;
+                  this.headimgurl[filename] = file;
                   resolve(file);
                 },
                 err => {
@@ -189,14 +189,14 @@ export class NativeService {
             });
           } else {
             // 直接使用本地文件
-            this.headimgurl = targetPathWithFileName;
+            this.headimgurl[filename] = targetPathWithFileName;
             resolve(targetPathWithFileName);
           }
         },
         error => {
           this.filedownload(remotepath, targetPathWithFileName).then(
             (file: any) => {
-              this.headimgurl = file;
+              this.headimgurl[filename] = file;
               resolve(file);
             },
             err => {

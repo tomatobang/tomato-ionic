@@ -81,7 +81,7 @@ export class ContactsPage implements OnInit {
 
   setHeadImg(friend) {
     if (window.cordova) {
-      this.native.downloadHeadImg(this.userid, false, friend.headImg).then(url => {
+      this.native.downloadHeadImg(friend.id, false, friend.headImg).then(url => {
         friend.headImg = this.helper.dealWithLocalUrl(url);
       });
     } else {
