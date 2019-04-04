@@ -11,7 +11,7 @@ import { BaiduLocationService } from '@services/baidulocation.service';
 export class FootprintformComponent implements OnInit {
   title = '';
   location = '加载中...';
-  create_at = '2012-12-12 10:00';
+  create_at;
   notes = '';
   tag = ['补录'];
   mode = [
@@ -85,6 +85,8 @@ export class FootprintformComponent implements OnInit {
     }).catch(err => {
       console.warn(err);
     });
+
+    this.create_at = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
   }
 
   async submit() {
@@ -93,7 +95,8 @@ export class FootprintformComponent implements OnInit {
         position: this.location,
         notes: this.notes,
         tag: this.tag.join(','),
-        mode: this.modeIndex + ''
+        mode: this.modeIndex + '',
+        create_at: new Date(new Date(this.create_at).getTime() - 8 * 3600 * 1000).toISOString()
       }).subscribe(ret => {
         this.notes = '';
         ret.mode = new Array(parseInt(ret.mode, 10));
