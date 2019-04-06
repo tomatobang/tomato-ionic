@@ -39,7 +39,7 @@ export class MessagePage implements OnInit {
     // 获取通知列表
     this.getReqFriendList();
     this.info.newMessagesMonitor.subscribe(data => {
-      for (let index = data.length - 1; index >= 0; index--) {
+      for (let index = 0; index < data.length; index++) {
         const element = data[index];
         if (this.userSet.has(element._id) && element.messages) {
           const i = this.userSet.get(element._id);
