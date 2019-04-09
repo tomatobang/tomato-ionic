@@ -52,7 +52,7 @@ ion-footer {
     .message {
         position: relative;
         padding: 10px 0;
-
+        overflow: hidden;
         .user-img {
             border-radius: 45px;
             width: 45px;
