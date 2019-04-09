@@ -1,5 +1,5 @@
 $userBackgroundColor: #387ef5;
-$toUserBackgroundColor: #fff;
+$toUserBackgroundColor: #ddd;
 
 ion-content {
     background-color: #f5f5f5;
@@ -53,6 +53,7 @@ ion-footer {
         position: relative;
         padding: 10px 0;
         overflow: hidden;
+
         .user-img {
             border-radius: 45px;
             width: 45px;
@@ -116,7 +117,8 @@ ion-footer {
         .msg-content {
             span.triangle {
                 border-style: solid;
-                border-color: #ddd;
+                border-color: $toUserBackgroundColor;
+                background-color: $toUserBackgroundColor;
                 border-top-width: 0;
                 border-right-width: 0;
                 left: -5px;
