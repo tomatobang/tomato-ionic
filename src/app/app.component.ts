@@ -116,6 +116,7 @@ export class MyApp {
           this.globalservice.jpushAlias = JSON.stringify(jpushAlias);
           this.jPush.setAlias(jpushAlias).then((args) => {
             console.log('jpush setAlias succeed:', args);
+            this.native.initJPush();
           }).catch(err => {
             console.log('jpush setAlias error:', err);
           });

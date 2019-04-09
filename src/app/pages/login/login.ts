@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+
 import { User } from '@services/data.service';
 import { GlobalService } from '@services/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
@@ -7,9 +10,9 @@ import { EmitService } from '@services/emit.service';
 import { JPush } from '@jiguang-ionic/jpush/ngx'
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
-import { Store } from '@ngrx/store';
+import { NativeService } from '@services/native.service';
+
 import { LoginActionTypes, Login } from './ngrx/login.actions';
-import { Router, ActivatedRoute } from '@angular/router';
 import { State } from './ngrx/login.reducer';
 
 @Component({
@@ -47,7 +50,8 @@ export class LoginPage implements OnInit {
     private actrouter: ActivatedRoute,
     private info: InfoService,
     private chatIO: ChatIOService,
-    private store$: Store<State>
+    private store$: Store<State>,
+    private native: NativeService,
   ) {
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.user.username = queryParams['username'];
@@ -91,13 +95,14 @@ export class LoginPage implements OnInit {
     this.globalservice.userinfo = JSON.stringify(userinfo);
     this.rebirthProvider.headers({ Authorization: token }, true);
     const jpushAlias = {
-      sequence: Math.random(),
+      sequence: new Date().getTime(),
       alias: this.globalservice.userinfo._id,
     };
     this.globalservice.jpushAlias = JSON.stringify(jpushAlias);
     this.jPushService.init();
     this.jPushService.setAlias(jpushAlias).then((args) => {
       console.log('jpush setAlias succeed:', args);
+      this.native.initJPush();
     }).catch(err => {
       console.log('jpush setAlias error:', err);
     });

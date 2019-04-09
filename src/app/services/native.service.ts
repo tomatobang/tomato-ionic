@@ -1,5 +1,6 @@
 /**
  * 常用原生服务
+ *  - 极光推送
  *  - 网络状态监听
  *  - 屏幕常亮设置
  *  - 文件下载
@@ -20,6 +21,8 @@ import {
   FileTransferObject,
 } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { JPush } from '@jiguang-ionic/jpush/ngx'
+import { Router } from '@angular/router';
 
 declare var window;
 
@@ -42,12 +45,79 @@ export class NativeService {
     private localNotifications: LocalNotifications,
     private appCenterAnalytics: AppCenterAnalytics,
     private appCenterCrashes: AppCenterCrashes,
-    private file: File
+    private file: File,
+    private jpush: JPush,
+    private router: Router,
   ) { }
 
-  /**
-   * 初始化
-   */
+
+  initJPush() {
+    document.addEventListener(
+      "jpush.receiveNotification",
+      (event: any) => {
+        var content;
+        if (this.isAndroid()) {
+          content = event.alert;
+        } else {
+          content = event.aps.alert;
+        }
+        console.log("Receive notification: " + JSON.stringify(event), content);
+      },
+      false
+    );
+
+    document.addEventListener(
+      "jpush.openNotification",
+      (event: any) => {
+        var content;
+        if (this.isAndroid()) {
+          content = event.alert;
+        } else {
+          // iOS
+          if (event.aps == undefined) {
+            // 本地通知
+            content = event.content;
+          } else {
+            // APNS
+            content = event.aps.alert;
+          }
+        }
+        this.jpush.setBadge(0);
+        this.jpush.clearAllNotification().then(() => { });
+        this.router.navigate(['tabs/friend/message']);
+        console.log("open notification: " + JSON.stringify(event), content);
+      },
+      false
+    );
+
+    document.addEventListener(
+      "jpush.receiveLocalNotification",
+      (event: any) => {
+        // iOS(*,9) Only , iOS(10,*) 将在 jpush.openNotification 和 jpush.receiveNotification 中触发。
+        var content;
+        if (this.isAndroid()) {
+        } else {
+          content = event.content;
+        }
+        console.log("receive local notification: " + JSON.stringify(event), content);
+      },
+      false
+    );
+  }
+
+
+  isAndroid(): boolean {
+    return this.isMobile() && this.platform.is("android");
+  }
+
+  isIos(): boolean {
+    return this.isMobile && (this.platform.is("ios") || this.platform.is("ipad") || this.platform.is("iphone"));
+  }
+
+  isMobile(): boolean {
+    return this.platform.is("mobile") && !this.platform.is("mobileweb");
+  }
+
   initAppCenter() {
     this.appCenterAnalytics.setEnabled(true).then(() => {
       this.appCenterAnalytics
