@@ -8,7 +8,7 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button shape="round" color="primary" (click)="submitBill()">提交</ion-button>
+      <ion-button shape="round" color="primary" (click)="submit()">提交</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -23,10 +23,11 @@
           [(ngModel)]="newBill.type">
           <ion-select-option value="支出">支出</ion-select-option>
           <ion-select-option value="收入">收入</ion-select-option>
+          <ion-select-option value="资产互转">资产互转</ion-select-option>
         </ion-select>
       </ion-card-title>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="newBill.type!=='资产互转'">
 
       <ion-item>
         <ion-label position="stacked">日期</ion-label>
@@ -94,6 +95,38 @@
 
     </ion-card-content>
 
+
+    <ion-card-content *ngIf="newBill.type==='资产互转'">
+
+      <ion-item>
+        <ion-label position="stacked">日期</ion-label>
+        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="assetExchange.date"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">金额(<span class="rmb-sign">¥</span>)</ion-label>
+        <ion-input type="number" class="amount" [(ngModel)]="assetExchange.amount"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">转出</ion-label>
+        <ion-select interface="popover" [(ngModel)]="assetExchange.fromAsset">
+          <ion-select-option *ngFor="let item of assetList" value="{{ item._id }}">{{ item.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">转入</ion-label>
+        <ion-select interface="popover" [(ngModel)]="assetExchange.toAsset">
+          <ion-select-option *ngFor="let item of assetList" value="{{ item._id }}">{{ item.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">备注</ion-label>
+        <ion-input [(ngModel)]="newBill.note"></ion-input>
+      </ion-item>
+    </ion-card-content>
   </ion-card>
 
 </ion-content>

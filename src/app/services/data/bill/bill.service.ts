@@ -60,6 +60,12 @@ export class OnlineBillService extends BillService {
   statistics(@Body data: { date, type, excludeTag }): Observable<any> {
     return null;
   }
+
+  @POST(baseUrl + 'api/bill/billexchange')
+  billexchange(@Body data: any): Observable<any> {
+    return null;
+  }
+
 }
 
 export const BILL_SERVICE_PROVIDERS: Array<any> = [

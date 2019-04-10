@@ -46,9 +46,9 @@ export class BillPage implements OnInit {
         this.totalIncome = 0;
         for (let index = 0; index < ret.length; index++) {
           const element: any = ret[index];
-          if (element.type === '支出') {
+          if (element.type === '支出' && element.tag !== '资产互转') {
             this.totalCost += element.amount;
-          } else if (element.type === '收入') {
+          } else if (element.type === '收入' && element.tag !== '资产互转') {
             this.totalIncome += element.amount;
           }
         }
@@ -76,7 +76,7 @@ export class BillPage implements OnInit {
     });
     modal.onDidDismiss().then(ret => {
       const data = ret.data;
-      if (data) {
+      if (data && data.tag !== '资产互转') {
         if (data.type === '支出') {
           this.totalCost += data.amount;
         } else {
@@ -85,6 +85,8 @@ export class BillPage implements OnInit {
           }
         }
         this.billList.unshift(data);
+      } else if (data.tag === '资产互转') {
+        this.init();
       }
     });
     await modal.present();
@@ -110,10 +112,10 @@ export class BillPage implements OnInit {
 
   deleteBillRecord(item, index) {
     this.billService.deleteBill(item._id).subscribe(ret => {
-      if (item.type === '支出') {
+      if (item.type === '支出' && item.tag !== '资产互转') {
         this.totalCost -= ret.amount;
       } else {
-        if (item.type === '收入') {
+        if (item.type === '收入' && item.tag !== '资产互转') {
           this.totalIncome -= ret.amount;
         }
       }

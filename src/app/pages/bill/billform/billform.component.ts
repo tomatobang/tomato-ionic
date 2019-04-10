@@ -30,6 +30,15 @@ export class BillformComponent implements OnInit {
     note: '',
     type: '支出'
   };
+
+  assetExchange = {
+    date: new Date().toISOString(),
+    amount: null,
+    note: '',
+    fromAsset: '',
+    toAsset: '',
+  };
+
   assetList = [];
   tag = [];
   payTag1 = [
@@ -87,9 +96,6 @@ export class BillformComponent implements OnInit {
       name: '数据校正', selected: false
     },
     {
-      name: '资产互转', selected: false
-    },
-    {
       name: '其它', selected: false
     }
   ];
@@ -99,9 +105,6 @@ export class BillformComponent implements OnInit {
     },
     {
       name: '理财', selected: false
-    },
-    {
-      name: '数据校正', selected: false
     },
     {
       name: '红包', selected: false
@@ -114,6 +117,9 @@ export class BillformComponent implements OnInit {
     },
     {
       name: '兼职', selected: false
+    },
+    {
+      name: '数据校正', selected: false
     },
     {
       name: '其它', selected: false
@@ -148,6 +154,7 @@ export class BillformComponent implements OnInit {
     } else {
       this.title = '新增账单';
       this.newBill.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
+      this.assetExchange.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
     }
 
     this.initAssetSelect();
@@ -207,7 +214,50 @@ export class BillformComponent implements OnInit {
     });
   }
 
-  async submitBill() {
+  async submit() {
+    if (this.newBill.type !== "资产互转") {
+      this.createOrUpdateBill();
+    } else {
+      this.submitAssetExchange();
+    }
+  }
+
+  async submitAssetExchange() {
+    if (!this.assetExchange.amount) {
+      const toast = await this.toastCtrl.create({
+        message: '请输入金额',
+        duration: 2500
+      });
+      await toast.present();
+      return;
+    }
+
+    if (!this.assetExchange.fromAsset || !this.assetExchange.toAsset) {
+      const toast = await this.toastCtrl.create({
+        message: '请选择转换资产',
+        duration: 2500
+      });
+      await toast.present();
+      return;
+    }
+
+    this.billService.billexchange(this.assetExchange).subscribe(ret => {
+      this.newBill.type = '支出';
+      this.assetExchange = {
+        date: new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString(),
+        amount: null,
+        note: '',
+        fromAsset: '',
+        toAsset: '',
+      };
+      this.modalCtrl.dismiss({
+        tag: '资产互转'
+      });
+    });
+
+  }
+
+  async createOrUpdateBill() {
     if (!this.newBill.amount) {
       const toast = await this.toastCtrl.create({
         message: '请输入金额',
@@ -239,7 +289,6 @@ export class BillformComponent implements OnInit {
     } else {
       this.createBill();
     }
-
   }
 
   updateBill() {
