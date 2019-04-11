@@ -52,6 +52,12 @@ export class ChatPage {
       this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
         let minusCount = 0;
         for (let index = 0; index < messages.length; index++) {
+
+          // fix not read message from server
+          if (!messages[index].from && !messages[index].to) {
+            messages[index].from = this.toUserId;
+            messages[index].to = this.userId;
+          }
           const newMsg: ChatMessage = {
             messageId: messages[index].create_at,
             userId: messages[index].from === this.toUserId ? this.toUserId : this.userId,
