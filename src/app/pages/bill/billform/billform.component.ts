@@ -240,7 +240,8 @@ export class BillformComponent implements OnInit {
       await toast.present();
       return;
     }
-
+    // adjust bill exchange date
+    this.assetExchange.date = new Date(new Date(this.assetExchange.date).getTime() - 8 * 3600 * 1000).toISOString();
     this.billService.billexchange(this.assetExchange).subscribe(ret => {
       this.newBill.type = '支出';
       this.assetExchange = {
