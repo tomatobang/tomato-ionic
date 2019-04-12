@@ -9,6 +9,7 @@ import { InfoService } from '@services/info.service';
 import { MessageService } from '@services//data/message/message.service';
 import { ActivatedRoute } from '@angular/router';
 import { ChatIOService } from '@services/utils/socket.io.service';
+import { Helper } from '@services/utils/helper';
 
 @Component({
   selector: 'page-chat',
@@ -23,7 +24,7 @@ export class ChatPage {
   userId: string;
   userName: string;
   myHeadImg: string;
-  friendHeadImg: string;
+  friendHeadImg: any;
   userImgUrl: string;
   toUserId: string;
   toUserName: string;
@@ -32,6 +33,7 @@ export class ChatPage {
 
   constructor(
     private actrouter: ActivatedRoute,
+    private helper: Helper,
     public navCtrl: NavController,
     public chatService: ChatService,
     public events: Events,
@@ -45,7 +47,7 @@ export class ChatPage {
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.toUserId = queryParams['toUserId'];
       this.toUserName = queryParams['toUserName'];
-      this.friendHeadImg = queryParams['friendHeadImg'];
+      this.friendHeadImg = this.helper.dealWithLocalUrl(queryParams['friendHeadImg']);;
       this.userId = this.globalService.userinfo._id;
       this.userName = this.globalService.userinfo.username;
       this.myHeadImg = this.globalService.qiniuDomain + this.globalService.userinfo.img;
