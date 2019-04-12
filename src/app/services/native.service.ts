@@ -121,7 +121,7 @@ export class NativeService {
   initAppCenter() {
     this.appCenterAnalytics.setEnabled(true).then(() => {
       this.appCenterAnalytics
-        .trackEvent('Init', { TEST: 'yipeng.ionic3' })
+        .trackEvent('Init', { TEST: 'tomatobang' })
         .then(() => {
           console.log('AppCenter Analytics event tracked');
         });
@@ -131,6 +131,16 @@ export class NativeService {
       this.appCenterCrashes.lastSessionCrashReport().then(report => {
         console.log('Crash report', report);
       });
+    });
+  }
+
+  submitEvent(eventName, extra = {}) {
+    this.appCenterAnalytics.isEnabled().then(() => {
+      this.appCenterAnalytics
+        .trackEvent(eventName, extra)
+        .then(() => {
+          console.log('AppCenter Analytics event:', eventName);
+        });
     });
   }
 

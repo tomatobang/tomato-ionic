@@ -76,7 +76,7 @@ export class MyApp {
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
-    public tabService: TabsService
+    public tabService: TabsService,
   ) {
     this.emitservice.getActiveTheme().subscribe(val => {
       if (val) {
@@ -117,6 +117,9 @@ export class MyApp {
           this.jPush.setAlias(jpushAlias).then((args) => {
             console.log('jpush setAlias succeed:', args);
             this.native.initJPush();
+            this.native.submitEvent('jpushInit', {
+              username: this.globalservice.userinfo.username
+            });
           }).catch(err => {
             console.log('jpush setAlias error:', err);
           });
