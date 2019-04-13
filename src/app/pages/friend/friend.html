@@ -1,15 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <div padding>
-            <ion-segment [(ngModel)]="showType">
-                <ion-segment-button value="hot">
-                    动态
-                </ion-segment-button>
-                <ion-segment-button value="rank">
-                    排名
-                </ion-segment-button>
-            </ion-segment>
-        </div>
+        <ion-title>圈子</ion-title>
         <ion-buttons slot="end">
             <ion-button icon-only (click)="presentPopover($event)">
                 <ion-icon name="add-circle-outline"></ion-icon>
@@ -28,77 +19,4 @@
             <ion-badge color="danger" slot="end">{{ messsageBadge }}</ion-badge>
         </ion-item>
     </ion-list>
-
-    <div [ngSwitch]="showType">
-        <ion-list *ngSwitchCase="'hot'" class="friend-working-on-list">
-            <div class="tomato-friend-task-list" (click)="toFriendInfo()">
-                <div class="tomato-friend-task-top">
-                    <span class="tomato-friend-task-state">
-                        <span class="tomato-friend-task-name">张三</span>的番茄钟“打卡健身”正在进行中...
-                    </span>
-
-                </div>
-                <div class="tomato-friend-task-bottom">
-                    <div class="tomato-friend-task-left">
-                        <span class="tomato-friend-task-time">
-                            2017-10-11 10:00 开始，已进行
-                            <span class="tomato-friend-task-duration"> 5 </span>分钟
-                        </span>
-                        <br>
-                        <span>目标:
-                            <span class="tomato-friend-task-target">俯卧撑 10 组</span>
-                        </span>
-                        <br>
-                        <span>备注:
-                            <span class="tomato-friend-task-notes">室内</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </ion-list>
-
-        <ion-list *ngSwitchCase="'rank'">
-            <ion-list class="rank-list">
-                <ion-item *ngFor="let item of rankList">
-                    <div class="rank-statistics">
-                        <ion-avatar slot="start" class="item-rank">
-                            <span class="rank {{ item.class }}">
-                                <span>{{ item.rankText }}</span>
-                            </span>
-                            <img class="user-rank-header-img" [src]="item.image">
-                        </ion-avatar>
-                        <div class="item-desc">
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="3">
-                                        <span class="tomatoNum"> {{ item.tomatoNum }}</span>
-                                    </ion-col>
-                                    <ion-col size="4">
-                                        番茄钟，专注
-                                    </ion-col>
-                                    <ion-col size="3">
-                                        <span class="minute"> {{ item.minute }}</span>
-                                    </ion-col>
-                                    <ion-col size="2">
-                                        分钟
-                                    </ion-col>
-                                </ion-row>
-                                <ion-row align-items-start class="rank-title">
-                                    <ion-col size="1">
-                                        <ion-icon ios="ios-microphone" md="ios-microphone-outline"></ion-icon>
-                                    </ion-col>
-                                    <ion-col size="4" style="text-align:left;font-size: 16px;">
-                                        {{ item.title }}
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </div>
-                        <p class="rank-location">
-                            <ion-icon name="pin"></ion-icon> 深圳市南山区
-                        </p>
-                    </div>
-                </ion-item>
-            </ion-list>
-        </ion-list>
-    </div>
 </ion-content>
