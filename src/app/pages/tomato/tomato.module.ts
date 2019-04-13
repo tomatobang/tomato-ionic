@@ -12,10 +12,12 @@ import { AutosizeDirective } from '@directives/autosize.directive';
 import { TaskPage } from './task/task';
 
 import { TomatoPageRoutingModule } from './tomato.router.module';
+import { TomatoSettingPage } from './tomatosetting/tomatosetting';
 
 @NgModule({
   declarations: [
     TomatoPage,
+    TomatoSettingPage,
     TaskPage,
     IndexIndexPage,
     TodaylistComponent,

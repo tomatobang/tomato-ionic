@@ -12,14 +12,7 @@ import { Storage } from '@ionic/Storage';
 export class SettingPage implements OnInit {
   isAlwaysLight = false;
 
-  longbreakTomatoNum: string;
-  longresttime: string;
-  IsLoopMode = false;
-  whiteNoiseType: string;
-
   settingModel = {
-    resttime: '5',
-    countdown: '25',
     isAlwaysLight: true
   };
 
@@ -30,33 +23,7 @@ export class SettingPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.settingModel.countdown = this.globalservice.countdown + '';
-    this.settingModel.resttime = this.globalservice.resttime + '';
     this.settingModel.isAlwaysLight = this.globalservice.isAlwaysLight;
-  }
-
-  /**
-   * 番茄钟时长
-   * @param value 时长
-   */
-  setCountdown(value: string) {
-    this.globalservice.countdown = parseInt(value, 10);
-  }
-
-  /**
-   * 短休息间隔
-   * @param value 休息时长
-   */
-  setResttime(value: string) {
-    this.globalservice.resttime = parseInt(value, 10);
-  }
-
-  /**
-   * 长休息间隔
-   * @param value 休息时长
-   */
-  setLongResttime(value: string) {
-    this.longresttime = value;
   }
 
   /**
@@ -91,9 +58,4 @@ export class SettingPage implements OnInit {
     this.storage.clear();
   }
 
-  setLongbreakTomatoNum() { }
-
-  setLoopMode() { }
-
-  setWhiteNoiseType() { }
 }

@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text=""></ion-back-button>
+        </ion-buttons>
+        <ion-title>番茄钟设置</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-list-header>
+            通用
+        </ion-list-header>
+
+        <ion-item>
+            <ion-icon name="sync" slot="start" color="primary"></ion-icon>
+            <ion-label>长休息间隔番茄钟数</ion-label>
+            <ion-select [(ngModel)]="longbreakTomatoNum" (ngModelChange)="setLongbreakTomatoNum()" cancelText="取消"
+                okText="确定!">
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="4" selected="true">4</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+                <ion-select-option value="6">6</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon name="speedometer" slot="start" color="primary"></ion-icon>
+            <ion-label>番茄钟时长</ion-label>
+            <ion-select [(ngModel)]="settingModel.countdown" (ngModelChange)="setCountdown($event)" cancelText="取消"
+                okText="确定!">
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="20">20</ion-select-option>
+                <ion-select-option value="25" selected="true">25</ion-select-option>
+                <ion-select-option value="30">30</ion-select-option>
+                <ion-select-option value="35">35</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon name="speedometer" slot="start" color="primary"></ion-icon>
+            <ion-label>短休息时长</ion-label>
+            <ion-select [(ngModel)]="settingModel.resttime" (ngModelChange)="setResttime($event)" cancelText="取消"
+                okText="确定!">
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+                <ion-select-option value="8">8</ion-select-option>
+                <ion-select-option value="10">10</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon name="speedometer" slot="start" color="primary"></ion-icon>
+            <ion-label>长休息时长</ion-label>
+            <ion-select [(ngModel)]="longresttime" (ngModelChange)="setLongResttime($event)" cancelText="取消" okText="确定!">
+                <ion-select-option value="15">15</ion-select-option>
+                <ion-select-option value="18">18</ion-select-option>
+                <ion-select-option value="20">20</ion-select-option>
+                <ion-select-option value="25">25</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-list-header>
+            高级
+        </ion-list-header>
+
+        <ion-item>
+            <ion-icon name="refresh-circle" slot="start" color="primary"></ion-icon>
+            <ion-label> 循环模式 </ion-label>
+            <ion-toggle (ionChange)="setLoopMode()" color="secondary" [(ngModel)]="IsLoopMode"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon name="musical-notes" slot="start" color="primary"></ion-icon>
+            <ion-label>白噪音效</ion-label>
+            <ion-select [(ngModel)]="whiteNoiseType" (ngModelChange)="setWhiteNoiseType()" cancelText="取消" okText="确定!">
+                <ion-select-option value="1">雨声</ion-select-option>
+                <ion-select-option value="2">瀑布</ion-select-option>
+                <ion-select-option value="3" selected="true">海浪</ion-select-option>
+                <ion-select-option value="4">鸟鸣</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+</ion-content>

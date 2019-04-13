@@ -10,6 +10,7 @@ import { OnlineTomatoService } from '@services/data.service';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { TomatoIOService } from '@services/utils/socket.io.service';
 import { Helper } from '@services/utils/helper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'page-tomato',
@@ -35,10 +36,11 @@ export class TomatoPage implements OnInit {
     public modalCtrl: ModalController,
     public globalservice: GlobalService,
     public tomatoIO: TomatoIOService,
-    private helper: Helper,
     public tomatoservice: OnlineTomatoService,
     public voiceService: VoicePlayService,
     private emitService: EmitService,
+    private helper: Helper,
+    private route: Router,
   ) {
   }
 
@@ -167,5 +169,9 @@ export class TomatoPage implements OnInit {
     } else {
       alert('此番茄钟无音频记录！');
     }
+  }
+
+  setting() {
+    this.route.navigate(['tabs/tomato/tomatosetting']);
   }
 }

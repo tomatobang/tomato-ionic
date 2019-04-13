@@ -2,8 +2,8 @@
     <ion-toolbar no-border-bottom>
         <ion-title>{{ page_title }}</ion-title>
         <ion-buttons slot="end">
-            <ion-button icon-only (click)="addTask()">
-                <ion-icon name="add-circle-outline"></ion-icon>
+            <ion-button icon-only (click)="setting()">
+                <ion-icon name="settings"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -67,6 +67,12 @@
                     </ion-card-content>
                 </ion-card>
             </div>
+
+            <ion-fab vertical="center" horizontal="end" edge slot="fixed" (click)="addTask()">
+                <ion-fab-button>
+                    <ion-icon name="add-circle-outline"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
         </ion-slide>
 
         <!-- 今日番茄钟 -->
