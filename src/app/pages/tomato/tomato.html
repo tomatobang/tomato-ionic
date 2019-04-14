@@ -1,10 +1,16 @@
 <ion-header>
     <ion-toolbar no-border-bottom>
-        <ion-title>{{ page_title }}</ion-title>
+        <ion-title>{{ page_title }} </ion-title>
+
         <ion-buttons slot="end">
-            <ion-button icon-only (click)="setting()">
+            <ion-chip (click)="addTask()" color="primary">
+                <ion-icon name="add"></ion-icon>
+                <ion-label>任务管理</ion-label>
+            </ion-chip>
+            <ion-chip (click)="setting()" color="primary">
                 <ion-icon name="settings"></ion-icon>
-            </ion-button>
+                <ion-label>设置</ion-label>
+            </ion-chip>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -67,12 +73,6 @@
                     </ion-card-content>
                 </ion-card>
             </div>
-
-            <ion-fab vertical="center" horizontal="end" edge slot="fixed" (click)="addTask()">
-                <ion-fab-button>
-                    <ion-icon name="add-circle-outline"></ion-icon>
-                </ion-fab-button>
-            </ion-fab>
         </ion-slide>
 
         <!-- 今日番茄钟 -->

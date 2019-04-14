@@ -18,6 +18,7 @@ todaylist {
 
 ion-avatar {
     width: 24px;
+
     img {
         width: 24px;
     }
@@ -40,16 +41,19 @@ timeline {
     margin-top: 25px;
     margin-left: 10px;
     margin-right: 10px;
+
     ion-icon {
         color: #F97271;
         width: 26px;
         text-align: center;
     }
+
     .tomato-break-reason {
         color: gray;
         font-size: 12px;
         text-align: left;
     }
+
     .tomato-start-end-time {
         font-size: 14px;
     }

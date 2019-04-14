@@ -6,6 +6,7 @@ import * as moment from 'moment';
 export class RelativeTimemPipe implements PipeTransform {
   transform(value: string, ...args) {
     moment.locale('zh-cn');
-    return moment(value).toNow();
+    let ret = moment(value).calendar();
+    return ret;
   }
 }
