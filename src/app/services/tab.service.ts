@@ -13,6 +13,7 @@ export class TabsService {
     'profile',
     'setting',
     'about',
+    'statistics',
   ];
 
   constructor(private router: Router, private platform: Platform) {
