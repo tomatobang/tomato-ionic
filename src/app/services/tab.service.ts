@@ -68,6 +68,7 @@ export class TabsService {
     try {
       setTimeout(() => shouldHide ? this.hideTabs() : this.showTabs(), 300);
     } catch (err) {
+      console.error(err);
     }
   }
 }
