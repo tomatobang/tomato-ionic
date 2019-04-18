@@ -1,7 +1,6 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { QRScannerModal } from '@modals/qr-scanner/qr-scanner';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'cmp-popover',
@@ -10,7 +9,7 @@ import { ModalController, PopoverController } from '@ionic/angular';
 })
 export class PopOverPage {
   constructor(
-    public router: Router,
+    public navCtrl: NavController,
     private modalCtrl: ModalController,
     private popover: PopoverController) { }
 
@@ -20,7 +19,7 @@ export class PopOverPage {
   * 跳转至搜索页
   */
   ToSearchPage() {
-    this.router.navigate(['tabs/friend/search']);
+    this.navCtrl.navigateForward(['tabs/friend/search']);
     this.popover.dismiss();
   }
 
@@ -44,7 +43,7 @@ export class PopOverPage {
    */
   ToContactsPage() {
     this.popover.dismiss();
-    this.router.navigate(['tabs/friend/contact']);
+    this.navCtrl.navigateForward(['tabs/friend/contact']);
   }
 
   /**
@@ -53,7 +52,7 @@ export class PopOverPage {
    */
   onScanQRCode(qrCode: object) {
     alert('成功扫描到:' + JSON.stringify(qrCode));
-    this.router.navigate(['tabs/friend/friendinfo'], {
+    this.navCtrl.navigateForward(['tabs/friend/friendinfo'], {
       queryParams: {
         userid: JSON.stringify(qrCode),
       }

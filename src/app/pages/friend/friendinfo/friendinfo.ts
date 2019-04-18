@@ -2,7 +2,8 @@ import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
 import { OnlineUserService } from '@services/data.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { NavController} from '@ionic/angular';
 
 @Component({
   selector: 'page-friendinfo',
@@ -28,7 +29,7 @@ export class FriendInfoPage {
     public chatIO: ChatIOService,
     public global: GlobalService,
     public userservice: OnlineUserService,
-    private router: Router,
+    private navCtrl: NavController,
     private actrouter: ActivatedRoute,
 
   ) {
@@ -62,7 +63,7 @@ export class FriendInfoPage {
    * 查看番茄钟
    */
   toFriendTomatoes() {
-    this.router.navigate(['tabs/friend/friendtomato'], {
+    this.navCtrl.navigateForward(['tabs/friend/friendtomato'], {
       queryParams: {
         friendName: this.friendName,
         headImg: this.headImg
@@ -86,7 +87,7 @@ export class FriendInfoPage {
    * 跳转至聊天页
    */
   toChatPage() {
-    this.router.navigate(['tabs/friend/message/chat'], {
+    this.navCtrl.navigateForward(['tabs/friend/message/chat'], {
       queryParams: {
         toUserId: this.friendid,
         toUserName: this.friendName,

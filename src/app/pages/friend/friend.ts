@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { NavController,PopoverController} from '@ionic/angular';
 import { PopOverPage } from './popover/popover';
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
@@ -21,7 +19,7 @@ export class FriendPage implements OnInit {
 
   constructor(
     public chatIO: ChatIOService,
-    private router: Router,
+    private navCtrl: NavController,
     private popoverController: PopoverController,
     public info: InfoService,
   ) {
@@ -51,11 +49,11 @@ export class FriendPage implements OnInit {
    * 跳转至消息页
    */
   toMessagePage() {
-    this.router.navigate(['tabs/friend/message']);
+    this.navCtrl.navigateForward(['tabs/friend/message']);
   }
 
   toFriendInfo() {
-    this.router.navigate(['tabs/friend/friendinfo']);
+    this.navCtrl.navigateForward(['tabs/friend/friendinfo']);
   }
 
   /**

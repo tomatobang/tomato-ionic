@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import {
   ModalController,
   Events,
+  NavController
 } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { TaskPage } from './task/task';
@@ -10,7 +11,6 @@ import { OnlineTomatoService } from '@services/data.service';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { TomatoIOService } from '@services/utils/socket.io.service';
 import { Helper } from '@services/utils/helper';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'page-tomato',
@@ -40,7 +40,7 @@ export class TomatoPage implements OnInit {
     public voiceService: VoicePlayService,
     private emitService: EmitService,
     private helper: Helper,
-    private route: Router,
+    private navCtrl: NavController,
   ) {
   }
 
@@ -172,6 +172,6 @@ export class TomatoPage implements OnInit {
   }
 
   setting() {
-    this.route.navigate(['tabs/tomato/tomatosetting']);
+    this.navCtrl.navigateForward(['tabs/tomato/tomatosetting']);
   }
 }

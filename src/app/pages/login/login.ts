@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ToastController, NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-
 import { User } from '@services/data.service';
 import { GlobalService } from '@services/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
@@ -46,7 +45,7 @@ export class LoginPage implements OnInit {
     private rebirthProvider: RebirthHttpProvider,
     private toastCtrl: ToastController,
     private jPushService: JPush,
-    private router: Router,
+    private navCtrl: NavController,
     private actrouter: ActivatedRoute,
     private info: InfoService,
     private chatIO: ChatIOService,
@@ -111,7 +110,7 @@ export class LoginPage implements OnInit {
     this.info.init();
     // 新用戶登录
     this.emitService.setActiveUser(userinfo);
-    this.router.navigate(['tabs'], {
+    this.navCtrl.navigateForward(['tabs'], {
       // replaceUrl: true
     });
   }
@@ -125,7 +124,7 @@ export class LoginPage implements OnInit {
   }
 
   public navToRegister(): void {
-    this.router.navigate(['register']);
+    this.navCtrl.navigateForward(['register']);
   }
 
   async presentToast(msg) {

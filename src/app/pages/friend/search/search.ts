@@ -1,5 +1,5 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'page-search',
@@ -7,17 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['search.scss']
 })
 export class SearchPage {
-  constructor(public router: Router) { }
+  constructor(public navCtrl: NavController) { }
 
   ionViewDidLoad() { }
 
   toHistoryTomato() {
     console.log('toHistoryTomato!');
-    this.router.navigate(['tabs/friend/historytomato']);
+    this.navCtrl.navigateForward(['tabs/friend/historytomato']);
   }
 
   toSearchUser() {
     console.log('toSearchUser!');
-    this.router.navigate(['tabs/friend/searchuser']);
+    this.navCtrl.navigateForward(['tabs/friend/searchuser']);
   }
 }

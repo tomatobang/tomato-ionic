@@ -5,17 +5,17 @@ import {
   QueryList,
   ElementRef,
 } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { PinyinService } from '@services/utils/pinyin.service';
 import { Friendinfo } from './providers/contact-friendinfo.model';
 import { GlobalService } from '@services/global.service';
 import { CacheService } from '@services/cache.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
-import { Router } from '@angular/router';
+
 import { EmitService } from '@services/emit.service';
 import { Helper } from '@services/utils/helper';
 import { NativeService } from '@services/native.service';
-
 @Component({
   selector: 'cmp-contacts',
   templateUrl: 'contacts.html',
@@ -45,7 +45,7 @@ export class ContactsPage implements OnInit {
     public globalService: GlobalService,
     public cache: CacheService,
     public chatIO: ChatIOService,
-    public router: Router,
+    public navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -122,7 +122,7 @@ export class ContactsPage implements OnInit {
    * @param friendname 好友名称
    */
   toFriendInfo(item) {
-    this.router.navigate(['tabs/friend/friendinfo'], {
+    this.navCtrl.navigateForward(['tabs/friend/friendinfo'], {
       queryParams: {
         userid: item.id,
         friendname: item.displayName,

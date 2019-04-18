@@ -1,10 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-
 import {
   MenuController,
-
+  NavController
 } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { Storage } from '@ionic/Storage';
 
 @Component({
@@ -20,12 +18,12 @@ export class GuidePage {
   constructor(
     private menu: MenuController,
     private storage: Storage,
-    private router: Router
+    private navCtrl: NavController
   ) { }
 
   startApp() {
     this.storage.set('hasSeenGuide', 'true');
-    this.router.navigate(['login']);
+    this.navCtrl.navigateForward(['login']);
   }
 
   onSlideChangeStart(slider) {

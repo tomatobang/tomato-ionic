@@ -8,7 +8,8 @@ import {
   PopoverController,
   IonRouterOutlet,
   MenuController,
-  LoadingController
+  LoadingController,
+  NavController
 } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -59,7 +60,7 @@ export class MyApp {
     private menuCtrl: MenuController,
     private actionSheetCtrl: ActionSheetController,
     private popoverCtrl: PopoverController,
-    private router: Router,
+    private navCtrl: NavController,
     public rebirthProvider: RebirthHttpProvider,
     public info: InfoService,
     public chatIO: ChatIOService,
@@ -141,7 +142,7 @@ export class MyApp {
   initRoute() {
     if (this.globalservice.isFirstTimeOpen) {
       this.globalservice.isFirstTimeOpen = false;
-      this.router.navigate(['guide']);
+      this.navCtrl.navigateForward(['guide']);
     } else {
       if (this.globalservice.userinfo) {
         this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
@@ -153,9 +154,9 @@ export class MyApp {
           if (data && data.status && data.status !== 'fail') {
             this.chatIO.login(this.globalservice.userinfo._id, this.globalservice.token);
             this.info.init();
-            this.router.navigate(['tabs']);
+            this.navCtrl.navigateForward(['tabs']);
           } else {
-            this.router.navigate(['login'], {
+            this.navCtrl.navigateForward(['login'], {
               queryParams: {
                 username: this.globalservice.userinfo.username,
                 password: this.globalservice.userinfo.password,
@@ -165,7 +166,7 @@ export class MyApp {
         });
 
       } else {
-        this.router.navigate(['login']);
+        this.navCtrl.navigateForward(['login']);
       }
     }
   }

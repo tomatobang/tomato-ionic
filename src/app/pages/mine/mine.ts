@@ -1,6 +1,6 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, Platform, ModalController } from '@ionic/angular';
+import { ActionSheetController, Platform, ModalController, NavController } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { NativeService } from '@services/native.service';
@@ -31,17 +31,18 @@ export class MinePage implements OnInit {
     public actionSheetCtrl: ActionSheetController,
     public native: NativeService,
     public platform: Platform,
-    private cache: CacheService,
-    private modalCtrl: ModalController,
     public chatIO: ChatIOService,
     public tomatoIO: TomatoIOService,
     public userService: OnlineUserService,
+    private cache: CacheService,
+    private modalCtrl: ModalController,
     private helper: Helper,
-    private router: Router,
     private emitService: EmitService,
+    private navCtrl: NavController,
+    private route: ActivatedRoute
   ) { }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.setUserInfo();
     this.emitService.getActiveUser().subscribe(ret => {
       this.setUserInfo();
@@ -83,7 +84,7 @@ export class MinePage implements OnInit {
    */
   logout() {
     this.userService.logout().subscribe(ret => {
-      this.router.navigate(['login'], {
+      this.navCtrl.navigateForward('login', {
         queryParams: {
           username: this.globalservice.userinfo.username,
           password: this.globalservice.userinfo.password,
@@ -112,25 +113,26 @@ export class MinePage implements OnInit {
 
   setting() {
     console.log('setting!');
-    this.router.navigate(['tabs/me/setting']);
-
+    this.navCtrl.navigateForward(['setting'], {
+      relativeTo: this.route
+    });
   }
 
   about() {
     console.log('about!');
-    this.router.navigate(['tabs/me/about']);
+    this.navCtrl.navigateForward(['tabs/me/about']);
   }
 
   profile() {
-    this.router.navigate(['tabs/me/profile']);
+    this.navCtrl.navigateForward(['tabs/me/profile']);
   }
 
   statistics() {
-    this.router.navigate(['tabs/me/statistics']);
+    this.navCtrl.navigateForward(['tabs/me/statistics']);
   }
 
   toGameBoard() {
-    this.router.navigate(['tabs/me/game']);
+    this.navCtrl.navigateForward(['tabs/me/game']);
   }
 
   /**

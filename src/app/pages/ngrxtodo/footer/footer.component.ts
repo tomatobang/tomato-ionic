@@ -1,6 +1,6 @@
+import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Router } from '@angular/router';
 import { AppState } from './../redux/ngrxtodo.reducer';
 import * as TodoActions from './../redux/todo/todo.actions';
 import { getFilter, getTodos } from './../redux/todo/todo.selectors';
@@ -14,7 +14,7 @@ export class FooterComponent implements OnInit {
   currentFilter: string;
   showFooter: boolean;
 
-  constructor(private store: Store<AppState>, private router: Router) {
+  constructor(private store: Store<AppState>, private navCtrl: NavController) {
     this.readFilterState();
     this.readTodosState();
   }
@@ -45,6 +45,6 @@ export class FooterComponent implements OnInit {
   }
 
   navigateTo(url) {
-    this.router.navigate(['tabs/ngrxtodo/' + url]);
+    this.navCtrl.navigateForward(['tabs/ngrxtodo/' + url]);
   }
 }

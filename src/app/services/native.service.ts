@@ -9,7 +9,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Platform, ToastController } from '@ionic/angular';
+import { Platform, ToastController, NavController } from '@ionic/angular';
 import { GlobalService } from './global.service';
 import { Insomnia } from '@ionic-native/insomnia/ngx';
 import { Network } from '@ionic-native/network/ngx';
@@ -47,7 +47,7 @@ export class NativeService {
     private appCenterCrashes: AppCenterCrashes,
     private file: File,
     private jpush: JPush,
-    private router: Router,
+    private navCtrl: NavController,
   ) { }
 
 
@@ -84,7 +84,7 @@ export class NativeService {
         }
         this.jpush.setBadge(0);
         this.jpush.clearAllNotification().then(() => { });
-        this.router.navigate(['tabs/friend/message']);
+        this.navCtrl.navigateForward(['tabs/friend/message']);
         console.log("open notification: " + JSON.stringify(event), content);
       },
       false

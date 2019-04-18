@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  ToastController,
+  ToastController, NavController
 } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OnlineUserService, User } from '@services/data.service';
 import { GlobalService } from '@services/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'page-register',
@@ -53,7 +52,7 @@ export class RegisterPage implements OnInit {
     public globalservice: GlobalService,
     public rebirthProvider: RebirthHttpProvider,
     private toastCtrl: ToastController,
-    public router: Router,
+    public navCtrl: NavController,
 
   ) {
     this.user.username = '';
@@ -157,7 +156,7 @@ export class RegisterPage implements OnInit {
   }
 
   public navToLogin(): void {
-    this.router.navigate(['login']);
+    this.navCtrl.navigateForward(['login']);
   }
 
   async presentToast(msg) {

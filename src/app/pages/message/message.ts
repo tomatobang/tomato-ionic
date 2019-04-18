@@ -1,5 +1,5 @@
+import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-
 import { UserFriendState } from '@services/data/user_friend/model/state.enum';
 import { GlobalService } from '@services/global.service';
 import { EmitService } from '@services/emit.service';
@@ -7,7 +7,6 @@ import { ChatIOService } from '@services/utils/socket.io.service';
 import { UserFriendService } from '@services/data/user_friend';
 import { InfoService } from '@services/info.service';
 import { CacheService } from '@services/cache.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'cmp-message',
@@ -29,7 +28,7 @@ export class MessagePage implements OnInit {
     public chatIO: ChatIOService,
     public info: InfoService,
     public cache: CacheService,
-    public router: Router,
+    public navCtrl: NavController,
     private emitService: EmitService,
   ) {
     this.userid = globalservice.userinfo._id;
@@ -137,7 +136,7 @@ export class MessagePage implements OnInit {
    */
   toChatPage(fid, fname, friendHeadImg) {
     console.log('toChatPage!');
-    this.router.navigate(['tabs/friend/message/chat'], {
+    this.navCtrl.navigateForward(['tabs/friend/message/chat'], {
       queryParams: {
         toUserId: fid,
         toUserName: fname,
