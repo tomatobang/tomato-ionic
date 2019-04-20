@@ -6,5 +6,7 @@ export class Footprint {
   tag?: string;
   notes?: string;
   position: string;
+  voices?: any;
+  pictures?: any;
   create_at?: string;
 }

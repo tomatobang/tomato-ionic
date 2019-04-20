@@ -16,6 +16,22 @@
   </ion-refresher>
 
   <ion-input placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
+  <div class="media-area">
+    <!-- <ion-icon name="mic" (click)="addVoices()"></ion-icon> -->
+    <ion-icon name="camera" (click)="addPictures()"></ion-icon>
+  </div>
+  <div class="picture-list">
+    <ng-container *ngFor="let item of pictures">
+      <img [src]="item" />
+    </ng-container>
+  </div>
+
+  <!-- <div class="voice-list">
+    <ng-container *ngFor="let item of voices">
+      <img [src]="item" />
+    </ng-container>
+
+  </div> -->
 
   <div class="tag-area">
     <div class="tag-header" (click)="openTagChooser()">标签
@@ -80,6 +96,11 @@
                 </ion-chip>
                 <ng-container *ngIf="item.mode">
                   <ion-icon *ngFor="let i of item.mode" name="star" class="star"></ion-icon>
+                </ng-container>
+              </div>
+              <div class="picture-list">
+                <ng-container *ngFor="let item of item.pictures">
+                  <img [src]="item" />
                 </ng-container>
               </div>
               <p class="text-small">
