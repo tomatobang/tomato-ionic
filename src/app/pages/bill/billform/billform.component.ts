@@ -332,11 +332,11 @@ export class BillformComponent implements OnInit {
     });
   }
 
-  resetFormData() {
+  resetFormData(amount?) {
     this.newBill = {
       _id: '',
       date: new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString(),
-      amount: null,
+      amount: amount ? amount : null,
       asset: '',
       tag: '',
       note: '',
@@ -370,7 +370,7 @@ export class BillformComponent implements OnInit {
       this.newBill.type = evt.detail.value;
       this.clearSelectedTag();
     } else {
-      this.resetFormData();
+      this.resetFormData(this.newBill.amount);
       this.newBill.type = evt.detail.value;
     }
   }
