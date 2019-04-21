@@ -14,6 +14,8 @@ export class FootprintformComponent implements OnInit {
   create_at;
   notes = '';
   tag = ['补录'];
+  voices = [];
+  pictures = [];
   mode = [
     { index: 1, selected: true },
     { index: 2, selected: true },
@@ -96,12 +98,16 @@ export class FootprintformComponent implements OnInit {
         notes: this.notes,
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
-        create_at: new Date(new Date(this.create_at).getTime() - 8 * 3600 * 1000).toISOString()
+        create_at: new Date(new Date(this.create_at).getTime() - 8 * 3600 * 1000).toISOString(),
+        voices: this.voices,
+        pictures: this.pictures
       }).subscribe(ret => {
         this.notes = '';
         ret.mode = new Array(parseInt(ret.mode, 10));
         this.clearTags();
         this.selectMode(3);
+        this.voices = [];
+        this.pictures = [];
         this.modalCtrl.dismiss(ret);
       }, () => {
       });

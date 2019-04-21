@@ -7,7 +7,6 @@ import { GlobalService } from '@services/global.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
-import { NativeService } from '@services/native.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { FootprintformComponent } from './footprintform/footprintform.component';
 
@@ -86,7 +85,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     private actionSheetCtrl: ActionSheetController,
     private camera: Camera,
     private qiniu: QiniuUploadService,
-    private native: NativeService,
   ) {
   }
 
