@@ -99,8 +99,8 @@
                 </ng-container>
               </div>
               <div class="picture-list">
-                <ng-container *ngFor="let item of item.pictures">
-                  <img [src]="item" />
+                <ng-container *ngFor="let pic of item.pictures">
+                  <img [src]="pic" (click)="showBigImgs(item.pictures)" />
                 </ng-container>
               </div>
               <p class="text-small">

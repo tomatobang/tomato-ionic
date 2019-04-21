@@ -1,0 +1,8 @@
+<div>
+  <close-popup color="dark" large="true" (closePopUp)="dismiss()"></close-popup>
+  <ion-slides #slides pager>
+    <ion-slide *ngFor="let pic of pictures">
+      <img [src]="pic" class="slide-image" />
+    </ion-slide>
+  </ion-slides>
+</div>

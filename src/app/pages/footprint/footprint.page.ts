@@ -11,6 +11,8 @@ import { NativeService } from '@services/native.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { FootprintformComponent } from './footprintform/footprintform.component';
 
+import { ShowBigImgsModal } from '@modals/show-big-imgs/show-big-imgs';
+
 @Component({
   selector: 'app-footprint',
   templateUrl: './footprint.page.html',
@@ -377,6 +379,18 @@ export class FootprintPage implements OnInit, OnDestroy {
       ],
     });
     await actionSheet.present();
+  }
+
+  async showBigImgs(pictures) {
+    const modal = await this.modalCtrl.create({
+      component: ShowBigImgsModal,
+      componentProps: {
+        pictures: pictures
+      }
+    });
+    modal.onDidDismiss().then(ret => {
+    });
+    await modal.present();
   }
 
   dateFtt(fmt, date) {

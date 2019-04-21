@@ -4,6 +4,7 @@ import { NativeService } from '@services/native.service';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
+import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
 
 import { SharedModule } from '../../shared/shared.module';
 import { FootprintPage } from './footprint.page';
@@ -19,6 +20,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    ShowBigImgsModalModule,
     RouterModule.forChild(routes)
   ],
   declarations: [FootprintPage, FootprintformComponent],
