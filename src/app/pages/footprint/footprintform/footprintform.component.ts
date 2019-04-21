@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { OnlineFootprintService } from '@services/data.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
+import { FootPrintService } from '../footprint.service';
 
 @Component({
   selector: 'app-footprintform',
@@ -70,6 +71,7 @@ export class FootprintformComponent implements OnInit {
     private footprintserice: OnlineFootprintService,
     private modalCtrl: ModalController,
     private baidu: BaiduLocationService,
+    private service: FootPrintService
   ) {
 
   }
@@ -88,7 +90,7 @@ export class FootprintformComponent implements OnInit {
       console.warn(err);
     });
 
-    this.create_at = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
+    this.create_at = new Date(new Date().getTime()).toISOString();
   }
 
   async submit() {
@@ -98,7 +100,7 @@ export class FootprintformComponent implements OnInit {
         notes: this.notes,
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
-        create_at: new Date(new Date(this.create_at).getTime() - 8 * 3600 * 1000).toISOString(),
+        create_at: new Date(new Date(this.create_at).getTime()).toISOString(),
         voices: this.voices,
         pictures: this.pictures
       }).subscribe(ret => {
@@ -157,5 +159,16 @@ export class FootprintformComponent implements OnInit {
 
   close() {
     this.modalCtrl.dismiss();
+  }
+
+  /**
+ * 添加图片
+ */
+  addPictures() {
+    this.service.addPictures().subscribe(ret => {
+      if (ret) {
+        this.pictures.push(ret);
+      }
+    });
   }
 }

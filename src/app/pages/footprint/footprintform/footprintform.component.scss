@@ -112,3 +112,23 @@ ion-icon.star {
         color: #888;
     }
 }
+
+.media-area {
+    margin-bottom: 5px;
+    margin-top: 5px;
+
+    ion-icon {
+        color: #888;
+        margin: 5px;
+        font-size: 27px;
+    }
+}
+
+
+.picture-list {
+    img {
+        display: inline-block;
+        margin-right: 3px;
+        width: 80px;
+    }
+}

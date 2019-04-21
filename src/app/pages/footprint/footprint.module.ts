@@ -8,6 +8,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { SharedModule } from '../../shared/shared.module';
 import { FootprintPage } from './footprint.page';
 import { FootprintformComponent } from './footprintform/footprintform.component';
+import { FootPrintService } from './footprint.service';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
   declarations: [FootprintPage, FootprintformComponent],
   entryComponents: [FootprintformComponent],
   providers: [
+    FootPrintService,
     FileTransfer,
     File,
     Camera,

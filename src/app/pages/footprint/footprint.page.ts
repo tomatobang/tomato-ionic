@@ -9,8 +9,9 @@ import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { FootprintformComponent } from './footprintform/footprintform.component';
-
 import { ShowBigImgsModal } from '@modals/show-big-imgs/show-big-imgs';
+
+import { FootPrintService } from './footprint.service';
 
 @Component({
   selector: 'app-footprint',
@@ -76,15 +77,16 @@ export class FootprintPage implements OnInit, OnDestroy {
   timeInterval;
 
   constructor(
-    private globalservice: GlobalService,
+    // private globalservice: GlobalService,
     private baidu: BaiduLocationService,
     private footprintserice: OnlineFootprintService,
     private loading: LoadingController,
     private emitService: EmitService,
     private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController,
-    private camera: Camera,
-    private qiniu: QiniuUploadService,
+    // private actionSheetCtrl: ActionSheetController,
+    // private camera: Camera,
+    // private qiniu: QiniuUploadService,
+    private service: FootPrintService
   ) {
   }
 
@@ -281,102 +283,12 @@ export class FootprintPage implements OnInit, OnDestroy {
   /**
    * 添加图片
    */
-  async addPictures() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: '添加图片',
-      buttons: [
-        {
-          text: '从相册中选择',
-          handler: () => {
-            console.log('从相册中选择 clicked');
-            const options: CameraOptions = {
-              quality: 100,
-              sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-              destinationType: this.camera.DestinationType.FILE_URI,
-              encodingType: this.camera.EncodingType.PNG,
-              mediaType: this.camera.MediaType.PICTURE,
-              targetWidth: 540,
-              targetHeight: 540,
-              allowEdit: true
-            };
-
-            this.camera.getPicture(options).then(
-              FILE_URI => {
-                const indexOfQ = FILE_URI.indexOf('?');
-                if (indexOfQ !== -1) {
-                  FILE_URI = FILE_URI.substr(0, indexOfQ);
-                }
-                const filename =
-                  'footprint_img_' +
-                  this.globalservice.userinfo.username +
-                  '_' +
-                  new Date().valueOf();
-                this.qiniu.initQiniu().subscribe(isInit => {
-                  if (isInit) {
-                    this.qiniu
-                      .uploadLocFile(FILE_URI, filename)
-                      .subscribe(data => {
-                        this.pictures.push(this.globalservice.qiniuDomain + filename);
-                      });
-                  }
-                });
-              },
-              err => {
-                console.log('从相册上传图片失败：', err);
-              }
-            );
-          },
-        },
-        {
-          text: '拍摄照片',
-          handler: () => {
-            console.log('拍摄照片 clicked');
-            const options: CameraOptions = {
-              quality: 100,
-              sourceType: this.camera.PictureSourceType.CAMERA,
-              destinationType: this.camera.DestinationType.FILE_URI,
-              encodingType: this.camera.EncodingType.PNG,
-              mediaType: this.camera.MediaType.PICTURE,
-              targetWidth: 540,
-              targetHeight: 540,
-              allowEdit: true
-            };
-
-            this.camera.getPicture(options).then(
-              FILE_URI => {
-                const indexOfQ = FILE_URI.indexOf('?');
-                if (indexOfQ !== -1) {
-                  FILE_URI = FILE_URI.substr(0, indexOfQ);
-                }
-                const filename =
-                  'footprint_img_' +
-                  this.globalservice.userinfo.username +
-                  '_' +
-                  new Date().valueOf();
-                this.qiniu.initQiniu().subscribe(isInit => {
-                  if (isInit) {
-                    this.qiniu.uploadLocFile(FILE_URI, filename).subscribe(data => {
-                      this.pictures.push(this.globalservice.qiniuDomain + filename);
-                    });
-                  }
-                });
-              },
-              err => {
-                console.log('拍照上传图片失败：', err);
-              }
-            );
-          },
-        },
-        {
-          text: '取消',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel 修改图片');
-          },
-        },
-      ],
+  addPictures() {
+    this.service.addPictures().subscribe(ret => {
+      if (ret) {
+        this.pictures.push(ret);
+      }
     });
-    await actionSheet.present();
   }
 
   async showBigImgs(pictures) {
