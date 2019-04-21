@@ -100,7 +100,8 @@
               </div>
               <div class="picture-list">
                 <ng-container *ngFor="let pic of item.pictures">
-                  <img [src]="pic" (click)="showBigImgs(item.pictures)" />
+                  <!-- (click)="showBigImgs(item.pictures)" -->
+                  <img [src]="pic" appShowBigImgDirective [pictures]="item.pictures" />
                 </ng-container>
               </div>
               <p class="text-small">
