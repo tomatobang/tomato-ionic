@@ -44,7 +44,7 @@ export class OnlineTodoService extends TodoService {
   ): Observable<Array<Todo>> {
     return null;
   }
-  @GET(baseUrl + 'api/todo')
+  @GET(baseUrl + 'api/todoregular')
   getRegularTodo(
     @Query('type') type = 1,
     @Query('pageIndex') pageIndex = 1,
