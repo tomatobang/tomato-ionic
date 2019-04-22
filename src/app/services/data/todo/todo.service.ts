@@ -13,6 +13,7 @@ import {
 import { baseUrl } from '../../../config';
 import { TodoService } from './abstract/todo.abstract';
 import { Todo } from './model/todo.model';
+import { TodoRegular } from './model/todoRegular.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,10 @@ export class OnlineTodoService extends TodoService {
   createTodo(@Body todo: Todo): Observable<any> {
     return null;
   }
+  @POST(baseUrl + 'api/todoregular/')
+  createRegularTodo(@Body todo: TodoRegular): Observable<any> {
+    return null;
+  }
 
   @GET(baseUrl + 'api/todo')
   getTodos(
@@ -37,6 +42,15 @@ export class OnlineTodoService extends TodoService {
     @Query('pageSize') pageSize = 10,
     @Query('keyword') keyword?: string
   ): Observable<Array<Todo>> {
+    return null;
+  }
+  @GET(baseUrl + 'api/todo')
+  getRegularTodo(
+    @Query('type') type = 1,
+    @Query('pageIndex') pageIndex = 1,
+    @Query('pageSize') pageSize = 10,
+    @Query('keyword') keyword?: string
+  ): Observable<Array<TodoRegular>> {
     return null;
   }
 
@@ -52,6 +66,10 @@ export class OnlineTodoService extends TodoService {
 
   @DELETE(baseUrl + 'api/todo/:id')
   deleteTodo(@Path('id') id: string): Observable<any> {
+    return null;
+  }
+  @DELETE(baseUrl + 'api/todoregular/:id')
+  deleteRegularTodo(@Path('id') id: string): Observable<any> {
     return null;
   }
 
