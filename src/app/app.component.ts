@@ -40,7 +40,6 @@ declare var window: any;
 })
 export class MyApp {
   backButtonPressed = false;
-  hideNav = false;
   statubarHeight = '0px';
 
   pages: Array<{ title: string; component: any }>;
@@ -131,9 +130,9 @@ export class MyApp {
 
     this.emitservice.qrcodeEmit.subscribe((ret) => {
       if (ret === 'qrScanner:show') {
-        this.hideNav = true;
+
       } else if (ret === 'qrScanner:hide') {
-        this.hideNav = false;
+
       }
     });
 

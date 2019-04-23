@@ -53,7 +53,7 @@ export class RegularTodoComponent implements OnInit {
       buttons: [
         {
           text: '取消',
-          handler: data => {
+          handler: () => {
             console.log('Cancel clicked');
           },
         },
