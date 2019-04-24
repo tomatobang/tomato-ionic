@@ -37,6 +37,17 @@ export class MessageService extends RebirthHttp {
   }
 
   /**
+   * 加载历史消息
+   * @param state
+   */
+  @POST(baseUrl + 'api/loadHistoryMsg')
+  loadHistoryChatMsg(
+    @Body data: {}
+  ): Observable<any> {
+    return null;
+  }
+
+  /**
    * 获取未读消息总数
    * @param data
    */
