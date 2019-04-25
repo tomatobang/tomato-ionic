@@ -13,6 +13,7 @@
 @import './todomvc.scss';
 @import "./theme/theme.dark.scss";
 @import "./theme/theme.light.scss";
+
 // ion-content {
 //     height: 100vh !important;
 // }
@@ -40,6 +41,7 @@ ion-app {
         visibility: hidden;
         background: transparent !important;
     }
+
     .modal-wrapper.sc-ion-modal-md {
         background: transparent !important;
         --background: transparent !important;
@@ -67,10 +69,6 @@ ion-app {
     font-style: normal;
 }
 
-.hide-app {
-    display: none;
-}
-
 .statistic-popover {
     .popover-content {
         --width: 80%;
@@ -86,12 +84,14 @@ ion-app {
         --ion-color-primary: #ff8208;
         font-size: 10px;
         text-align: left !important;
+
         .day-pay-label {
             background: #ff8208;
             padding: 1px 2px;
             color: #fff;
             margin-bottom: 1px;
         }
+
         .day-income-label {
             padding: 1px 2px;
             margin-bottom: 1px;
@@ -105,6 +105,7 @@ ion-app {
     height: 65px !important;
     font-size: 10px;
     --ion-color-primary: rgba(200, 200, 200, .8);
+
     button.days-btn {
         p {
             position: absolute;
@@ -113,6 +114,7 @@ ion-app {
             font-size: 14px !important;
             text-align: center;
         }
+
         border-radius:2px !important;
         height: 70px !important;
     }

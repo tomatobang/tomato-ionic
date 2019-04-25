@@ -20,6 +20,8 @@ export class ChatPage {
   @ViewChild('chat_content') content;
   @ViewChild('chat_input') messageInput;
 
+  oldestMsgTime = new Date();
+
   msgList: ChatMessage[] = [];
   userId: string;
   userName: string;
@@ -52,33 +54,12 @@ export class ChatPage {
       this.userName = this.globalService.userinfo.username;
       this.myHeadImg = this.globalService.qiniuDomain + this.globalService.userinfo.img;
       this.info.getFriendHistoryMsg(this.toUserId).subscribe(messages => {
-        let minusCount = 0;
-        for (let index = 0; index < messages.length; index++) {
-
-          // fix not read message from server
-          if (!messages[index].from && !messages[index].to) {
-            messages[index].from = this.toUserId;
-            messages[index].to = this.userId;
-          }
-          const newMsg: ChatMessage = {
-            messageId: messages[index].create_at,
-            userId: messages[index].from === this.toUserId ? this.toUserId : this.userId,
-            userName: messages[index].from === this.toUserId ? this.toUserName : this.userName,
-            userImgUrl: messages[index].from === this.toUserId ? this.friendHeadImg : this.myHeadImg,
-            toUserId: messages[index].to ? messages[index].to : this.userId,
-            time: messages[index].create_at,
-            message: messages[index].content,
-            status: 'success',
-          };
-          this.pushNewMsg(newMsg);
-          if (!messages[index].has_read) {
-            minusCount -= 1;
-            this.updateMsgState(messages[index]._id);
-          }
-        }
-        if (minusCount < 0) {
-          this.info.addUnreadMsgCount(minusCount, this.toUserId);
-          this.info.updateMessageState(this.toUserId);
+        if (messages && messages.length > 0) {
+          messages = messages.sort((a, b) => {
+            return new Date(a.create_at).getTime() - new Date(b.create_at).getTime();
+          });
+          this.oldestMsgTime = messages[0].create_at;
+          this.showMessages(messages);
         }
       });
 
@@ -108,6 +89,41 @@ export class ChatPage {
         }
       });
     });
+  }
+
+  showMessages(messages, revert?) {
+    let minusCount = 0;
+    for (let index = 0; index < messages.length; index++) {
+
+      // fix not read message from server
+      if (!messages[index].from && !messages[index].to) {
+        messages[index].from = this.toUserId;
+        messages[index].to = this.userId;
+      }
+      const newMsg: ChatMessage = {
+        messageId: messages[index].create_at,
+        userId: messages[index].from === this.toUserId ? this.toUserId : this.userId,
+        userName: messages[index].from === this.toUserId ? this.toUserName : this.userName,
+        userImgUrl: messages[index].from === this.toUserId ? this.friendHeadImg : this.myHeadImg,
+        toUserId: messages[index].to ? messages[index].to : this.userId,
+        time: messages[index].create_at,
+        message: messages[index].content,
+        status: 'success',
+      };
+      if (revert) {
+        this.unshiftNewMsg(newMsg);
+      } else {
+        this.pushNewMsg(newMsg);
+      }
+      if (!messages[index].has_read) {
+        minusCount -= 1;
+        this.updateMsgState(messages[index]._id);
+      }
+    }
+    if (minusCount < 0) {
+      this.info.addUnreadMsgCount(minusCount, this.toUserId);
+      this.info.updateMessageState(this.toUserId);
+    }
   }
 
   /**
@@ -210,6 +226,15 @@ export class ChatPage {
     this.scrollToBottom();
   }
 
+  unshiftNewMsg(msg: ChatMessage) {
+    // Verify user relationships
+    if (msg.userId === this.userId && msg.toUserId === this.toUserId) {
+      this.msgList.unshift(msg);
+    } else if (msg.toUserId === this.userId && msg.userId === this.toUserId) {
+      this.msgList.unshift(msg);
+    }
+  }
+
   getMsgIndexById(id: string) {
     return this.msgList.findIndex(e => e.messageId === id);
   }
@@ -240,5 +265,27 @@ export class ChatPage {
       this.content.el.scrollToBottom();
       this.content.scrollTop = this.content.scrollHeight;
     }, 300);
+  }
+
+  loadHistoryChatMsg(event) {
+    const refresher = event.target;
+    this.messageService.loadHistoryChatMsg({
+      friendid: this.toUserId,
+      startTime: this.oldestMsgTime
+    }).subscribe(ret => {
+      const records = ret.records;
+      if (records && records.length) {
+        this.cache.setFriendMsg(this.toUserId, {
+          _id: this.toUserId,
+          count: 0,
+          messages: records
+        });
+        this.oldestMsgTime = records[records.length - 1].create_at;
+        this.showMessages(records, true);
+        if (refresher) {
+          refresher.complete();
+        }
+      }
+    });
   }
 }

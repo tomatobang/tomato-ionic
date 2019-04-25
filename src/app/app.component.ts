@@ -2,7 +2,6 @@ import { Component, ViewChildren, QueryList } from '@angular/core';
 import {
   Platform,
   ToastController,
-  Events,
   ModalController,
   ActionSheetController,
   PopoverController,
@@ -40,7 +39,6 @@ declare var window: any;
 })
 export class MyApp {
   backButtonPressed = false;
-  hideNav = false;
   statubarHeight = '0px';
 
   pages: Array<{ title: string; component: any }>;
@@ -61,23 +59,23 @@ export class MyApp {
     private actionSheetCtrl: ActionSheetController,
     private popoverCtrl: PopoverController,
     private navCtrl: NavController,
-    public rebirthProvider: RebirthHttpProvider,
-    public info: InfoService,
-    public chatIO: ChatIOService,
-    public userService: OnlineUserService,
-    public platform: Platform,
-    public events: Events,
-    public statusBar: StatusBar,
-    public splashScreen: SplashScreen,
-    public native: NativeService,
-    public updateService: UpdateService,
-    public translateservice: TranslateService,
-    public globalservice: GlobalService,
-    public emitservice: EmitService,
-    public toastCtrl: ToastController,
-    public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController,
-    public tabService: TabsService,
+    private rebirthProvider: RebirthHttpProvider,
+    private router: Router,
+    private info: InfoService,
+    private chatIO: ChatIOService,
+    private userService: OnlineUserService,
+    private platform: Platform,
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private native: NativeService,
+    private updateService: UpdateService,
+    private translateservice: TranslateService,
+    private globalservice: GlobalService,
+    private emitservice: EmitService,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
+    private tabService: TabsService, // please don't move
   ) {
     this.emitservice.getActiveTheme().subscribe(val => {
       if (val) {
@@ -131,9 +129,9 @@ export class MyApp {
 
     this.emitservice.qrcodeEmit.subscribe((ret) => {
       if (ret === 'qrScanner:show') {
-        this.hideNav = true;
+        // TODO
       } else if (ret === 'qrScanner:hide') {
-        this.hideNav = false;
+        // TODO
       }
     });
 
@@ -147,7 +145,7 @@ export class MyApp {
       if (this.globalservice.userinfo) {
         this.rebirthProvider.headers({ Authorization: this.globalservice.token }, true);
         this.rebirthProvider.addResponseErrorInterceptor(err => {
-          console.error('请求错误！', err);
+          console.error('request error:', err);
         });
 
         this.userService.auth().subscribe(data => {
@@ -191,10 +189,10 @@ export class MyApp {
   }
 
   /**
-   * 物理键返回事件
+   * register hardware backbutton event
    */
   registerBackButtonAction() {
-    this.platform.backButton.subscribe(async () => {
+    this.platform.backButton.subscribeWithPriority(9999,async () => {
       // close action sheet
       try {
         const element = await this.actionSheetCtrl.getTop();
@@ -234,9 +232,10 @@ export class MyApp {
       } catch (error) { }
 
       this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
+        const back_button_off = ['/tabs/footprint', '/tabs/tomato', '/tabs/bill', '/tabs/ngrxtodo', '/tabs/friend', '/tabs/me'];
         if (outlet && outlet.canGoBack()) {
           outlet.pop();
-        } else { //  if (this.router.url === 'tabs/footprint')
+        } else if (back_button_off.includes(this.router.url)) {
           if (
             new Date().getTime() - this.lastTimeBackPress <
             this.timePeriodToExit
@@ -257,7 +256,7 @@ export class MyApp {
   }
 
   /**
-   * 代码热更新
+   * code hot load
    */
   loading: any;
   codeSync() {
