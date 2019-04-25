@@ -91,3 +91,11 @@ li.completed label {
 .float-right {
     float: right;
 }
+
+.picture-list{
+    img{
+        display: inline-block;
+        margin-right: 3px;
+        width: 80px;
+    }
+}

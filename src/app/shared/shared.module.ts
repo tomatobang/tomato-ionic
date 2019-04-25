@@ -11,6 +11,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { DebounceClickDirective } from '@directives/debounce-click.directive';
 import { TrackEventDirective } from '@directives/trackEvent.directive';
+import { ShowBigImgDirective } from '@directives/show-big-image.directive';
+import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
 
 import { CalendarModule } from '../components/ion2-calendar';
 import { SocketIoModule } from 'ngx-socket-io';
@@ -27,6 +29,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FormsModule,
     PipesModule,
     CalendarModule,
+    ShowBigImgsModalModule,
     HttpClientModule,
     SocketIoModule,
     TranslateModule.forRoot({
@@ -37,13 +40,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       },
     }),
   ],
-  declarations: [DebounceClickDirective, TrackEventDirective],
+  declarations: [DebounceClickDirective, TrackEventDirective, ShowBigImgDirective],
   providers: [], // better be empty!
   exports: [
     PipesModule,
     TranslateModule,
     DebounceClickDirective,
     TrackEventDirective,
+    ShowBigImgDirective,
     IonicModule,
     CommonModule,
     FormsModule,

@@ -1,10 +1,17 @@
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ActionSheetController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ModalController } from '@ionic/angular';
+
+import { GlobalService } from '@services/global.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
+import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { FootprintformComponent } from './footprintform/footprintform.component';
-import { ModalController } from '@ionic/angular';
+import { ShowBigImgsModal } from '@modals/show-big-imgs/show-big-imgs';
+
+import { FootPrintService } from './footprint.service';
 
 @Component({
   selector: 'app-footprint',
@@ -16,6 +23,9 @@ export class FootprintPage implements OnInit, OnDestroy {
   create_at = '2012-12-12 10:00';
   notes = '';
   tag = [];
+  voices = [];
+  pictures = [];
+
   footprintlist: any;
   mode = [
     { index: 1, selected: true },
@@ -67,11 +77,16 @@ export class FootprintPage implements OnInit, OnDestroy {
   timeInterval;
 
   constructor(
+    // private globalservice: GlobalService,
     private baidu: BaiduLocationService,
     private footprintserice: OnlineFootprintService,
     private loading: LoadingController,
     private emitService: EmitService,
     private modalCtrl: ModalController,
+    // private actionSheetCtrl: ActionSheetController,
+    // private camera: Camera,
+    // private qiniu: QiniuUploadService,
+    private service: FootPrintService
   ) {
   }
 
@@ -88,7 +103,6 @@ export class FootprintPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.baidu.getCurrentLocation().then(val => {
       if (val && val.time) {
         this.create_at = this.dateFtt('hh:mm:ss', new Date(val.time));
@@ -120,27 +134,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.timeInterval = setInterval(() => {
       this.create_at = this.dateFtt('hh:mm:ss', new Date());
     }, 1000);
-  }
-
-  dateFtt(fmt, date) {
-    let o = {
-      'M+': date.getMonth() + 1,
-      'd+': date.getDate(),
-      'h+': date.getHours(),
-      'm+': date.getMinutes(),
-      's+': date.getSeconds(),
-      'q+': Math.floor((date.getMonth() + 3) / 3),
-      'S': date.getMilliseconds()
-    };
-    if (/(y+)/.test(fmt)) {
-      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
-    }
-    for (let k in o) {
-      if (new RegExp('(' + k + ')').test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
-      }
-    }
-    return fmt;
   }
 
   doRefresh(event) {
@@ -189,12 +182,16 @@ export class FootprintPage implements OnInit, OnDestroy {
         position: this.location,
         notes: this.notes,
         tag: this.tag.join(','),
-        mode: this.modeIndex + ''
+        mode: this.modeIndex + '',
+        voices: this.voices,
+        pictures: this.pictures
       }).subscribe(ret => {
         loading.dismiss();
-        this.notes = '';
         ret.mode = new Array(parseInt(ret.mode, 10));
         this.footprintlist.unshift(ret);
+        this.notes = '';
+        this.voices = [];
+        this.pictures = [];
         this.clearTags();
         this.selectMode(3);
       }, () => {
@@ -277,6 +274,54 @@ export class FootprintPage implements OnInit, OnDestroy {
       }
     });
     await modal.present();
+  }
+
+  addVoices() {
+
+  }
+
+  /**
+   * 添加图片
+   */
+  addPictures() {
+    this.service.addPictures().subscribe(ret => {
+      if (ret) {
+        this.pictures.push(ret);
+      }
+    });
+  }
+
+  async showBigImgs(pictures) {
+    const modal = await this.modalCtrl.create({
+      component: ShowBigImgsModal,
+      componentProps: {
+        pictures: pictures
+      }
+    });
+    modal.onDidDismiss().then(ret => {
+    });
+    await modal.present();
+  }
+
+  dateFtt(fmt, date) {
+    let o = {
+      'M+': date.getMonth() + 1,
+      'd+': date.getDate(),
+      'h+': date.getHours(),
+      'm+': date.getMinutes(),
+      's+': date.getSeconds(),
+      'q+': Math.floor((date.getMonth() + 3) / 3),
+      'S': date.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (let k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+      }
+    }
+    return fmt;
   }
 
 }

@@ -55,6 +55,11 @@
       <ion-label>
         <div class="text-small">
           <span class="list-title">{{ item.notes }}</span>
+          <div class="picture-list">
+            <ng-container *ngFor="let pic of item.pictures">
+              <img [src]="pic" appShowBigImgDirective [pictures]="item.pictures" />
+            </ng-container>
+          </div>
           <ion-chip color="primary" *ngIf="item.tag" style="height:24px;line-height:24px;">
             <ion-label style="font-size:10px">{{ item.tag }}</ion-label>
           </ion-chip>

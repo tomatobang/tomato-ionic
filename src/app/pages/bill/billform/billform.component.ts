@@ -140,7 +140,7 @@ export class BillformComponent implements OnInit {
     if (this.edit) {
       this.newBill = {
         _id: this.item._id,
-        date: new Date(new Date(this.item.create_at).getTime() + 8 * 3600 * 1000).toISOString(),
+        date: new Date(new Date(this.item.create_at).getTime()).toISOString(),
         amount: this.item.amount,
         asset: this.item.asset._id,
         tag: this.item.tag.split(','),
@@ -153,8 +153,8 @@ export class BillformComponent implements OnInit {
       }, 10);
     } else {
       this.title = '新增账单';
-      this.newBill.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
-      this.assetExchange.date = new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString();
+      this.newBill.date = new Date(new Date().getTime()).toISOString();
+      this.assetExchange.date = new Date(new Date().getTime()).toISOString();
     }
 
     this.initAssetSelect();
@@ -241,11 +241,11 @@ export class BillformComponent implements OnInit {
       return;
     }
     // adjust bill exchange date
-    this.assetExchange.date = new Date(new Date(this.assetExchange.date).getTime() - 8 * 3600 * 1000).toISOString();
+    this.assetExchange.date = new Date(new Date(this.assetExchange.date).getTime()).toISOString();
     this.billService.billexchange(this.assetExchange).subscribe(ret => {
       this.newBill.type = '支出';
       this.assetExchange = {
-        date: new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString(),
+        date: new Date(new Date().getTime()).toISOString(),
         amount: null,
         note: '',
         fromAsset: '',
@@ -294,7 +294,7 @@ export class BillformComponent implements OnInit {
 
   updateBill() {
     this.billService.updateBill(this.newBill._id, {
-      create_at: new Date(new Date(this.newBill.date).getTime() - 8 * 3600 * 1000).toISOString(),
+      create_at: new Date(new Date(this.newBill.date).getTime()).toISOString(),
       amount: this.newBill.amount,
       asset: this.newBill.asset,
       tag: this.tag.join(','),
@@ -314,7 +314,7 @@ export class BillformComponent implements OnInit {
 
   createBill() {
     this.billService.createBill({
-      create_at: new Date(new Date(this.newBill.date).getTime() - 8 * 3600 * 1000).toISOString(),
+      create_at: new Date(new Date(this.newBill.date).getTime()).toISOString(),
       amount: this.newBill.amount,
       asset: this.newBill.asset,
       tag: this.tag.join(','),
@@ -335,7 +335,7 @@ export class BillformComponent implements OnInit {
   resetFormData(amount?) {
     this.newBill = {
       _id: '',
-      date: new Date(new Date().getTime() + 8 * 3600 * 1000).toISOString(),
+      date: new Date(new Date().getTime()).toISOString(),
       amount: amount ? amount : null,
       asset: '',
       tag: '',
