@@ -12,11 +12,13 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DebounceClickDirective } from '@directives/debounce-click.directive';
 import { TrackEventDirective } from '@directives/trackEvent.directive';
 import { ShowBigImgDirective } from '@directives/show-big-image.directive';
+import { VoiceRecoderDirective } from '@directives/voice-recorder.directive';
 import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
 
 import { CalendarModule } from '../components/ion2-calendar';
 import { SocketIoModule } from 'ngx-socket-io';
 
+import { VoiceRecorderComponent } from '@components/voice-recorder/';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, 'assets/i18n/', '.json');
@@ -40,13 +42,16 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       },
     }),
   ],
-  declarations: [DebounceClickDirective, TrackEventDirective, ShowBigImgDirective],
+  declarations: [DebounceClickDirective, TrackEventDirective,
+    ShowBigImgDirective, VoiceRecoderDirective, VoiceRecorderComponent,],
+  entryComponents: [VoiceRecorderComponent],
   providers: [], // better be empty!
   exports: [
     PipesModule,
     TranslateModule,
     DebounceClickDirective,
     TrackEventDirective,
+    VoiceRecoderDirective,
     ShowBigImgDirective,
     IonicModule,
     CommonModule,
