@@ -3,6 +3,8 @@ import { Platform } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { VoicePlayService } from '@services/utils/voiceplay.service';
+import { Helper } from '@services/utils/helper';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { Observable } from 'rxjs';
 
@@ -16,6 +18,8 @@ export class FootPrintService {
     private actionSheetCtrl: ActionSheetController,
     private camera: Camera,
     private qiniu: QiniuUploadService,
+    private voiceService: VoicePlayService,
+    private helper: Helper,
   ) { }
 
   addPictures(): Observable<any> {
@@ -122,6 +126,58 @@ export class FootPrintService {
       });
       await actionSheet.present();
     });
+  }
+
+  uploadVoiceFile(uploadMediaFilepath, fileName) {
+    return new Promise((resolve, reject) => {
+      this.qiniu.initQiniu().subscribe(data => {
+        if (data) {
+          this.qiniu
+            .uploadLocFile(
+              uploadMediaFilepath,
+              fileName
+            )
+            .subscribe(ret => {
+              if (ret.data) {
+                resolve(fileName);
+              } else {
+                resolve('');
+              }
+            });
+        }
+      });
+    });
+  }
+
+  playLocalVoice(mediaSrc) {
+    this.voiceService.play(mediaSrc).then(() => {
+    });
+  }
+
+  playRemoteVoice(voiceUrl) {
+    if (voiceUrl) {
+      const filename = this.helper.getFileName(voiceUrl);
+      const remotepath = this.globalservice.qiniuDomain + filename;
+      this.voiceService
+        .downloadVoiceFile_observable(filename, remotepath)
+        .subscribe(
+          data => {
+            if (data.data) {
+              this.voiceService.play(data.value).then(() => {
+              });
+            } else {
+              if (data.value) {
+                // 显示进度
+                // console.log('下载进度', data.value);
+              }
+            }
+          },
+          err => {
+          }
+        );
+    } else {
+      alert('此任务无音频记录！');
+    }
   }
 
 }

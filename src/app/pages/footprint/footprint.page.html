@@ -17,21 +17,25 @@
 
   <ion-input placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
   <div class="media-area">
-    <!-- <ion-icon name="mic" (click)="addVoices()"></ion-icon> -->
+    <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
     <ion-icon name="camera" (click)="addPictures()"></ion-icon>
   </div>
+
+  <div class="voice-list">
+    <ng-container *ngFor="let item of voicesToPlay">
+      <div id="play_block">
+        <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
+          播放( {{ item.voiceDuration }} ")
+        </ion-button>
+      </div>
+    </ng-container>
+  </div>
+
   <div class="picture-list">
     <ng-container *ngFor="let item of pictures">
       <img [src]="item" />
     </ng-container>
   </div>
-
-  <!-- <div class="voice-list">
-    <ng-container *ngFor="let item of voices">
-      <img [src]="item" />
-    </ng-container>
-
-  </div> -->
 
   <div class="tag-area">
     <div class="tag-header" (click)="openTagChooser()">标签
@@ -61,6 +65,11 @@
       <ion-icon class="star" name="star" *ngIf="item.selected" (click)="selectMode(item.index, false)"></ion-icon>
       <ion-icon class="star" name="star-outline" *ngIf="!item.selected" (click)="selectMode(item.index, true)"></ion-icon>
     </ng-container>
+  </div>
+
+  <div class="star-container flex-layout">
+    <ion-label>是否公开</ion-label>
+    <ion-checkbox color="primary" slot="end" [(ngModel)]="isPublish"></ion-checkbox>
   </div>
 
   <div class="add-footprint-button-container">
@@ -100,8 +109,16 @@
               </div>
               <div class="picture-list">
                 <ng-container *ngFor="let pic of item.pictures">
-                  <!-- (click)="showBigImgs(item.pictures)" -->
                   <img [src]="pic" appShowBigImgDirective [pictures]="item.pictures" />
+                </ng-container>
+              </div>
+              <div class="voice-list" *ngIf="item.voices.length > 0">
+                <ng-container *ngFor="let item of item.voices">
+                  <div id="play_block">
+                    <ion-button shape="round" color="primary" (click)="playRemoteVoice(item)">
+                      播放
+                    </ion-button>
+                  </div>
                 </ng-container>
               </div>
               <p class="text-small">
