@@ -66,10 +66,20 @@
                 <ion-label stacked>描述/备注</ion-label>
                 <ion-textarea class="task-note-ion-textarea" autoSizeTextarea type="text" [(ngModel)]="newTask.description"></ion-textarea>
             </ion-item>
+
+            <ion-item *ngIf="this.mediaSrc">
+                <div id="play_block">
+                    <ion-button shape="round" color="primary" (click)="playLocalVoice()">
+                        播放
+                    </ion-button>
+                </div>
+            </ion-item>
             <div style="text-align:center;padding-left:15px;padding-top:15px">
-                <voice-recorder [(voiceUploadUrl)]="voiceUploadUrl" [(postParams)]="voicepostParams"></voice-recorder>
+                <ion-button color="primary" appVoiceRecoderDirective (finishRecord)="addVoices($event)">添加语音记录</ion-button>
             </div>
         </ion-list>
+
+
     </div>
 
     <div *ngIf="!openNewTaskForm" [ngSwitch]="taskType">
