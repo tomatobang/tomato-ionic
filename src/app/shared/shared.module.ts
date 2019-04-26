@@ -13,6 +13,8 @@ import { DebounceClickDirective } from '@directives/debounce-click.directive';
 import { TrackEventDirective } from '@directives/trackEvent.directive';
 import { ShowBigImgDirective } from '@directives/show-big-image.directive';
 import { VoiceRecoderDirective } from '@directives/voice-recorder.directive';
+import { VoicePlayDirective } from '@directives/voice-play.directive';
+
 import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
 
 import { CalendarModule } from '../components/ion2-calendar';
@@ -43,7 +45,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
   ],
   declarations: [DebounceClickDirective, TrackEventDirective,
-    ShowBigImgDirective, VoiceRecoderDirective, VoiceRecorderComponent,],
+    ShowBigImgDirective, VoiceRecoderDirective, VoiceRecorderComponent, VoicePlayDirective],
   entryComponents: [VoiceRecorderComponent],
   providers: [], // better be empty!
   exports: [
@@ -51,6 +53,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     TranslateModule,
     DebounceClickDirective,
     TrackEventDirective,
+    VoicePlayDirective,
     VoiceRecoderDirective,
     ShowBigImgDirective,
     IonicModule,
