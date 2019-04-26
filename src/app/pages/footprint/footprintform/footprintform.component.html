@@ -19,8 +19,17 @@
     <ion-card-content>
       <ion-input placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
       <div class="media-area">
-        <!-- <ion-icon name="mic" (click)="addVoices()"></ion-icon> -->
+        <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
         <ion-icon name="camera" (click)="addPictures()"></ion-icon>
+      </div>
+      <div class="voice-list">
+        <ng-container *ngFor="let item of voicesToPlay">
+          <div id="play_block">
+            <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
+              播放( {{ item.voiceDuration }} ")
+            </ion-button>
+          </div>
+        </ng-container>
       </div>
       <div class="picture-list">
         <ng-container *ngFor="let item of pictures">

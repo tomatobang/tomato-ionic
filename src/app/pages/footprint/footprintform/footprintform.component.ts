@@ -16,6 +16,7 @@ export class FootprintformComponent implements OnInit {
   notes = '';
   tag = ['补录'];
   voices = [];
+  voicesToPlay = [];
   pictures = [];
   mode = [
     { index: 1, selected: true },
@@ -68,13 +69,11 @@ export class FootprintformComponent implements OnInit {
   modeIndex = 3;
   openTag = false;
   constructor(
-    private footprintserice: OnlineFootprintService,
+    private onlinefootprintService: OnlineFootprintService,
     private modalCtrl: ModalController,
     private baidu: BaiduLocationService,
-    private service: FootPrintService
-  ) {
-
-  }
+    private footprintService: FootPrintService
+  ) {}
 
   ngOnInit() {
     this.baidu.getCurrentLocation().then(val => {
@@ -95,7 +94,7 @@ export class FootprintformComponent implements OnInit {
 
   async submit() {
     if (this.location) {
-      this.footprintserice.createFootprint({
+      this.onlinefootprintService.createFootprint({
         position: this.location,
         notes: this.notes,
         tag: this.tag.join(','),
@@ -165,10 +164,37 @@ export class FootprintformComponent implements OnInit {
  * 添加图片
  */
   addPictures() {
-    this.service.addPictures().subscribe(ret => {
+    this.footprintService.addPictures().subscribe(ret => {
       if (ret) {
         this.pictures.push(ret);
       }
     });
+  }
+
+  playLocalVoice(mediaSrc) {
+    this.footprintService.playLocalVoice(mediaSrc);
+  }
+
+  addVoices(ret) {
+    if (ret && ret.data) {
+      let uploadMediaFilepath = ret.data.uploadMediaFilepath;
+      let mediaSrc = ret.data.mediaSrc;
+      let voiceDuration = ret.data.voiceDuration;
+
+      this.voicesToPlay.push({
+        uploadMediaFilepath: uploadMediaFilepath,
+        mediaSrc: mediaSrc,
+        voiceDuration: voiceDuration
+      });
+
+      let fileName = uploadMediaFilepath.substr(
+        uploadMediaFilepath.lastIndexOf('/') + 1
+      );
+      fileName = 'footprint_voice_' + fileName;
+      this.voices.push(fileName);
+      this.footprintService.uploadVoiceFile(uploadMediaFilepath, fileName).then(() => {
+
+      });
+    }
   }
 }

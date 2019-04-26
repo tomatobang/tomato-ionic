@@ -154,30 +154,4 @@ export class FootPrintService {
     });
   }
 
-  playRemoteVoice(voiceUrl) {
-    if (voiceUrl) {
-      const filename = this.helper.getFileName(voiceUrl);
-      const remotepath = this.globalservice.qiniuDomain + filename;
-      this.voiceService
-        .downloadVoiceFile_observable(filename, remotepath)
-        .subscribe(
-          data => {
-            if (data.data) {
-              this.voiceService.play(data.value).then(() => {
-              });
-            } else {
-              if (data.value) {
-                // 显示进度
-                // console.log('下载进度', data.value);
-              }
-            }
-          },
-          err => {
-          }
-        );
-    } else {
-      alert('此任务无音频记录！');
-    }
-  }
-
 }

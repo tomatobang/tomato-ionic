@@ -303,10 +303,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.footprintService.playLocalVoice(mediaSrc);
   }
 
-  playRemoteVoice(voiceUrl) {
-    this.footprintService.playRemoteVoice(voiceUrl);
-  }
-
   /**
    * 添加图片
    */
