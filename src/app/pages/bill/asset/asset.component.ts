@@ -34,6 +34,7 @@ export class AssetComponent implements OnInit {
     this.service.getAssets().subscribe(ret => {
       if (ret) {
         this.totalAmount = 0;
+        ret.sort((a, b) => b.amount - a.amount);
         this.assetList = ret;
         for (let index = 0; index < ret.length; index++) {
           const element = ret[index];

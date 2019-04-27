@@ -28,8 +28,8 @@
     </ion-list-header>
     <ion-item-sliding *ngFor="let item of assetList; let i = index;">
       <ion-item>
-        <ion-label text-wrap>
-          <ion-text color="primary">
+        <ion-label>
+          <ion-text>
             <h3>{{ item.name }}</h3>
           </ion-text>
           <p class="amount"><span class="rmb-sign">¥</span>{{ item.amount | NumberFix:2 }}</p>

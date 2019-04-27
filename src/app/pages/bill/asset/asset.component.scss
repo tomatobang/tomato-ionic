@@ -1,4 +1,7 @@
 ion-list {
+    h3{
+        color: #888;
+    }
     .amount {
         line-height: 40px;
         font-size: 32px;
@@ -8,18 +11,8 @@ ion-list {
     }
 
     ion-item-sliding {
-        .asset-item {
-            height: 60px;
-            width: 100%;
-            position: relative;
-            margin-top: 8px !important;
-        }
-
-        ion-note {
-            position: absolute;
-            bottom: 2px;
-            width: 100%;
-            text-align: center;
+        ion-label {
+            margin: 0;
         }
     }
 }
