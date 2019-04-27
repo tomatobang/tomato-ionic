@@ -1,14 +1,10 @@
 ion-list {
-    ion-note {
+    .amount {
+        line-height: 40px;
         font-size: 32px;
+        vertical-align: center;
         color: #ff8208;
         font-family: 'RobotoLight';
-    }
-
-    .label {
-        position: absolute;
-        left: 3px;
-        top: 3px;
     }
 
     ion-item-sliding {
@@ -29,6 +25,9 @@ ion-list {
 }
 
 .total-amount {
+    margin-left: 15px;
+    margin-bottom: 15px;
+    color: #ff8208;
     font-size: 36px !important;
     font-family: 'RobotoRegular' !important;
 }

@@ -114,6 +114,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.location = '网络问题，定位失败!';
       }
     }).catch(err => {
+      this.location = '定位失败!';
       console.warn(err);
     });
 
