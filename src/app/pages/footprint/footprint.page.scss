@@ -1,3 +1,9 @@
+.input-container {
+    background: #eee !important;
+    padding-top: 15px;
+    padding-bottom: 30px
+}
+
 .add-footprint-button-container {
     width: 150px;
     height: 150px;
@@ -171,7 +177,7 @@ ion-icon.star {
     }
 }
 
-#play_block {
+.play-block {
     height: 35px;
     display: inline-block;
 }

@@ -8,14 +8,14 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button icon-only >
-          <ion-chip *ngIf="!showForm" (click)="showAssetForm()" color="primary">
-              <ion-icon name="add"></ion-icon>
-              <ion-label>添加资产</ion-label>
-          </ion-chip>
-          <ion-chip *ngIf="showForm" (click)="showAssetForm()" color="primary">
-              <ion-label>取消</ion-label>
-          </ion-chip>
+      <ion-button icon-only>
+        <ion-chip *ngIf="!showForm" (click)="showAssetForm()" color="primary">
+          <ion-icon name="add"></ion-icon>
+          <ion-label>添加资产</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="showForm" (click)="showAssetForm()" color="primary">
+          <ion-label>取消</ion-label>
+        </ion-chip>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -49,17 +49,16 @@
   <ion-list>
     <ion-list-header>
       <ion-label>总资产
-        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalAmount | NumberFix:2}}</ion-note>
+        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalAmount | NumberFix:2 }}
+        </ion-note>
       </ion-label>
     </ion-list-header>
     <ion-item-sliding *ngFor="let item of assetList; let i = index;">
       <ion-item>
-        <ion-card>
-          <ion-card-content>
-            <span class="label">{{ item.name }}</span>
-            <ion-note slot="end"><span class="rmb-sign">¥</span>{{ item.amount | NumberFix:2}}</ion-note>
-          </ion-card-content>
-        </ion-card>
+        <div class="asset-item">
+          <span class="label">{{ item.name }}</span>
+          <ion-note slot="end"><span class="rmb-sign">¥</span>{{ item.amount | NumberFix:2 }}</ion-note>
+        </div>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="edit(item)">编辑</ion-item-option>
