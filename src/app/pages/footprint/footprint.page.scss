@@ -1,3 +1,8 @@
+.input-container {
+    background: #eee !important;
+    padding: 15px 10px 30px 10px;
+}
+
 .add-footprint-button-container {
     width: 150px;
     height: 150px;
@@ -29,8 +34,8 @@
     }
 }
 
-.picture-list{
-    img{
+.picture-list {
+    img {
         display: inline-block;
         margin-right: 3px;
         width: 80px;
@@ -40,9 +45,10 @@
 .media-area {
     margin-bottom: 5px;
     margin-top: 5px;
-    ion-icon{
+
+    ion-icon {
         color: #888;
-        margin:5px;
+        margin: 5px;
         font-size: 27px;
     }
 }
@@ -168,4 +174,9 @@ ion-icon.star {
         font-size: 24px;
         color: #888;
     }
+}
+
+.play-block {
+    height: 35px;
+    display: inline-block;
 }

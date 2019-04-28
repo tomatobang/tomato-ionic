@@ -9,60 +9,71 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新地址" refreshingSpinner="circles" refreshingText="刷新中...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
+      refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-
-  <ion-input placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
-  <div class="media-area">
-    <!-- <ion-icon name="mic" (click)="addVoices()"></ion-icon> -->
-    <ion-icon name="camera" (click)="addPictures()"></ion-icon>
-  </div>
-  <div class="picture-list">
-    <ng-container *ngFor="let item of pictures">
-      <img [src]="item" />
-    </ng-container>
-  </div>
-
-  <!-- <div class="voice-list">
-    <ng-container *ngFor="let item of voices">
-      <img [src]="item" />
-    </ng-container>
-
-  </div> -->
-
-  <div class="tag-area">
-    <div class="tag-header" (click)="openTagChooser()">标签
-      <span class="choosed-tag" *ngFor="let item of tag">{{ item }} &nbsp;</span>
-      <div class="choosed-tag-icon">
-        <ion-icon name="arrow-dropright" *ngIf="!openTag">
-          展开
-        </ion-icon>
-        <ion-icon name="arrow-dropdown" *ngIf="openTag"></ion-icon>
-      </div>
+  <div class="input-container">
+    <ion-input placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
+    <div class="media-area">
+      <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
+      <ion-icon name="camera" (click)="addPictures()"></ion-icon>
     </div>
-    <div class="tag-content" [ngClass]="{'open-tag': openTag}">
-      <ng-container *ngFor="let item of taglist" style="display: inline">
-        <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-          <ion-label class="text-small">{{ item.name }}</ion-label>
-        </ion-chip>
-        <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-          <ion-label class="text-small">{{ item.name }}</ion-label>
-        </ion-chip>
+
+    <div class="voice-list">
+      <ng-container *ngFor="let item of voicesToPlay">
+        <div class="play-block">
+          <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
+            播放( {{ item.voiceDuration }} ")
+          </ion-button>
+        </div>
       </ng-container>
     </div>
-  </div>
 
-  <div class="star-container flex-layout">
-    <ion-label>心情</ion-label>
-    <ng-container *ngFor="let item of mode" style="display: inline">
-      <ion-icon class="star" name="star" *ngIf="item.selected" (click)="selectMode(item.index, false)"></ion-icon>
-      <ion-icon class="star" name="star-outline" *ngIf="!item.selected" (click)="selectMode(item.index, true)"></ion-icon>
-    </ng-container>
-  </div>
+    <div class="picture-list">
+      <ng-container *ngFor="let item of pictures">
+        <img [src]="item" />
+      </ng-container>
+    </div>
 
+    <div class="tag-area">
+      <div class="tag-header" (click)="openTagChooser()">标签
+        <span class="choosed-tag" *ngFor="let item of tag">{{ item }} &nbsp;</span>
+        <div class="choosed-tag-icon">
+          <ion-icon name="arrow-dropright" *ngIf="!openTag">
+            展开
+          </ion-icon>
+          <ion-icon name="arrow-dropdown" *ngIf="openTag"></ion-icon>
+        </div>
+      </div>
+      <div class="tag-content" [ngClass]="{'open-tag': openTag}">
+        <ng-container *ngFor="let item of taglist" style="display: inline">
+          <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+            <ion-label class="text-small">{{ item.name }}</ion-label>
+          </ion-chip>
+          <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+            <ion-label class="text-small">{{ item.name }}</ion-label>
+          </ion-chip>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="star-container flex-layout">
+      <ion-label>心情</ion-label>
+      <ng-container *ngFor="let item of mode" style="display: inline">
+        <ion-icon class="star" name="star" *ngIf="item.selected" (click)="selectMode(item.index, false)"></ion-icon>
+        <ion-icon class="star" name="star-outline" *ngIf="!item.selected" (click)="selectMode(item.index, true)">
+        </ion-icon>
+      </ng-container>
+    </div>
+
+    <!-- <div class="star-container flex-layout">
+    <ion-label>是否公开</ion-label>
+    <ion-checkbox color="primary" slot="end" [(ngModel)]="isPublish"></ion-checkbox>
+  </div> -->
+  </div>
   <div class="add-footprint-button-container">
     <div class="add-footprint-button" (click)="addFootprint()">
       <div>添加足跡</div>
@@ -78,13 +89,12 @@
     </ion-select>
   </div>
 
-  <ion-card>
+  <ion-card *ngIf="footprintlist && footprintlist.length > 0">
     <ion-card-header>
       <ion-card-title>今日足迹</ion-card-title>
       <ion-card-subtitle></ion-card-subtitle>
     </ion-card-header>
-
-    <ion-card-content *ngIf="footprintlist">
+    <ion-card-content>
       <ion-list>
         <ion-item-sliding *ngFor="let item of footprintlist; let i = index;">
           <ion-item>
@@ -100,8 +110,16 @@
               </div>
               <div class="picture-list">
                 <ng-container *ngFor="let pic of item.pictures">
-                  <!-- (click)="showBigImgs(item.pictures)" -->
                   <img [src]="pic" appShowBigImgDirective [pictures]="item.pictures" />
+                </ng-container>
+              </div>
+              <div class="voice-list" *ngIf="item.voices.length > 0">
+                <ng-container *ngFor="let item of item.voices; let i = index;">
+                  <div id="play_block">
+                    <ion-button shape="round" color="primary" appVoicePlayDirective [voiceUrl]="item">
+                      播放({{ i+1 }})
+                    </ion-button>
+                  </div>
                 </ng-container>
               </div>
               <p class="text-small">

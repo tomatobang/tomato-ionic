@@ -6,10 +6,12 @@ ion-slides {
     margin: 5px 0px;
     height: 90px;
     width: 100% !important;
+
     ion-slide {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        justify-content: start;
         width: 100% !important;
 
         ion-chip {
@@ -20,11 +22,15 @@ ion-slides {
     }
 }
 
+ion-label {
+    --color: #777 !important;
+}
+
 .amount {
     color: #ff8208;
     text-align: left;
-    font-size: 24px;
-    font-family: 'RobotoLight';
+    font-size: 32px;
+    font-family: 'Roboto';
 }
 
 .bill-note {

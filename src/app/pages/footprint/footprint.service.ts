@@ -3,6 +3,8 @@ import { Platform } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { VoicePlayService } from '@services/utils/voiceplay.service';
+import { Helper } from '@services/utils/helper';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { Observable } from 'rxjs';
 
@@ -16,6 +18,8 @@ export class FootPrintService {
     private actionSheetCtrl: ActionSheetController,
     private camera: Camera,
     private qiniu: QiniuUploadService,
+    private voiceService: VoicePlayService,
+    private helper: Helper,
   ) { }
 
   addPictures(): Observable<any> {
@@ -121,6 +125,32 @@ export class FootPrintService {
         ],
       });
       await actionSheet.present();
+    });
+  }
+
+  uploadVoiceFile(uploadMediaFilepath, fileName) {
+    return new Promise((resolve, reject) => {
+      this.qiniu.initQiniu().subscribe(data => {
+        if (data) {
+          this.qiniu
+            .uploadLocFile(
+              uploadMediaFilepath,
+              fileName
+            )
+            .subscribe(ret => {
+              if (ret.data) {
+                resolve(fileName);
+              } else {
+                resolve('');
+              }
+            });
+        }
+      });
+    });
+  }
+
+  playLocalVoice(mediaSrc) {
+    this.voiceService.play(mediaSrc).then(() => {
     });
   }
 

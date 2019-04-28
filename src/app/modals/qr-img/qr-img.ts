@@ -24,7 +24,7 @@ export class QRImgModal {
     this.bio = this.globalservice.userinfo.bio;
     this.headImg = this.globalservice.qiniuDomain + this.globalservice.userinfo.img;
     if (!this.headImg) {
-      this.headImg = '/assets/imgs/logo.png';
+      this.headImg = '/assets/imgs/time.svg';
     }
     this.username = username;
     this.qrcodeUrl =

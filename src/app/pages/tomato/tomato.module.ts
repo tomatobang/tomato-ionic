@@ -7,7 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { AngularRoundProgressDirective } from '@directives/angular-round-progress.directive';
 import { TimelineModule } from '@components/timeline/timeline.module';
-import { VoiceRecorderComponent } from '@components/voice-recorder/';
+
 import { AutosizeDirective } from '@directives/autosize.directive';
 import { TaskPage } from './task/task';
 
@@ -22,7 +22,6 @@ import { TomatoSettingPage } from './tomatosetting/tomatosetting';
     IndexIndexPage,
     TodaylistComponent,
     AngularRoundProgressDirective,
-    VoiceRecorderComponent,
     AutosizeDirective
   ],
   imports: [

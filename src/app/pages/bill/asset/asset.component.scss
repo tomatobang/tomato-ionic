@@ -1,27 +1,34 @@
 ion-list {
-    ion-note {
-        font-size: 28px;
+    h3{
+        color: #888;
+    }
+    .amount {
+        line-height: 40px;
+        font-size: 32px;
+        vertical-align: center;
         color: #ff8208;
         font-family: 'RobotoLight';
     }
-    ion-card {
-        width: 100%;
-    }
-    .label{
-        position: absolute;
-        left: 2px;
-        top:2px;
+
+    ion-item-sliding {
+        ion-label {
+            margin: 0;
+        }
     }
 }
-.total-amount{
-    font-size: 32px !important;
-    font-family: 'RobotoLight';
+
+.total-amount {
+    margin-left: 15px;
+    margin-bottom: 15px;
+    color: #ff8208;
+    font-size: 36px !important;
+    font-family: 'RobotoRegular' !important;
 }
 
 ion-card {
     text-align: center;
 }
 
-.rmb-sign{
+.rmb-sign {
     font-size: 12px;
 }

@@ -1,31 +1,39 @@
-.add-newtask-title {
-  text-align: center;
-  margin-top: 0px;
+.task-title {
+    font-size: 18px;
 }
-.task-title{
-  font-size: 18px;
-}
+
 .subtitle {
-  font-size: 12px;
-  span {
-    color: gray;
-  }
-}
-button.add-task-button[icon-only]{
-  padding: 5px 10px;
+    font-size: 12px;
+
+    span {
+        color: gray;
+    }
 }
 
-.downloading-bg{
-  background: #7CCD7C;
-  width:30px;
-  height: 15px;
+button.add-task-button[icon-only] {
+    padding: 5px 10px;
 }
 
-.newtask-form-container{
-  margin: 0px 5px;
+ion-title {
+    margin: 15px 5px;
 }
 
-.task-note-ion-textarea{
-  height: auto !important;
-  min-height: 40px !important;
+.downloading-bg {
+    background: #7CCD7C;
+    width: 30px;
+    height: 15px;
+}
+
+.newtask-form-container {
+    margin: 0px 5px;
+}
+
+.task-note-ion-textarea {
+    height: auto !important;
+    min-height: 40px !important;
+}
+
+#play_block {
+    height: 35px;
+    display: inline-block;
 }

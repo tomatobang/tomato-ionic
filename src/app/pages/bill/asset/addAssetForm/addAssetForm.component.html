@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar no-border-bottom>
+    <ion-title>{{ editType }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button icon-only>
+        <ion-chip (click)="submitAsset()" color="primary">
+          <ion-label>提交</ion-label>
+        </ion-chip>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">名称</ion-label>
+        <ion-input [(ngModel)]="asset.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">金额</ion-label>
+        <ion-input [(ngModel)]="asset.amount"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">备注</ion-label>
+        <ion-input [(ngModel)]="asset.note"></ion-input>
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

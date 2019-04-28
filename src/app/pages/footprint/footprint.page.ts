@@ -1,13 +1,12 @@
-import { LoadingController, ActionSheetController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ModalController } from '@ionic/angular';
 
-import { GlobalService } from '@services/global.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
-import { QiniuUploadService } from '@services/qiniu.upload.service';
+import { GlobalService } from '@services/global.service';
+
 import { FootprintformComponent } from './footprintform/footprintform.component';
 import { ShowBigImgsModal } from '@modals/show-big-imgs/show-big-imgs';
 
@@ -19,12 +18,15 @@ import { FootPrintService } from './footprint.service';
   styleUrls: ['./footprint.page.scss'],
 })
 export class FootprintPage implements OnInit, OnDestroy {
+
   location = '加载中...';
   create_at = '2012-12-12 10:00';
   notes = '';
   tag = [];
   voices = [];
+  voicesToPlay = [];
   pictures = [];
+  isPublish = false;
 
   footprintlist: any;
   mode = [
@@ -77,16 +79,13 @@ export class FootprintPage implements OnInit, OnDestroy {
   timeInterval;
 
   constructor(
-    // private globalservice: GlobalService,
     private baidu: BaiduLocationService,
     private footprintserice: OnlineFootprintService,
     private loading: LoadingController,
     private emitService: EmitService,
     private modalCtrl: ModalController,
-    // private actionSheetCtrl: ActionSheetController,
-    // private camera: Camera,
-    // private qiniu: QiniuUploadService,
-    private service: FootPrintService
+    private footprintService: FootPrintService,
+    public globalservice: GlobalService,
   ) {
   }
 
@@ -115,6 +114,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.location = '网络问题，定位失败!';
       }
     }).catch(err => {
+      this.location = '定位失败!';
       console.warn(err);
     });
 
@@ -191,6 +191,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.footprintlist.unshift(ret);
         this.notes = '';
         this.voices = [];
+        this.voicesToPlay = [];
         this.pictures = [];
         this.clearTags();
         this.selectMode(3);
@@ -276,15 +277,38 @@ export class FootprintPage implements OnInit, OnDestroy {
     await modal.present();
   }
 
-  addVoices() {
+  addVoices(ret) {
+    if (ret && ret.data) {
+      let uploadMediaFilepath = ret.data.uploadMediaFilepath;
+      let mediaSrc = ret.data.mediaSrc;
+      let voiceDuration = ret.data.voiceDuration;
 
+      this.voicesToPlay.push({
+        uploadMediaFilepath: uploadMediaFilepath,
+        mediaSrc: mediaSrc,
+        voiceDuration: voiceDuration
+      });
+
+      let fileName = uploadMediaFilepath.substr(
+        uploadMediaFilepath.lastIndexOf('/') + 1
+      );
+      fileName = 'footprint_voice_' + fileName;
+      this.voices.push(fileName);
+      this.footprintService.uploadVoiceFile(uploadMediaFilepath, fileName).then(() => {
+
+      });
+    }
+  }
+
+  playLocalVoice(mediaSrc) {
+    this.footprintService.playLocalVoice(mediaSrc);
   }
 
   /**
    * 添加图片
    */
   addPictures() {
-    this.service.addPictures().subscribe(ret => {
+    this.footprintService.addPictures().subscribe(ret => {
       if (ret) {
         this.pictures.push(ret);
       }

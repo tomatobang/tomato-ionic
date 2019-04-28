@@ -9,5 +9,7 @@ export class NumberFixPipe implements PipeTransform {
             return value.toFixed(2);
         }
 
+        return 0;
+
     }
 }

@@ -1,6 +1,7 @@
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
+import { addAssetFormComponent } from './addAssetForm/addAssetForm.component';
 import { OnlineAssetService } from '@services/data/asset/asset.service';
 import { EmitService } from '@services/emit.service';
 
@@ -11,20 +12,13 @@ import { EmitService } from '@services/emit.service';
 })
 export class AssetComponent implements OnInit {
   showForm = false;
-  cardTitle = '';
 
   assetList;
-
-  asset = {
-    name: '',
-    amount: null,
-    note: ''
-  };
   editItem;
   totalAmount = 0;
 
   constructor(
-    private modal: ModalController,
+    private modalCtrl: ModalController,
     private service: OnlineAssetService,
     private emitService: EmitService
   ) { }
@@ -36,14 +30,11 @@ export class AssetComponent implements OnInit {
     });
   }
 
-  close() {
-    this.modal.dismiss();
-  }
-
   loadAssetList() {
     this.service.getAssets().subscribe(ret => {
       if (ret) {
         this.totalAmount = 0;
+        ret.sort((a, b) => b.amount - a.amount);
         this.assetList = ret;
         for (let index = 0; index < ret.length; index++) {
           const element = ret[index];
@@ -53,38 +44,48 @@ export class AssetComponent implements OnInit {
     });
   }
 
-  showAssetForm() {
+  async showAssetForm(type) {
+    let modal;
     this.showForm = !this.showForm;
-    if (this.showForm) {
-      this.cardTitle = '新增';
-    }
-  }
-
-  /**
-   * 提交修改
-   */
-  submitAsset() {
-    this.showForm = false;
-    if (this.cardTitle === '新增' && this.asset.name && this.asset.amount) {
-      this.service.createAsset(this.asset).subscribe(ret => {
-        if (this.assetList) {
-          this.totalAmount += ret.amount;
-          this.assetList.push(ret);
-        } else {
-          this.assetList = [ret];
+    if (type === '新增') {
+      modal = await this.modalCtrl.create({
+        component: addAssetFormComponent,
+        componentProps: {
+          editType: type
         }
-        this.emitService.eventEmit.emit('assetChange');
+      });
+    } else {
+      modal = await this.modalCtrl.create({
+        component: addAssetFormComponent,
+        componentProps: {
+          editType: '编辑',
+          editItem: this.editItem
+        }
       });
     }
 
-    if (this.cardTitle === '编辑' && this.editItem) {
-      this.service.updateAsset(this.editItem._id, this.asset).subscribe(ret => {
-        this.editItem.name = ret.name;
-        this.editItem.amount = ret.amount;
-        this.editItem.note = ret.note;
-        this.emitService.eventEmit.emit('assetChange');
-      });
-    }
+    modal.onDidDismiss().then(ret => {
+      const data = ret.data;
+      if (data && data.type === '新增') {
+        this.service.createAsset(data.asset).subscribe(ret => {
+          if (this.assetList) {
+            this.totalAmount += ret.amount;
+            this.assetList.push(ret);
+          } else {
+            this.assetList = [ret];
+          }
+          this.emitService.eventEmit.emit('assetChange');
+        });
+      } else if (data && data.type === '编辑') {
+        this.service.updateAsset(this.editItem._id, data.asset).subscribe(ret => {
+          this.editItem.name = ret.name;
+          this.editItem.amount = ret.amount;
+          this.editItem.note = ret.note;
+          this.emitService.eventEmit.emit('assetChange');
+        });
+      }
+    });
+    await modal.present();
   }
 
   /**
@@ -93,11 +94,7 @@ export class AssetComponent implements OnInit {
    */
   edit(item) {
     this.editItem = item;
-    this.asset.name = this.editItem.name;
-    this.asset.amount = this.editItem.amount;
-    this.asset.note = this.editItem.notes;
-    this.cardTitle = '编辑';
-    this.showForm = true;
+    this.showAssetForm('编辑');
   }
 
   /**
@@ -111,5 +108,9 @@ export class AssetComponent implements OnInit {
       this.assetList.splice(index, 1);
       this.emitService.eventEmit.emit('assetChange');
     });
+  }
+
+  close() {
+    this.modalCtrl.dismiss();
   }
 }

@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Platform, ModalController } from '@ionic/angular';
 import { OnlineTaskService } from '@services/data.service';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
-import { Helper } from '@services/utils/helper';
 import { GlobalService } from '@services/global.service';
-import { VoiceRecorderComponent } from '@components/voice-recorder/';
+import { Helper } from '@services/utils/helper';
 import { baseUrl } from '../../../config';
+import { QiniuUploadService } from '@services/qiniu.upload.service';
 
 @Component({
   selector: 'cmp-task',
@@ -13,6 +13,11 @@ import { baseUrl } from '../../../config';
   styleUrls: ['./task.scss']
 })
 export class TaskPage implements OnInit {
+  uploadMediaFilepath;
+  mediaSrc;
+  voiceUploadProgress;
+  isUploading = false;
+
   showDismissButton = true;
   page_title = '任务管理';
   taskType = 'today';
@@ -28,7 +33,7 @@ export class TaskPage implements OnInit {
     num: 1,
   };
 
-  voicepostParams = {};
+  voicepostParams: any;
 
   voiceUploadUrl = {
     url: baseUrl + 'upload/voicefile',
@@ -40,12 +45,14 @@ export class TaskPage implements OnInit {
     public voiceService: VoicePlayService,
     public globalservice: GlobalService,
     public platform: Platform,
-    public helper: Helper
-  ) { }
-
-  @ViewChild(VoiceRecorderComponent) voiceRecordCMP: VoiceRecorderComponent;
+    public helper: Helper,
+    private qiniu: QiniuUploadService,
+  ) {
+    this.voicepostParams = {};
+  }
 
   ngOnInit() {
+    this.mediaSrc = null;
     this.taskservice.getTasks().subscribe(
       data => {
         const dataArr = data;
@@ -62,6 +69,13 @@ export class TaskPage implements OnInit {
         console.log('getTasks err', err);
       }
     );
+  }
+
+  playLocalVoice() {
+    if (this.mediaSrc) {
+      this.voiceService.play(this.mediaSrc).then(() => {
+      });
+    }
   }
 
   playVoiceRecord(task) {
@@ -112,8 +126,46 @@ export class TaskPage implements OnInit {
     };
   }
 
-  addTask = function (isActive: any) {
-    const task = this.newTask;
+  addVoices(ret) {
+    if (ret && ret.data) {
+      this.uploadMediaFilepath = ret.data.uploadMediaFilepath;
+      this.mediaSrc = ret.data.mediaSrc;
+    }
+  }
+
+  uploadVoiceFile() {
+    return new Promise((resolve, reject) => {
+      this.isUploading = true;
+      const fileName = this.uploadMediaFilepath.substr(
+        this.uploadMediaFilepath.lastIndexOf('/') + 1
+      );
+      this.qiniu.initQiniu().subscribe(data => {
+        if (data) {
+          this.qiniu
+            .uploadLocFile(
+              this.uploadMediaFilepath,
+              this.voicepostParams.userid +
+              '_' +
+              this.voicepostParams.taskid +
+              '_' +
+              fileName
+            )
+            .subscribe(ret => {
+              if (ret.data) {
+                this.isUploading = false;
+                resolve(fileName);
+              } else {
+                this.voiceUploadProgress = ret.value;
+              }
+            });
+        }
+      });
+    });
+  }
+
+  addTask(isActive: any) {
+    let task: any;
+    task = this.newTask;
     task.isActive = true;
     task.voiceUrl = '';
     // 创建任务
@@ -129,7 +181,7 @@ export class TaskPage implements OnInit {
         task._id = data._id;
         // 上传音屏文件
         setTimeout(() => {
-          this.voiceRecordCMP.uploadVoiceFile().then(
+          this.uploadVoiceFile().then(
             filename => {
               const tt = this.allTasks.unfinished;
               task.voiceUrl =
@@ -151,6 +203,7 @@ export class TaskPage implements OnInit {
               this.allTasks.unfinished.slice();
               this.newTask = {
                 title: '',
+                target: '',
                 description: '',
                 num: 1,
               };
@@ -166,6 +219,7 @@ export class TaskPage implements OnInit {
               this.allTasks.unfinished.slice();
               this.newTask = {
                 title: '',
+                target: '',
                 description: '',
                 num: 1,
               };
