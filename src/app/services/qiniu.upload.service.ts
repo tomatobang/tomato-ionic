@@ -15,7 +15,7 @@ declare var window;
 export class QiniuUploadService {
   private _qiuniutokeninfo: any;
 
-  constructor(public http: HttpClient, public _g: GlobalService) {}
+  constructor(public http: HttpClient, public _g: GlobalService) { }
 
   public getUploadToken(): Observable<any> {
     const httpOptions = {
@@ -48,7 +48,13 @@ export class QiniuUploadService {
     });
   }
 
-  public uploadLocFile(filePath, name) {
+  /**
+   * 上传本地文件
+   * @param filePath 路径
+   * @param name 名称
+   * @param isTryAgain 是否为重试操作
+   */
+  public uploadLocFile(filePath, name, isTryAgain?) {
     return Observable.create(observer => {
       window.plugins.QiNiuUploadPlugin.simpleUploadFile(
         {
@@ -70,7 +76,15 @@ export class QiniuUploadService {
           });
         },
         err => {
-          console.log('qiniu,uploadLocFile ret err:', err);
+          console.log('qiniu uploadLocFile ret err:', err);
+          if (err && err.info === 'expired token' && !isTryAgain) {
+            // refresh token and try again
+            this.initQiniu(true).subscribe(() => {
+              return this.uploadLocFile(filePath, name, true).subscribe((data) => {
+                observer.next(data);
+              });
+            });
+          }
           observer.error(err);
         }
       );
@@ -79,16 +93,17 @@ export class QiniuUploadService {
 
   /**
    * 七牛初始化
+   * @param force 是否强制刷新
    */
-  initQiniu(): Observable<any> {
+  initQiniu(force?): Observable<any> {
     return Observable.create(observer => {
-      if (this._qiuniutokeninfo) {
+      if (this._qiuniutokeninfo && !force) {
         const timespan = new Date().getTime() - this._qiuniutokeninfo.getTime();
         const timespan_milliseconds = timespan % (3600 * 1000);
         const timespan_minutes = Math.floor(
           timespan_milliseconds / (60 * 1000)
         );
-        if (timespan_minutes < 115) {
+        if (timespan_minutes < 90) {
           observer.next(true);
         } else {
           this.getQiniuTokenAndInit(observer);
