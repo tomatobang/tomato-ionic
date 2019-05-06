@@ -89,7 +89,7 @@ export class FootprintformComponent implements OnInit {
       console.warn(err);
     });
 
-    this.create_at = new Date(new Date().getTime()).toISOString();
+    this.create_at = new Date().toISOString();
   }
 
   async submit() {
@@ -99,7 +99,7 @@ export class FootprintformComponent implements OnInit {
         notes: this.notes,
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
-        create_at: new Date(new Date(this.create_at).getTime()).toISOString(),
+        create_at: new Date(this.create_at).toISOString(),
         voices: this.voices,
         pictures: this.pictures
       }).subscribe(ret => {
