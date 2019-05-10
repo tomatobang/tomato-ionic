@@ -102,22 +102,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.baidu.getCurrentLocation().then(val => {
-      if (val && val.time) {
-        this.create_at = this.dateFtt('hh:mm:ss', new Date(val.time));
-        this.location = val.addr + '(' + val.locationDescribe + ')';
-        if (val.pois) {
-          this.locationList = val.pois;
-        }
-      } else {
-        this.create_at = this.dateFtt('hh:mm:ss', new Date());
-        this.location = '网络问题，定位失败!';
-      }
-    }).catch(err => {
-      this.location = '定位失败!';
-      console.warn(err);
-    });
-
+    this.locating();
     this.refreshCreateAt();
     this.listFootprint();
 
@@ -137,17 +122,35 @@ export class FootprintPage implements OnInit, OnDestroy {
   }
 
   doRefresh(event) {
-    this.baidu.getCurrentLocation().then(val => {
-      if (val) {
-        this.location = val.addr + '(' + val.locationDescribe + ')';
-        this.create_at = this.dateFtt('hh:mm:ss', new Date(val.time));
-      }
-      event.target.complete();
-    }).catch(err => {
-      event.target.complete();
-      console.error(err);
-    });
+    this.locating(event);
     this.listFootprint();
+  }
+
+  locating(event?) {
+    this.baidu.getCurrentLocation().then(val => {
+      if (val && val.time) {
+        this.create_at = this.dateFtt('hh:mm:ss', new Date(val.time));
+        this.location = val.addr + '(' + val.locationDescribe + ')';
+        if (val.pois) {
+          this.locationList = val.pois;
+        }
+        if (event) {
+          event.target.complete();
+        }
+      } else {
+        this.create_at = this.dateFtt('hh:mm:ss', new Date());
+        this.location = '网络问题，定位失败!';
+        if (event) {
+          event.target.complete();
+        }
+      }
+    }).catch(err => {
+      this.location = '定位失败!';
+      if (event) {
+        event.target.complete();
+      }
+      console.warn(err);
+    });
   }
 
   /**
