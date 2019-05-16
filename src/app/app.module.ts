@@ -16,6 +16,8 @@ export class IonicGestureConfig extends HammerGestureConfig {
   }
 }
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/Storage';
@@ -36,6 +38,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { MyErrorHandler } from './error.handler';
 import { RavenErrorHandler } from './raven-error-handler.';
+import { EFOSHttpInterceptor } from './http.interceptor.service';
 
 @NgModule({
   declarations: [MyApp],
@@ -62,6 +65,11 @@ import { RavenErrorHandler } from './raven-error-handler.';
     { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'zh-CN' },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: EFOSHttpInterceptor,
+      multi: true
+    }
     // { provide: ErrorHandler, useClass: MyErrorHandler },
     // { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],

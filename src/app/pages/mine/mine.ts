@@ -22,7 +22,7 @@ export class MinePage implements OnInit {
   username = '';
   displayName = '';
   bio = '';
-  headImg: SafeUrl;
+  headImg: SafeUrl = './assets/tomato-active.png';;
   showBigHeadImg = false;
 
   constructor(
