@@ -22,7 +22,7 @@ import {
 } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { JPush } from '@jiguang-ionic/jpush/ngx'
-import { Router } from '@angular/router';
+import { InfoService } from '@services/info.service';
 
 declare var window;
 
@@ -48,6 +48,7 @@ export class NativeService {
     private file: File,
     private jpush: JPush,
     private navCtrl: NavController,
+    public info: InfoService,
   ) { }
 
 
@@ -84,6 +85,8 @@ export class NativeService {
         }
         this.jpush.setBadge(0);
         this.jpush.clearAllNotification().then(() => { });
+        // 加载未读消息
+        this.info.loadUnreadMsg();
         this.navCtrl.navigateForward(['tabs/friend/message']);
         console.log("open notification: " + JSON.stringify(event), content);
       },
@@ -147,6 +150,10 @@ export class NativeService {
   initNativeService() {
     this.listenInsomniaState();
     this.listenNetworkState();
+    document.addEventListener("resume", () => {
+      // 加载未读消息
+      this.info.loadUnreadMsg();
+    }, false);
   }
 
   isOffline() {
