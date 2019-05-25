@@ -38,7 +38,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { MyErrorHandler } from './error.handler';
 import { RavenErrorHandler } from './raven-error-handler.';
-import { EFOSHttpInterceptor } from './http.interceptor.service';
+import { TBHttpInterceptor } from './http.interceptor.service';
 
 @NgModule({
   declarations: [MyApp],
@@ -67,7 +67,7 @@ import { EFOSHttpInterceptor } from './http.interceptor.service';
     { provide: LOCALE_ID, useValue: 'zh-CN' },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: EFOSHttpInterceptor,
+      useClass: TBHttpInterceptor,
       multi: true
     }
     // { provide: ErrorHandler, useClass: MyErrorHandler },

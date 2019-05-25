@@ -25,56 +25,16 @@ platform :ios do
     scan
   end
 
-  desc "Submit a new Beta Build to Apple PGYER"
+  desc "Submit a new Beta Build to PGYER"
   desc "This will also make sure the profile is up to date"
   lane :beta do
+    setup_travis
 
-    keychain_name = "ios-build.keychain"
-    keychain_password = SecureRandom.base64
-
-    create_keychain(
-      name: keychain_name,
-      password: keychain_password,
-      default_keychain: true,
-      unlock: true,
-      timeout: 3600,
-      add_to_search_list: true
-    )
-
-    # Import distribution certificate
-    import_certificate(
-      certificate_path: "sh/release/certificates/ios_distribution.p12",
-      certificate_password: ENV["KEY_PASSWORD"],
-      keychain_name: keychain_name,
-      keychain_password: keychain_password
-    )      
-
-    # Import push certificate
-    import_certificate(
-      certificate_path: "sh/release/certificates/ios_push_distribution.p12",
-      certificate_password: ENV["KEY_PASSWORD"],
-      keychain_name: keychain_name,
-      keychain_password: keychain_password
-    )
-        
-    # cert(
-    #   team_id: "CVU2X68836",
-    #   username: "yipeng.info@gmail.com",
-    #   filename: "ionic4traviscert",
-    #   keychain_path:"/Users/travis/Library/Keychains/ios-build.keychain-db",
-    #   keychain_password: keychain_password
-    # )
-    
-    sigh(
-      adhoc: true, 
-      force: true,
-      username: "yipeng.info@gmail.com",
-      team_id: "CVU2X68836",
-      provisioning_name: "ionic4AdHoc.mobileprovision"
+    match(
+      type: "adhoc", 
     )
     
-    # sh "ionic cordova build ios --prod --release"
-    sh "ls -l"
+    # sh "ls -l"
 
     ionic(
       platform: "ios", 
@@ -82,8 +42,8 @@ platform :ios do
     )
 
     sh "cd .."
-    sh "ls"
-    pgyer(api_key: ENV["PGYER_APIKEY"], user_key: ENV["PGYER_USERKEY"], update_description: "upload by fastlane", ipa:'/Users/travis/build/pengkobe/tomato-ionic/platforms/ios/build/device/tomato-ionic.ipa')
+    # sh "ls"
+    pgyer(api_key: ENV["PGYER_APIKEY"], user_key: ENV["PGYER_USERKEY"], update_description: "upload by fastlane", ipa:'/Users/travis/build/pengkobe/ionic4-boilerplate/platforms/ios/build/device/ionic4-boilerplate.ipa')
 
   end
 

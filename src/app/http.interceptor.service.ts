@@ -13,7 +13,7 @@ import {
 } from '@ionic/angular';
 
 @Injectable()
-export class EFOSHttpInterceptor implements HttpInterceptor {
+export class TBHttpInterceptor implements HttpInterceptor {
     status = {
         '400': '错误的请求,由于语法错误,该请求无法完成.',
         '401': '未经授权,服务器拒绝响应.',
