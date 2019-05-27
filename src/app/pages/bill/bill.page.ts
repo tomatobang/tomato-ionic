@@ -85,7 +85,7 @@ export class BillPage implements OnInit {
           }
         }
         this.billList.unshift(data);
-      } else if (data.tag === '资产互转') {
+      } else if (data && data.tag === '资产互转') {
         this.init();
       }
     });
