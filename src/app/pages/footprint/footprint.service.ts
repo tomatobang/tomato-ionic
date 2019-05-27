@@ -76,6 +76,7 @@ export class FootPrintService {
               console.log('拍摄照片 clicked');
               const options: CameraOptions = {
                 quality: 100,
+                saveToPhotoAlbum: true,
                 sourceType: this.camera.PictureSourceType.CAMERA,
                 destinationType: this.camera.DestinationType.FILE_URI,
                 encodingType: this.camera.EncodingType.PNG,
