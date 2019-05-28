@@ -86,6 +86,7 @@ export class FootprintformComponent implements OnInit {
         this.location = '网络问题，定位失败!';
       }
     }).catch(err => {
+      this.location = '定位失败!';
       console.warn(err);
     });
 

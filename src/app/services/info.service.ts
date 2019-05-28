@@ -101,6 +101,13 @@ export class InfoService {
   }
 
   /**
+   * 清除未读消息数
+   */
+  clearUnreadMsgCount() {
+    this.messagCountSubject.next(0);
+  }
+
+  /**
    * 同步本地消息至缓存与消息列表
    * @param fid 好友编号
    * @param msg 消息

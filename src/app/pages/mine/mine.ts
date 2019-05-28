@@ -11,6 +11,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { Helper } from '@services/utils/helper';
 import { QRImgModal } from '@modals/qr-img/qr-img';
 import { EmitService } from '@services/emit.service';
+import { InfoService } from '@services/info.service';
 
 @Component({
   selector: 'cmp-mine',
@@ -34,7 +35,8 @@ export class MinePage implements OnInit {
     public chatIO: ChatIOService,
     public tomatoIO: TomatoIOService,
     public userService: OnlineUserService,
-    private cache: CacheService,
+    private cacheService: CacheService,
+    private infoService: InfoService,
     private modalCtrl: ModalController,
     private helper: Helper,
     private emitService: EmitService,
@@ -91,7 +93,7 @@ export class MinePage implements OnInit {
         }
       }).then(() => {
         if (!this.globalservice.userinfo) {
-          this.cache.clearCache();
+          this.cacheService.clearCache();
           this.globalservice.token = '';
           return;
         }
@@ -100,13 +102,14 @@ export class MinePage implements OnInit {
         this.globalservice.userinfo = '';
         this.globalservice.token = '';
         this.jPushService.setBadge(0);
+        this.infoService.clearUnreadMsgCount();
         this.jPushService.clearAllNotification().then(() => { });
         this.jPushService.deleteAlias(this.globalservice.jpushAlias).then((args) => {
           console.log('jpush deleteAlias succeed:', args);
         }).catch(err => {
           console.log('jpush deleteAlias error:', err);
         });
-        this.cache.clearCache();
+        this.cacheService.clearCache();
       });
     });
   }
