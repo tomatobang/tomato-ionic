@@ -8,7 +8,10 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button shape="round" color="primary" (click)="submit()">提交</ion-button>
+      <ion-button shape="round" color="primary" (click)="submit()">
+        <span *ngIf="!isSubmiting">提交</span>
+        <ion-spinner name="circles" *ngIf="isSubmiting"></ion-spinner>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,8 +22,8 @@
 
     <ion-card-header>
       <ion-card-title>
-        <ion-select okText="确认" interface="popover" cancelText="取消" placeholder="类别" (ionChange)="changeBillType($event)"
-          [(ngModel)]="newBill.type">
+        <ion-select okText="确认" interface="popover" cancelText="取消" placeholder="类别"
+          (ionChange)="changeBillType($event)" [(ngModel)]="newBill.type">
           <ion-select-option value="支出">支出</ion-select-option>
           <ion-select-option value="收入">收入</ion-select-option>
           <ion-select-option value="资产互转">资产互转</ion-select-option>
@@ -31,7 +34,8 @@
 
       <ion-item>
         <ion-label position="stacked">日期</ion-label>
-        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date"></ion-datetime>
+        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="newBill.date">
+        </ion-datetime>
       </ion-item>
 
       <ion-item>
@@ -100,7 +104,8 @@
 
       <ion-item>
         <ion-label position="stacked">日期</ion-label>
-        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="assetExchange.date"></ion-datetime>
+        <ion-datetime cancelText="取消" doneText='确认' display-format="YYYY-MM-DD, HH:mm" [(ngModel)]="assetExchange.date">
+        </ion-datetime>
       </ion-item>
 
       <ion-item>

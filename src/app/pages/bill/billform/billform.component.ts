@@ -18,6 +18,7 @@ export class BillformComponent implements OnInit {
   slideOpts = {
     effect: 'flip'
   };
+  isSubmiting = false;
 
   title = '';
 
@@ -215,10 +216,13 @@ export class BillformComponent implements OnInit {
   }
 
   async submit() {
-    if (this.newBill.type !== "资产互转") {
-      this.createOrUpdateBill();
-    } else {
-      this.submitAssetExchange();
+    debugger;
+    if (!this.isSubmiting) {
+      if (this.newBill.type !== "资产互转") {
+        this.createOrUpdateBill();
+      } else {
+        this.submitAssetExchange();
+      }
     }
   }
 
@@ -241,6 +245,7 @@ export class BillformComponent implements OnInit {
       return;
     }
     // adjust bill exchange date
+    this.isSubmiting = true;
     this.assetExchange.date = new Date(this.assetExchange.date).toISOString();
     this.billService.billexchange(this.assetExchange).subscribe(ret => {
       this.newBill.type = '支出';
@@ -254,7 +259,9 @@ export class BillformComponent implements OnInit {
       this.modalCtrl.dismiss({
         tag: '资产互转'
       });
-    });
+    }, () => {
+      this.isSubmiting = false;
+    }, () => {});
 
   }
 
@@ -285,6 +292,7 @@ export class BillformComponent implements OnInit {
       return;
     }
 
+    this.isSubmiting = true;
     if (this.edit) {
       this.updateBill();
     } else {
@@ -309,7 +317,9 @@ export class BillformComponent implements OnInit {
         this.modalCtrl.dismiss(ret);
         this.resetFormData();
       }
-    });
+    }, () => { 
+      this.isSubmiting = false; 
+    }, () => {});
   }
 
   createBill() {
@@ -329,7 +339,9 @@ export class BillformComponent implements OnInit {
         this.modalCtrl.dismiss(ret);
         this.resetFormData();
       }
-    });
+    }, () => { 
+      this.isSubmiting = false; 
+    }, () => {});
   }
 
   resetFormData(amount?) {
