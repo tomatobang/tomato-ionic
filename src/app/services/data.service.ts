@@ -20,6 +20,7 @@ export * from './data/todo';
 export * from './data/footprint';
 export * from './data/bill';
 export * from './data/asset';
+export * from './data/tag';
 
 @Injectable({
   providedIn: 'root',
