@@ -61,7 +61,7 @@
           <ion-label position="stacked" style="margin:10px 0px;">标签</ion-label>
           <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='收入'">
             <ion-slide>
-              <ng-container *ngFor="let item of payTag3">
+              <ng-container *ngFor="let item of incomeTags">
                 <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
                   <ion-label class="text-small">{{ item.name }}</ion-label>
                 </ion-chip>
@@ -73,17 +73,7 @@
           </ion-slides>
           <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='支出'">
             <ion-slide>
-              <ng-container *ngFor="let item of payTag1">
-                <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
-                  <ion-label class="text-small">{{ item.name }}</ion-label>
-                </ion-chip>
-                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
-                  <ion-label class="text-small">{{ item.name }}</ion-label>
-                </ion-chip>
-              </ng-container>
-            </ion-slide>
-            <ion-slide>
-              <ng-container *ngFor="let item of payTag2">
+              <ng-container *ngFor="let item of payTags">
                 <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
                   <ion-label class="text-small">{{ item.name }}</ion-label>
                 </ion-chip>
@@ -94,7 +84,6 @@
             </ion-slide>
           </ion-slides>
         </div>
-
       </ion-item>
 
     </ion-card-content>

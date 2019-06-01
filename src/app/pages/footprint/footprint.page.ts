@@ -6,6 +6,7 @@ import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
 import { GlobalService } from '@services/global.service';
+import { OnlineTagService } from '@services/data/tag/tag.service';
 
 import { FootprintformComponent } from './footprintform/footprintform.component';
 import { ShowBigImgsModal } from '@modals/show-big-imgs/show-big-imgs';
@@ -80,12 +81,14 @@ export class FootprintPage implements OnInit, OnDestroy {
 
   constructor(
     private baidu: BaiduLocationService,
-    private footprintserice: OnlineFootprintService,
+    private footprintservice: OnlineFootprintService,
+    private tagservice: OnlineTagService,
     private loading: LoadingController,
     private emitService: EmitService,
     private modalCtrl: ModalController,
     private footprintService: FootPrintService,
-    public globalservice: GlobalService,
+    private globalservice: GlobalService,
+
   ) {
   }
 
@@ -105,7 +108,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.locating();
     this.refreshCreateAt();
     this.listFootprint();
-
+    this.loadTags();
     this.emitService.getActiveUser().subscribe(ret => {
       this.listFootprint();
     });
@@ -153,12 +156,27 @@ export class FootprintPage implements OnInit, OnDestroy {
     });
   }
 
+  async loadTags() {
+    this.tagservice.getTags(1).subscribe(ret => {
+      if (ret && ret.length > 0) {
+        let tags;
+        tags = [];
+        ret.map(val => {
+          tags.push({
+            name: val.name, selected: false
+          });
+        });
+        this.taglist = tags;
+      }
+    });
+  }
+
   /**
    * 今日足迹列表
    */
   async listFootprint() {
     const loading = await this.createLoading();
-    this.footprintserice.getFootprints().subscribe(ret => {
+    this.footprintservice.getFootprints().subscribe(ret => {
       loading.dismiss();
       if (ret) {
         this.footprintlist = ret;
@@ -181,7 +199,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   async addFootprint() {
     if (this.location) {
       const loading = await this.createLoading();
-      this.footprintserice.createFootprint({
+      this.footprintservice.createFootprint({
         position: this.location,
         notes: this.notes,
         tag: this.tag.join(','),
@@ -233,7 +251,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   async deleteFootprint(_id, index) {
     const loading = await this.createLoading();
     if (_id) {
-      this.footprintserice.deleteFootprint(_id).subscribe(ret => {
+      this.footprintservice.deleteFootprint(_id).subscribe(ret => {
         loading.dismiss();
         if (this.footprintlist && this.footprintlist.length > 0) {
           this.footprintlist.splice(index, 1);

@@ -2,6 +2,8 @@ import { ToastController, ModalController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
 import { OnlineAssetService } from '@services/data/asset/asset.service';
 import { OnlineBillService } from '@services/data/bill/bill.service';
+import { OnlineTagService } from '@services/data/tag/tag.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-billform',
@@ -42,96 +44,14 @@ export class BillformComponent implements OnInit {
 
   assetList = [];
   tag = [];
-  payTag1 = [
-    {
-      name: '吃饭', selected: false
-    },
-    {
-      name: '零食水果', selected: false
-    },
-    {
-      name: '交通', selected: false
-    },
-    {
-      name: '日常用品', selected: false
-    },
-    {
-      name: '衣服', selected: false
-    },
-    {
-      name: '文娱', selected: false
-    },
-    {
-      name: '物业费', selected: false
-    },
-    {
-      name: '理财', selected: false
-    },
-    {
-      name: '书籍教育', selected: false
-    },
-  ];
-  payTag2 = [
-    {
-      name: '人情红包', selected: false
-    },
-    {
-      name: '通讯', selected: false
-    },
-    {
-      name: '运动', selected: false
-    },
-    {
-      name: '房租', selected: false
-    },
-    {
-      name: '旅游', selected: false
-    },
-    {
-      name: '数码', selected: false
-    },
-    {
-      name: '公益', selected: false
-    },
-    {
-      name: '数据校正', selected: false
-    },
-    {
-      name: '其它', selected: false
-    }
-  ];
-  payTag3 = [
-    {
-      name: '工资', selected: false
-    },
-    {
-      name: '理财', selected: false
-    },
-    {
-      name: '红包', selected: false
-    },
-    {
-      name: '过节费', selected: false
-    },
-    {
-      name: '活动奖励', selected: false
-    },
-    {
-      name: '兼职', selected: false
-    },
-    {
-      name: '数据校正', selected: false
-    },
-    {
-      name: '其它', selected: false
-    }
-  ];
-
+  payTags = [];
+  incomeTags = [];
   dateStr;
 
   constructor(
     private modalCtrl: ModalController,
     private assetService: OnlineAssetService,
+    private tagService: OnlineTagService,
     private billService: OnlineBillService,
     private toastCtrl: ToastController,
   ) {
@@ -149,9 +69,6 @@ export class BillformComponent implements OnInit {
         type: this.item.type
       };
       this.title = '编辑账单';
-      setTimeout(() => {
-        this.initSelectedTag(this.newBill.tag, this.newBill.type);
-      }, 10);
     } else {
       this.title = '新增账单';
       this.newBill.date = new Date().toISOString();
@@ -159,6 +76,20 @@ export class BillformComponent implements OnInit {
     }
 
     this.initAssetSelect();
+    this.initTags();
+  }
+
+  initTags() {
+    let requestPaytag = this.tagService.getTags(2);
+    let requestIncometag = this.tagService.getTags(3);
+    forkJoin([requestPaytag, requestIncometag])
+      .subscribe((data: any) => {
+        this.payTags = data[0];
+        this.incomeTags = data[1];
+        this.payTags.sort((a, b) => a.sort - b.sort);
+        this.incomeTags.sort((a, b) => a.sort - b.sort);
+        this.initSelectedTag(this.newBill.tag, this.newBill.type);
+      });
   }
 
   initSelectedTag(tags, type) {
@@ -167,34 +98,26 @@ export class BillformComponent implements OnInit {
       for (let index = 0; index < tags.length; index++) {
         const tag = tags[index];
         if (type === '支出') {
-          for (let index = 0; index < this.payTag1.length; index++) {
-            const tag1 = this.payTag1[index];
-            if (tag === tag1.name) {
-              tag1.selected = true;
-              this.tag.push(tag1.name);
+          for (let index = 0; index < this.payTags.length; index++) {
+            const pagTag = this.payTags[index];
+            if (tag === pagTag.name) {
+              pagTag.selected = true;
+              this.tag.push(pagTag.name);
             }
           }
 
-          for (let index = 0; index < this.payTag2.length; index++) {
-            const tag2 = this.payTag2[index];
-            if (tag === tag2.name) {
-              tag2.selected = true;
-              this.tag.push(tag2.name);
-            }
-          }
         } else if (type === '收入') {
-          for (let index = 0; index < this.payTag3.length; index++) {
-            const tag3 = this.payTag3[index];
-            if (tag === tag3.name) {
-              tag3.selected = true;
-              this.tag.push(tag3.name);
+          for (let index = 0; index < this.incomeTags.length; index++) {
+            const incomeTag = this.incomeTags[index];
+            if (tag === incomeTag.name) {
+              incomeTag.selected = true;
+              this.tag.push(incomeTag.name);
             }
           }
         }
       }
     }
   }
-
 
   initAssetSelect() {
     this.assetService.getAssets().subscribe(ret => {
@@ -216,7 +139,6 @@ export class BillformComponent implements OnInit {
   }
 
   async submit() {
-    debugger;
     if (!this.isSubmiting) {
       if (this.newBill.type !== "资产互转") {
         this.createOrUpdateBill();
@@ -224,6 +146,14 @@ export class BillformComponent implements OnInit {
         this.submitAssetExchange();
       }
     }
+  }
+
+  sleep(second) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(' enough sleep~');
+      }, second);
+    })
   }
 
   async submitAssetExchange() {
@@ -261,7 +191,7 @@ export class BillformComponent implements OnInit {
       });
     }, () => {
       this.isSubmiting = false;
-    }, () => {});
+    }, () => { });
 
   }
 
@@ -317,9 +247,9 @@ export class BillformComponent implements OnInit {
         this.modalCtrl.dismiss(ret);
         this.resetFormData();
       }
-    }, () => { 
-      this.isSubmiting = false; 
-    }, () => {});
+    }, () => {
+      this.isSubmiting = false;
+    }, () => { });
   }
 
   createBill() {
@@ -339,9 +269,9 @@ export class BillformComponent implements OnInit {
         this.modalCtrl.dismiss(ret);
         this.resetFormData();
       }
-    }, () => { 
-      this.isSubmiting = false; 
-    }, () => {});
+    }, () => {
+      this.isSubmiting = false;
+    }, () => { });
   }
 
   resetFormData(amount?) {
@@ -362,13 +292,10 @@ export class BillformComponent implements OnInit {
   }
 
   clearSelectedTag() {
-    this.payTag1.map(val => {
+    this.payTags.map(val => {
       val.selected = false;
     });
-    this.payTag2.map(val => {
-      val.selected = false;
-    });
-    this.payTag3.map(val => {
+    this.incomeTags.map(val => {
       val.selected = false;
     });
   }
@@ -379,12 +306,11 @@ export class BillformComponent implements OnInit {
 
   changeBillType(evt) {
     if (this.edit) {
-      this.newBill.type = evt.detail.value;
       this.clearSelectedTag();
     } else {
       this.resetFormData(this.newBill.amount);
-      this.newBill.type = evt.detail.value;
     }
+    this.newBill.type = evt.detail.value;
   }
 
   findAssetName(assetid) {
