@@ -14,6 +14,8 @@ import { TrackEventDirective } from '@directives/trackEvent.directive';
 import { ShowBigImgDirective } from '@directives/show-big-image.directive';
 import { VoiceRecoderDirective } from '@directives/voice-recorder.directive';
 import { VoicePlayDirective } from '@directives/voice-play.directive';
+import { AddTagDirective } from '@directives/add-tag.directive';
+
 
 import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
 
@@ -45,10 +47,16 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }),
   ],
   declarations: [DebounceClickDirective, TrackEventDirective,
-    ShowBigImgDirective, VoiceRecoderDirective, VoiceRecorderComponent, VoicePlayDirective],
+    ShowBigImgDirective, VoiceRecoderDirective, VoiceRecorderComponent, VoicePlayDirective, AddTagDirective],
   entryComponents: [VoiceRecorderComponent],
   providers: [], // better be empty!
   exports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    CalendarModule,
+    SocketIoModule,
+    HttpClientModule,
     PipesModule,
     TranslateModule,
     DebounceClickDirective,
@@ -56,12 +64,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     VoicePlayDirective,
     VoiceRecoderDirective,
     ShowBigImgDirective,
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    CalendarModule,
-    SocketIoModule,
-    HttpClientModule,
+    AddTagDirective,
   ],
 })
 export class SharedModule { }

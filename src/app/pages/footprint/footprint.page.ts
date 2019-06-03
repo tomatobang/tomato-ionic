@@ -40,41 +40,7 @@ export class FootprintPage implements OnInit, OnDestroy {
 
   locationList = [];
 
-  taglist = [
-    {
-      name: '起床', selected: false
-    },
-    {
-      name: '睡觉', selected: false
-    },
-    {
-      name: '上班', selected: false
-    },
-    {
-      name: '下班', selected: false
-    },
-    {
-      name: '吃饭', selected: false
-    },
-    {
-      name: '开会', selected: false
-    },
-    {
-      name: '活动', selected: false
-    },
-    {
-      name: '出差', selected: false
-    },
-    {
-      name: '旅游', selected: false
-    },
-    {
-      name: '运动', selected: false
-    },
-    {
-      name: '其它', selected: false
-    },
-  ];
+  taglist = [];
   modeIndex = 3;
   openTag = false;
   timeInterval;
@@ -169,6 +135,21 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.taglist = tags;
       }
     });
+  }
+
+  addTag(name) {
+    if (name && name.length >= 1) {
+      this.tagservice.createTag({
+        type: 1,
+        name: name
+      }).subscribe(res => {
+        if (res) {
+          this.taglist.push({
+            name: name, selected: false
+          });
+        }
+      });
+    }
   }
 
   /**

@@ -57,6 +57,10 @@
             <ion-label class="text-small">{{ item.name }}</ion-label>
           </ion-chip>
         </ng-container>
+        <ion-chip appAddTagDirective (addTag)="addTag($event)" color="success">
+          <ion-icon name="add"></ion-icon>
+          <ion-label>添加标签</ion-label>
+        </ion-chip>
       </div>
     </div>
 

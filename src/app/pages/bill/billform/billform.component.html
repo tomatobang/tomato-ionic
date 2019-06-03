@@ -58,7 +58,13 @@
 
       <ion-item>
         <div>
-          <ion-label position="stacked" style="margin:10px 0px;">标签</ion-label>
+          <ion-label position="stacked" style="margin:10px 0px;">
+            标签
+            <ion-chip appAddTagDirective (addTag)="addTag($event,newBill.type)" color="success">
+              <ion-icon name="add"></ion-icon>
+              <ion-label>添加标签</ion-label>
+            </ion-chip>
+          </ion-label>
           <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='收入'">
             <ion-slide>
               <ng-container *ngFor="let item of incomeTags">

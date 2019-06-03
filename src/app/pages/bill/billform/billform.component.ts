@@ -274,6 +274,25 @@ export class BillformComponent implements OnInit {
     }, () => { });
   }
 
+  addTag(name, type) {
+    if (name && name.length >= 1) {
+      this.tagService.createTag({
+        type: type === '支出' ? 2 : 3,
+        name: name
+      }).subscribe(res => {
+        if (type === '支出') {
+          this.payTags.push({
+            name: name, selected: false
+          });
+        } else {
+          this.incomeTags.push({
+            name: name, selected: false
+          });
+        }
+      });
+    }
+  }
+
   resetFormData(amount?) {
     this.newBill = {
       _id: '',
