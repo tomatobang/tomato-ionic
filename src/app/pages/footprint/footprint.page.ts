@@ -129,7 +129,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         tags = [];
         ret.map(val => {
           tags.push({
-            name: val.name, selected: false
+            _id: val._id, name: val.name, selected: false, showDeleteBut: false
           });
         });
         this.taglist = tags;
@@ -145,11 +145,21 @@ export class FootprintPage implements OnInit, OnDestroy {
       }).subscribe(res => {
         if (res) {
           this.taglist.push({
-            name: name, selected: false
+            _id: res._id, name: name, selected: false, showDeleteBut: false
           });
         }
       });
     }
+  }
+
+  deleteTag(item, i) {
+    this.tagservice.deleteTag(item._id).subscribe(res => {
+      this.taglist.splice(i, 1);
+    });
+  }
+
+  showAndHideDeleteBut(item) {
+    item.showDeleteBut = !item.showDeleteBut;
   }
 
   /**

@@ -280,17 +280,30 @@ export class BillformComponent implements OnInit {
         type: type === '支出' ? 2 : 3,
         name: name
       }).subscribe(res => {
+        Object.assign(res, {
+          name: name, selected: false
+        })
         if (type === '支出') {
-          this.payTags.push({
-            name: name, selected: false
-          });
+          this.payTags.push(res);
         } else {
-          this.incomeTags.push({
-            name: name, selected: false
-          });
+          this.incomeTags.push(res);
         }
       });
     }
+  }
+
+  showAndHideDeleteBut(item) {
+    item.showDeleteBut = !item.showDeleteBut;
+  }
+
+  deleteTag(item, i, type) {
+    this.tagService.deleteTag(item._id).subscribe(res => {
+      if (type === 'income') {
+        this.incomeTags.splice(i, 1);
+      } else {
+        this.payTags.splice(i, 1);
+      }
+    });
   }
 
   resetFormData(amount?) {

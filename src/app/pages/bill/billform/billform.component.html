@@ -67,24 +67,29 @@
           </ion-label>
           <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='收入'">
             <ion-slide>
-              <ng-container *ngFor="let item of incomeTags">
+              <ng-container *ngFor="let item of incomeTags; let i = index" (press)="showAndHideDeleteBut(item)">
                 <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
                   <ion-label class="text-small">{{ item.name }}</ion-label>
+                  <ion-icon *ngIf="item.showDeleteBut" name="close" (click)="deleteTag(item,i, 'income')"></ion-icon>
                 </ion-chip>
-                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected" (press)="showAndHideDeleteBut(item)">
                   <ion-label class="text-small">{{ item.name }}</ion-label>
+                  <ion-icon *ngIf="item.showDeleteBut" name="close" (click)="deleteTag(item,i, 'income')"></ion-icon>
                 </ion-chip>
               </ng-container>
             </ion-slide>
           </ion-slides>
           <ion-slides pager="false" [options]="slideOpts" class="tag-slide" *ngIf="newBill.type==='支出'">
             <ion-slide>
-              <ng-container *ngFor="let item of payTags">
-                <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+              <ng-container *ngFor="let item of payTags; let i = index">
+                <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected"
+                  (press)="showAndHideDeleteBut(item)">
                   <ion-label class="text-small">{{ item.name }}</ion-label>
+                  <ion-icon *ngIf="item.showDeleteBut" name="close" (click)="deleteTag(item,i, 'pay')"></ion-icon>
                 </ion-chip>
-                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+                <ion-chip (click)="selectTag(item)" *ngIf="!item.selected" (press)="showAndHideDeleteBut(item)">
                   <ion-label class="text-small">{{ item.name }}</ion-label>
+                  <ion-icon *ngIf="item.showDeleteBut" name="close" (click)="deleteTag(item,i, 'pay')"></ion-icon>
                 </ion-chip>
               </ng-container>
             </ion-slide>

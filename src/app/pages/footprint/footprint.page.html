@@ -49,12 +49,15 @@
         </div>
       </div>
       <div class="tag-content" [ngClass]="{'open-tag': openTag}">
-        <ng-container *ngFor="let item of taglist" style="display: inline">
-          <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected">
+        <ng-container *ngFor="let item of taglist; let i = index" style="display: inline">
+          <ion-chip color="primary" (click)="selectTag(item)" *ngIf="item.selected"
+            (press)="showAndHideDeleteBut(item)">
             <ion-label class="text-small">{{ item.name }}</ion-label>
+            <ion-icon *ngIf="item.showDeleteBut" name="close" (click)="deleteTag(item,i)"></ion-icon>
           </ion-chip>
-          <ion-chip (click)="selectTag(item)" *ngIf="!item.selected">
+          <ion-chip (click)="selectTag(item)" *ngIf="!item.selected" (press)="showAndHideDeleteBut(item)">
             <ion-label class="text-small">{{ item.name }}</ion-label>
+            <ion-icon *ngIf="item.showDeleteBut" name="close" (click)="deleteTag(item,i)"></ion-icon>
           </ion-chip>
         </ng-container>
         <ion-chip appAddTagDirective (addTag)="addTag($event)" color="success">
