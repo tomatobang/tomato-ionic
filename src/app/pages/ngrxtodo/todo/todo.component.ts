@@ -8,6 +8,7 @@ import * as TodoActions from './../redux/todo/todo.actions';
 
 @Component({
   selector: 'page-ngrxtodo',
+  styleUrls: ['./todo.component.scss'],
   templateUrl: './todo.component.html'
 })
 export class TodoComponent implements OnInit {
@@ -24,15 +25,15 @@ export class TodoComponent implements OnInit {
     this.textField = new FormControl('', [Validators.required]);
     this.checkField = new FormControl(false);
     this.checkField.valueChanges
-    .subscribe(state => {
-      const action = new TodoActions.ToggleAction(this.todo);
-      this.store.dispatch(action);
-    });
+      .subscribe(state => {
+        const action = new TodoActions.ToggleAction(this.todo);
+        this.store.dispatch(action);
+      });
   }
 
   ngOnInit() {
     this.textField.setValue(this.todo.title);
-    this.checkField.setValue(this.todo.completed, {emitEvent: false});
+    this.checkField.setValue(this.todo.completed, { emitEvent: false });
   }
 
   updateText() {

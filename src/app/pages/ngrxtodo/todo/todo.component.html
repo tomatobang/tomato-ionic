@@ -1,21 +1,23 @@
 <li [class.completed]="todo.completed" [class.editing]="editing">
   <div class="view">
-    <input 
-    class="toggle"
-    type="checkbox" 
-    [formControl]="checkField"/>
-    <label
-      (dblclick)="activeEditMode()">
+    <input class="toggle" type="checkbox" [formControl]="checkField" />
+    <label (dblclick)="activeEditMode()">
       {{ todo.title }}
+      <ion-text class="tag tag-1" *ngIf="todo.type === 1">
+        重要紧急
+      </ion-text>
+      <ion-text class="tag tag-2" *ngIf="todo.type === 2">
+        重要不紧急
+      </ion-text>
+      <ion-text class="tag tag-3" *ngIf="todo.type === 3">
+        不重要紧急
+      </ion-text>
+      <ion-text class="tag tag-4" *ngIf="todo.type === 4">
+        不重要不紧急
+      </ion-text>
     </label>
     <button class="destroy" (click)="deleteTodo()"></button>
   </div>
-  <input 
-    class="edit"
-    type="text" 
-    #textInput
-    (keyup.enter)="updateText()"
-    (blur)="updateText()"
-    [formControl]="textField" 
-    [hidden]="editing" />
+  <!-- <input class="edit" type="text" #textInput (keyup.enter)="updateText()" (blur)="updateText()"
+    [formControl]="textField" [hidden]="editing" /> -->
 </li>

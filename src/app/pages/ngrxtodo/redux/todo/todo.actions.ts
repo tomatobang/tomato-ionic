@@ -22,7 +22,8 @@ export class AddTodoAction implements Action {
   public _id: string;
 
   constructor(
-    public title: string
+    public title: string,
+    public todotype: number,
   ) {
     this._id = Math.random() + '';
   }

@@ -23,12 +23,17 @@ export class TodoEffects {
     @Effect()
     addtodo$: Observable<Action> = this.actions$.pipe(
         ofType<AddTodoAction>(ADD_TODO),
-        map((action: AddTodoAction) => action.title),
-        mergeMap(async title => {
+        map((action: AddTodoAction) => {
+            return {
+                title: action.title,
+                type: action.todotype
+            };
+        }),
+        mergeMap(async data => {
             let params;
             params = {
-                title: title,
-                type: 1,
+                title: data.title,
+                type: data.type,
             };
             this.apiService.createTodo(params).subscribe(res => {
                 this.store$.dispatch({

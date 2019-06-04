@@ -86,10 +86,10 @@ export class RegularTodoComponent implements OnInit {
     })
   }
 
-  addTodo(item) {
+  addTodo(item, type) {
     const title: string = item.title;
     item.added = true;
-    const action = new TodoActions.AddTodoAction(title.trim());
+    const action = new TodoActions.AddTodoAction(title.trim(), type);
     this.store.dispatch(action);
   }
 

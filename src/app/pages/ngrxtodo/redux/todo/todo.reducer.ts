@@ -14,6 +14,7 @@ export function TodosReducer(
         {
           _id: action.payload._id,
           title: action.payload.title,
+          type: action.payload.type,
           completed: false,
         },
       ];
