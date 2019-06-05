@@ -3,7 +3,7 @@ import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
 import { OnlineUserService } from '@services/data.service';
 import { ActivatedRoute } from '@angular/router';
-import { NavController} from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'page-friendinfo',
@@ -16,6 +16,7 @@ export class FriendInfoPage {
   headImg;
   userid;
   bio = '';
+  location = '';
   isFriend = false;
 
   @ViewChild('friendinfo_content') content;
@@ -25,19 +26,21 @@ export class FriendInfoPage {
   transition = false;
 
   constructor(
-    public ref: ChangeDetectorRef,
-    public chatIO: ChatIOService,
-    public global: GlobalService,
-    public userservice: OnlineUserService,
+    private ref: ChangeDetectorRef,
+    private chatIO: ChatIOService,
+    private global: GlobalService,
+    private userservice: OnlineUserService,
     private navCtrl: NavController,
     private actrouter: ActivatedRoute,
 
   ) {
     this.userid = this.global.userinfo._id;
     this.actrouter.queryParams.subscribe((queryParams) => {
-      this.friendid = queryParams['userid'];
-      this.friendName = queryParams['friendname'];
-      this.headImg = queryParams['headImg'];
+      if (queryParams && queryParams['userid']) {
+        this.friendid = queryParams['userid'];
+        this.friendName = queryParams['friendname'];
+        this.headImg = queryParams['headImg'];
+      }
       this.loadUserInfo(this.friendid);
       if (this.friendid && !this.friendName) {
         this.isFriend = false;
@@ -52,6 +55,7 @@ export class FriendInfoPage {
     this.userservice.getUserByID(friendid).subscribe(data => {
       this.friendName = data.displayName || data.username;
       this.bio = data.bio;
+      this.location = data.location ? data.location : '未知';
     });
   }
 
@@ -65,6 +69,7 @@ export class FriendInfoPage {
   toFriendTomatoes() {
     this.navCtrl.navigateForward(['tabs/friend/friendtomato'], {
       queryParams: {
+        friendid: this.friendid,
         friendName: this.friendName,
         headImg: this.headImg
       }
@@ -111,6 +116,6 @@ export class FriendInfoPage {
   }
 
   toMore() {
-
+    alert('coming soon~')
   }
 }

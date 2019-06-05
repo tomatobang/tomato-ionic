@@ -105,7 +105,7 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 
 	calculateDimensionsForSidebar() {
 		return {
-			height: this.mainWrapper.nativeElement.clientHeight + 'px'
+			height: 'auto' // this.mainWrapper.nativeElement.clientHeight + 'px'
 		};
 	}
 

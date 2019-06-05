@@ -18,7 +18,7 @@ export class FriendTomatoesPage implements OnInit {
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.title = queryParams['friendName'];
       this.headImg = queryParams['headImg'];
-      this.tomatoes = new Array(10).fill('');
+      // this.tomatoes = new Array(10).fill('');
     });
   }
 }
