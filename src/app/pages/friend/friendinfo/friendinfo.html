@@ -7,19 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content #friendinfo_content class="content" (ionScroll)="onScroll($event)" [class.transition]="transition"
-  [style.background-size]="headerImgSize" [style.background-image]="'url('+ headerImgUrl+ ')'">
-  <div class="user-info">
-    <img [src]="headImg" onError="this.src='./assets/tomato-active.png';">
-    <h4>{{ friendName }}</h4>
-    <p>{{ bio }}</p>
+<ion-content class="content" (ionScroll)="onScroll($event)">
+
+  <div style="position: relative;">
+    <div class="friendinfo-header-bg" [style.background-size]="headerImgSize"
+      [style.background-image]="'url('+ headerImgUrl+ ')'" [class.transition]="transition">
+    </div>
+
+    <div class="user-info">
+      <img [src]="headImg" onError="this.src='./assets/tomato-active.png';">
+      <h4>{{ friendName }}</h4>
+      <p>{{ bio }}</p>
+    </div>
+    <p class="req-add-friend-but" *ngIf="!isFriend">
+      <ion-button color="secondary" (click)="reqAddFriend()">请求加为好友</ion-button>
+    </p>
+    <p class="req-add-friend-but" *ngIf="isFriend">
+      <ion-button color="secondary" (click)="toChatPage()">发起聊天</ion-button>
+    </p>
   </div>
-  <p class="req-add-friend-but" *ngIf="!isFriend">
-    <ion-button color="secondary" (click)="reqAddFriend()">请求加为好友</ion-button>
-  </p>
-  <p class="req-add-friend-but" *ngIf="isFriend">
-    <ion-button color="secondary" (click)="toChatPage()">发起聊天</ion-button>
-  </p>
   <ion-list>
     <ion-item>
       <ion-icon name="locate" item-start class="setting-icon"></ion-icon>

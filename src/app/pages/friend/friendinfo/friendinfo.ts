@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, OnInit } from '@angular/core';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { GlobalService } from '@services/global.service';
 import { OnlineUserService } from '@services/data.service';
@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
   templateUrl: 'friendinfo.html',
   styleUrls: ['friendinfo.scss'],
 })
-export class FriendInfoPage {
+export class FriendInfoPage implements OnInit {
   friendid;
   friendName = '';
   headImg;
@@ -19,7 +19,6 @@ export class FriendInfoPage {
   location = '';
   isFriend = false;
 
-  @ViewChild('friendinfo_content') content;
   showToolbar = false;
   headerImgSize = '100%';
   headerImgUrl = '';
@@ -50,6 +49,10 @@ export class FriendInfoPage {
     });
   }
 
+  ngOnInit() {
+    this.headerImgUrl = 'assets/tomatobang.jpg';
+  }
+
 
   loadUserInfo(friendid) {
     this.userservice.getUserByID(friendid).subscribe(data => {
@@ -57,10 +60,6 @@ export class FriendInfoPage {
       this.bio = data.bio;
       this.location = data.location ? data.location : '未知';
     });
-  }
-
-  ionViewDidLoad() {
-    this.headerImgUrl = 'assets/tomatobang.jpg';
   }
 
   /**

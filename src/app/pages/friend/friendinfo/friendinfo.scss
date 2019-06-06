@@ -3,8 +3,18 @@
       padding-top: 44px;
   }
 
+  .friendinfo-header-bg {
+      width: 105%;
+      filter: blur(7px);
+      top: -10px;
+      left: -10px;
+      bottom: -10px;
+      position: absolute;
+  }
+
   ion-toolbar {
       transition: all 0.3s;
+
       .back-button,
       .bar-button {
           color: #fff;
@@ -45,6 +55,10 @@
   .user-info {
       width: 100%;
       height: 135px;
+      margin-top: 15px;
+      position: relative;
+      z-index: 999;
+
       img {
           display: block;
           width: 60px;
@@ -53,16 +67,19 @@
           border: 3px solid rgba(255, 255, 255, 0.8);
           margin: 0 auto;
       }
+
       h4,
       p {
           color: #fff;
           text-align: center;
           text-shadow: 0 0 5px rgba(0, 0, 0, 0.31);
       }
+
       h4 {
           font-size: 1em;
           margin: 5px 0;
       }
+
       p {
           padding: 0 10px;
           font-size: 0.8em;
