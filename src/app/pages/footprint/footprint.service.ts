@@ -37,8 +37,8 @@ export class FootPrintService {
                 destinationType: this.camera.DestinationType.FILE_URI,
                 encodingType: this.camera.EncodingType.PNG,
                 mediaType: this.camera.MediaType.PICTURE,
-                targetWidth: 540,
-                targetHeight: 540,
+                targetWidth: 900,
+                targetHeight: 900,
                 allowEdit: true
               };
 
@@ -81,8 +81,8 @@ export class FootPrintService {
                 destinationType: this.camera.DestinationType.FILE_URI,
                 encodingType: this.camera.EncodingType.PNG,
                 mediaType: this.camera.MediaType.PICTURE,
-                targetWidth: 540,
-                targetHeight: 540,
+                targetWidth: 900,
+                targetHeight: 900,
                 allowEdit: true
               };
 
