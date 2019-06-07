@@ -57,6 +57,7 @@
     "@ionic-native/local-notifications": "^5.0.0-beta.21",
     "@ionic-native/media": "^5.2.0",
     "@ionic-native/network": "^5.0.0-beta.21",
+    "@ionic-native/photo-viewer": "^5.7.0",
     "@ionic-native/qr-scanner": "^5.0.0-beta.21",
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
@@ -72,6 +73,7 @@
     "alloytouch": "^0.2.5",
     "alloytouch-transformjs": "^0.1.0",
     "code-push": "^2.0.6",
+    "com-sarriaroman-photoviewer": "^1.2.2",
     "cordova-android": "7.1.4",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-appcenter-analytics": "^0.2.0",
@@ -188,7 +190,8 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-zip": {},
-      "cordova-plugin-code-push": {}
+      "cordova-plugin-code-push": {},
+      "com-sarriaroman-photoviewer": {}
     },
     "platforms": [
       "android"

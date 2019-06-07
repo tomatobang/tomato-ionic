@@ -117,7 +117,7 @@
               </div>
               <div class="picture-list">
                 <ng-container *ngFor="let pic of item.pictures">
-                  <img [src]="pic" appShowBigImgDirective [pictures]="item.pictures" />
+                  <img [src]="pic" [picClicked]="pic" appShowBigImgDirective [pictures]="item.pictures" />
                 </ng-container>
               </div>
               <div class="voice-list" *ngIf="item.voices.length > 0">
