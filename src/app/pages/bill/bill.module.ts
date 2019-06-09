@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from './../../shared/shared.module';
 import { BillPage } from './bill.page';
 import { AssetComponent } from './asset/asset.component';
-import { BillformComponent } from './billform/billform.component';
 import { addAssetFormComponent } from './asset/addAssetForm/addAssetForm.component';
 
 const routes: Routes = [
@@ -20,7 +19,7 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes)
   ],
-  entryComponents: [AssetComponent, BillformComponent, addAssetFormComponent],
-  declarations: [BillPage, AssetComponent, BillformComponent, addAssetFormComponent]
+  entryComponents: [AssetComponent, addAssetFormComponent],
+  declarations: [BillPage, AssetComponent, addAssetFormComponent]
 })
 export class BillPageModule { }
