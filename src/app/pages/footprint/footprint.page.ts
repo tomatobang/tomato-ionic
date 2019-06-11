@@ -27,6 +27,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   voices = [];
   voicesToPlay = [];
   pictures = [];
+  videos = [];
   isPublish = false;
 
   footprintlist: any;
@@ -196,7 +197,8 @@ export class FootprintPage implements OnInit, OnDestroy {
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
         voices: this.voices,
-        pictures: this.pictures
+        pictures: this.pictures,
+        videos: this.videos
       }).subscribe(ret => {
         loading.dismiss();
         ret.mode = new Array(parseInt(ret.mode, 10));
@@ -205,6 +207,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.voices = [];
         this.voicesToPlay = [];
         this.pictures = [];
+        this.videos = [];
         this.clearTags();
         this.selectMode(3);
       }, () => {
@@ -325,6 +328,15 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.pictures.push(ret);
       }
     });
+  }
+
+  addVideo() {
+    this.footprintService.addVideo().subscribe(ret => {
+      if (ret) {
+        this.videos.push(ret);
+      }
+    });
+
   }
 
   async showBigImgs(pictures) {

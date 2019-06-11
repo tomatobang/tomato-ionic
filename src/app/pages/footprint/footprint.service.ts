@@ -3,8 +3,8 @@ import { Platform } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { MediaCapture, MediaFile, CaptureError, CaptureVideoOptions } from '@ionic-native/media-capture/ngx';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
-import { Helper } from '@services/utils/helper';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class FootPrintService {
     private camera: Camera,
     private qiniu: QiniuUploadService,
     private voiceService: VoicePlayService,
-    private helper: Helper,
+    private mediaCapture: MediaCapture
   ) { }
 
   addPictures(): Observable<any> {
@@ -126,6 +126,42 @@ export class FootPrintService {
         ],
       });
       await actionSheet.present();
+    });
+  }
+
+  addVideo() {
+    return Observable.create(async observer => {
+      const options: CaptureVideoOptions = {
+        limit: 1,
+        quality: 0.9,// only support low/high quality mode
+      }
+      this.mediaCapture.captureVideo(options).then(
+        (mediafiles: MediaFile[]) => {
+          if (mediafiles.length < 1) {
+            observer.error('视频录制失败');
+            observer.complete();
+          }
+          console.log(mediafiles[0], (mediafiles[0].size / 1024).toFixed(2) + 'KB');
+          const filename =
+            'footprint_video_' +
+            this.globalservice.userinfo.username +
+            '_' +
+            new Date().valueOf();
+          this.qiniu.initQiniu().subscribe(isInit => {
+            if (isInit) {
+              this.qiniu.uploadLocFile(mediafiles[0].fullPath, filename).subscribe(data => {
+                observer.next(this.globalservice.qiniuDomain + filename);
+                observer.complete();
+              });
+            }
+          });
+        },
+        (error: CaptureError) => {
+          console.log('Something went wrong');
+          observer.error('视频录制失败：', error);
+          observer.complete();
+        }
+      );
     });
   }
 
