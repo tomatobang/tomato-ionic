@@ -39,12 +39,12 @@
       </ng-container>
     </div>
     <div class="video-list">
-      <ng-container *ngFor="let item of videos">
+      <div *ngFor="let item of videos">
         <video controls>
           <source src="{{ item }}" type="video/mp4">
           Your webview does not support the <code>video</code> element.
         </video>
-      </ng-container>
+      </div>
     </div>
 
     <div class="tag-area">

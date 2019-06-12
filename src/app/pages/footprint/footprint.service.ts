@@ -6,6 +6,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { MediaCapture, MediaFile, CaptureError, CaptureVideoOptions } from '@ionic-native/media-capture/ngx';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
+import { VideoEditor, CreateThumbnailOptions } from '@ionic-native/video-editor/ngx';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -19,7 +20,8 @@ export class FootPrintService {
     private camera: Camera,
     private qiniu: QiniuUploadService,
     private voiceService: VoicePlayService,
-    private mediaCapture: MediaCapture
+    private mediaCapture: MediaCapture,
+    private videoEditor: VideoEditor
   ) { }
 
   addPictures(): Observable<any> {
@@ -37,8 +39,8 @@ export class FootPrintService {
                 destinationType: this.camera.DestinationType.FILE_URI,
                 encodingType: this.camera.EncodingType.PNG,
                 mediaType: this.camera.MediaType.PICTURE,
-                targetWidth: 900,
-                targetHeight: 900,
+                targetWidth: 1080,
+                targetHeight: 1080,
                 allowEdit: true
               };
 
@@ -81,8 +83,8 @@ export class FootPrintService {
                 destinationType: this.camera.DestinationType.FILE_URI,
                 encodingType: this.camera.EncodingType.PNG,
                 mediaType: this.camera.MediaType.PICTURE,
-                targetWidth: 900,
-                targetHeight: 900,
+                targetWidth: 1080,
+                targetHeight: 1080,
                 allowEdit: true
               };
 
@@ -133,7 +135,7 @@ export class FootPrintService {
     return Observable.create(async observer => {
       const options: CaptureVideoOptions = {
         limit: 1,
-        quality: 0.9,// only support low/high quality mode
+        quality: 1,// only support low/high quality mode
       }
       this.mediaCapture.captureVideo(options).then(
         (mediafiles: MediaFile[]) => {
@@ -147,14 +149,28 @@ export class FootPrintService {
             this.globalservice.userinfo.username +
             '_' +
             new Date().valueOf();
-          this.qiniu.initQiniu().subscribe(isInit => {
-            if (isInit) {
-              this.qiniu.uploadLocFile(mediafiles[0].fullPath, filename).subscribe(data => {
-                observer.next(this.globalservice.qiniuDomain + filename);
-                observer.complete();
+
+          this.videoEditor.transcodeVideo({
+            fileUri: mediafiles[0].fullPath,
+            outputFileName: filename + '.mp4',
+            optimizeForNetworkUse: this.videoEditor.OptimizeForNetworkUse.YES, //ios only
+            maintainAspectRatio: true,//ios only
+            // videoBitrate: 1000000,
+            width: 640,
+            outputFileType: this.videoEditor.OutputFileType.MPEG4
+          })
+            .then((fileUri: string) => {
+              console.log('video transcode success', fileUri);
+              this.qiniu.initQiniu().subscribe(isInit => {
+                if (isInit) {
+                  this.qiniu.uploadLocFile(fileUri, filename).subscribe(data => {
+                    observer.next(this.globalservice.qiniuDomain + filename);
+                    observer.complete();
+                  });
+                }
               });
-            }
-          });
+            })
+            .catch((error: any) => console.log('video transcode error', error));
         },
         (error: CaptureError) => {
           console.log('Something went wrong');
@@ -162,6 +178,28 @@ export class FootPrintService {
           observer.complete();
         }
       );
+    });
+  }
+
+  /**
+   * 创建视频缩略图
+   * @param fileUri 
+   * @param outputFileName 
+   */
+  createThumbnail(fileUri, outputFileName) {
+    return Observable.create(async observer => {
+      this.videoEditor.createThumbnail({
+        fileUri: fileUri,
+        atTime: 0.1, // in seconds
+        outputFileName: outputFileName
+      }).then((fileUri: string) => {
+        observer.next(fileUri);
+        observer.complete();
+      },
+        (error: CaptureError) => {
+          observer.error('createThumbnail error:', error);
+          observer.complete();
+        });
     });
   }
 

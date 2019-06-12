@@ -19,6 +19,7 @@ import { AppCenterAnalytics } from '@ionic-native/app-center-analytics/ngx';
 import { AppCenterCrashes } from '@ionic-native/app-center-crashes/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { VideoEditor } from '@ionic-native/video-editor/ngx';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { JPush } from '@jiguang-ionic/jpush/ngx'
 import { GlobalService } from '@services/global.service';
@@ -65,6 +66,7 @@ import { UserFriendService } from '@services/data/user_friend';
     LocalNotifications,
     PhotoViewer,
     MediaCapture,
+    VideoEditor,
     RebirthHttpProvider,
     NativeService,
     UpdateService,
