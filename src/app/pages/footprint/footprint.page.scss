@@ -38,15 +38,28 @@
     img {
         display: inline-block;
         margin-right: 3px;
-        width: 80px;
+        width: 100px;
     }
 }
 
 .video-list {
-    video {
-        display: inline-block;
-        margin-right: 3px;
-        width: 80px;
+    >div {
+        position: relative;
+
+        video {
+            display: inline-block;
+            margin-right: 3px;
+            width: 100px;
+        }
+
+        ion-icon {
+            color: #777;
+            opacity: .8;
+            font-size: 36px;
+            position: absolute;
+            top: 50px;
+            left: 32px;
+        }
     }
 }
 

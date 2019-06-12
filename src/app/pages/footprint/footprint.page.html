@@ -89,7 +89,7 @@
     <ion-label>是否公开</ion-label>
     <ion-checkbox color="primary" slot="end" [(ngModel)]="isPublish"></ion-checkbox>
   </div> -->
-  
+
   </div>
   <div class="add-footprint-button-container">
     <div class="add-footprint-button" (click)="addFootprint()">
@@ -131,12 +131,13 @@
                 </ng-container>
               </div>
               <div class="video-list" *ngIf="item.videos">
-                <ng-container *ngFor="let item of item.videos">
-                  <video controls>
+                <div *ngFor="let item of item.videos">
+                  <ion-icon name="videocam"></ion-icon>
+                  <video appShowVideoDirective [videoUrl]="item" preload="auto" poster="assets/tomatobang.jpg">
                     <source src="{{ item }}" type="video/mp4">
                     Your webview does not support the <code>video</code> element.
                   </video>
-                </ng-container>
+                </div>
               </div>
               <div class="voice-list" *ngIf="item.voices.length > 0">
                 <ng-container *ngFor="let item of item.voices; let i = index;">

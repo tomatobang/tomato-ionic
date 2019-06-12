@@ -5,12 +5,9 @@ import { ModalController } from '@ionic/angular';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
-import { GlobalService } from '@services/global.service';
 import { OnlineTagService } from '@services/data/tag/tag.service';
 
 import { FootprintformComponent } from './footprintform/footprintform.component';
-import { ShowBigImgsModal } from '@modals/show-big-imgs/show-big-imgs';
-
 import { FootPrintService } from './footprint.service';
 
 @Component({
@@ -54,8 +51,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     private emitService: EmitService,
     private modalCtrl: ModalController,
     private footprintService: FootPrintService,
-    private globalservice: GlobalService,
-
   ) {
   }
 
@@ -337,18 +332,6 @@ export class FootprintPage implements OnInit, OnDestroy {
       }
     });
 
-  }
-
-  async showBigImgs(pictures) {
-    const modal = await this.modalCtrl.create({
-      component: ShowBigImgsModal,
-      componentProps: {
-        pictures: pictures
-      }
-    });
-    modal.onDidDismiss().then(ret => {
-    });
-    await modal.present();
   }
 
   dateFtt(fmt, date) {

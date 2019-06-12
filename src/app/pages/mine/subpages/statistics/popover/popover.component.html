@@ -64,7 +64,8 @@
           </div>
           <div class="video-list" *ngIf="item.videos">
             <ng-container *ngFor="let item of item.videos">
-              <video controls>
+              <ion-icon name="videocam"></ion-icon>
+              <video appShowVideoDirective [videoUrl]="item" preload="auto" poster="assets/tomatobang.jpg">
                 <source src="{{ item }}" type="video/mp4">
                 Your webview does not support the <code>video</code> element.
               </video>
