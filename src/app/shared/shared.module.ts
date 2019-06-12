@@ -18,6 +18,7 @@ import { AddTagDirective } from '@directives/add-tag.directive';
 import { BillformComponent } from '../pages/bill/billform/billform.component';
 
 import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
+import { ShowVideoModalModule } from '@modals/show-video/show-video.module';
 
 import { CalendarModule } from '../components/ion2-calendar';
 import { SocketIoModule } from 'ngx-socket-io';
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PipesModule,
     CalendarModule,
     ShowBigImgsModalModule,
+    ShowVideoModalModule,
     HttpClientModule,
     SocketIoModule,
     TranslateModule.forRoot({
