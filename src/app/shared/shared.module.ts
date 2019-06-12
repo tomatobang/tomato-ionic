@@ -15,8 +15,9 @@ import { ShowBigImgDirective } from '@directives/show-big-image.directive';
 import { VoiceRecoderDirective } from '@directives/voice-recorder.directive';
 import { VoicePlayDirective } from '@directives/voice-play.directive';
 import { AddTagDirective } from '@directives/add-tag.directive';
-import { BillformComponent } from '../pages/bill/billform/billform.component';
+import { ShowVideoDirective } from '@directives/show-video.directive';
 
+import { BillformComponent } from '../pages/bill/billform/billform.component';
 import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
 import { ShowVideoModalModule } from '@modals/show-video/show-video.module';
 
@@ -48,8 +49,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       },
     }),
   ],
-  declarations: [DebounceClickDirective, TrackEventDirective,
-    ShowBigImgDirective, VoiceRecoderDirective, VoiceRecorderComponent, VoicePlayDirective, AddTagDirective, BillformComponent],
+  declarations: [
+    DebounceClickDirective, TrackEventDirective, ShowBigImgDirective,
+    VoiceRecoderDirective, VoicePlayDirective, AddTagDirective,
+    ShowVideoDirective, VoiceRecorderComponent, BillformComponent
+  ],
   entryComponents: [VoiceRecorderComponent, BillformComponent],
   providers: [], // better be empty!
   exports: [
@@ -66,6 +70,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     VoicePlayDirective,
     VoiceRecoderDirective,
     ShowBigImgDirective,
+    ShowVideoDirective,
     AddTagDirective,
   ],
 })
