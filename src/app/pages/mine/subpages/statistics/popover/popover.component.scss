@@ -101,21 +101,23 @@ li.completed label {
 }
 
 .video-list {
-    position: relative;
+    >div {
+        position: relative;
 
-    video {
+        img,
+        video {
+            display: inline-block;
+            margin-right: 3px;
+            width: 100px;
+        }
 
-        display: inline-block;
-        margin-right: 3px;
-        width: 80px;
-    }
-
-    ion-icon {
-        color: #777;
-        opacity: .8;
-        font-size: 32px;
-        position: absolute;
-        top: 40px;
-        left: 22px;
+        ion-icon {
+            color: #f97271;
+            opacity: .8;
+            font-size: 36px;
+            position: absolute;
+            top: 30px;
+            left: 32px;
+        }
     }
 }

@@ -23,7 +23,7 @@ export class ShowVideoDirective implements OnInit, OnDestroy {
     public ngOnDestroy() {
     }
 
-    @HostListener('press', ['$event'])
+    @HostListener('click', ['$event'])
     async clickEvent(event: MouseEvent) {
 
         const modal = await this.modalCtrl.create({

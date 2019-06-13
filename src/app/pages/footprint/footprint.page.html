@@ -40,10 +40,9 @@
     </div>
     <div class="video-list">
       <div *ngFor="let item of videos">
-        <video controls>
-          <source src="{{ item }}" type="video/mp4">
-          Your webview does not support the <code>video</code> element.
-        </video>
+        <ion-icon name="videocam"></ion-icon>
+        <img appShowVideoDirective [videoUrl]="item" onError="this.src='./assets/tomato-grey.png';"
+          src="{{ item + '_thumbnail' }}" />
       </div>
     </div>
 
@@ -133,10 +132,8 @@
               <div class="video-list" *ngIf="item.videos">
                 <div *ngFor="let item of item.videos">
                   <ion-icon name="videocam"></ion-icon>
-                  <video appShowVideoDirective [videoUrl]="item" preload="auto" poster="assets/tomatobang.jpg">
-                    <source src="{{ item }}" type="video/mp4">
-                    Your webview does not support the <code>video</code> element.
-                  </video>
+                  <img appShowVideoDirective [videoUrl]="item" onError="this.src='./assets/tomato-grey.png';"
+                    src="{{ item + '_thumbnail' }}" />
                 </div>
               </div>
               <div class="voice-list" *ngIf="item.voices.length > 0">

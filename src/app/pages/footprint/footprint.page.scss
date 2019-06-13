@@ -46,6 +46,7 @@
     >div {
         position: relative;
 
+        img,
         video {
             display: inline-block;
             margin-right: 3px;
@@ -53,11 +54,11 @@
         }
 
         ion-icon {
-            color: #777;
+            color: #f97271;
             opacity: .8;
             font-size: 36px;
             position: absolute;
-            top: 50px;
+            top: 30px;
             left: 32px;
         }
     }

@@ -161,10 +161,12 @@ export class FootPrintService {
           })
             .then((fileUri: string) => {
               console.log('video transcode success', fileUri);
+
               this.qiniu.initQiniu().subscribe(isInit => {
                 if (isInit) {
                   this.qiniu.uploadLocFile(fileUri, filename).subscribe(data => {
                     observer.next(this.globalservice.qiniuDomain + filename);
+                    this.createThumbnail(fileUri, filename);
                     observer.complete();
                   });
                 }
@@ -187,20 +189,19 @@ export class FootPrintService {
    * @param outputFileName 
    */
   createThumbnail(fileUri, outputFileName) {
-    return Observable.create(async observer => {
-      this.videoEditor.createThumbnail({
-        fileUri: fileUri,
-        atTime: 0.1, // in seconds
-        outputFileName: outputFileName
-      }).then((fileUri: string) => {
-        observer.next(fileUri);
-        observer.complete();
-      },
-        (error: CaptureError) => {
-          observer.error('createThumbnail error:', error);
-          observer.complete();
-        });
-    });
+    this.videoEditor.createThumbnail({
+      fileUri: fileUri,
+      atTime: 0.1, // in seconds
+      outputFileName: outputFileName + '_thumbnail'
+    }).then((thumb_fileUri: string) => {
+      this.qiniu.initQiniu().subscribe(isInit => {
+        if (isInit) {
+          this.qiniu.uploadLocFile(thumb_fileUri, outputFileName + '_thumbnail').subscribe(data => {
+            console.log('create thumbnail video succeed');
+          });
+        }
+      });
+    }, (error: CaptureError) => { });
   }
 
   uploadVoiceFile(uploadMediaFilepath, fileName) {
