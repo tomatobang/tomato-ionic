@@ -3,9 +3,10 @@ import { Platform } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { MediaCapture, MediaFile, CaptureError, CaptureVideoOptions } from '@ionic-native/media-capture/ngx';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
-import { Helper } from '@services/utils/helper';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
+import { VideoEditor, CreateThumbnailOptions } from '@ionic-native/video-editor/ngx';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -19,7 +20,8 @@ export class FootPrintService {
     private camera: Camera,
     private qiniu: QiniuUploadService,
     private voiceService: VoicePlayService,
-    private helper: Helper,
+    private mediaCapture: MediaCapture,
+    private videoEditor: VideoEditor
   ) { }
 
   addPictures(): Observable<any> {
@@ -37,8 +39,8 @@ export class FootPrintService {
                 destinationType: this.camera.DestinationType.FILE_URI,
                 encodingType: this.camera.EncodingType.PNG,
                 mediaType: this.camera.MediaType.PICTURE,
-                targetWidth: 900,
-                targetHeight: 900,
+                targetWidth: 1080,
+                targetHeight: 1080,
                 allowEdit: true
               };
 
@@ -81,8 +83,8 @@ export class FootPrintService {
                 destinationType: this.camera.DestinationType.FILE_URI,
                 encodingType: this.camera.EncodingType.PNG,
                 mediaType: this.camera.MediaType.PICTURE,
-                targetWidth: 900,
-                targetHeight: 900,
+                targetWidth: 1080,
+                targetHeight: 1080,
                 allowEdit: true
               };
 
@@ -127,6 +129,79 @@ export class FootPrintService {
       });
       await actionSheet.present();
     });
+  }
+
+  addVideo() {
+    return Observable.create(async observer => {
+      const options: CaptureVideoOptions = {
+        limit: 1,
+        quality: 1,// only support low/high quality mode
+      }
+      this.mediaCapture.captureVideo(options).then(
+        (mediafiles: MediaFile[]) => {
+          if (mediafiles.length < 1) {
+            observer.error('视频录制失败');
+            observer.complete();
+          }
+          console.log(mediafiles[0], (mediafiles[0].size / 1024).toFixed(2) + 'KB');
+          const filename =
+            'footprint_video_' +
+            this.globalservice.userinfo.username +
+            '_' +
+            new Date().valueOf();
+
+          this.videoEditor.transcodeVideo({
+            fileUri: mediafiles[0].fullPath,
+            outputFileName: filename + '.mp4',
+            optimizeForNetworkUse: this.videoEditor.OptimizeForNetworkUse.YES, //ios only
+            maintainAspectRatio: true,//ios only
+            // videoBitrate: 1000000,
+            width: 640,
+            outputFileType: this.videoEditor.OutputFileType.MPEG4
+          })
+            .then((fileUri: string) => {
+              console.log('video transcode success', fileUri);
+
+              this.qiniu.initQiniu().subscribe(isInit => {
+                if (isInit) {
+                  this.qiniu.uploadLocFile(fileUri, filename).subscribe(data => {
+                    observer.next(this.globalservice.qiniuDomain + filename);
+                    this.createThumbnail(fileUri, filename);
+                    observer.complete();
+                  });
+                }
+              });
+            })
+            .catch((error: any) => console.log('video transcode error', error));
+        },
+        (error: CaptureError) => {
+          console.log('Something went wrong');
+          observer.error('视频录制失败：', error);
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  /**
+   * 创建视频缩略图
+   * @param fileUri 
+   * @param outputFileName 
+   */
+  createThumbnail(fileUri, outputFileName) {
+    this.videoEditor.createThumbnail({
+      fileUri: fileUri,
+      atTime: 0.1, // in seconds
+      outputFileName: outputFileName + '_thumbnail'
+    }).then((thumb_fileUri: string) => {
+      this.qiniu.initQiniu().subscribe(isInit => {
+        if (isInit) {
+          this.qiniu.uploadLocFile(thumb_fileUri, outputFileName + '_thumbnail').subscribe(data => {
+            console.log('create thumbnail video succeed');
+          });
+        }
+      });
+    }, (error: CaptureError) => { });
   }
 
   uploadVoiceFile(uploadMediaFilepath, fileName) {

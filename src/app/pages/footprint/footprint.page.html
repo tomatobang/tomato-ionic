@@ -20,6 +20,7 @@
     <div class="media-area">
       <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
       <ion-icon name="camera" (click)="addPictures()"></ion-icon>
+      <ion-icon name="videocam" (click)="addVideo()"></ion-icon>
     </div>
 
     <div class="voice-list">
@@ -36,6 +37,13 @@
       <ng-container *ngFor="let item of pictures">
         <img [src]="item" />
       </ng-container>
+    </div>
+    <div class="video-list">
+      <div *ngFor="let item of videos">
+        <ion-icon name="videocam"></ion-icon>
+        <img appShowVideoDirective [videoUrl]="item" onError="this.src='./assets/tomato-grey.png';"
+          src="{{ item + '_thumbnail' }}" />
+      </div>
     </div>
 
     <div class="tag-area">
@@ -80,6 +88,7 @@
     <ion-label>是否公开</ion-label>
     <ion-checkbox color="primary" slot="end" [(ngModel)]="isPublish"></ion-checkbox>
   </div> -->
+
   </div>
   <div class="add-footprint-button-container">
     <div class="add-footprint-button" (click)="addFootprint()">
@@ -119,6 +128,13 @@
                 <ng-container *ngFor="let pic of item.pictures">
                   <img [src]="pic" [picClicked]="pic" appShowBigImgDirective [pictures]="item.pictures" />
                 </ng-container>
+              </div>
+              <div class="video-list" *ngIf="item.videos">
+                <div *ngFor="let item of item.videos">
+                  <ion-icon name="videocam"></ion-icon>
+                  <img appShowVideoDirective [videoUrl]="item" onError="this.src='./assets/tomato-grey.png';"
+                    src="{{ item + '_thumbnail' }}" />
+                </div>
               </div>
               <div class="voice-list" *ngIf="item.voices.length > 0">
                 <ng-container *ngFor="let item of item.voices; let i = index;">

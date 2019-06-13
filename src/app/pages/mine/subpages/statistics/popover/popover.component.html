@@ -48,7 +48,6 @@
       <ion-item-option (click)="editBill(item,i)" color="secondary">编辑</ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
-
 </ion-list>
 
 <!-- 足迹 -->
@@ -62,6 +61,13 @@
             <ng-container *ngFor="let pic of item.pictures">
               <img [src]="pic" [picClicked]="pic" appShowBigImgDirective [pictures]="item.pictures" />
             </ng-container>
+          </div>
+          <div class="video-list" *ngIf="item.videos">
+            <div *ngFor="let item of item.videos">
+              <ion-icon name="videocam"></ion-icon>
+              <img appShowVideoDirective [videoUrl]="item + ''"
+                onError="javascript:this.src='./assets/tomato-grey.png';" [src]="item + '_thumbnail'" />
+            </div>
           </div>
           <div class="voice-list" *ngIf="item.voices.length > 0">
             <ng-container *ngFor="let item of item.voices; let i = index;">
@@ -90,7 +96,7 @@
   </ion-item-sliding>
 </ion-list>
 
-
+<!-- TODO -->
 <div *ngIf="type==='todo'" class="todo-list">
   <li *ngFor="let todo of todolist" [class.completed]="todo.completed">
     <div class="view">

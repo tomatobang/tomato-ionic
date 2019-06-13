@@ -5,12 +5,9 @@ import { ModalController } from '@ionic/angular';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
-import { GlobalService } from '@services/global.service';
 import { OnlineTagService } from '@services/data/tag/tag.service';
 
 import { FootprintformComponent } from './footprintform/footprintform.component';
-import { ShowBigImgsModal } from '@modals/show-big-imgs/show-big-imgs';
-
 import { FootPrintService } from './footprint.service';
 
 @Component({
@@ -27,6 +24,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   voices = [];
   voicesToPlay = [];
   pictures = [];
+  videos = [];
   isPublish = false;
 
   footprintlist: any;
@@ -53,8 +51,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     private emitService: EmitService,
     private modalCtrl: ModalController,
     private footprintService: FootPrintService,
-    private globalservice: GlobalService,
-
   ) {
   }
 
@@ -196,7 +192,8 @@ export class FootprintPage implements OnInit, OnDestroy {
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
         voices: this.voices,
-        pictures: this.pictures
+        pictures: this.pictures,
+        videos: this.videos
       }).subscribe(ret => {
         loading.dismiss();
         ret.mode = new Array(parseInt(ret.mode, 10));
@@ -205,6 +202,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.voices = [];
         this.voicesToPlay = [];
         this.pictures = [];
+        this.videos = [];
         this.clearTags();
         this.selectMode(3);
       }, () => {
@@ -327,16 +325,13 @@ export class FootprintPage implements OnInit, OnDestroy {
     });
   }
 
-  async showBigImgs(pictures) {
-    const modal = await this.modalCtrl.create({
-      component: ShowBigImgsModal,
-      componentProps: {
-        pictures: pictures
+  addVideo() {
+    this.footprintService.addVideo().subscribe(ret => {
+      if (ret) {
+        this.videos.push(ret);
       }
     });
-    modal.onDidDismiss().then(ret => {
-    });
-    await modal.present();
+
   }
 
   dateFtt(fmt, date) {
