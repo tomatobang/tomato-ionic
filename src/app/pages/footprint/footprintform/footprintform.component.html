@@ -15,7 +15,8 @@
 
 <ion-content no-bounce>
   <div class="input-container">
-    <ion-input class="footprint-note-input" placeholder="发生了什么..." [(ngModel)]="notes"></ion-input>
+    <ion-textarea rows="1" autoSizeTextarea class="footprint-note-input" placeholder="发生了什么..." [(ngModel)]="notes">
+    </ion-textarea>
     <div class="media-area">
       <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
       <ion-icon name="camera" (click)="addPictures()"></ion-icon>

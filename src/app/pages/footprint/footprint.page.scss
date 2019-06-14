@@ -105,11 +105,12 @@ ion-card {
     margin-top: 25px;
 }
 
-ion-input {
+ion-textarea {
     font-size: 18px;
     position: relative;
     margin: 0;
     width: 100%;
+    min-height: 40px !important;
     font-size: 22px;
     font-family: inherit;
     font-weight: inherit;
@@ -118,7 +119,7 @@ ion-input {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: 16px 16px 16px 60px;
+    // padding: 16px 16px 16px 60px;
     border: none;
     background: rgba(0, 0, 0, 0.003);
     box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);

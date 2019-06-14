@@ -16,6 +16,7 @@ import { VoiceRecoderDirective } from '@directives/voice-recorder.directive';
 import { VoicePlayDirective } from '@directives/voice-play.directive';
 import { AddTagDirective } from '@directives/add-tag.directive';
 import { ShowVideoDirective } from '@directives/show-video.directive';
+import { AutosizeDirective } from '@directives/autosize.directive';
 
 import { BillformComponent } from '../pages/bill/billform/billform.component';
 import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
@@ -51,7 +52,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   declarations: [
     DebounceClickDirective, TrackEventDirective, ShowBigImgDirective,
-    VoiceRecoderDirective, VoicePlayDirective, AddTagDirective,
+    VoiceRecoderDirective, VoicePlayDirective, AddTagDirective, AutosizeDirective,
     ShowVideoDirective, VoiceRecorderComponent, BillformComponent
   ],
   entryComponents: [VoiceRecorderComponent, BillformComponent],
@@ -72,6 +73,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ShowBigImgDirective,
     ShowVideoDirective,
     AddTagDirective,
+    AutosizeDirective,
   ],
 })
 export class SharedModule { }
