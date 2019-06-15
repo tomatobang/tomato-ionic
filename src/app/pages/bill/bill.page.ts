@@ -84,7 +84,7 @@ export class BillPage implements OnInit {
             this.totalIncome += data.amount;
           }
         }
-        this.billList.unshift(data);
+        this.init();
       } else if (data && data.tag === '资产互转') {
         this.init();
       }
@@ -119,7 +119,7 @@ export class BillPage implements OnInit {
           this.totalIncome -= ret.amount;
         }
       }
-      this.billList.splice(index, 1);
+      this.init();
     });
   }
 
