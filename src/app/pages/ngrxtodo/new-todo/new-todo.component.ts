@@ -10,7 +10,7 @@ import * as TodoActions from './../redux/todo/todo.actions';
   templateUrl: './new-todo.component.html'
 })
 export class NewTodoComponent implements OnInit {
-
+  val;
   textField: FormControl;
 
   constructor(
@@ -28,6 +28,7 @@ export class NewTodoComponent implements OnInit {
       const action = new TodoActions.AddTodoAction(title.trim(), 1);
       this.store.dispatch(action);
       this.textField.setValue('', { emitEvent: false });
+      this.val = '';
     }
   }
 

@@ -16,7 +16,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <div class="input-container">
-    <ion-textarea rows="1" placeholder="发生了什么..." [(ngModel)]="notes" autoSizeTextarea></ion-textarea>
+    <ion-textarea rows="1" placeholder="发生了什么..." [dataval]="notes" [(ngModel)]="notes" autoSizeTextarea></ion-textarea>
     <div class="media-area">
       <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
       <ion-icon name="camera" (click)="addPictures()"></ion-icon>
