@@ -1,3 +1,21 @@
-<!-- autofocus  -->
-<textarea id="new-todo" class="new-todo" rows="1" [dataval]="val" autoSizeTextarea (keyup.enter)="saveTodo()"
-    placeholder="打算干点啥?" [formControl]="textField"></textarea>
+<div style="display: block; position: relative;">
+    <textarea id="new-todo" class="new-todo" rows="1" [dataval]="title" [(ngModel)]="title" autoSizeTextarea
+        (keyup.enter)="saveTodo()" placeholder="打算干点啥?" [formControl]="textField"></textarea>
+
+    <div class="tag-area">
+        <ion-icon name="information-circle" class="tag tag-1" *ngIf="todoType.value === '1'">
+        </ion-icon>
+        <ion-icon name="information-circle" class="tag tag-2" *ngIf="todoType.value === '2'">
+        </ion-icon>
+        <ion-icon name="information-circle" class="tag tag-3" *ngIf="todoType.value === '3'">
+        </ion-icon>
+        <ion-icon name="information-circle" class="tag tag-4" *ngIf="todoType.value === '4'">
+        </ion-icon>
+    </div>
+    <ion-select okText="确定" cancelText="取消" [(ngModel)]="todoType.value">
+        <ion-select-option value="1">重要紧急</ion-select-option>
+        <ion-select-option value="2">重要不紧急</ion-select-option>
+        <ion-select-option value="3">不重要紧急</ion-select-option>
+        <ion-select-option value="4">不重要不紧急</ion-select-option>
+    </ion-select>
+</div>

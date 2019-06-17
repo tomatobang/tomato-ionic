@@ -1,0 +1,36 @@
+textarea {
+    display: inline-block !important;
+    width: 75% !important;
+}
+
+.tag-area {
+    position: absolute;
+    right: 5%;
+    bottom: 15px;
+}
+
+ion-select {
+    display: inline-block;
+    width: 23%;
+    opacity: 0
+}
+
+ion-icon {
+    font-size: 32px;
+}
+
+.tag-1 {
+    color: #F04141;
+}
+
+.tag-2 {
+    color: #FFCE00;
+}
+
+.tag-3 {
+    color: #222428;
+}
+
+.tag-4 {
+    color: #989aa2;
+}
