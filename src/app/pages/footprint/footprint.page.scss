@@ -45,10 +45,10 @@
 .video-list {
     >div {
         position: relative;
+        display: inline-block;
 
-        img,
-        video {
-            display: inline-block;
+        img {
+
             margin-right: 3px;
             width: 100px;
         }
@@ -137,6 +137,10 @@ ion-textarea {
     font-size: 12px;
 }
 
+ion-card-header {
+    padding-bottom: 0 !important;
+}
+
 .star-container {
     margin-bottom: 15px;
 
@@ -166,8 +170,18 @@ ion-icon.star {
     white-space: pre-line;
 }
 
+.list-info-block {
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
 .list-title {
-    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+
+    span {
+        font-size: 16px;
+    }
 }
 
 .tag-area {
@@ -202,4 +216,11 @@ ion-icon.star {
 .play-block {
     height: 35px;
     display: inline-block;
+}
+
+.footprint-tag {
+    margin-right: 5px;
+    color: #fff !important;
+    padding: 2px 4px;
+    background: #f97271;
 }

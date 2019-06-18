@@ -73,23 +73,24 @@
             <ng-container *ngFor="let item of item.voices; let i = index;">
               <div id="play_block">
                 <ion-button shape="round" color="primary" appVoicePlayDirective [voiceUrl]="item">
-                  播放({{ i+1 }})
+                  片段({{ i+1 }})
                 </ion-button>
               </div>
             </ng-container>
           </div>
-          <ion-chip color="primary" *ngIf="item.tag" style="height:24px;line-height:24px;">
-            <ion-label style="font-size:10px">{{ item.tag }}</ion-label>
-          </ion-chip>
+        </div>
+        <p class="text-small">
+          <ion-text class="footprint-tag" color="primary" *ngIf="item.tag">
+            {{ item.tag }}
+          </ion-text>
+          {{ item.create_at | DateTransform}}
+
           <ng-container *ngIf="item.mode">
             <ion-icon *ngFor="let i of item.mode" name="star" class="star"></ion-icon>
           </ng-container>
-        </div>
-        <p class="text-small">
-          {{ item.position }}
         </p>
         <p class="text-small">
-          {{ item.create_at | DateTransform:'withdate'}}
+          {{ item.position }}
         </p>
       </ion-label>
     </ion-item>

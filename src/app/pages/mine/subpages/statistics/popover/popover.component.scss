@@ -43,7 +43,6 @@ li.completed label {
     color: #777;
 }
 
-
 .list-amount {
     color: #ff8208;
     text-align: left;
@@ -75,8 +74,11 @@ li.completed label {
     color: #777;
 }
 
-.tag-slide {
-    font-size: 12px;
+.footprint-tag {
+    margin-right: 5px;
+    color: #fff !important;
+    padding: 2px 4px;
+    background: #f97271;
 }
 
 .text-small {
@@ -103,10 +105,9 @@ li.completed label {
 .video-list {
     >div {
         position: relative;
+        display: inline-block;
 
-        img,
-        video {
-            display: inline-block;
+        img {
             margin-right: 3px;
             width: 100px;
         }

@@ -107,22 +107,15 @@
 
   <ion-card *ngIf="footprintlist && footprintlist.length > 0">
     <ion-card-header>
-      <ion-card-title>今日足迹</ion-card-title>
-      <ion-card-subtitle></ion-card-subtitle>
+      <H3>今日足迹</H3>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
         <ion-item-sliding *ngFor="let item of footprintlist; let i = index;">
           <ion-item>
-            <ion-label>
-              <div class="text-small">
-                <span class="list-title">{{ item.notes }}</span>
-                <ion-chip color="primary" *ngIf="item.tag" style="height:24px;line-height:24px;">
-                  <ion-label style="font-size:10px">{{ item.tag }}</ion-label>
-                </ion-chip>
-                <ng-container *ngIf="item.mode">
-                  <ion-icon *ngFor="let i of item.mode" name="star" class="star"></ion-icon>
-                </ng-container>
+            <div>
+              <div class="text-small list-title">
+                <span>{{ item.notes }}</span>
               </div>
               <div class="picture-list">
                 <ng-container *ngFor="let pic of item.pictures">
@@ -140,18 +133,26 @@
                 <ng-container *ngFor="let item of item.voices; let i = index;">
                   <div id="play_block">
                     <ion-button shape="round" color="primary" appVoicePlayDirective [voiceUrl]="item">
-                      播放({{ i+1 }})
+                      片段({{ i+1 }})
                     </ion-button>
                   </div>
                 </ng-container>
               </div>
+              <div class="text-small list-info-block">
+                <ion-text class="footprint-tag" color="primary" *ngIf="item.tag">
+                  {{ item.tag }}
+                </ion-text>
+                {{ item.create_at | DateTransform}}
+                <div style="display: inline-block">
+                  <ng-container *ngIf="item.mode">
+                    <ion-icon *ngFor="let i of item.mode" name="star" class="star"></ion-icon>
+                  </ng-container>
+                </div>
+              </div>
               <p class="text-small">
                 {{ item.position }}
               </p>
-              <p class="text-small">
-                {{ item.create_at | DateTransform}}
-              </p>
-            </ion-label>
+            </div>
           </ion-item>
           <ion-item-options side="end">
             <ion-item-option (click)="deleteFootprint(item._id,i)" color="danger">删除</ion-item-option>
