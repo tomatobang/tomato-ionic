@@ -80,10 +80,29 @@ export class RegularTodoComponent implements OnInit {
     await prompt.present();
   }
 
-  deleteRegularTodo(id, index) {
-    this.todoService.deleteRegularTodo(id).subscribe(ret => {
-      this.regularTodos.splice(index, 1);
-    })
+  async deleteRegularTodo(id, index) {
+    const alert = await this.alertCtrl.create({
+      header: '提示',
+      message: '确认<strong>删除</strong>? ',
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => { }
+        }, {
+          text: '确定',
+          handler: () => {
+            this.todoService.deleteRegularTodo(id).subscribe(ret => {
+              this.regularTodos.splice(index, 1);
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
   }
 
   addTodo(item, type) {
