@@ -111,7 +111,7 @@
     "core-js": "^2.5.4",
     "echarts": "^4.2.0-rc.2",
     "hammerjs": "^2.0.8",
-    "jpush-phonegap-plugin": "^3.5.1",
+    "jpush-phonegap-plugin": "^3.6.4",
     "moment": "^2.24.0",
     "ngx-echarts": "^4.0.0",
     "ngx-socket-io": "^2.1.1",
@@ -189,9 +189,6 @@
         "ANDROID_KEY": "pGMXz22S1XYcZHt0a5pVoCfM",
         "IOS_KEY": "9kG4tIYIiI5ieGYnF0AaKydaAzHxYwRO"
       },
-      "jpush-phonegap-plugin": {
-        "APP_KEY": "e4fad56dc2d40b58d77629f7"
-      },
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
@@ -200,7 +197,11 @@
       "cordova-plugin-code-push": {},
       "com-sarriaroman-photoviewer": {},
       "cordova-plugin-media-capture": {},
-      "cordova-plugin-video-editor": {}
+      "cordova-plugin-video-editor": {},
+      "jpush-phonegap-plugin": {
+        "APP_KEY": "e4fad56dc2d40b58d77629f7",
+        "CHANNEL": "developer-default"
+      }
     },
     "platforms": [
       "android"
