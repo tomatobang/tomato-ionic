@@ -14,9 +14,11 @@ $ npm i
 
 ### Services
 
-- JPush see:https://www.jiguang.cn/
-- TalkingData see: http://www.talkingdata.com/
-- QiNiu see: https://www.qiniu.com
+3rd-party services
+
+- Appcenter. see: https://appcenter.ms 
+- JPush. see:https://www.jiguang.cn/
+- QiNiu. see: https://www.qiniu.com
 
 ### Serve
 
@@ -27,8 +29,6 @@ To serve in the browser
 $ ionic serve
 ```
 
-
-now you can see tomatobang running at your browser
 
 ### Platforms
 
@@ -54,13 +54,13 @@ $ ionic cordova run ios
 
 ### Build Android APK File
 
-To build APK file to output folder
-
 ```bash
 $ ionic cordova build android
 ```
 
 ### Hot Push
+
+You can add `--prod` for production release
 
 ```bash
 # android
