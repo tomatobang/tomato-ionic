@@ -31,13 +31,12 @@ declare var window;
 })
 export class NativeService {
   headimgurl = {};
-  toast: any;
 
   private _isOffline = false;
 
   constructor(
-    public platform: Platform,
-    public globalservice: GlobalService,
+    private platform: Platform,
+    private globalservice: GlobalService,
     private insomnia: Insomnia,
     private toastCtrl: ToastController,
     private transfer: FileTransfer,
@@ -48,7 +47,7 @@ export class NativeService {
     private file: File,
     private jpush: JPush,
     private navCtrl: NavController,
-    public info: InfoService,
+    private info: InfoService,
   ) { }
 
 
@@ -96,7 +95,7 @@ export class NativeService {
     document.addEventListener(
       "jpush.receiveLocalNotification",
       (event: any) => {
-        // iOS(*,9) Only , iOS(10,*) 将在 jpush.openNotification 和 jpush.receiveNotification 中触发。
+        // iOS(*,9) Only , iOS(10,*) 将在 jpush.openNotification 和 jpush.receiveNotification 中触发
         var content;
         if (this.isAndroid()) {
         } else {
@@ -172,13 +171,12 @@ export class NativeService {
   }
 
   async listenNetworkState() {
-    this.createToast();
+
     const offlineOnlineThrottle = this.throttle(async msg => {
       if (this._isOffline === true) {
-        await this.toast.setMessage(msg);
-        await this.toast.present();
+        this.createToast('网络中断');
       }
-    }, 2400);
+    }, 10000);
     this.network.onDisconnect().subscribe(() => {
       this._isOffline = true;
       console.log('network was disconnected :-(');
@@ -187,9 +185,7 @@ export class NativeService {
 
     this.network.onConnect().subscribe(async () => {
       this._isOffline = false;
-      if (this.toast) {
-        await this.toast.dismissAll();
-      }
+      this.createToast('网络已恢复');
       setTimeout(() => {
         if (this.network.type === 'wifi') {
           console.log('got network:wifi!');
@@ -219,14 +215,15 @@ export class NativeService {
    * @param msg message to show
    */
   async createToast(msg = '') {
-    this.toast = await this.toastCtrl.create({
+    const toast = await this.toastCtrl.create({
       message: msg,
-      duration: 3000,
+      // duration: 3000,
       position: 'top',
       cssClass: 'my-toast-style',
       showCloseButton: true,
       closeButtonText: '关闭',
     });
+    toast.present();
   }
 
   /**
