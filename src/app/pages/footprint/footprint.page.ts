@@ -151,6 +151,9 @@ export class FootprintPage implements OnInit, OnDestroy {
   deleteTag(item, i) {
     this.tagservice.deleteTag(item._id).subscribe(res => {
       this.taglist.splice(i, 1);
+      if (this.tag.indexOf(item.name) > -1) {
+        this.tag.splice(this.tag.indexOf(item.name), 1);
+      }
     });
   }
 
