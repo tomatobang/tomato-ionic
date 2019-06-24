@@ -13,7 +13,7 @@ declare var window;
   providedIn: 'root',
 })
 export class QiniuUploadService {
-  private _qiuniutokeninfo: any;
+  private _qiuniutoken_updatetime: any;
 
   constructor(public http: HttpClient, public _g: GlobalService) { }
 
@@ -97,8 +97,8 @@ export class QiniuUploadService {
    */
   initQiniu(force?): Observable<any> {
     return Observable.create(observer => {
-      if (this._qiuniutokeninfo && !force) {
-        const timespan = new Date().getTime() - this._qiuniutokeninfo.getTime();
+      if (this._qiuniutoken_updatetime && !force) {
+        const timespan = new Date().getTime() - this._qiuniutoken_updatetime.getTime();
         const timespan_milliseconds = timespan % (3600 * 1000);
         const timespan_minutes = Math.floor(
           timespan_milliseconds / (60 * 1000)
@@ -118,7 +118,7 @@ export class QiniuUploadService {
     this.getUploadToken().subscribe(
       data => {
         console.log('qiniutoken:', data);
-        this._qiuniutokeninfo = new Date();
+        this._qiuniutoken_updatetime = new Date();
         this.init(data.uploadToken).subscribe(d => {
           observer.next(true);
         });
