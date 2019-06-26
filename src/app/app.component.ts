@@ -124,8 +124,24 @@ export class MyApp {
           });
         }
         this.backgroundMode.disable();
+
+        this.platform.pause.subscribe(ret => {
+          this.native.submitEvent('app_pause', {
+            username: this.globalservice.userinfo.username,
+            info: ret
+          });
+          console.log('tomatobang pause....')
+        });
+        this.platform.resume.subscribe(ret => {
+          this.native.submitEvent('app_resume', {
+            username: this.globalservice.userinfo.username,
+            info: ret
+          });
+          console.log('tomatobang resume....')
+        });
       }
     });
+
 
     this.emitservice.qrcodeEmit.subscribe((ret) => {
       if (ret === 'qrScanner:show') {
@@ -192,7 +208,7 @@ export class MyApp {
    * register hardware backbutton event
    */
   registerBackButtonAction() {
-    this.platform.backButton.subscribeWithPriority(9999,async () => {
+    this.platform.backButton.subscribeWithPriority(9999, async () => {
       // close action sheet
       try {
         const element = await this.actionSheetCtrl.getTop();
