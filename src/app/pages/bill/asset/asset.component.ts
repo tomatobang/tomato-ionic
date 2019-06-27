@@ -78,6 +78,7 @@ export class AssetComponent implements OnInit {
         });
       } else if (data && data.type === '编辑') {
         this.service.updateAsset(this.editItem._id, data.asset).subscribe(ret => {
+          this.totalAmount += ret.amount - this.editItem.amount;
           this.editItem.name = ret.name;
           this.editItem.amount = ret.amount;
           this.editItem.note = ret.note;
