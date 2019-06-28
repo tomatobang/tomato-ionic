@@ -22,6 +22,8 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { VideoEditor } from '@ionic-native/video-editor/ngx';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { JPush } from '@jiguang-ionic/jpush/ngx'
+import { WebView } from '@ionic-native/ionic-webview/ngx'
+
 import { GlobalService } from '@services/global.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { UpdateService } from '@services/update.service';
@@ -67,6 +69,7 @@ import { UserFriendService } from '@services/data/user_friend';
     PhotoViewer,
     MediaCapture,
     VideoEditor,
+    WebView,
     RebirthHttpProvider,
     NativeService,
     UpdateService,

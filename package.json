@@ -54,6 +54,7 @@
     "@ionic-native/file-opener": "^5.0.0-beta.21",
     "@ionic-native/file-transfer": "^5.0.0-beta.21",
     "@ionic-native/insomnia": "^5.0.0-beta.21",
+    "@ionic-native/ionic-webview": "^5.8.0",
     "@ionic-native/local-notifications": "^5.0.0-beta.21",
     "@ionic-native/media": "^5.2.0",
     "@ionic-native/media-capture": "^5.7.0",

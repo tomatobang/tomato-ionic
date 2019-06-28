@@ -3,6 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { WebView } from '@ionic-native/ionic-webview/ngx'
 
 import { Platform } from '@ionic/angular';
 declare var window;
@@ -11,7 +12,7 @@ declare var window;
   providedIn: 'root',
 })
 export class Helper {
-  constructor(public platform: Platform, private sanitizer: DomSanitizer) { }
+  constructor(public webView: WebView, public platform: Platform, private sanitizer: DomSanitizer) { }
 
   getBasePath() {
     let basePath;
@@ -64,7 +65,7 @@ export class Helper {
 
   dealWithLocalUrl(url): SafeUrl {
     if (window.cordova) {
-      url = window.Ionic.WebView.convertFileSrc(url) + '?' + new Date().getTime();
+      url = this.webView.convertFileSrc(url) + '?' + new Date().getTime();
       url = this.sanitizer.bypassSecurityTrustUrl(url);
     }
     return url;
