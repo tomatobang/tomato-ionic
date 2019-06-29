@@ -18,7 +18,7 @@ import { FootPrintService } from './footprint.service';
 export class FootprintPage implements OnInit, OnDestroy {
 
   location = '加载中...';
-  create_at = '2012-12-12 10:00';
+  createAt = '2012-12-12 10:00';
   notes = '';
   tag = [];
   voices = [];
@@ -82,7 +82,7 @@ export class FootprintPage implements OnInit, OnDestroy {
 
   refreshCreateAt() {
     this.timeInterval = setInterval(() => {
-      this.create_at = this.dateFtt('hh:mm:ss', new Date());
+      this.createAt = this.dateFtt('hh:mm:ss', new Date());
     }, 1000);
   }
 
@@ -94,7 +94,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   locating(event?) {
     this.baidu.getCurrentLocation().then(val => {
       if (val && val.time) {
-        this.create_at = this.dateFtt('hh:mm:ss', new Date(val.time));
+        this.createAt = this.dateFtt('hh:mm:ss', new Date(val.time));
         this.location = val.addr + '(' + val.locationDescribe + ')';
         if (val.pois) {
           this.locationList = val.pois;
@@ -103,7 +103,7 @@ export class FootprintPage implements OnInit, OnDestroy {
           event.target.complete();
         }
       } else {
-        this.create_at = this.dateFtt('hh:mm:ss', new Date());
+        this.createAt = this.dateFtt('hh:mm:ss', new Date());
         this.location = '网络问题，定位失败!';
         if (event) {
           event.target.complete();
@@ -172,7 +172,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.footprintlist = ret;
         this.footprintlist.sort(function (a, b) {
 
-          return new Date(a.create_at) < new Date(b.create_at) ? 1 : -1;
+          return new Date(a.createAt) < new Date(b.createAt) ? 1 : -1;
         });
         this.footprintlist.map(val => {
           val.mode = new Array(parseInt(val.mode, 10));
@@ -225,10 +225,10 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.openTag = false;
   }
 
-  async createLoading() {
+  async createLoading(msg?) {
     const loading = await this.loading.create({
       spinner: 'bubbles',
-      message: 'process...',
+      message: msg ? msg : 'process...',
       translucent: true,
     });
     await loading.present();
@@ -292,9 +292,9 @@ export class FootprintPage implements OnInit, OnDestroy {
 
   addVoices(ret) {
     if (ret && ret.data) {
-      let uploadMediaFilepath = ret.data.uploadMediaFilepath;
-      let mediaSrc = ret.data.mediaSrc;
-      let voiceDuration = ret.data.voiceDuration;
+      const uploadMediaFilepath = ret.data.uploadMediaFilepath;
+      const mediaSrc = ret.data.mediaSrc;
+      const voiceDuration = ret.data.voiceDuration;
 
       this.voicesToPlay.push({
         uploadMediaFilepath: uploadMediaFilepath,
@@ -328,11 +328,16 @@ export class FootprintPage implements OnInit, OnDestroy {
     });
   }
 
-  addVideo() {
+  async addVideo() {
+    const loading = await this.createLoading('制作中...');
     this.footprintService.addVideo().subscribe(ret => {
-      if (ret) {
-        this.videos.push(ret);
+      if (ret && ret.value) {
+        this.videos.push(ret.value);
+        loading.dismiss();
       }
+    }, err => {
+      loading.dismiss();
+      alert('视频制作失败!');
     });
 
   }

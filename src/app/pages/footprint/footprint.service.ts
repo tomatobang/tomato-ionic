@@ -135,8 +135,8 @@ export class FootPrintService {
     return Observable.create(async observer => {
       const options: CaptureVideoOptions = {
         limit: 1,
-        quality: 1,// only support low/high quality mode
-      }
+        quality: 1, // only support low/high quality mode
+      };
       this.mediaCapture.captureVideo(options).then(
         (mediafiles: MediaFile[]) => {
           if (mediafiles.length < 1) {
@@ -153,10 +153,10 @@ export class FootPrintService {
           this.videoEditor.transcodeVideo({
             fileUri: mediafiles[0].fullPath,
             outputFileName: filename + '.mp4',
-            optimizeForNetworkUse: this.videoEditor.OptimizeForNetworkUse.YES, //ios only
-            maintainAspectRatio: true,//ios only
-            // videoBitrate: 1000000,
-            width: 640,
+            optimizeForNetworkUse: this.videoEditor.OptimizeForNetworkUse.YES, // ios only
+            maintainAspectRatio: true, // ios only
+            videoBitrate: 6000000,
+            width: 1280,
             outputFileType: this.videoEditor.OutputFileType.MPEG4
           })
             .then((fileUri: string) => {
@@ -164,10 +164,17 @@ export class FootPrintService {
 
               this.qiniu.initQiniu().subscribe(isInit => {
                 if (isInit) {
-                  this.qiniu.uploadLocFile(fileUri, filename).subscribe(data => {
-                    observer.next(this.globalservice.qiniuDomain + filename);
-                    this.createThumbnail(fileUri, filename);
-                    observer.complete();
+                  this.qiniu.uploadLocFile(fileUri, filename).subscribe(ret => {
+                    if (ret.data) {
+                     this.createThumbnail(fileUri, filename);
+                      observer.next({
+                        data: true,
+                        value: this.globalservice.qiniuDomain + filename,
+                      });
+                      observer.complete();
+                    } else {
+                      observer.next(ret);
+                    }
                   });
                 }
               });
@@ -185,8 +192,8 @@ export class FootPrintService {
 
   /**
    * 创建视频缩略图
-   * @param fileUri 
-   * @param outputFileName 
+   * @param fileUri
+   * @param outputFileName
    */
   createThumbnail(fileUri, outputFileName) {
     this.videoEditor.createThumbnail({
