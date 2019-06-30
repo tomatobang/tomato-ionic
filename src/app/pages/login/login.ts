@@ -6,7 +6,7 @@ import { User } from '@services/data.service';
 import { GlobalService } from '@services/global.service';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { EmitService } from '@services/emit.service';
-import { JPush } from '@jiguang-ionic/jpush/ngx'
+import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';
 import { NativeService } from '@services/native.service';

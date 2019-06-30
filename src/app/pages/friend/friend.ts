@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController,PopoverController} from '@ionic/angular';
+import { NavController, PopoverController} from '@ionic/angular';
 import { PopOverPage } from './popover/popover';
 import { InfoService } from '@services/info.service';
 import { ChatIOService } from '@services/utils/socket.io.service';

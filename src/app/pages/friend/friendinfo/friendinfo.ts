@@ -115,6 +115,6 @@ export class FriendInfoPage implements OnInit {
   }
 
   toMore() {
-    alert('coming soon~')
+    alert('coming soon~');
   }
 }

@@ -67,21 +67,21 @@ export class AssetComponent implements OnInit {
     modal.onDidDismiss().then(ret => {
       const data = ret.data;
       if (data && data.type === '新增') {
-        this.service.createAsset(data.asset).subscribe(ret => {
+        this.service.createAsset(data.asset).subscribe(res => {
           if (this.assetList) {
-            this.totalAmount += ret.amount;
-            this.assetList.push(ret);
+            this.totalAmount += res.amount;
+            this.assetList.push(res);
           } else {
-            this.assetList = [ret];
+            this.assetList = [res];
           }
           this.emitService.eventEmit.emit('assetChange');
         });
       } else if (data && data.type === '编辑') {
-        this.service.updateAsset(this.editItem._id, data.asset).subscribe(ret => {
-          this.totalAmount += ret.amount - this.editItem.amount;
-          this.editItem.name = ret.name;
-          this.editItem.amount = ret.amount;
-          this.editItem.note = ret.note;
+        this.service.updateAsset(this.editItem._id, data.asset).subscribe(res => {
+          this.totalAmount += res.amount - this.editItem.amount;
+          this.editItem.name = res.name;
+          this.editItem.amount = res.amount;
+          this.editItem.note = res.note;
           this.emitService.eventEmit.emit('assetChange');
         });
       }

@@ -180,14 +180,16 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 	private unwindGroup(groupItems: any): Array<any> {
 		let result: Array<any> = [];
 		for (const letter in groupItems) {
-			result = result.concat([{ isDivider: true, letter: letter }].concat(groupItems[letter]));
+			if (letter) {
+				result = result.concat([{ isDivider: true, letter: letter }].concat(groupItems[letter]));
+			}
 		}
 		return result;
 	}
 
 	private iterateAlphabet(alphabet: any): Array<any> {
 		let str: string;
-		if (this.headerTemplate != null || this.headerTemplate != undefined) {
+		if (this.headerTemplate != null || this.headerTemplate !== undefined) {
 			str = '↑ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		} else {
 			str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

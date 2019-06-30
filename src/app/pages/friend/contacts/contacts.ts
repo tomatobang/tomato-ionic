@@ -65,7 +65,7 @@ export class ContactsPage implements OnInit {
         this.friendlist = data;
         this.friendlist.map((val) => {
           this.setHeadImg(val);
-        })
+        });
         this.getSortedFriendlist();
         this.loadOnlineFriendList();
       }

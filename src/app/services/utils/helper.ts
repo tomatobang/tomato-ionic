@@ -3,7 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { WebView } from '@ionic-native/ionic-webview/ngx'
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { Platform } from '@ionic/angular';
 declare var window;

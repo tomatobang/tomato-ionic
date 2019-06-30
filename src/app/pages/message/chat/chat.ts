@@ -49,7 +49,7 @@ export class ChatPage {
     this.actrouter.queryParams.subscribe((queryParams) => {
       this.toUserId = queryParams['toUserId'];
       this.toUserName = queryParams['toUserName'];
-      this.friendHeadImg = this.helper.dealWithLocalUrl(queryParams['friendHeadImg']);;
+      this.friendHeadImg = this.helper.dealWithLocalUrl(queryParams['friendHeadImg']);
       this.userId = this.globalService.userinfo._id;
       this.userName = this.globalService.userinfo.username;
       this.myHeadImg = this.globalService.qiniuDomain + this.globalService.userinfo.img;

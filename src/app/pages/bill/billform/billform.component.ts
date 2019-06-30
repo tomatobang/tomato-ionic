@@ -80,8 +80,8 @@ export class BillformComponent implements OnInit {
   }
 
   initTags() {
-    let requestPaytag = this.tagService.getTags(2);
-    let requestIncometag = this.tagService.getTags(3);
+    const requestPaytag = this.tagService.getTags(2);
+    const requestIncometag = this.tagService.getTags(3);
     forkJoin([requestPaytag, requestIncometag])
       .subscribe((data: any) => {
         this.payTags = data[0];
@@ -98,17 +98,16 @@ export class BillformComponent implements OnInit {
       for (let index = 0; index < tags.length; index++) {
         const tag = tags[index];
         if (type === '支出') {
-          for (let index = 0; index < this.payTags.length; index++) {
-            const pagTag = this.payTags[index];
+          for (let i = 0; i < this.payTags.length; i++) {
+            const pagTag = this.payTags[i];
             if (tag === pagTag.name) {
               pagTag.selected = true;
               this.tag.push(pagTag.name);
             }
           }
-
         } else if (type === '收入') {
-          for (let index = 0; index < this.incomeTags.length; index++) {
-            const incomeTag = this.incomeTags[index];
+          for (let j = 0; j < this.incomeTags.length; j++) {
+            const incomeTag = this.incomeTags[j];
             if (tag === incomeTag.name) {
               incomeTag.selected = true;
               this.tag.push(incomeTag.name);
@@ -140,7 +139,7 @@ export class BillformComponent implements OnInit {
 
   async submit() {
     if (!this.isSubmiting) {
-      if (this.newBill.type !== "资产互转") {
+      if (this.newBill.type !== '资产互转') {
         this.createOrUpdateBill();
       } else {
         this.submitAssetExchange();
@@ -153,7 +152,7 @@ export class BillformComponent implements OnInit {
       setTimeout(() => {
         resolve(' enough sleep~');
       }, second);
-    })
+    });
   }
 
   async submitAssetExchange() {
@@ -282,7 +281,7 @@ export class BillformComponent implements OnInit {
       }).subscribe(res => {
         Object.assign(res, {
           name: name, selected: false
-        })
+        });
         if (type === '支出') {
           this.payTags.push(res);
         } else {

@@ -37,8 +37,11 @@ export class InfoService {
     return this.realtimeMsgSubject.asObservable();
   }
   private static instance: InfoService = null;
+  // 未读消息数
   unreadMsgCount = 0;
+  // 当前聊天对象
   chatingNow;
+  // 未读消息
   unreadMessage = [];
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -72,9 +75,6 @@ export class InfoService {
     return InfoService.instance;
   }
 
-  /**
-   * 初始化消息服务
-   */
   public init() {
     this.loadUnreadMsg();
     this.loadHistoryMsg();
@@ -100,15 +100,12 @@ export class InfoService {
     });
   }
 
-  /**
-   * 清除未读消息数
-   */
   clearUnreadMsgCount() {
     this.messagCountSubject.next(0);
   }
 
   /**
-   * 同步本地消息至缓存与消息列表
+   * 同步消息至缓存并添加至消息列表
    * @param fid 好友编号
    * @param msg 消息
    */
@@ -118,7 +115,7 @@ export class InfoService {
   }
 
   /**
-   * 消息状态置为已读
+   * 消息置为已读
    * @param fid
    */
   updateMessageState(fid) {
@@ -146,7 +143,7 @@ export class InfoService {
   }
 
   /**
-   * 或许好友消息列表
+   * 获取好友历史消息
    * @param fid 好友编号
    */
   getFriendHistoryMsg(fid) {
@@ -171,10 +168,9 @@ export class InfoService {
           for (let index = 0; index < messages.length; index++) {
             const element = messages[index];
             count += element.count;
-            // 存储好友消息
             this.cache.setFriendMsg(element._id, element);
           }
-          // 发布总数
+
           this.unreadMsgCount += count;
           this.messagCountSubject.next(this.unreadMsgCount);
           this.messageSubject.next(messages);
@@ -194,7 +190,7 @@ export class InfoService {
 
   /**
    * @deprecated
-   * 获取用户未读消息列表
+   * 获取用户未读消息
    * @param userid 用户编号
    */
   getUnreadHistoryMsg(userid) {

@@ -28,7 +28,7 @@ export class ChatService {
 
   /**
    * @mock
-   * 模拟消息列表
+   * 模拟消息
    */
   getMsgList(): Observable<ChatMessage[]> {
     const msgListUrl = './assets/mock/msg-list.json';

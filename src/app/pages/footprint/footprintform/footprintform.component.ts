@@ -178,9 +178,9 @@ export class FootprintformComponent implements OnInit {
 
   addVoices(ret) {
     if (ret && ret.data) {
-      let uploadMediaFilepath = ret.data.uploadMediaFilepath;
-      let mediaSrc = ret.data.mediaSrc;
-      let voiceDuration = ret.data.voiceDuration;
+      const uploadMediaFilepath = ret.data.uploadMediaFilepath;
+      const mediaSrc = ret.data.mediaSrc;
+      const voiceDuration = ret.data.voiceDuration;
 
       this.voicesToPlay.push({
         uploadMediaFilepath: uploadMediaFilepath,

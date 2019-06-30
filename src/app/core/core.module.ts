@@ -21,8 +21,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { VideoEditor } from '@ionic-native/video-editor/ngx';
 import { RebirthHttpProvider } from 'rebirth-http';
-import { JPush } from '@jiguang-ionic/jpush/ngx'
-import { WebView } from '@ionic-native/ionic-webview/ngx'
+import { JPush } from '@jiguang-ionic/jpush/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 import { GlobalService } from '@services/global.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';

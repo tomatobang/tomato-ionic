@@ -35,7 +35,7 @@ export class MessagePage implements OnInit {
   }
 
   ngOnInit(): void {
-    // 获取通知列表
+    // 获取通知
     this.getReqFriendList();
     this.info.newMessagesMonitor.subscribe(data => {
       for (let index = 0; index < data.length; index++) {
@@ -146,7 +146,7 @@ export class MessagePage implements OnInit {
   }
 
   /**
-   * 获取好友发起请求列表
+   * 获取好友发起请求
    */
   getReqFriendList() {
     this.userFriendService

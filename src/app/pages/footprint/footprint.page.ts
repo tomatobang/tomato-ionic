@@ -162,7 +162,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   }
 
   /**
-   * 今日足迹列表
+   * 今日足迹
    */
   async listFootprint() {
     const loading = await this.createLoading();
@@ -343,7 +343,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   }
 
   dateFtt(fmt, date) {
-    let o = {
+    const o = {
       'M+': date.getMonth() + 1,
       'd+': date.getDate(),
       'h+': date.getHours(),
@@ -355,9 +355,9 @@ export class FootprintPage implements OnInit, OnDestroy {
     if (/(y+)/.test(fmt)) {
       fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
     }
-    for (let k in o) {
+    for (const k in o) {
       if (new RegExp('(' + k + ')').test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
       }
     }
     return fmt;

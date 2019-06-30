@@ -27,7 +27,7 @@ export class CacheService {
   }
 
   /**
-   * 获取好友列表
+   * 获取好友
    */
   getFriendList(): Observable<any> {
     this.userid = this.globalService.userinfo._id;

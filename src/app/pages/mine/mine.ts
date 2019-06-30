@@ -23,7 +23,7 @@ export class MinePage implements OnInit {
   username = '';
   displayName = '';
   bio = '';
-  headImg: SafeUrl = './assets/tomato-active.png';;
+  headImg: SafeUrl = './assets/tomato-active.png';
   showBigHeadImg = false;
 
   constructor(
@@ -66,7 +66,7 @@ export class MinePage implements OnInit {
   initHeadImg() {
     if (this.globalservice.userinfo.img) {
       this.platform.ready().then(readySource => {
-        this.setHeadImg(false)
+        this.setHeadImg(false);
       });
     }
   }

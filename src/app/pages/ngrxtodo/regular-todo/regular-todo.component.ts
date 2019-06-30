@@ -95,7 +95,7 @@ export class RegularTodoComponent implements OnInit {
           handler: () => {
             this.todoService.deleteRegularTodo(id).subscribe(ret => {
               this.regularTodos.splice(index, 1);
-            })
+            });
           }
         }
       ]

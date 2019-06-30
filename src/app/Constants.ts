@@ -1,7 +1,7 @@
 
 export const DEBUG = {
   IS_DEBUG: false
-}
+};
 
 export const CODE_PUSH_DEPLOYMENT_KEY = {
   ANDROID: {
@@ -12,4 +12,4 @@ export const CODE_PUSH_DEPLOYMENT_KEY = {
     Production: 'ios Production key',
     Staging: 'ios Staging key'
   }
-}
+};

@@ -46,7 +46,7 @@ export class AddTagDirective implements OnInit, OnDestroy {
                 {
                     text: '提交',
                     handler: data => {
-                        this.addTag.emit(data.tagName)
+                        this.addTag.emit(data.tagName);
                     },
                 },
             ],

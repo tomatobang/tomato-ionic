@@ -46,7 +46,7 @@ export class PopoverComponent implements OnInit {
   }
 
   /**
-   * 账单列表
+   * 加载账单
    */
   loadBillList() {
     this.billService.getBills(this.time).subscribe(ret => {
@@ -84,7 +84,7 @@ export class PopoverComponent implements OnInit {
   }
 
   /**
-   * 足迹列表
+   * 加载足迹
    */
   loadFootprintList() {
     this.footprintService.getFootprints(this.time).subscribe(ret => {
@@ -102,7 +102,7 @@ export class PopoverComponent implements OnInit {
   }
 
   /**
- * todo 列表
+ * 加载 todo
  */
   loadTodoList() {
     this.toodoService.getTodos(this.time).subscribe(ret => {

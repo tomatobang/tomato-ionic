@@ -7,7 +7,7 @@ declare let window;
 
 @Component({
   selector: 'voice-recorder',
-  providers: [Media, FileTransfer],//
+  providers: [Media, FileTransfer], //
   templateUrl: './voice-recorder.html',
   styleUrls: ['voice-recorder.scss'],
 })
@@ -88,7 +88,7 @@ export class VoiceRecorderComponent implements OnInit, OnDestroy {
     this.startVoiceRecordAnimate();
   }
 
-  setFileName(){
+  setFileName() {
     this.mediaSrc = new Date().getTime() + '';
     if (this.platform.is('ios')) {
       this.mediaPath = window.cordova

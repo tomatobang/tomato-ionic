@@ -8,6 +8,6 @@ export class Footprint {
   position: string;
   voices?: any;
   pictures?: any;
-  videos?:any;
+  videos?: any;
   create_at?: string;
 }

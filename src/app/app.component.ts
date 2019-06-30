@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
-import { JPush } from '@jiguang-ionic/jpush/ngx'
+import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { RebirthHttpProvider } from 'rebirth-http';
 
 import { GlobalService } from '@services/global.service';
@@ -38,18 +38,6 @@ declare var window: any;
   templateUrl: 'app.component.html',
 })
 export class MyApp {
-  backButtonPressed = false;
-  statubarHeight = '0px';
-
-  pages: Array<{ title: string; component: any }>;
-
-  lastTimeBackPress = 0;
-  timePeriodToExit = 2000;
-
-  @ViewChildren(IonRouterOutlet)
-  routerOutlets: QueryList<IonRouterOutlet>;
-
-  selectedTheme: String;
 
   constructor(
     private jPush: JPush,
@@ -87,6 +75,23 @@ export class MyApp {
     this.initRoute();
     this.codeSync();
   }
+  backButtonPressed = false;
+  statubarHeight = '0px';
+
+  pages: Array<{ title: string; component: any }>;
+
+  lastTimeBackPress = 0;
+  timePeriodToExit = 2000;
+
+  @ViewChildren(IonRouterOutlet)
+  routerOutlets: QueryList<IonRouterOutlet>;
+
+  selectedTheme: String;
+
+  /**
+   * code hot load
+   */
+  loading: any;
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -130,14 +135,14 @@ export class MyApp {
             username: this.globalservice.userinfo.username,
             info: ret
           });
-          console.log('tomatobang pause....')
+          console.log('tomatobang pause....');
         });
         this.platform.resume.subscribe(ret => {
           this.native.submitEvent('app_resume', {
             username: this.globalservice.userinfo.username,
             info: ret
           });
-          console.log('tomatobang resume....')
+          console.log('tomatobang resume....');
         });
       }
     });
@@ -270,14 +275,9 @@ export class MyApp {
       });
     });
   }
-
-  /**
-   * code hot load
-   */
-  loading: any;
   codeSync() {
     if (!this.isMobile()) {
-      return
+      return;
     }
     let deploymentKey = '';
     if (this.isAndroid() && DEBUG.IS_DEBUG) {
@@ -325,14 +325,14 @@ export class MyApp {
   }
 
   isMobile(): boolean {
-    return this.platform.is("mobile") && !this.platform.is("mobileweb");
+    return this.platform.is('mobile') && !this.platform.is('mobileweb');
   }
 
   isAndroid(): boolean {
-    return this.isMobile() && this.platform.is("android");
+    return this.isMobile() && this.platform.is('android');
   }
 
   isIos(): boolean {
-    return this.isMobile && (this.platform.is("ios") || this.platform.is("ipad") || this.platform.is("iphone"));
+    return this.isMobile && (this.platform.is('ios') || this.platform.is('ipad') || this.platform.is('iphone'));
   }
 }

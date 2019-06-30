@@ -231,7 +231,7 @@ export class TaskPage implements OnInit {
         }, 100);
       }
     });
-  };
+  }
 
   removeTask(task: any) {
     for (const index in this.allTasks.unfinished) {

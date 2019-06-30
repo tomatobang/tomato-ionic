@@ -21,7 +21,7 @@ import {
   FileTransferObject,
 } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { JPush } from '@jiguang-ionic/jpush/ngx'
+import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { InfoService } from '@services/info.service';
 
 declare var window;
@@ -53,23 +53,23 @@ export class NativeService {
 
   initJPush() {
     document.addEventListener(
-      "jpush.receiveNotification",
+      'jpush.receiveNotification',
       (event: any) => {
-        var content;
+        let content;
         if (this.isAndroid()) {
           content = event.alert;
         } else {
           content = event.aps.alert;
         }
-        console.log("Receive notification: " + JSON.stringify(event), content);
+        console.log('Receive notification: ' + JSON.stringify(event), content);
       },
       false
     );
 
     document.addEventListener(
-      "jpush.openNotification",
+      'jpush.openNotification',
       (event: any) => {
-        var content;
+        let content;
         if (this.isAndroid()) {
           content = event.alert;
         } else {
@@ -87,21 +87,21 @@ export class NativeService {
         // 加载未读消息
         this.info.loadUnreadMsg();
         this.navCtrl.navigateForward(['tabs/friend/message']);
-        console.log("open notification: " + JSON.stringify(event), content);
+        console.log('open notification: ' + JSON.stringify(event), content);
       },
       false
     );
 
     document.addEventListener(
-      "jpush.receiveLocalNotification",
+      'jpush.receiveLocalNotification',
       (event: any) => {
         // iOS(*,9) Only , iOS(10,*) 将在 jpush.openNotification 和 jpush.receiveNotification 中触发
-        var content;
+        let content;
         if (this.isAndroid()) {
         } else {
           content = event.content;
         }
-        console.log("receive local notification: " + JSON.stringify(event), content);
+        console.log('receive local notification: ' + JSON.stringify(event), content);
       },
       false
     );
@@ -109,15 +109,15 @@ export class NativeService {
 
 
   isAndroid(): boolean {
-    return this.isMobile() && this.platform.is("android");
+    return this.isMobile() && this.platform.is('android');
   }
 
   isIos(): boolean {
-    return this.isMobile && (this.platform.is("ios") || this.platform.is("ipad") || this.platform.is("iphone"));
+    return this.isMobile && (this.platform.is('ios') || this.platform.is('ipad') || this.platform.is('iphone'));
   }
 
   isMobile(): boolean {
-    return this.platform.is("mobile") && !this.platform.is("mobileweb");
+    return this.platform.is('mobile') && !this.platform.is('mobileweb');
   }
 
   initAppCenter() {
@@ -149,7 +149,7 @@ export class NativeService {
   initNativeService() {
     this.listenInsomniaState();
     this.listenNetworkState();
-    document.addEventListener("resume", () => {
+    document.addEventListener('resume', () => {
       // 加载未读消息
       this.info.loadUnreadMsg();
     }, false);
