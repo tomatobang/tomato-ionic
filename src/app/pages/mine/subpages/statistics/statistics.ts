@@ -71,9 +71,10 @@ export class StatisticsPage implements OnInit {
     this.todoService.statistics({
       date: date
     }).subscribe(ret => {
-      const completed = ret.completed;
-      const imcompleted = ret.imcompleted;
+      const completed = ret.completed ? ret.completed : [];
+      const imcompleted = ret.imcompleted ? ret.imcompleted : [];
       const result: DayConfig[] = [];
+
       for (let i = 0; i < completed.length; i++) {
         const completedItem = completed[i];
         for (let j = 0; j < imcompleted.length; j++) {
@@ -123,13 +124,15 @@ export class StatisticsPage implements OnInit {
     }).subscribe(ret => {
       const result: DayConfig[] = [];
       const data = ret.data;
-      for (let i = 0; i < data.length; i++) {
-        const item = data[i];
-        result.push({
-          date: item._id,
-          subTitle: `<div class="day-pay-label">足迹</div>${item.count}`,
-          cssClass: 'date-square-style'
-        });
+      if (data && data.length) {
+        for (let i = 0; i < data.length; i++) {
+          const item = data[i];
+          result.push({
+            date: item._id,
+            subTitle: `<div class="day-pay-label">足迹</div>${item.count}`,
+            cssClass: 'date-square-style'
+          });
+        }
       }
       this.setOptionMulti(result);
     });
