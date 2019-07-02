@@ -171,8 +171,7 @@ export class FootprintPage implements OnInit, OnDestroy {
       if (ret) {
         this.footprintlist = ret;
         this.footprintlist.sort(function (a, b) {
-
-          return new Date(a.createAt) < new Date(b.createAt) ? 1 : -1;
+          return new Date(a.create_at) < new Date(b.create_at) ? 1 : -1;
         });
         this.footprintlist.map(val => {
           val.mode = new Array(parseInt(val.mode, 10));

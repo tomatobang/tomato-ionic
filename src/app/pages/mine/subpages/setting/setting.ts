@@ -10,44 +10,55 @@ import { Storage } from '@ionic/Storage';
   styleUrls: ['./setting.scss']
 })
 export class SettingPage implements OnInit {
-  isAlwaysLight = false;
-
   settingModel = {
-    isAlwaysLight: true
+    isAlwaysLight: false,
+    isAllowEditPicture: true
   };
 
   constructor(
-    public globalservice: GlobalService,
+    private globalservice: GlobalService,
     private insomnia: Insomnia,
-    public storage: Storage,
+    private storage: Storage,
   ) { }
 
   ngOnInit() {
     this.settingModel.isAlwaysLight = this.globalservice.isAlwaysLight;
+    this.settingModel.isAllowEditPicture = this.globalservice.isAllowEditPicture;
   }
 
   /**
    * 设置屏幕常亮状态
    */
   changeLightState() {
-    if (this.isAlwaysLight) {
-      this.globalservice.isAlwaysLight = true;
+    if (this.settingModel.isAlwaysLight) {
       this.insomnia.keepAwake().then(
-        () => { },
+        () => {
+          this.globalservice.isAlwaysLight = true;
+        },
         e => {
-          this.globalservice.isAlwaysLight = false;
           console.log('error', e);
         }
       );
     } else {
-      this.globalservice.isAlwaysLight = false;
       this.insomnia.allowSleepAgain().then(
-        () => { },
+        () => {
+          this.globalservice.isAlwaysLight = false;
+        },
         e => {
-          this.globalservice.isAlwaysLight = true;
           console.log('error', e);
         }
       );
+    }
+  }
+
+  /**
+ * 设置足迹照片是否允许编辑
+ */
+  allowEditPicture() {
+    if (this.settingModel.isAllowEditPicture) {
+      this.globalservice.isAllowEditPicture = true;
+    } else {
+      this.globalservice.isAllowEditPicture = false;
     }
   }
 

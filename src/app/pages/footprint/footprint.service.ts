@@ -25,6 +25,7 @@ export class FootPrintService {
   ) { }
 
   addPictures(): Observable<any> {
+    const isAllowEditPicture = this.globalservice.isAllowEditPicture;
     return Observable.create(async observer => {
       const actionSheet = await this.actionSheetCtrl.create({
         header: '添加图片',
@@ -37,11 +38,12 @@ export class FootPrintService {
                 quality: 100,
                 sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
                 destinationType: this.camera.DestinationType.FILE_URI,
-                encodingType: this.camera.EncodingType.PNG,
+                correctOrientation:true,
+                encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
                 targetWidth: 1080,
                 targetHeight: 1080,
-                allowEdit: true
+                allowEdit: isAllowEditPicture
               };
 
               this.camera.getPicture(options).then(
@@ -81,11 +83,12 @@ export class FootPrintService {
                 saveToPhotoAlbum: true,
                 sourceType: this.camera.PictureSourceType.CAMERA,
                 destinationType: this.camera.DestinationType.FILE_URI,
-                encodingType: this.camera.EncodingType.PNG,
+                correctOrientation:true,
+                encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
                 targetWidth: 1080,
                 targetHeight: 1080,
-                allowEdit: true
+                allowEdit: isAllowEditPicture
               };
 
               this.camera.getPicture(options).then(
@@ -166,7 +169,7 @@ export class FootPrintService {
                 if (isInit) {
                   this.qiniu.uploadLocFile(fileUri, filename).subscribe(ret => {
                     if (ret.data) {
-                     this.createThumbnail(fileUri, filename);
+                      this.createThumbnail(fileUri, filename);
                       observer.next({
                         data: true,
                         value: this.globalservice.qiniuDomain + filename,

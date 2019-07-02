@@ -85,7 +85,7 @@
     "cordova-plugin-background-mode": "git+https://github.com/katzer/cordova-plugin-background-mode.git",
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-baidumaplocation": "git+https://github.com/pengkobe/cordova-plugin-baidumaplocation.git",
-    "cordova-plugin-camera": "^4.0.3",
+    "cordova-plugin-camera": "git+https://github.com/apache/cordova-plugin-camera.git",
     "cordova-plugin-code-push": "^1.11.17",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
@@ -184,7 +184,6 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-media": {},
-      "cordova-plugin-camera": {},
       "cordova-plugin-qiniu": {},
       "cordova-plugin-baidumaplocation": {
         "ANDROID_KEY": "pGMXz22S1XYcZHt0a5pVoCfM",
@@ -202,6 +201,9 @@
       "jpush-phonegap-plugin": {
         "APP_KEY": "e4fad56dc2d40b58d77629f7",
         "CHANNEL": "developer-default"
+      },
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
       }
     },
     "platforms": [

@@ -15,7 +15,13 @@
         <ion-item>
             <ion-icon name="bulb" slot="start" color="primary"></ion-icon>
             <ion-label> 屏幕常亮</ion-label>
-            <ion-toggle (ionChange)="changeLightState()" color="secondary" [(ngModel)]="isAlwaysLight"></ion-toggle>
+            <ion-toggle (ionChange)="changeLightState()" color="secondary" [(ngModel)]="settingModel.isAlwaysLight"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon name="image" slot="start" color="primary"></ion-icon>
+            <ion-label> 足迹照片编辑</ion-label>
+            <ion-toggle (ionChange)="allowEditPicture()" color="secondary" [(ngModel)]="settingModel.isAllowEditPicture"></ion-toggle>
         </ion-item>
     </ion-list>
 

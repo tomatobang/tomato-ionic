@@ -22,7 +22,8 @@ export class GlobalService {
   private _jpushAlias: any;
   private _countdown = 0;
   private _resttime = 0;
-  private _isAlwaysLight = false;
+  private _isAlwaysLight;
+  private _isAllowEditPicture;
   private _languageType;
 
   constructor(public events: Events) { }
@@ -172,10 +173,10 @@ export class GlobalService {
       return this._isAlwaysLight;
     } else {
       const isAlwaysLight = localStorage.getItem('isAlwaysLight');
-      if (isAlwaysLight === 'false') {
-        this._isAlwaysLight = false;
-      } else {
+      if (isAlwaysLight === 'true') {
         this._isAlwaysLight = true;
+      } else {
+        this._isAlwaysLight = false;
       }
       return this._isAlwaysLight;
     }
@@ -191,6 +192,32 @@ export class GlobalService {
     }
     localStorage.setItem('isAlwaysLight', str);
   }
+
+  get isAllowEditPicture() {
+    if (this._isAllowEditPicture) {
+      return this._isAllowEditPicture;
+    } else {
+      const isAllowEditPicture = localStorage.getItem('isAllowEditPicture');
+      if (isAllowEditPicture === 'false') {
+        this._isAllowEditPicture = false;
+      } else {
+        this._isAllowEditPicture = true;
+      }
+      return this._isAllowEditPicture;
+    }
+  }
+
+  set isAllowEditPicture(value: boolean) {
+    this._isAllowEditPicture = value;
+    let str = '';
+    if (value) {
+      str = 'true';
+    } else {
+      str = 'false';
+    }
+    localStorage.setItem('isAllowEditPicture', str);
+  }
+
 
   get languageType() {
     if (this._languageType) {
