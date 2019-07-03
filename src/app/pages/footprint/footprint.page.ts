@@ -25,7 +25,10 @@ export class FootprintPage implements OnInit, OnDestroy {
   voicesToPlay = [];
   pictures = [];
   videos = [];
+  // TODO: 是否公开
   isPublish = false;
+  // 是否显示输入面板
+  showInput = false;
 
   footprintlist: any;
   mode = [
@@ -207,6 +210,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.videos = [];
         this.clearTags();
         this.selectMode(3);
+        this.showInput = false;
       }, () => {
         loading.dismiss();
       });
@@ -360,6 +364,10 @@ export class FootprintPage implements OnInit, OnDestroy {
       }
     }
     return fmt;
+  }
+
+  showInputContainer() {
+    this.showInput = !this.showInput;
   }
 
 }

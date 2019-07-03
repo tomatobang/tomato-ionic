@@ -6,6 +6,10 @@
         补录
       </ion-button>
     </ion-buttons>
+    <div class="arrow-dropdown-circle">
+      <ion-icon name="arrow-dropdown-circle" *ngIf="!showInput" (click)="showInputContainer()"></ion-icon>
+      <ion-icon name="arrow-dropup-circle" *ngIf="showInput" (click)="showInputContainer()"></ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +19,8 @@
       refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <div class="input-container">
+
+  <div class="input-container" [ngClass]="{'show':showInput}">
     <ion-textarea rows="1" placeholder="发生了什么..." [dataval]="notes" [(ngModel)]="notes" autoSizeTextarea></ion-textarea>
     <div class="media-area">
       <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>

@@ -1,6 +1,23 @@
 .input-container {
     background: #eee !important;
     padding: 15px 10px 30px 10px;
+    display: none;
+}
+
+.input-container.show {
+    display: block;
+    height: auto;
+    transition: all 1s;
+}
+.arrow-dropdown-circle{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    ion-icon{
+        font-size: 27px;
+        color: #f97271;
+    }
 }
 
 .add-footprint-button-container {
