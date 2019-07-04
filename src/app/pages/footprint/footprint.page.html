@@ -136,7 +136,7 @@
               </div>
               <div class="voice-list" *ngIf="item.voices.length > 0">
                 <ng-container *ngFor="let item of item.voices; let i = index;">
-                  <div id="play_block">
+                  <div class="play-block">
                     <ion-button shape="round" color="primary" appVoicePlayDirective [voiceUrl]="item">
                       片段({{ i+1 }})
                     </ion-button>

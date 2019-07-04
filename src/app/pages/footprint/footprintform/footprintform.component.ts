@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { OnlineFootprintService } from '@services/data.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
+import { OnlineTagService } from '@services/data/tag/tag.service';
 import { FootPrintService } from '../footprint.service';
 
 @Component({
@@ -28,48 +29,12 @@ export class FootprintformComponent implements OnInit {
 
   locationList = [];
 
-  taglist = [
-    {
-      name: '补录', selected: false
-    },
-    {
-      name: '起床', selected: false
-    },
-    {
-      name: '睡觉', selected: false
-    },
-    {
-      name: '上班', selected: false
-    },
-    {
-      name: '下班', selected: false
-    },
-    {
-      name: '吃饭', selected: false
-    },
-    {
-      name: '开会', selected: false
-    },
-    {
-      name: '活动', selected: false
-    },
-    {
-      name: '出差', selected: false
-    },
-    {
-      name: '旅游', selected: false
-    },
-    {
-      name: '运动', selected: false
-    },
-    {
-      name: '其它', selected: false
-    },
-  ];
+  taglist = [];
   modeIndex = 3;
   openTag = false;
   constructor(
     private onlinefootprintService: OnlineFootprintService,
+    private tagservice: OnlineTagService,
     private modalCtrl: ModalController,
     private baidu: BaiduLocationService,
     private footprintService: FootPrintService
@@ -89,8 +54,23 @@ export class FootprintformComponent implements OnInit {
       this.location = '定位失败!';
       console.warn(err);
     });
-
+    this.loadTags();
     this.create_at = new Date().toISOString();
+  }
+
+  async loadTags() {
+    this.tagservice.getTags(1).subscribe(ret => {
+      if (ret && ret.length > 0) {
+        let tags;
+        tags = [];
+        ret.map(val => {
+          tags.push({
+            _id: val._id, name: val.name, selected: false, showDeleteBut: false
+          });
+        });
+        this.taglist = tags;
+      }
+    });
   }
 
   async submit() {

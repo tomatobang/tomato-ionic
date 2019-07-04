@@ -23,7 +23,7 @@
     </div>
     <div class="voice-list">
       <ng-container *ngFor="let item of voicesToPlay">
-        <div id="play_block">
+        <div class="play-block">
           <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
             播放( {{ item.voiceDuration }} ")
           </ion-button>
