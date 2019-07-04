@@ -54,7 +54,33 @@ export class QiniuUploadService {
    * @param name 名称
    * @param isTryAgain 是否为重试操作
    */
-  public uploadLocFile(filePath, name, isTryAgain?) {
+  public uploadLocFile(filePath, name) {
+    return Observable.create(observer => {
+      this.simpleUploadFile(filePath, name).subscribe(ret => {
+        observer.next(ret);
+        if (ret && ret.data) {
+          observer.complete();
+        }
+      }, err => {
+        if (err && err.info.indexOf("expired") !== -1) {
+          // refresh token and try again
+          this.initQiniu(true).subscribe(() => {
+            return this.simpleUploadFile(filePath, name).subscribe((data) => {
+              observer.next(data);
+              if (data && data.data) {
+                observer.complete();
+              }
+            });
+          });
+
+        } else {
+          observer.error(err);
+        }
+      });
+    });
+  }
+
+  simpleUploadFile(filePath, name): Observable<any> {
     return Observable.create(observer => {
       window.plugins.QiNiuUploadPlugin.simpleUploadFile(
         {
@@ -76,15 +102,6 @@ export class QiniuUploadService {
           });
         },
         err => {
-          console.log('qiniu uploadLocFile ret err:', err);
-          if (err && err.info === 'expired token' && !isTryAgain) {
-            // refresh token and try again
-            this.initQiniu(true).subscribe(() => {
-              return this.uploadLocFile(filePath, name, true).subscribe((data) => {
-                observer.next(data);
-              });
-            });
-          }
           observer.error(err);
         }
       );
