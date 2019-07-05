@@ -98,7 +98,7 @@ export class QiniuUploadService {
         progress => {
           observer.next({
             data: false,
-            value: progress,
+            value: progress.percent,
           });
         },
         err => {

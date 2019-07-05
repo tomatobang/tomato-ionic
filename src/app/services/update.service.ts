@@ -176,7 +176,7 @@ export class UpdateService {
                   (evt.loaded / evt.total) * 100,
                   10
                 );
-                loading.data.content = `<div>已下载${downloadProgress}%</div>`;
+                loading.message = `<div>已下载${downloadProgress}%</div>`;
                 if (downloadProgress >= 100) {
                   loading.dismiss();
                 }

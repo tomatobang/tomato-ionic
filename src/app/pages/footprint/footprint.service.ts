@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -14,8 +13,7 @@ export class FootPrintService {
   isPlaying = false;
 
   constructor(
-    public platform: Platform,
-    public globalservice: GlobalService,
+    private globalservice: GlobalService,
     private actionSheetCtrl: ActionSheetController,
     private camera: Camera,
     private qiniu: QiniuUploadService,
@@ -38,7 +36,7 @@ export class FootPrintService {
                 quality: 100,
                 sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
                 destinationType: this.camera.DestinationType.FILE_URI,
-                correctOrientation:true,
+                correctOrientation: true,
                 encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
                 targetWidth: 1080,
@@ -61,9 +59,16 @@ export class FootPrintService {
                     if (isInit) {
                       this.qiniu
                         .uploadLocFile(FILE_URI, filename)
-                        .subscribe(data => {
-                          observer.next(this.globalservice.qiniuDomain + filename);
-                          observer.complete();
+                        .subscribe(ret => {
+                          if (ret.data) {
+                            observer.next({
+                              data: true,
+                              value: this.globalservice.qiniuDomain + filename,
+                            });
+                            observer.complete();
+                          } else {
+                            observer.next(ret);
+                          }
                         });
                     }
                   });
@@ -83,7 +88,7 @@ export class FootPrintService {
                 saveToPhotoAlbum: true,
                 sourceType: this.camera.PictureSourceType.CAMERA,
                 destinationType: this.camera.DestinationType.FILE_URI,
-                correctOrientation:true,
+                correctOrientation: true,
                 encodingType: this.camera.EncodingType.JPEG,
                 mediaType: this.camera.MediaType.PICTURE,
                 targetWidth: 1080,
@@ -104,9 +109,16 @@ export class FootPrintService {
                     new Date().valueOf();
                   this.qiniu.initQiniu().subscribe(isInit => {
                     if (isInit) {
-                      this.qiniu.uploadLocFile(FILE_URI, filename).subscribe(data => {
-                        observer.next(this.globalservice.qiniuDomain + filename);
-                        observer.complete();
+                      this.qiniu.uploadLocFile(FILE_URI, filename).subscribe(ret => {
+                        if (ret.data) {
+                          observer.next({
+                            data: true,
+                            value: this.globalservice.qiniuDomain + filename,
+                          });
+                          observer.complete();
+                        } else {
+                          observer.next(ret);
+                        }
                       });
                     }
                   });
@@ -143,7 +155,7 @@ export class FootPrintService {
       this.mediaCapture.captureVideo(options).then(
         (mediafiles: MediaFile[]) => {
           if (mediafiles.length < 1) {
-            observer.error('视频录制失败');
+            observer.error('取消');
             observer.complete();
           }
           console.log(mediafiles[0], (mediafiles[0].size / 1024).toFixed(2) + 'KB');
@@ -206,8 +218,10 @@ export class FootPrintService {
     }).then((thumb_fileUri: string) => {
       this.qiniu.initQiniu().subscribe(isInit => {
         if (isInit) {
-          this.qiniu.uploadLocFile(thumb_fileUri, outputFileName + '_thumbnail').subscribe(data => {
-            console.log('create thumbnail video succeed');
+          this.qiniu.uploadLocFile(thumb_fileUri, outputFileName + '_thumbnail').subscribe(ret => {
+            if (ret.data) {
+              console.log('create thumbnail video succeed');
+            }
           });
         }
       });

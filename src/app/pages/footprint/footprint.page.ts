@@ -9,6 +9,7 @@ import { OnlineTagService } from '@services/data/tag/tag.service';
 
 import { FootprintformComponent } from './footprintform/footprintform.component';
 import { FootPrintService } from './footprint.service';
+declare var window;
 
 @Component({
   selector: 'app-footprint',
@@ -75,6 +76,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.listFootprint();
     this.loadTags();
     this.emitService.getActiveUser().subscribe(ret => {
+      this.loadTags();
       this.listFootprint();
     });
   }
@@ -324,25 +326,45 @@ export class FootprintPage implements OnInit, OnDestroy {
    * 添加图片
    */
   addPictures() {
-    this.footprintService.addPictures().subscribe(ret => {
-      if (ret) {
-        this.pictures.push(ret);
+    // let loading;
+    this.footprintService.addPictures().subscribe(async ret => {
+      // if (!loading) {
+      //   loading = await this.createLoading('图片制作中');
+      // }
+      if (ret && ret.data) {
+        this.pictures.push(ret.value);
+        // loading.dismiss();
+      } else if (ret && !ret.data) {
+        const downloadProgress = window.parseInt(
+          ret.value * 100,
+          10
+        );
+        // loading.message = `<div>已完成${downloadProgress}%</div>`;
       }
+    }, err => {
+      // loading.dismiss();
+      console.warn(err);
     });
   }
 
   async addVideo() {
-    const loading = await this.createLoading('制作中...');
+    let loading;
+    loading = await this.createLoading('视频制作中');
     this.footprintService.addVideo().subscribe(ret => {
-      if (ret && ret.value) {
+      if (ret && ret.data) {
         this.videos.push(ret.value);
         loading.dismiss();
+      } else if (ret && !ret.data) {
+        const downloadProgress = window.parseInt(
+          ret.value * 100,
+          10
+        );
+        loading.message = `<div>已完成${downloadProgress}%</div>`;
       }
     }, err => {
       loading.dismiss();
-      alert('视频制作失败!');
+      console.warn(err);
     });
-
   }
 
   dateFtt(fmt, date) {

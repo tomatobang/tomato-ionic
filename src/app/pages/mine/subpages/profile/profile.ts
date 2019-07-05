@@ -260,27 +260,29 @@ export class ProfilePage implements OnInit {
                   if (isInit) {
                     this.qn
                       .uploadLocFile(FILE_URI, filename)
-                      .subscribe(data => {
-                        this.userservice
-                          .updateUserHeadImg({
-                            userid: this.userid,
-                            filename: filename,
-                          })
-                          .subscribe(ret => {
-                            this.globalservice.userinfo.img = filename;
-                            this.globalservice.userinfo = JSON.stringify(
-                              this.globalservice.userinfo
-                            );
-                            this.native
-                              .downloadHeadImg(
-                                this.userid,
-                                true,
-                                this.globalservice.qiniuDomain + filename
-                              )
-                              .then(url => {
-                                this.headImg = this.helper.dealWithLocalUrl(url);
-                              });
-                          });
+                      .subscribe(ret => {
+                        if (ret.data) {
+                          this.userservice
+                            .updateUserHeadImg({
+                              userid: this.userid,
+                              filename: filename,
+                            })
+                            .subscribe(ret => {
+                              this.globalservice.userinfo.img = filename;
+                              this.globalservice.userinfo = JSON.stringify(
+                                this.globalservice.userinfo
+                              );
+                              this.native
+                                .downloadHeadImg(
+                                  this.userid,
+                                  true,
+                                  this.globalservice.qiniuDomain + filename
+                                )
+                                .then(url => {
+                                  this.headImg = this.helper.dealWithLocalUrl(url);
+                                });
+                            });
+                        }
                       });
                   }
                 });
@@ -319,29 +321,30 @@ export class ProfilePage implements OnInit {
                   new Date().valueOf();
                 this.qn.initQiniu().subscribe(isInit => {
                   if (isInit) {
-                    this.qn.uploadLocFile(FILE_URI, filename).subscribe(data => {
-                      this.userservice
-                        .updateUserHeadImg({
-                          userid: this.userid,
-                          filename: filename,
-                        })
-                        .subscribe(ret => {
-                          this.globalservice.userinfo.img = filename;
-                          this.globalservice.userinfo = JSON.stringify(
-                            this.globalservice.userinfo
-                          );
-                          this.native
-                            .downloadHeadImg(
-                              this.userid,
-                              true,
-                              this.globalservice.qiniuDomain + filename
-                            )
-                            .then(url => {
-                              this.headImg = this.helper.dealWithLocalUrl(url);
-                            });
-                        });
+                    this.qn.uploadLocFile(FILE_URI, filename).subscribe(ret => {
+                      if (ret.data) {
+                        this.userservice
+                          .updateUserHeadImg({
+                            userid: this.userid,
+                            filename: filename,
+                          })
+                          .subscribe(ret => {
+                            this.globalservice.userinfo.img = filename;
+                            this.globalservice.userinfo = JSON.stringify(
+                              this.globalservice.userinfo
+                            );
+                            this.native
+                              .downloadHeadImg(
+                                this.userid,
+                                true,
+                                this.globalservice.qiniuDomain + filename
+                              )
+                              .then(url => {
+                                this.headImg = this.helper.dealWithLocalUrl(url);
+                              });
+                          });
+                      }
                     });
-
                   }
                 });
               },
