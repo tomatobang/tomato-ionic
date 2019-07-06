@@ -15,6 +15,9 @@ export class AutosizeDirective {
   @Input()
   set dataval(val) {
     if (val === '' && this.textArea) {
+      if (val === '') {
+        this.renderer.setStyle(this.textArea, 'min-height', '45px');
+      }
       setTimeout(() => {
         this.adjust(this.textArea);
       }, 100);
@@ -32,7 +35,6 @@ export class AutosizeDirective {
 
   adjust(textArea): void {
     this.renderer.setStyle(textArea, 'overflow', 'hidden');
-    this.renderer.setStyle(textArea, 'height', 'auto');
     this.renderer.setStyle(textArea, 'height', textArea.scrollHeight + 'px');
   }
 }
