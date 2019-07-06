@@ -1,5 +1,5 @@
 /**
- * 统一管理系统中通用服务
+ * 统一管理通用服务
  */
 
 import { NgModule } from '@angular/core';
@@ -23,6 +23,7 @@ import { VideoEditor } from '@ionic-native/video-editor/ngx';
 import { RebirthHttpProvider } from 'rebirth-http';
 import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 import { GlobalService } from '@services/global.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
@@ -70,6 +71,7 @@ import { UserFriendService } from '@services/data/user_friend';
     MediaCapture,
     VideoEditor,
     WebView,
+    AndroidPermissions,
     RebirthHttpProvider,
     NativeService,
     UpdateService,

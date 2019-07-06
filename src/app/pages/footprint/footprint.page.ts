@@ -212,7 +212,10 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.videos = [];
         this.clearTags();
         this.selectMode(3);
-        this.showInput = false;
+        setTimeout(() => {
+          this.showInput = false;
+        }, 50);
+
       }, () => {
         loading.dismiss();
       });

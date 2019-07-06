@@ -16,6 +16,7 @@ import { Network } from '@ionic-native/network/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AppCenterAnalytics } from '@ionic-native/app-center-analytics/ngx';
 import { AppCenterCrashes } from '@ionic-native/app-center-crashes/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import {
   FileTransfer,
   FileTransferObject,
@@ -44,6 +45,7 @@ export class NativeService {
     private localNotifications: LocalNotifications,
     private appCenterAnalytics: AppCenterAnalytics,
     private appCenterCrashes: AppCenterCrashes,
+    private androidPermissions: AndroidPermissions,
     private file: File,
     private jpush: JPush,
     private navCtrl: NavController,
@@ -149,10 +151,46 @@ export class NativeService {
   initNativeService() {
     this.listenInsomniaState();
     this.listenNetworkState();
+    if (this.isAndroid()) {
+      this.requestPermission();
+    }
     document.addEventListener('resume', () => {
       // 加载未读消息
       this.info.loadUnreadMsg();
     }, false);
+  }
+
+  requestPermission() {
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_NETWORK_STATE).then(
+      result => console.log('Has ACCESS_NETWORK_STATE permission?', result.hasPermission),
+      () => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_NETWORK_STATE)
+    );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_BACKGROUND_LOCATION).then(
+      result => console.log('Has ACCESS_BACKGROUND_LOCATION permission?', result.hasPermission),
+      () => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_BACKGROUND_LOCATION)
+    );
+
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
+      result => console.log('Has CAMERA permission?', result.hasPermission),
+      () => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
+    );
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.RECORD_AUDIO).then(
+      result => console.log('Has RECORD_AUDIO permission?', result.hasPermission),
+      () => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.RECORD_AUDIO)
+    );
+
+    // another way
+    // this.androidPermissions.requestPermissions([
+    //   this.androidPermissions.PERMISSION.ACCESS_NETWORK_STATE,
+    //   this.androidPermissions.PERMISSION.ACCESS_BACKGROUND_LOCATION,
+    //   this.androidPermissions.PERMISSION.CAMERA,
+    //   this.androidPermissions.PERMISSION.RECORD_AUDIO,
+    //   this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE
+    // ]).then(val =>{
+
+    // }).catch(err =>{
+
+    // });
   }
 
   isOffline() {
