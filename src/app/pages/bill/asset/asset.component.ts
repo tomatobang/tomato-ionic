@@ -2,6 +2,7 @@ import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 import { addAssetFormComponent } from './addAssetForm/addAssetForm.component';
+import { AssetBillInfoComponent } from './assetBillInfo/assetBillInfo.component';
 import { OnlineAssetService } from '@services/data/asset/asset.service';
 import { EmitService } from '@services/emit.service';
 
@@ -110,6 +111,22 @@ export class AssetComponent implements OnInit {
       this.emitService.eventEmit.emit('assetChange');
     });
   }
+
+
+  async showAssetBills(item) {
+    let modal;
+    modal = await this.modalCtrl.create({
+      component: AssetBillInfoComponent,
+      componentProps: {
+        asset: item
+      }
+    });
+
+    modal.onDidDismiss().then(ret => {
+    });
+    await modal.present();
+  }
+
 
   close() {
     this.modalCtrl.dismiss();

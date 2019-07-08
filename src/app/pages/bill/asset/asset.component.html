@@ -37,6 +37,7 @@
             <p>{{ item.notes }}</p>
           </ion-text>
         </ion-label>
+        <ion-button size="small" (click)="showAssetBills(item)" slot="end">资产账单</ion-button>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="edit(item)">编辑</ion-item-option>

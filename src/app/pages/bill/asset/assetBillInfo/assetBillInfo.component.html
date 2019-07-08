@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar no-border-bottom>
+    <ion-title>{{ asset?.name }}账单</ion-title>
+    <ion-buttons slot="start">
+      <ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <ion-item-sliding *ngFor="let item of billList;let i = index;">
+    <ion-item>
+      <ion-label>
+        <p>
+          <ion-text class="list-amount">
+            <span class="rmb-sign" [ngClass]="{'amount-grey':item.tag==='资产互转'}">¥</span>
+            <span [ngClass]="{'amount-grey':item.tag==='资产互转'}">{{ item.amount }} </span>
+            <ion-text class="bill-note text-small" *ngIf="item.asset_balance ">
+              余额: {{ item.asset_balance | NumberFix:2 }}
+            </ion-text>
+          </ion-text>
+
+          <ion-text class="float-right">
+            <ion-text *ngIf="item.tag" class="bill-note">{{ item.tag }}</ion-text>
+            <ion-text *ngIf="item.note" class="bill-note">({{ item.note }})</ion-text>
+          </ion-text>
+        </p>
+        <p>
+          <ion-text class="bill-note amount-tag-income" *ngIf="item.type==='收入'">
+            {{ item.type }}
+          </ion-text>
+          <ion-text class="bill-note amount-tag-pay" *ngIf="item.type==='支出'">
+            {{ item.type }}
+          </ion-text>
+          <ion-text class="bill-note asset-tag" *ngIf="item.asset.name">
+            {{ item.asset.name }}
+          </ion-text>
+          <ion-text class="bill-note float-right text-small">
+            {{ item.create_at | DateTransform }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item-options side="end">
+      <!-- <ion-item-option (click)="editBill(item,i)" color="secondary">编辑</ion-item-option>
+      <ion-item-option (click)="deleteBillRecord(item,i)" color="danger">删除</ion-item-option> -->
+    </ion-item-options>
+  </ion-item-sliding>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

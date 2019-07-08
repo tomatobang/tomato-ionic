@@ -13,6 +13,10 @@ export abstract class BillService extends RebirthHttp {
     keyword?: string
   ): Observable<Array<Bill>>;
 
+  abstract getAssetBills(
+    data: any
+  ): Observable<Array<Bill>>;
+  
   abstract updateBill(billUrl: string, bill: Bill): Observable<any>;
 
   abstract deleteBill(billUrl: string): Observable<any>;

@@ -41,6 +41,13 @@ export class OnlineBillService extends BillService {
     return null;
   }
 
+  @POST(baseUrl + 'api/assetbill')
+  getAssetBills(
+    @Body data: { asset, date?, num?}
+  ): Observable<Array<Bill>> {
+    return null;
+  }
+
   @GET(baseUrl + 'api/bill/:id')
   getBillByTitle(@Path('id') billTitle: string): Observable<Bill> {
     return null;
