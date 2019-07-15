@@ -4,6 +4,7 @@ import { OnlineFootprintService } from '@services/data.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineTagService } from '@services/data/tag/tag.service';
 import { FootPrintService } from '../footprint.service';
+declare var window;
 
 @Component({
   selector: 'app-footprintform',
@@ -89,6 +90,7 @@ export class FootprintformComponent implements OnInit {
         this.clearTags();
         this.selectMode(3);
         this.voices = [];
+        this.voicesToPlay = [];
         this.pictures = [];
         this.modalCtrl.dismiss(ret);
       }, () => {
@@ -145,10 +147,24 @@ export class FootprintformComponent implements OnInit {
  * 添加图片
  */
   addPictures() {
-    this.footprintService.addPictures().subscribe(ret => {
-      if (ret) {
-        this.pictures.push(ret);
+    // let loading;
+    this.footprintService.addPictures().subscribe(async ret => {
+      // if (!loading) {
+      //   loading = await this.createLoading('图片制作中');
+      // }
+      if (ret && ret.data) {
+        this.pictures.push(ret.value);
+        // loading.dismiss();
+      } else if (ret && !ret.data) {
+        const downloadProgress = window.parseInt(
+          ret.value * 100,
+          10
+        );
+        // loading.message = `<div>已完成${downloadProgress}%</div>`;
       }
+    }, err => {
+      // loading.dismiss();
+      console.warn(err);
     });
   }
 
