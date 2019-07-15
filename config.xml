@@ -24,6 +24,9 @@
     <preference name="ShowSplashScreen" value="true" />
     <preference name="APPCENTER_ANALYTICS_ENABLE_IN_JS" value="true" />
     <preference name="APPCENTER_CRASHES_ALWAYS_SEND" value="false" />
+    <platform name="electron">
+        <preference name="ElectronSettingsFilePath" value="electron/settings.json" />
+    </platform>
     <platform name="android">
         <allow-intent href="market:*" />
         <preference name="APP_SECRET" value="55e81acb-3fc4-4286-bf50-ffe9a6040bde" />
@@ -129,4 +132,5 @@
     </plugin>
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
     <engine name="android" spec="7.1.4" />
+    <engine name="cordova-electron" spec="1.1.0" />
 </widget>

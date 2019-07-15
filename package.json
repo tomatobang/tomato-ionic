@@ -79,6 +79,7 @@
     "code-push": "^2.0.6",
     "com-sarriaroman-photoviewer": "^1.2.2",
     "cordova-android": "7.1.4",
+    "cordova-electron": "1.1.0",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-appcenter-analytics": "^0.2.0",
@@ -126,6 +127,7 @@
     "zone.js": "~0.8.29"
   },
   "devDependencies": {
+    "electron": "^4.2.6",
     "@angular-devkit/architect": "~0.12.3",
     "@angular-devkit/build-angular": "~0.13.0",
     "@angular-devkit/core": "~7.2.3",
@@ -210,7 +212,8 @@
       "cordova-plugin-android-permissions": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "cordova-electron"
     ]
   }
 }
