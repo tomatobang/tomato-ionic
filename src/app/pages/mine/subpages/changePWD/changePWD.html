@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      修改密码
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">取消
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="changePWDForm" (ngSubmit)="save()" novalidate role="form">
+    <ion-item>
+      <ion-label position="stacked">旧密码</ion-label>
+      <ion-input type="password" formControlName="oldPassword" placeholder="旧密码..." [(ngModel)]="PWDModel.oldPassword">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">新密码</ion-label>
+      <ion-input type="password" formControlName="newPassword" placeholder="新密码..." [(ngModel)]="PWDModel.newPassword"
+        validateEqual="newPassword_confirm"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">确认新密码</ion-label>
+      <ion-input type="password" formControlName="newPassword_confirm" placeholder="确认新密码..."
+        [(ngModel)]="PWDModel.newPassword_confirm" validateEqual="newPassword"></ion-input>
+    </ion-item>
+
+    <ion-button slot="icon-only" expand="block" fill="outline" color="secondary" type="submit">保存
+    </ion-button>
+
+    <div *ngIf="formErrors.oldPassword" class="text-danger">
+      [旧密码]: {{ formErrors.oldPassword }}
+    </div>
+    <div *ngIf="formErrors.newPassword" class="text-danger">
+      [新密码]:{{ formErrors.newPassword }}
+    </div>
+    <div *ngIf="formErrors.newPassword_confirm" class="text-danger">
+      [确认新密码]: {{ formErrors.newPassword_confirm }}
+    </div>
+  </form>
+</ion-content>

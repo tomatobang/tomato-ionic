@@ -13,6 +13,7 @@ import { QiniuUploadService } from '@services/qiniu.upload.service';
 import { GlobalService } from '@services/global.service';
 import { Helper } from '@services/utils/helper';
 import { UpdatemodalPage } from '../updatemodal/updatemodal';
+import { ChangePWDPage } from '../changePWD/changePWD';
 
 @Component({
   selector: 'cmp-profile',
@@ -79,6 +80,22 @@ export class ProfilePage implements OnInit {
       });
     }
   }
+
+  /**
+  * 更新密码
+  */
+  async changePWD() {
+    const modal = await this.modalCtrl.create({
+      component: ChangePWDPage,
+      componentProps: {},
+      showBackdrop: true,
+    });
+
+    modal.onDidDismiss().then(() => {
+    });
+    await modal.present();
+  }
+
 
   /**
    * 更新性别

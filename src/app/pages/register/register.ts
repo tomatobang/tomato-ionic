@@ -149,7 +149,9 @@ export class RegisterPage implements OnInit {
       if (control && control.dirty && !control.valid) {
         const messages = this.validationMessages[field];
         for (const key of Object.keys(control.errors)) {
-          this.formErrors[field] += messages[key] + ' ';
+          if (messages[key] && !this.formErrors[field]) {
+            this.formErrors[field] += messages[key] + ' ';
+          }
         }
       }
     }

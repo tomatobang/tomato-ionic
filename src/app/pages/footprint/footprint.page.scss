@@ -9,14 +9,22 @@
     height: auto;
     transition: all 1s;
 }
-.arrow-dropdown-circle{
+
+.arrow-dropdown-circle {
     position: absolute;
     width: 100%;
     bottom: 0;
     text-align: center;
-    ion-icon{
+
+    ion-icon {
         font-size: 27px;
         color: #f97271;
+    }
+}
+
+.ios {
+    .arrow-dropdown-circle {
+        text-align: left;
     }
 }
 

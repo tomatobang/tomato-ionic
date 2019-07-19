@@ -8,7 +8,6 @@ import { File } from '@ionic-native/file/ngx';
 import { Helper } from '@services/utils/helper';
 import { Camera } from '@ionic-native/camera/ngx';
 import { PipesModule } from '@pipes/pipes.module';
-import { UpdatemodalPage } from './subpages/updatemodal/updatemodal';
 import { MinePageRoutingModule } from './mine.router.module';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -17,11 +16,16 @@ import { SettingPage } from './subpages/setting/setting';
 import { ProfilePage } from './subpages/profile/profile';
 import { AboutPage } from './subpages/about/about';
 import { PopoverComponent } from './subpages/statistics/popover/popover.component';
+import { UpdatemodalPage } from './subpages/updatemodal/updatemodal';
+import { ChangePWDPage } from './subpages/changePWD/changePWD';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EqualValidator } from '@directives/equal-validator.directive';
 
 @NgModule({
-  declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage, PopoverComponent],
-  imports: [IonicModule, PipesModule, MinePageRoutingModule, SharedModule],
-  entryComponents: [MinePage, UpdatemodalPage, PopoverComponent],
+  declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage,
+    ChangePWDPage, PopoverComponent, EqualValidator],
+  imports: [IonicModule, PipesModule, MinePageRoutingModule, SharedModule, FormsModule, ReactiveFormsModule],
+  entryComponents: [MinePage, UpdatemodalPage, ChangePWDPage, PopoverComponent],
   providers: [
     FileTransfer,
     File,
@@ -29,6 +33,6 @@ import { PopoverComponent } from './subpages/statistics/popover/popover.componen
     Helper,
     NativeService,
   ],
-  exports: [MinePage, ]
+  exports: [MinePage,]
 })
 export class MinePageModule { }
