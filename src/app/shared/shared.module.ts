@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PipesModule } from '@pipes/pipes.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -17,6 +17,7 @@ import { VoicePlayDirective } from '@directives/voice-play.directive';
 import { AddTagDirective } from '@directives/add-tag.directive';
 import { ShowVideoDirective } from '@directives/show-video.directive';
 import { AutosizeDirective } from '@directives/autosize.directive';
+import { EqualValidator } from '@directives/equal-validator.directive';
 
 import { BillformComponent } from '../pages/bill/billform/billform.component';
 import { ShowBigImgsModalModule } from '@modals/show-big-imgs/show-big-imgs.module';
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     IonicModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     PipesModule,
     CalendarModule,
     ShowBigImgsModalModule,
@@ -52,7 +54,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   declarations: [
     DebounceClickDirective, TrackEventDirective, ShowBigImgDirective,
-    VoiceRecoderDirective, VoicePlayDirective, AddTagDirective, AutosizeDirective,
+    VoiceRecoderDirective, VoicePlayDirective, AddTagDirective, AutosizeDirective, EqualValidator,
     ShowVideoDirective, VoiceRecorderComponent, BillformComponent
   ],
   entryComponents: [VoiceRecorderComponent, BillformComponent],
@@ -61,6 +63,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     IonicModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CalendarModule,
     SocketIoModule,
     HttpClientModule,
@@ -74,6 +77,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ShowVideoDirective,
     AddTagDirective,
     AutosizeDirective,
+    EqualValidator,
   ],
 })
 export class SharedModule { }

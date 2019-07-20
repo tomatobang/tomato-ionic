@@ -61,6 +61,11 @@ export class OnlineUserService extends UserService {
     return null;
   }
 
+  @POST(baseUrl + 'api/user/changepwd')
+  changePWD(@Body data: { oldPassword: string; newPassword: string }): Observable<any> {
+    return null;
+  }
+
   @POST(baseUrl + 'api/user')
   register(@Body user: User): Observable<any> {
     return null;

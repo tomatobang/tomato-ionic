@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from '@services/global.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { OnlineUserService } from '@services/data.service';
 
 @Component({
   selector: 'cmp-changepwd',
@@ -11,18 +12,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class ChangePWDPage implements OnInit {
   changePWDForm: FormGroup;
 
-  PWDModel: {
-    oldPassword: string;
-    newPassword: string;
-    newPassword_confirm: string;
-  };
-
-
-
   formErrors = {
     oldPassword: '',
     newPassword: '',
-    newPassword_confirm: '',
+    newPasswordConfirm: '',
   };
 
   validationMessages = {
@@ -34,37 +27,35 @@ export class ChangePWDPage implements OnInit {
       required: '密码必须输入。',
       minlength: '密码至少要6位。',
     },
-    newPassword_confirm: {
+    newPasswordConfirm: {
       required: '重复密码必须输入。',
       minlength: '密码至少要6位。',
       validateEqual: '两次输入的密码不一致。',
     },
   };
 
-  constructor(private modalCtrl: ModalController, private _g: GlobalService, public fb: FormBuilder, ) {
+  otherError = '';
+
+  constructor(private modalCtrl: ModalController, private _g: GlobalService,
+    public fb: FormBuilder, private userservice: OnlineUserService) {
   }
 
   ngOnInit() {
-    this.PWDModel = {
-      oldPassword: '',
-      newPassword: '',
-      newPassword_confirm: '',
-    }
     this.buildForm();
   }
 
   buildForm(): void {
     this.changePWDForm = this.fb.group({
       oldPassword: [
-        this.PWDModel.oldPassword,
+        null,
         [Validators.required, Validators.minLength(6)],
       ],
       newPassword: [
-        this.PWDModel.newPassword,
+        null,
         [Validators.required, Validators.minLength(6)],
       ],
-      newPassword_confirm: [
-        this.PWDModel.newPassword_confirm,
+      newPasswordConfirm: [
+        null,
         [Validators.required, Validators.minLength(6)],
       ],
     });
@@ -91,19 +82,29 @@ export class ChangePWDPage implements OnInit {
     }
   }
 
-  dismiss() {
-    this.modalCtrl.dismiss();
-  }
-
   save() {
-    console.log('userForm.valid:', this.changePWDForm.valid);
+    console.log('changePWDForm.valid:', this.changePWDForm.valid);
     if (this.changePWDForm.valid) {
-      if (this.PWDModel.oldPassword !== this.PWDModel.newPassword) {
-        // 新密码老密码一样
+      if (this.changePWDForm.value.oldPassword !== this.changePWDForm.value.newPassword) {
+        this.userservice.changePWD({
+          oldPassword: this.changePWDForm.value.oldPassword,
+          newPassword: this.changePWDForm.value.newPassword,
+        }).subscribe(ret => {
+          console.log(ret);
+          if (ret.status === 'fail') {
+            this.otherError = ret.description;
+          } else {
+            alert('密码修改成功，下次请使用新密码登录!');
+            this.modalCtrl.dismiss();
+          }
+        });
       } else {
-        this.modalCtrl.dismiss();
+        this.otherError = '新旧密码一样!';
       }
     }
+  }
 
+  dismiss() {
+    this.modalCtrl.dismiss();
   }
 }

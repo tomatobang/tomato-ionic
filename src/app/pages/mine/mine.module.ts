@@ -18,13 +18,11 @@ import { AboutPage } from './subpages/about/about';
 import { PopoverComponent } from './subpages/statistics/popover/popover.component';
 import { UpdatemodalPage } from './subpages/updatemodal/updatemodal';
 import { ChangePWDPage } from './subpages/changePWD/changePWD';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EqualValidator } from '@directives/equal-validator.directive';
 
 @NgModule({
   declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage,
-    ChangePWDPage, PopoverComponent, EqualValidator],
-  imports: [IonicModule, PipesModule, MinePageRoutingModule, SharedModule, FormsModule, ReactiveFormsModule],
+    ChangePWDPage, PopoverComponent],
+  imports: [IonicModule, PipesModule, MinePageRoutingModule, SharedModule],
   entryComponents: [MinePage, UpdatemodalPage, ChangePWDPage, PopoverComponent],
   providers: [
     FileTransfer,

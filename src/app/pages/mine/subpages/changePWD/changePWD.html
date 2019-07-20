@@ -11,25 +11,22 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="changePWDForm" (ngSubmit)="save()" novalidate role="form">
+  <form [formGroup]="changePWDForm" (ngSubmit)="save()" role="form">
     <ion-item>
       <ion-label position="stacked">旧密码</ion-label>
-      <ion-input type="password" formControlName="oldPassword" placeholder="旧密码..." [(ngModel)]="PWDModel.oldPassword">
+      <ion-input type="password" formControlName="oldPassword" placeholder="旧密码...">
       </ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">新密码</ion-label>
-      <ion-input type="password" formControlName="newPassword" placeholder="新密码..." [(ngModel)]="PWDModel.newPassword"
-        validateEqual="newPassword_confirm"></ion-input>
+      <ion-input type="password" formControlName="newPassword" placeholder="新密码..." reverse="true"
+        validateEqual="newPasswordConfirm"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">确认新密码</ion-label>
-      <ion-input type="password" formControlName="newPassword_confirm" placeholder="确认新密码..."
-        [(ngModel)]="PWDModel.newPassword_confirm" validateEqual="newPassword"></ion-input>
+      <ion-input type="password" formControlName="newPasswordConfirm" placeholder="确认新密码..."
+        validateEqual="newPassword"></ion-input>
     </ion-item>
-
-    <ion-button slot="icon-only" expand="block" fill="outline" color="secondary" type="submit">保存
-    </ion-button>
 
     <div *ngIf="formErrors.oldPassword" class="text-danger">
       [旧密码]: {{ formErrors.oldPassword }}
@@ -37,8 +34,16 @@
     <div *ngIf="formErrors.newPassword" class="text-danger">
       [新密码]:{{ formErrors.newPassword }}
     </div>
-    <div *ngIf="formErrors.newPassword_confirm" class="text-danger">
-      [确认新密码]: {{ formErrors.newPassword_confirm }}
+    <div *ngIf="formErrors.newPasswordConfirm" class="text-danger">
+      [确认新密码]: {{ formErrors.newPasswordConfirm }}
     </div>
+
+    <div *ngIf="otherError" class="text-danger">
+      {{ otherError }}
+    </div>
+
+    <ion-button [disabled]="changePWDForm.invalid" slot="icon-only" expand="block" fill="outline" color="secondary"
+      type="submit">保存
+    </ion-button>
   </form>
 </ion-content>
