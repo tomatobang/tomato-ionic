@@ -2,6 +2,9 @@
   <ion-toolbar>
     <ion-title>TODO</ion-title>
     <ion-buttons slot="end">
+      <ion-button icon-only (click)="refresh()">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
       <ion-button icon-only (click)="showRegularTodos()">
         <ion-icon name="list"></ion-icon>
       </ion-button>

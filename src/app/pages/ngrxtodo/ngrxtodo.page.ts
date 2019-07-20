@@ -36,6 +36,10 @@ export class NgRxTodoComponent implements OnInit {
 
   }
 
+  refresh() {
+    this.populateTodos();
+  }
+
   async showRegularTodos() {
     const modal = await this.modalCtrl.create({
       component: RegularTodoComponent
