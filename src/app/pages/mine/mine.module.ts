@@ -19,6 +19,8 @@ import { PopoverComponent } from './subpages/statistics/popover/popover.componen
 import { UpdatemodalPage } from './subpages/updatemodal/updatemodal';
 import { ChangePWDPage } from './subpages/changePWD/changePWD';
 
+import { MineService } from './mine.service';
+
 @NgModule({
   declarations: [MinePage, StatisticsPage, SettingPage, ProfilePage, AboutPage, UpdatemodalPage,
     ChangePWDPage, PopoverComponent],
@@ -30,6 +32,7 @@ import { ChangePWDPage } from './subpages/changePWD/changePWD';
     Camera,
     Helper,
     NativeService,
+    MineService,
   ],
   exports: [MinePage,]
 })

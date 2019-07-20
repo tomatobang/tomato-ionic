@@ -89,40 +89,38 @@ export class OnlineUserService extends UserService {
   @POST(baseUrl + 'api/user/headimg')
   updateUserHeadImg(@Body
   data: {
-    userid: string;
     filename: string;
   }): Observable<any> {
     return null;
   }
 
   @POST(baseUrl + 'api/user/sex')
-  updateSex(@Body data: { userid: string; sex: string }): Observable<any> {
+  updateSex(@Body data: { sex: string }): Observable<any> {
     return null;
   }
 
   @POST(baseUrl + 'api/user/displayname')
   updateDisplayName(@Body
   data: {
-    userid: string;
     displayname: string;
   }): Observable<any> {
     return null;
   }
 
   @POST(baseUrl + 'api/user/email')
-  updateEmail(@Body data: { userid: string; email: string }): Observable<any> {
+  updateEmail(@Body data: { email: string }): Observable<any> {
     return null;
   }
 
   @POST(baseUrl + 'api/user/location')
-  updateLocation(@Body data: { userid: string; location: string }): Observable<
+  updateLocation(@Body data: { location: string }): Observable<
     any
   > {
     return null;
   }
 
   @POST(baseUrl + 'api/user/bio')
-  updateBio(@Body data: { userid: string; bio: string }): Observable<any> {
+  updateBio(@Body data: { bio: string }): Observable<any> {
     return null;
   }
 }

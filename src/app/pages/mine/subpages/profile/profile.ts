@@ -14,6 +14,7 @@ import { GlobalService } from '@services/global.service';
 import { Helper } from '@services/utils/helper';
 import { UpdatemodalPage } from '../updatemodal/updatemodal';
 import { ChangePWDPage } from '../changePWD/changePWD';
+import { MineService } from '../../mine.service';
 
 @Component({
   selector: 'cmp-profile',
@@ -40,7 +41,8 @@ export class ProfilePage implements OnInit {
     public platform: Platform,
     private userservice: OnlineUserService,
     private qn: QiniuUploadService,
-    private helper: Helper
+    private helper: Helper,
+    private mineService: MineService
   ) { }
 
   ngOnInit() {
@@ -92,6 +94,7 @@ export class ProfilePage implements OnInit {
     });
 
     modal.onDidDismiss().then(() => {
+      this.mineService.logout();
     });
     await modal.present();
   }
@@ -108,7 +111,7 @@ export class ProfilePage implements OnInit {
       }
       this.sex = data.sex;
       this.userservice
-        .updateSex({ userid: this.userid, sex: this.sex })
+        .updateSex({ sex: this.sex })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
             this.globalservice.userinfo = userdata;
@@ -131,7 +134,7 @@ export class ProfilePage implements OnInit {
       }
       this.bio = data.bio;
       this.userservice
-        .updateBio({ userid: this.userid, bio: this.bio })
+        .updateBio({ bio: this.bio })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
             this.globalservice.userinfo = userdata;
@@ -156,7 +159,6 @@ export class ProfilePage implements OnInit {
       this.displayName = data.displayname;
       this.userservice
         .updateDisplayName({
-          userid: this.userid,
           displayname: this.displayName,
         })
         .subscribe(userdata => {
@@ -181,7 +183,7 @@ export class ProfilePage implements OnInit {
       }
       this.email = data.email;
       this.userservice
-        .updateEmail({ userid: this.userid, email: this.email })
+        .updateEmail({ email: this.email })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
             this.globalservice.userinfo = userdata;
@@ -204,7 +206,7 @@ export class ProfilePage implements OnInit {
       }
       this.location = data.location;
       this.userservice
-        .updateLocation({ userid: this.userid, location: this.location })
+        .updateLocation({ location: this.location })
         .subscribe(userdata => {
           if (this.verifyResponse(userdata)) {
             this.globalservice.userinfo = userdata;
@@ -281,7 +283,6 @@ export class ProfilePage implements OnInit {
                         if (ret.data) {
                           this.userservice
                             .updateUserHeadImg({
-                              userid: this.userid,
                               filename: filename,
                             })
                             .subscribe(ret => {
@@ -342,7 +343,6 @@ export class ProfilePage implements OnInit {
                       if (ret.data) {
                         this.userservice
                           .updateUserHeadImg({
-                            userid: this.userid,
                             filename: filename,
                           })
                           .subscribe(ret => {

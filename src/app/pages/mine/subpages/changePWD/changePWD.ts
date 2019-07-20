@@ -37,15 +37,15 @@ export class ChangePWDPage implements OnInit {
   otherError = '';
 
   constructor(private modalCtrl: ModalController, private _g: GlobalService,
-    public fb: FormBuilder, private userservice: OnlineUserService) {
+    private formbuilder: FormBuilder, private userservice: OnlineUserService) {
   }
 
   ngOnInit() {
     this.buildForm();
   }
 
-  buildForm(): void {
-    this.changePWDForm = this.fb.group({
+  buildForm() {
+    this.changePWDForm = this.formbuilder.group({
       oldPassword: [
         null,
         [Validators.required, Validators.minLength(6)],
@@ -94,7 +94,6 @@ export class ChangePWDPage implements OnInit {
           if (ret.status === 'fail') {
             this.otherError = ret.description;
           } else {
-            alert('密码修改成功，下次请使用新密码登录!');
             this.modalCtrl.dismiss();
           }
         });

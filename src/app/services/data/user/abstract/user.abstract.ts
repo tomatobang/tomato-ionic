@@ -26,24 +26,20 @@ export abstract class UserService extends RebirthHttp {
   abstract verifyUserNameEmail(email: EmailUserName): Observable<any>;
 
   abstract updateUserHeadImg(data: {
-    userid: string;
     filename: string;
   }): Observable<any>;
 
   abstract updateSex(data: { userid: string; sex: string }): Observable<any>;
 
   abstract updateDisplayName(data: {
-    userid: string;
     displayname: string;
   }): Observable<any>;
 
   abstract updateEmail(data: {
-    userid: string;
     email: string;
   }): Observable<any>;
 
   abstract updateLocation(data: {
-    userid: string;
     location: string;
   }): Observable<any>;
 
