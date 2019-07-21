@@ -94,7 +94,9 @@ export class ChangePWDPage implements OnInit {
           if (ret.status === 'fail') {
             this.otherError = ret.description;
           } else {
-            this.modalCtrl.dismiss();
+            this.modalCtrl.dismiss({
+              succeed: true
+            });
           }
         });
       } else {
@@ -104,6 +106,8 @@ export class ChangePWDPage implements OnInit {
   }
 
   dismiss() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({
+      succeed: false
+    });
   }
 }

@@ -93,8 +93,10 @@ export class ProfilePage implements OnInit {
       showBackdrop: true,
     });
 
-    modal.onDidDismiss().then(() => {
-      this.mineService.logout();
+    modal.onDidDismiss().then((data) => {
+      if (data.data && data.data.succeed) {
+        this.mineService.logout();
+      }
     });
     await modal.present();
   }
