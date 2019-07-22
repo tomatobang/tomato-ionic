@@ -39,8 +39,11 @@
     </div>
 
     <div class="picture-list">
-      <ng-container *ngFor="let item of pictures">
-        <img [src]="item" />
+      <ng-container *ngFor="let item of pictures_safeUrl; let i = index">
+        <div class="picture-item">
+          <img [src]="item" />
+          <ion-icon name="close" (click)="deletePicture(item,i)"></ion-icon>
+        </div>
       </ng-container>
     </div>
     <div class="video-list">

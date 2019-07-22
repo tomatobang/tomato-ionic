@@ -1,3 +1,4 @@
+
 import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -9,6 +10,7 @@ import { OnlineTagService } from '@services/data/tag/tag.service';
 
 import { FootprintformComponent } from './footprintform/footprintform.component';
 import { FootPrintService } from './footprint.service';
+import { Helper } from '@services/utils/helper';
 declare var window;
 
 @Component({
@@ -24,7 +26,9 @@ export class FootprintPage implements OnInit, OnDestroy {
   tag = [];
   voices = [];
   voicesToPlay = [];
+  pictures_safeUrl = [];
   pictures = [];
+  pictures_qiniu = [];
   videos = [];
   // TODO: 是否公开
   isPublish = false;
@@ -55,6 +59,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     private emitService: EmitService,
     private modalCtrl: ModalController,
     private footprintService: FootPrintService,
+    private helper: Helper
   ) {
   }
 
@@ -166,6 +171,11 @@ export class FootprintPage implements OnInit, OnDestroy {
     item.showDeleteBut = !item.showDeleteBut;
   }
 
+  deletePicture(item, i) {
+    this.pictures_safeUrl.splice(i, 1);
+    this.pictures.splice(i, 1);
+  }
+
   /**
    * 今日足迹
    */
@@ -193,13 +203,46 @@ export class FootprintPage implements OnInit, OnDestroy {
   async addFootprint() {
     if (this.location) {
       const loading = await this.createLoading();
+      this.uploadPictures(loading);
+    }
+  }
+
+  async uploadPictures(loading) {
+    if (this.pictures.length > 0) {
+      const local_url = this.pictures.splice(0, 1)[0];
+      console.log('上传:', local_url);
+      this.footprintService.qiniuFileUpload(local_url).subscribe(ret => {
+        console.log('上传成功:', local_url);
+        if (ret && ret.data) {
+          this.pictures_qiniu.push(ret.value);
+          // loading.dismiss();
+        } else if (ret && !ret.data) {
+          const downloadProgress = window.parseInt(
+            ret.value * 100,
+            10
+          );
+          // loading.message = `<div>已完成${downloadProgress}%</div>`;
+        }
+        if (this.pictures.length > 0) {
+          this.uploadPictures(loading);
+        } else {
+          this.createRecord(loading);
+        }
+      });
+    } else {
+      this.createRecord(loading);
+    }
+  }
+
+  createRecord(loading) {
+    if (this.location) {
       this.footprintservice.createFootprint({
         position: this.location,
         notes: this.notes,
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
         voices: this.voices,
-        pictures: this.pictures,
+        pictures: this.pictures_qiniu,
         videos: this.videos
       }).subscribe(ret => {
         loading.dismiss();
@@ -209,6 +252,8 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.voices = [];
         this.voicesToPlay = [];
         this.pictures = [];
+        this.pictures_safeUrl = [];
+        this.pictures_qiniu = [];
         this.videos = [];
         this.clearTags();
         this.selectMode(3);
@@ -217,6 +262,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         loading.dismiss();
       });
     }
+
   }
 
   clearTags() {
@@ -327,20 +373,25 @@ export class FootprintPage implements OnInit, OnDestroy {
    */
   addPictures() {
     // let loading;
-    this.footprintService.addPictures().subscribe(async ret => {
-      // if (!loading) {
-      //   loading = await this.createLoading('图片制作中');
-      // }
-      if (ret && ret.data) {
-        this.pictures.push(ret.value);
-        // loading.dismiss();
-      } else if (ret && !ret.data) {
-        const downloadProgress = window.parseInt(
-          ret.value * 100,
-          10
-        );
-        // loading.message = `<div>已完成${downloadProgress}%</div>`;
+    this.footprintService.addPictures().subscribe(LOCAL_FILE_URI => {
+      if (LOCAL_FILE_URI) {
+        this.pictures_safeUrl.push(this.helper.dealWithLocalUrl(LOCAL_FILE_URI));
+        this.pictures.push(LOCAL_FILE_URI);
       }
+
+      // // if (!loading) {
+      // //   loading = await this.createLoading('图片制作中');
+      // // }
+      // if (ret && ret.data) {
+      //   this.pictures.push(ret.value);
+      //   // loading.dismiss();
+      // } else if (ret && !ret.data) {
+      //   const downloadProgress = window.parseInt(
+      //     ret.value * 100,
+      //     10
+      //   );
+      //   // loading.message = `<div>已完成${downloadProgress}%</div>`;
+      // }
     }, err => {
       // loading.dismiss();
       console.warn(err);
