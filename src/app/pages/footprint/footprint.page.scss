@@ -62,14 +62,15 @@
 .picture-list {
     img {
         display: inline-block;
-        margin-right: 3px;
         width: 100px;
     }
 
     .picture-item {
         position: relative;
         width: 100px;
+        margin-right: 3px;
         display: inline-block;
+
         ion-icon {
             color: #f97271;
             opacity: .8;

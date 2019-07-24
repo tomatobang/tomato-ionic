@@ -4,15 +4,26 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { ToastController, Platform } from '@ionic/angular';
 
-import { Platform } from '@ionic/angular';
 declare var window;
 
 @Injectable({
   providedIn: 'root',
 })
 export class Helper {
-  constructor(public webView: WebView, public platform: Platform, private sanitizer: DomSanitizer) { }
+  constructor(public webView: WebView, public platform: Platform, private sanitizer: DomSanitizer, private toastCtrl: ToastController) { }
+
+  async createToast(msg) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      position: 'top',
+      cssClass: 'my-toast-style',
+      showCloseButton: true,
+      closeButtonText: '关闭',
+    });
+    toast.present();
+  }
 
   getBasePath() {
     let basePath;
@@ -70,4 +81,6 @@ export class Helper {
     }
     return url;
   }
+
+
 }

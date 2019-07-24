@@ -59,7 +59,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     private emitService: EmitService,
     private modalCtrl: ModalController,
     private footprintService: FootPrintService,
-    private helper: Helper
+    private helper: Helper,
   ) {
   }
 
@@ -202,32 +202,37 @@ export class FootprintPage implements OnInit, OnDestroy {
    */
   async addFootprint() {
     if (this.location) {
-      const loading = await this.createLoading();
-      this.uploadPictures(loading);
+      const loading = await this.createLoading('图片上传中...');
+      this.uploadPictures(loading, this.pictures.length);
     }
   }
 
-  async uploadPictures(loading) {
+  async uploadPictures(loading, total) {
     if (this.pictures.length > 0) {
       const local_url = this.pictures.splice(0, 1)[0];
       console.log('上传:', local_url);
       this.footprintService.qiniuFileUpload(local_url).subscribe(ret => {
-        console.log('上传成功:', local_url);
         if (ret && ret.data) {
+          console.log('上传成功:', local_url);
           this.pictures_qiniu.push(ret.value);
+          if (this.pictures.length > 0) {
+            this.uploadPictures(loading, total);
+          } else {
+            this.createRecord(loading);
+          }
           // loading.dismiss();
         } else if (ret && !ret.data) {
           const downloadProgress = window.parseInt(
             ret.value * 100,
             10
           );
-          // loading.message = `<div>已完成${downloadProgress}%</div>`;
+          loading.message = `<div>(${total - this.pictures.length}/${total})已完成${downloadProgress}%</div>`;
         }
-        if (this.pictures.length > 0) {
-          this.uploadPictures(loading);
-        } else {
-          this.createRecord(loading);
-        }
+
+      }, async err => {
+        console.error(err);
+        loading.dismiss();
+        this.helper.createToast('上传失败，请重试!');
       });
     } else {
       this.createRecord(loading);
@@ -378,22 +383,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.pictures_safeUrl.push(this.helper.dealWithLocalUrl(LOCAL_FILE_URI));
         this.pictures.push(LOCAL_FILE_URI);
       }
-
-      // // if (!loading) {
-      // //   loading = await this.createLoading('图片制作中');
-      // // }
-      // if (ret && ret.data) {
-      //   this.pictures.push(ret.value);
-      //   // loading.dismiss();
-      // } else if (ret && !ret.data) {
-      //   const downloadProgress = window.parseInt(
-      //     ret.value * 100,
-      //     10
-      //   );
-      //   // loading.message = `<div>已完成${downloadProgress}%</div>`;
-      // }
     }, err => {
-      // loading.dismiss();
       console.warn(err);
     });
   }

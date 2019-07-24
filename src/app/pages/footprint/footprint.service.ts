@@ -51,28 +51,6 @@ export class FootPrintService {
                     FILE_URI = FILE_URI.substr(0, indexOfQ);
                   }
                   observer.next(FILE_URI);
-                  // const filename =
-                  //   'footprint_img_' +
-                  //   this.globalservice.userinfo.username +
-                  //   '_' +
-                  //   new Date().valueOf();
-                  // this.qiniu.initQiniu().subscribe(isInit => {
-                  //   if (isInit) {
-                  //     this.qiniu
-                  //       .uploadLocFile(FILE_URI, filename)
-                  //       .subscribe(ret => {
-                  //         if (ret.data) {
-                  //           observer.next({
-                  //             data: true,
-                  //             value: this.globalservice.qiniuDomain + filename,
-                  //           });
-                  //           observer.complete();
-                  //         } else {
-                  //           observer.next(ret);
-                  //         }
-                  //       });
-                  //   }
-                  // });
                 },
                 err => {
                   console.log('从相册上传图片失败：', err);
@@ -104,26 +82,6 @@ export class FootPrintService {
                     FILE_URI = FILE_URI.substr(0, indexOfQ);
                   }
                   observer.next(FILE_URI);
-                  // const filename =
-                  //   'footprint_img_' +
-                  //   this.globalservice.userinfo.username +
-                  //   '_' +
-                  //   new Date().valueOf();
-                  // this.qiniu.initQiniu().subscribe(isInit => {
-                  //   if (isInit) {
-                  //     this.qiniu.uploadLocFile(FILE_URI, filename).subscribe(ret => {
-                  //       if (ret.data) {
-                  //         observer.next({
-                  //           data: true,
-                  //           value: this.globalservice.qiniuDomain + filename,
-                  //         });
-                  //         observer.complete();
-                  //       } else {
-                  //         observer.next(ret);
-                  //       }
-                  //     });
-                  //   }
-                  // });
                 },
                 err => {
                   console.log('拍照上传图片失败：', err);
@@ -203,7 +161,6 @@ export class FootPrintService {
           })
             .then((fileUri: string) => {
               console.log('video transcode success', fileUri);
-              // const videofilePath = fileUri ? fileUri.startsWith('file://') ? fileUri : `file://${fileUri}` : '';
               this.qiniu.initQiniu().subscribe(isInit => {
                 if (isInit) {
                   this.qiniu.uploadLocFile(fileUri, filename).subscribe(ret => {
@@ -221,10 +178,12 @@ export class FootPrintService {
                 }
               });
             })
-            .catch((error: any) => console.log('video transcode error', error));
+            .catch((error: any) => {
+              observer.error('video transcode error:', error);
+              observer.complete();
+            });
         },
         (error: CaptureError) => {
-          console.log('Something went wrong');
           observer.error('视频录制失败：', error);
           observer.complete();
         }
