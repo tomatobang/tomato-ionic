@@ -23,13 +23,13 @@
   <div class="input-container" [ngClass]="{'show':showInput}">
     <ion-textarea rows="1" placeholder="发生了什么..." [dataval]="notes" [(ngModel)]="notes" autoSizeTextarea></ion-textarea>
     <div class="media-area">
-      <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
       <ion-icon name="camera" (click)="addPictures()"></ion-icon>
       <ion-icon name="videocam" (click)="addVideo()"></ion-icon>
+      <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
     </div>
 
     <div class="voice-list">
-      <ng-container *ngFor="let item of voicesToPlay">
+      <ng-container *ngFor="let item of voicesObjs">
         <div class="play-block">
           <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
             播放( {{ item.voiceDuration }} ")
@@ -39,7 +39,7 @@
     </div>
 
     <div class="picture-list">
-      <ng-container *ngFor="let item of pictures_safeUrl; let i = index">
+      <ng-container *ngFor="let item of picturesSafeUrl; let i = index">
         <div class="picture-item">
           <img [src]="item" />
           <ion-icon name="close" (click)="deletePicture(item,i)"></ion-icon>
@@ -47,7 +47,7 @@
       </ng-container>
     </div>
     <div class="video-list">
-      <div *ngFor="let item of videosObj; let i = index">
+      <div *ngFor="let item of videosObjs; let i = index">
         <ion-icon name="videocam"></ion-icon>
         <!-- <ion-icon name="close" (click)="deleteVideo(item,i)"></ion-icon> -->
         <img (click)="showVideo(item.videoUrl)" onError="this.src='./assets/tomato-grey.png';"

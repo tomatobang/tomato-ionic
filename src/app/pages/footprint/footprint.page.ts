@@ -2,7 +2,7 @@
 import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Observable, concat } from 'rxjs';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 
 import { GlobalService } from '@services/global.service';
@@ -27,13 +27,13 @@ export class FootprintPage implements OnInit, OnDestroy {
   createAt = '2012-12-12 10:00';
   notes = '';
   tag = [];
-  voices = [];
-  voicesToPlay = [];
-  pictures_safeUrl = [];
-  pictures = [];
-  pictures_qiniu = [];
-  videos_qiniu = [];
-  videosObj = [];
+  picturesSafeUrl = [];
+  pictureObjs = [];
+  videosObjs = [];
+  voicesObjs = [];
+  voicesQiniuUrl = [];
+  picturesQiniuUrl = [];
+  videosQiniuUrl = [];
   // TODO: 是否公开
   isPublish = false;
   // 是否显示输入面板
@@ -57,8 +57,7 @@ export class FootprintPage implements OnInit, OnDestroy {
 
   constructor(
     private baidu: BaiduLocationService,
-    private globalservice: GlobalService,
-    private footprintservice: OnlineFootprintService,
+    private onlineFootprintService: OnlineFootprintService,
     private tagservice: OnlineTagService,
     private loading: LoadingController,
     private emitService: EmitService,
@@ -67,18 +66,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     private helper: Helper,
     private videoPlayer: VideoPlayer
   ) {
-  }
-
-  selectMode(index) {
-    this.modeIndex = index;
-    for (let i = 0; i < index; i++) {
-      const element = this.mode[i];
-      element.selected = true;
-    }
-    for (let j = index; j < this.mode.length; j++) {
-      const element = this.mode[j];
-      element.selected = false;
-    }
   }
 
   ngOnInit() {
@@ -105,6 +92,27 @@ export class FootprintPage implements OnInit, OnDestroy {
   doRefresh(event) {
     this.locating(event);
     this.listFootprint();
+  }
+
+  /**
+ * 今日足迹
+ */
+  async listFootprint() {
+    const loading = await this.createLoading();
+    this.onlineFootprintService.getFootprints().subscribe(ret => {
+      loading.dismiss();
+      if (ret) {
+        this.footprintlist = ret;
+        this.footprintlist.sort(function (a, b) {
+          return new Date(a.create_at) < new Date(b.create_at) ? 1 : -1;
+        });
+        this.footprintlist.map(val => {
+          val.mode = new Array(parseInt(val.mode, 10));
+        });
+      }
+    }, () => {
+      loading.dismiss();
+    });
   }
 
   locating(event?) {
@@ -173,167 +181,78 @@ export class FootprintPage implements OnInit, OnDestroy {
     });
   }
 
-  showAndHideDeleteBut(item) {
-    item.showDeleteBut = !item.showDeleteBut;
-  }
-
-  deletePicture(item, i) {
-    this.pictures_safeUrl.splice(i, 1);
-    this.pictures.splice(i, 1);
-  }
-
-  deleteVideo(item, i) {
-    this.videosObj.splice(i, 1);
-  }
-
-  /**
-   * 今日足迹
-   */
-  async listFootprint() {
-    const loading = await this.createLoading();
-    this.footprintservice.getFootprints().subscribe(ret => {
-      loading.dismiss();
-      if (ret) {
-        this.footprintlist = ret;
-        this.footprintlist.sort(function (a, b) {
-          return new Date(a.create_at) < new Date(b.create_at) ? 1 : -1;
-        });
-        this.footprintlist.map(val => {
-          val.mode = new Array(parseInt(val.mode, 10));
-        });
-      }
-    }, () => {
-      loading.dismiss();
-    });
-  }
-
   /**
    * 添加足迹
    */
   async addFootprint() {
     if (this.location) {
       const loading = await this.createLoading('努力上传中...');
-      this.uploadPictures(loading, this.pictures.length).subscribe(ret => {
-        if (ret) {
-          this.uploadVideos(loading, this.videosObj.length).subscribe(ret => {
-            if (ret) {
-              this.createRecord(loading);
-            }
-          });
+      let arr: Observable<any>[] = [];
+      for (let index = 0; index < this.pictureObjs.length; index++) {
+        const element = this.pictureObjs[index];
+        arr.push(this.footprintService.uploadPictures(element, loading, this.pictureObjs.length, index + 1));
+      }
+
+      for (let index = 0; index < this.videosObjs.length; index++) {
+        const element = this.videosObjs[index];
+        arr.push(this.footprintService.uploadVideos(element, loading, this.videosObjs.length, index + 1));
+      }
+
+      for (let index = 0; index < this.voicesObjs.length; index++) {
+        const element = this.voicesObjs[index];
+        arr.push(this.footprintService.uploadVoices(element, loading, this.voicesObjs.length, index + 1));
+      }
+
+      concat(...arr).subscribe(ret => {
+        if (ret && ret.type) {
+          switch (ret.type) {
+            case 'picture':
+              this.picturesQiniuUrl.push(ret.value);
+              break;
+            case 'video':
+              this.videosQiniuUrl.push(ret.value);
+              break;
+            case 'voice':
+              this.voicesQiniuUrl.push(ret.value);
+              break;
+            default:
+              break;
+          }
         }
+
+      }, err => {
+        console.log(err);
+        if (loading) {
+          loading.dismiss();
+        }
+      }, () => {
+        this.createRecord(loading);
       });
     }
-
-  }
-
-  uploadPictures(loading, total) {
-    return Observable.create(async observer => {
-      if (this.pictures.length > 0) {
-        const local_url = this.pictures.splice(0, 1)[0];
-        const remoteFileName = 'footprint_img_' + this.globalservice.userinfo.username +
-          '_' +
-          new Date().valueOf();
-        console.log('准备上传:', local_url);
-        this.footprintService.qiniuFileUpload(local_url, remoteFileName).subscribe(ret => {
-          if (ret && ret.data) {
-            console.log('上传成功:', local_url);
-            this.pictures_qiniu.push(ret.value);
-            if (this.pictures.length > 0) {
-              this.uploadPictures(loading, total);
-            } else {
-              observer.next(true);
-              observer.complete();
-            }
-          } else if (ret && !ret.data) {
-            const downloadProgress = window.parseInt(
-              ret.value * 100,
-              10
-            );
-            loading.message = `<div>图片(${total - this.pictures.length}/${total})已完成${downloadProgress}%</div>`;
-          }
-
-        }, async err => {
-          console.error(err);
-          loading.dismiss();
-          this.helper.createToast('上传失败，请重试!');
-        });
-      } else {
-        observer.next(true);
-        observer.complete();
-      }
-    });
-
-  }
-
-  uploadVideos(loading, total) {
-    return Observable.create(async observer => {
-      if (this.videosObj.length > 0) {
-        const videoObj = this.videosObj.splice(0, 1)[0];
-        console.log('准备上传视频:', videoObj.videoUrl);
-        const remoteFileName = 'footprint_video_' + this.globalservice.userinfo.username +
-          '_' +
-          new Date().valueOf();
-        // 上传视频
-        this.footprintService.qiniuFileUpload(videoObj.videoUrl, remoteFileName).subscribe(ret => {
-          if (ret && ret.data) {
-            console.log('视频上传成功:', ret.value);
-            this.videos_qiniu.push(ret.value);
-            // 上传缩略图
-            this.footprintService.qiniuFileUpload(videoObj.thumbnailRawUrl, remoteFileName + '_thumbnail').subscribe(ret => {
-              if (ret && ret.data) {
-                console.log('视频缩略图上传成功:', ret.data);
-                if (this.videosObj.length > 0) {
-                  this.uploadVideos(loading, total);
-                } else {
-                  observer.next(true);
-                  observer.complete();
-                }
-              }
-            });
-
-          } else if (ret && !ret.data) {
-            const downloadProgress = window.parseInt(
-              ret.value * 100,
-              10
-            );
-            loading.message = `<div>视频(${total - this.videosObj.length}/${total})已完成${downloadProgress}%</div>`;
-          }
-
-        }, async err => {
-          console.error(err);
-          loading.dismiss();
-          this.helper.createToast('上传视频失败，请重试!');
-        });
-      } else {
-        observer.next(true);
-        observer.complete();
-      }
-    });
-
   }
 
   createRecord(loading) {
     if (this.location) {
-      this.footprintservice.createFootprint({
+      this.onlineFootprintService.createFootprint({
         position: this.location,
         notes: this.notes,
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
-        voices: this.voices,
-        pictures: this.pictures_qiniu,
-        videos: this.videos_qiniu
+        voices: this.voicesQiniuUrl,
+        pictures: this.picturesQiniuUrl,
+        videos: this.videosQiniuUrl
       }).subscribe(ret => {
         loading.dismiss();
         ret.mode = new Array(parseInt(ret.mode, 10));
         this.footprintlist.unshift(ret);
         this.notes = '';
-        this.voices = [];
-        this.voicesToPlay = [];
-        this.pictures = [];
-        this.pictures_safeUrl = [];
-        this.pictures_qiniu = [];
-        this.videos_qiniu = [];
-        this.videosObj = [];
+        this.voicesQiniuUrl = [];
+        this.voicesObjs = [];
+        this.pictureObjs = [];
+        this.picturesSafeUrl = [];
+        this.picturesQiniuUrl = [];
+        this.videosQiniuUrl = [];
+        this.videosObjs = [];
         this.clearTags();
         this.selectMode(3);
         this.showInput = false;
@@ -341,7 +260,130 @@ export class FootprintPage implements OnInit, OnDestroy {
         loading.dismiss();
       });
     }
+  }
 
+  /**
+   * 删除足迹
+   * @param _id 编号
+   */
+  async deleteFootprint(_id, index) {
+    const loading = await this.createLoading();
+    if (_id) {
+      this.onlineFootprintService.deleteFootprint(_id).subscribe(ret => {
+        loading.dismiss();
+        if (this.footprintlist && this.footprintlist.length > 0) {
+          this.footprintlist.splice(index, 1);
+        }
+      }, () => {
+        loading.dismiss();
+      });
+    } else {
+      loading.dismiss();
+    }
+  }
+
+  addVoices(ret) {
+    if (ret && ret.data) {
+      const uploadMediaFilepath = ret.data.uploadMediaFilepath;
+      const mediaSrc = ret.data.mediaSrc;
+      const voiceDuration = ret.data.voiceDuration;
+
+      this.voicesObjs.push({
+        uploadMediaFilepath: uploadMediaFilepath,
+        mediaSrc: mediaSrc,
+        voiceDuration: voiceDuration
+      });
+    }
+  }
+
+  playLocalVoice(mediaSrc) {
+    this.footprintService.playLocalVoice(mediaSrc);
+  }
+
+  /**
+   * 添加图片
+   */
+  addPictures() {
+    this.footprintService.addPictures().subscribe(LOCAL_FILE_URI => {
+      if (LOCAL_FILE_URI) {
+        this.picturesSafeUrl.push(this.helper.dealWithLocalUrl(LOCAL_FILE_URI));
+        this.pictureObjs.push(LOCAL_FILE_URI);
+      }
+    }, err => {
+      console.warn(err);
+    });
+  }
+
+  /**
+   * 录制视频
+   */
+  async addVideo() {
+    let loading;
+    loading = await this.createLoading('视频制作中');
+    this.footprintService.addVideo().subscribe(ret => {
+      if (ret) {
+        let { videoUrl, thumbImg } = ret;
+        console.log(ret);
+        if (thumbImg) {
+          this.videosObjs.push({
+            safeUrl: this.helper.dealWithLocalUrl('file://' + thumbImg),
+            thumbnailRawUrl: thumbImg,
+            videoUrl: 'file://' + videoUrl
+          });
+        }
+        loading.dismiss();
+      } else if (ret && !ret.data) {
+        const downloadProgress = window.parseInt(
+          ret.value * 100,
+          10
+        );
+        loading.message = `<div>已完成${downloadProgress}%</div>`;
+      }
+    }, err => {
+      loading.dismiss();
+      console.warn(err);
+    });
+  }
+
+  /**
+   * 选择心情指数
+   * @param index 
+   */
+  selectMode(index) {
+    this.modeIndex = index;
+    for (let i = 0; i < index; i++) {
+      const element = this.mode[i];
+      element.selected = true;
+    }
+    for (let j = index; j < this.mode.length; j++) {
+      const element = this.mode[j];
+      element.selected = false;
+    }
+  }
+
+  /**
+   * 播放本地视频
+   * @param url 
+   */
+  showVideo(url) {
+    this.videoPlayer.play(url).then(() => {
+      console.log('video completed');
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  showAndHideDeleteBut(item) {
+    item.showDeleteBut = !item.showDeleteBut;
+  }
+
+  deletePicture(item, i) {
+    this.picturesSafeUrl.splice(i, 1);
+    this.pictureObjs.splice(i, 1);
+  }
+
+  deleteVideo(item, i) {
+    this.videosObjs.splice(i, 1);
   }
 
   clearTags() {
@@ -363,27 +405,6 @@ export class FootprintPage implements OnInit, OnDestroy {
     });
     await loading.present();
     return loading;
-  }
-
-
-  /**
-   * 删除足迹
-   * @param _id 编号
-   */
-  async deleteFootprint(_id, index) {
-    const loading = await this.createLoading();
-    if (_id) {
-      this.footprintservice.deleteFootprint(_id).subscribe(ret => {
-        loading.dismiss();
-        if (this.footprintlist && this.footprintlist.length > 0) {
-          this.footprintlist.splice(index, 1);
-        }
-      }, () => {
-        loading.dismiss();
-      });
-    } else {
-      loading.dismiss();
-    }
   }
 
   openTagChooser() {
@@ -418,83 +439,6 @@ export class FootprintPage implements OnInit, OnDestroy {
       }
     });
     await modal.present();
-  }
-
-  addVoices(ret) {
-    if (ret && ret.data) {
-      const uploadMediaFilepath = ret.data.uploadMediaFilepath;
-      const mediaSrc = ret.data.mediaSrc;
-      const voiceDuration = ret.data.voiceDuration;
-
-      this.voicesToPlay.push({
-        uploadMediaFilepath: uploadMediaFilepath,
-        mediaSrc: mediaSrc,
-        voiceDuration: voiceDuration
-      });
-
-      let fileName = uploadMediaFilepath.substr(
-        uploadMediaFilepath.lastIndexOf('/') + 1
-      );
-      fileName = 'footprint_voice_' + fileName;
-      this.voices.push(fileName);
-      this.footprintService.uploadVoiceFile(uploadMediaFilepath, fileName).then(() => {
-
-      });
-    }
-  }
-
-  playLocalVoice(mediaSrc) {
-    this.footprintService.playLocalVoice(mediaSrc);
-  }
-
-  /**
-   * 添加图片
-   */
-  addPictures() {
-    this.footprintService.addPictures().subscribe(LOCAL_FILE_URI => {
-      if (LOCAL_FILE_URI) {
-        this.pictures_safeUrl.push(this.helper.dealWithLocalUrl(LOCAL_FILE_URI));
-        this.pictures.push(LOCAL_FILE_URI);
-      }
-    }, err => {
-      console.warn(err);
-    });
-  }
-
-  async addVideo() {
-    let loading;
-    loading = await this.createLoading('视频制作中');
-    this.footprintService.addVideo().subscribe(ret => {
-      if (ret) {
-        let { videoUrl, thumbImg } = ret;
-        console.log(ret);
-        if (thumbImg) {
-          this.videosObj.push({
-            safeUrl: this.helper.dealWithLocalUrl('file://' + thumbImg),
-            thumbnailRawUrl: thumbImg,
-            videoUrl: 'file://' + videoUrl
-          });
-        }
-        loading.dismiss();
-      } else if (ret && !ret.data) {
-        const downloadProgress = window.parseInt(
-          ret.value * 100,
-          10
-        );
-        loading.message = `<div>已完成${downloadProgress}%</div>`;
-      }
-    }, err => {
-      loading.dismiss();
-      console.warn(err);
-    });
-  }
-
-  showVideo(url) {
-    this.videoPlayer.play(url).then(() => {
-      console.log('video completed');
-    }).catch(err => {
-      console.log(err);
-    });
   }
 
   dateFtt(fmt, date) {

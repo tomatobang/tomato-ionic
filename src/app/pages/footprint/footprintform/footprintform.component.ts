@@ -39,7 +39,7 @@ export class FootprintformComponent implements OnInit {
     private modalCtrl: ModalController,
     private baidu: BaiduLocationService,
     private footprintService: FootPrintService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.baidu.getCurrentLocation().then(val => {
@@ -147,23 +147,13 @@ export class FootprintformComponent implements OnInit {
  * 添加图片
  */
   addPictures() {
-    // let loading;
     this.footprintService.addPictures().subscribe(async ret => {
-      // if (!loading) {
-      //   loading = await this.createLoading('图片制作中');
-      // }
       if (ret && ret.data) {
         this.pictures.push(ret.value);
-        // loading.dismiss();
       } else if (ret && !ret.data) {
-        const downloadProgress = window.parseInt(
-          ret.value * 100,
-          10
-        );
-        // loading.message = `<div>已完成${downloadProgress}%</div>`;
+
       }
     }, err => {
-      // loading.dismiss();
       console.warn(err);
     });
   }
@@ -189,7 +179,7 @@ export class FootprintformComponent implements OnInit {
       );
       fileName = 'footprint_voice_' + fileName;
       this.voices.push(fileName);
-      this.footprintService.uploadVoiceFile(uploadMediaFilepath, fileName).then(() => {
+      this.footprintService.qiniuFileUpload(uploadMediaFilepath, fileName).then(() => {
 
       });
     }
