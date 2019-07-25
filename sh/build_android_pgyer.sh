@@ -24,9 +24,9 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./tomatoAndroid
 jarsigner -verify app-release-unsigned.apk
 
 # 压缩优化
-${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk efos-release-signed.apk
+${ANDROID_HOME}/build-tools/28.0.3/zipalign -v 4 app-release-unsigned.apk tomatobang-release-signed.apk
 
 # 上传至蒲公英
 cd ../../../../../../../
 
-./pgyer_upload.sh ./platforms/android/app/build/outputs/apk/release/efos-release-signed.apk ${PGYER_APIKEY}
+./pgyer_upload.sh ./platforms/android/app/build/outputs/apk/release/tomatobang-release-signed.apk ${PGYER_APIKEY}

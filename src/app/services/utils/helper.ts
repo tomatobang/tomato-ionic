@@ -77,7 +77,7 @@ export class Helper {
   dealWithLocalUrl(url): SafeUrl {
     if (window.cordova) {
       url = this.webView.convertFileSrc(url) + '?' + new Date().getTime();
-      url = this.sanitizer.bypassSecurityTrustUrl(url);
+      // url = this.sanitizer.bypassSecurityTrustUrl(url);
     }
     return url;
   }

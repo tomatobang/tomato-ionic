@@ -47,10 +47,11 @@
       </ng-container>
     </div>
     <div class="video-list">
-      <div *ngFor="let item of videos">
+      <div *ngFor="let item of videosObj; let i = index">
         <ion-icon name="videocam"></ion-icon>
-        <img appShowVideoDirective [videoUrl]="item" onError="this.src='./assets/tomato-grey.png';"
-          src="{{ item + '_thumbnail' }}" />
+        <!-- <ion-icon name="close" (click)="deleteVideo(item,i)"></ion-icon> -->
+        <img (click)="showVideo(item.videoUrl)" onError="this.src='./assets/tomato-grey.png';"
+          src="{{ item.safeUrl }}" />
       </div>
     </div>
 

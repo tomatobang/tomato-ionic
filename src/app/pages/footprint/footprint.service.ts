@@ -106,12 +106,7 @@ export class FootPrintService {
     });
   }
 
-  qiniuFileUpload(FILE_URI) {
-    const filename =
-      'footprint_img_' +
-      this.globalservice.userinfo.username +
-      '_' +
-      new Date().valueOf();
+  qiniuFileUpload(FILE_URI, filename) {
     return Observable.create(async observer => {
       this.qiniu.initQiniu().subscribe(isInit => {
         if (isInit) {
@@ -161,21 +156,14 @@ export class FootPrintService {
           })
             .then((fileUri: string) => {
               console.log('video transcode success', fileUri);
-              this.qiniu.initQiniu().subscribe(isInit => {
-                if (isInit) {
-                  this.qiniu.uploadLocFile(fileUri, filename).subscribe(ret => {
-                    if (ret.data) {
-                      this.createThumbnail(fileUri, filename);
-                      observer.next({
-                        data: true,
-                        value: this.globalservice.qiniuDomain + filename,
-                      });
-                      observer.complete();
-                    } else {
-                      observer.next(ret);
-                    }
+              this.createThumbnail(fileUri, filename).subscribe(thumb_fileUri => {
+                if (thumb_fileUri) {
+                  observer.next({
+                    videoUrl: fileUri,
+                    thumbImg: thumb_fileUri
                   });
                 }
+                observer.complete();
               });
             })
             .catch((error: any) => {
@@ -197,21 +185,20 @@ export class FootPrintService {
    * @param outputFileName
    */
   createThumbnail(fileUri, outputFileName) {
-    this.videoEditor.createThumbnail({
-      fileUri: fileUri,
-      atTime: 0.1, // in seconds
-      outputFileName: outputFileName + '_thumbnail'
-    }).then((thumb_fileUri: string) => {
-      this.qiniu.initQiniu().subscribe(isInit => {
-        if (isInit) {
-          this.qiniu.uploadLocFile(thumb_fileUri, outputFileName + '_thumbnail').subscribe(ret => {
-            if (ret.data) {
-              console.log('create thumbnail video succeed');
-            }
-          });
-        }
+    return Observable.create(async observer => {
+      this.videoEditor.createThumbnail({
+        fileUri: fileUri,
+        atTime: 0.1, // in seconds
+        outputFileName: outputFileName + '_thumbnail'
+      }).then((thumb_fileUri: string) => {
+        observer.next(thumb_fileUri);
+        observer.complete();
+      }, (error: CaptureError) => {
+        observer.error(error);
+        observer.complete();
       });
-    }, (error: CaptureError) => { });
+
+    });
   }
 
   uploadVoiceFile(uploadMediaFilepath, fileName) {

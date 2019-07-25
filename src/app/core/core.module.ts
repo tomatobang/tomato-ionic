@@ -24,6 +24,7 @@ import { RebirthHttpProvider } from 'rebirth-http';
 import { JPush } from '@jiguang-ionic/jpush/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { VideoPlayer } from '@ionic-native/video-player/ngx';
 
 import { GlobalService } from '@services/global.service';
 import { QiniuUploadService } from '@services/qiniu.upload.service';
@@ -72,6 +73,7 @@ import { UserFriendService } from '@services/data/user_friend';
     VideoEditor,
     WebView,
     AndroidPermissions,
+    VideoPlayer,
     RebirthHttpProvider,
     NativeService,
     UpdateService,

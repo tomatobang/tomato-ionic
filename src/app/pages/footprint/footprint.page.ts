@@ -2,7 +2,10 @@
 import { LoadingController } from '@ionic/angular';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { VideoPlayer } from '@ionic-native/video-player/ngx';
 
+import { GlobalService } from '@services/global.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';
@@ -29,7 +32,8 @@ export class FootprintPage implements OnInit, OnDestroy {
   pictures_safeUrl = [];
   pictures = [];
   pictures_qiniu = [];
-  videos = [];
+  videos_qiniu = [];
+  videosObj = [];
   // TODO: 是否公开
   isPublish = false;
   // 是否显示输入面板
@@ -53,6 +57,7 @@ export class FootprintPage implements OnInit, OnDestroy {
 
   constructor(
     private baidu: BaiduLocationService,
+    private globalservice: GlobalService,
     private footprintservice: OnlineFootprintService,
     private tagservice: OnlineTagService,
     private loading: LoadingController,
@@ -60,6 +65,7 @@ export class FootprintPage implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private footprintService: FootPrintService,
     private helper: Helper,
+    private videoPlayer: VideoPlayer
   ) {
   }
 
@@ -176,6 +182,10 @@ export class FootprintPage implements OnInit, OnDestroy {
     this.pictures.splice(i, 1);
   }
 
+  deleteVideo(item, i) {
+    this.videosObj.splice(i, 1);
+  }
+
   /**
    * 今日足迹
    */
@@ -202,41 +212,104 @@ export class FootprintPage implements OnInit, OnDestroy {
    */
   async addFootprint() {
     if (this.location) {
-      const loading = await this.createLoading('图片上传中...');
-      this.uploadPictures(loading, this.pictures.length);
+      const loading = await this.createLoading('努力上传中...');
+      this.uploadPictures(loading, this.pictures.length).subscribe(ret => {
+        if (ret) {
+          this.uploadVideos(loading, this.videosObj.length).subscribe(ret => {
+            if (ret) {
+              this.createRecord(loading);
+            }
+          });
+        }
+      });
     }
+
   }
 
-  async uploadPictures(loading, total) {
-    if (this.pictures.length > 0) {
-      const local_url = this.pictures.splice(0, 1)[0];
-      console.log('上传:', local_url);
-      this.footprintService.qiniuFileUpload(local_url).subscribe(ret => {
-        if (ret && ret.data) {
-          console.log('上传成功:', local_url);
-          this.pictures_qiniu.push(ret.value);
-          if (this.pictures.length > 0) {
-            this.uploadPictures(loading, total);
-          } else {
-            this.createRecord(loading);
+  uploadPictures(loading, total) {
+    return Observable.create(async observer => {
+      if (this.pictures.length > 0) {
+        const local_url = this.pictures.splice(0, 1)[0];
+        const remoteFileName = 'footprint_img_' + this.globalservice.userinfo.username +
+          '_' +
+          new Date().valueOf();
+        console.log('准备上传:', local_url);
+        this.footprintService.qiniuFileUpload(local_url, remoteFileName).subscribe(ret => {
+          if (ret && ret.data) {
+            console.log('上传成功:', local_url);
+            this.pictures_qiniu.push(ret.value);
+            if (this.pictures.length > 0) {
+              this.uploadPictures(loading, total);
+            } else {
+              observer.next(true);
+              observer.complete();
+            }
+          } else if (ret && !ret.data) {
+            const downloadProgress = window.parseInt(
+              ret.value * 100,
+              10
+            );
+            loading.message = `<div>图片(${total - this.pictures.length}/${total})已完成${downloadProgress}%</div>`;
           }
-          // loading.dismiss();
-        } else if (ret && !ret.data) {
-          const downloadProgress = window.parseInt(
-            ret.value * 100,
-            10
-          );
-          loading.message = `<div>(${total - this.pictures.length}/${total})已完成${downloadProgress}%</div>`;
-        }
 
-      }, async err => {
-        console.error(err);
-        loading.dismiss();
-        this.helper.createToast('上传失败，请重试!');
-      });
-    } else {
-      this.createRecord(loading);
-    }
+        }, async err => {
+          console.error(err);
+          loading.dismiss();
+          this.helper.createToast('上传失败，请重试!');
+        });
+      } else {
+        observer.next(true);
+        observer.complete();
+      }
+    });
+
+  }
+
+  uploadVideos(loading, total) {
+    return Observable.create(async observer => {
+      if (this.videosObj.length > 0) {
+        const videoObj = this.videosObj.splice(0, 1)[0];
+        console.log('准备上传视频:', videoObj.videoUrl);
+        const remoteFileName = 'footprint_video_' + this.globalservice.userinfo.username +
+          '_' +
+          new Date().valueOf();
+        // 上传视频
+        this.footprintService.qiniuFileUpload(videoObj.videoUrl, remoteFileName).subscribe(ret => {
+          if (ret && ret.data) {
+            console.log('视频上传成功:', ret.value);
+            this.videos_qiniu.push(ret.value);
+            // 上传缩略图
+            this.footprintService.qiniuFileUpload(videoObj.thumbnailRawUrl, remoteFileName + '_thumbnail').subscribe(ret => {
+              if (ret && ret.data) {
+                console.log('视频缩略图上传成功:', ret.data);
+                if (this.videosObj.length > 0) {
+                  this.uploadVideos(loading, total);
+                } else {
+                  observer.next(true);
+                  observer.complete();
+                }
+              }
+            });
+
+          } else if (ret && !ret.data) {
+            const downloadProgress = window.parseInt(
+              ret.value * 100,
+              10
+            );
+            loading.message = `<div>视频(${total - this.videosObj.length}/${total})已完成${downloadProgress}%</div>`;
+          }
+
+        }, async err => {
+          console.error(err);
+          loading.dismiss();
+          this.helper.createToast('上传视频失败，请重试!');
+        });
+      } else {
+        observer.next(true);
+        observer.complete();
+      }
+    });
+
   }
 
   createRecord(loading) {
@@ -248,7 +321,7 @@ export class FootprintPage implements OnInit, OnDestroy {
         mode: this.modeIndex + '',
         voices: this.voices,
         pictures: this.pictures_qiniu,
-        videos: this.videos
+        videos: this.videos_qiniu
       }).subscribe(ret => {
         loading.dismiss();
         ret.mode = new Array(parseInt(ret.mode, 10));
@@ -259,7 +332,8 @@ export class FootprintPage implements OnInit, OnDestroy {
         this.pictures = [];
         this.pictures_safeUrl = [];
         this.pictures_qiniu = [];
-        this.videos = [];
+        this.videos_qiniu = [];
+        this.videosObj = [];
         this.clearTags();
         this.selectMode(3);
         this.showInput = false;
@@ -377,7 +451,6 @@ export class FootprintPage implements OnInit, OnDestroy {
    * 添加图片
    */
   addPictures() {
-    // let loading;
     this.footprintService.addPictures().subscribe(LOCAL_FILE_URI => {
       if (LOCAL_FILE_URI) {
         this.pictures_safeUrl.push(this.helper.dealWithLocalUrl(LOCAL_FILE_URI));
@@ -392,8 +465,16 @@ export class FootprintPage implements OnInit, OnDestroy {
     let loading;
     loading = await this.createLoading('视频制作中');
     this.footprintService.addVideo().subscribe(ret => {
-      if (ret && ret.data) {
-        this.videos.push(ret.value);
+      if (ret) {
+        let { videoUrl, thumbImg } = ret;
+        console.log(ret);
+        if (thumbImg) {
+          this.videosObj.push({
+            safeUrl: this.helper.dealWithLocalUrl('file://' + thumbImg),
+            thumbnailRawUrl: thumbImg,
+            videoUrl: 'file://' + videoUrl
+          });
+        }
         loading.dismiss();
       } else if (ret && !ret.data) {
         const downloadProgress = window.parseInt(
@@ -405,6 +486,14 @@ export class FootprintPage implements OnInit, OnDestroy {
     }, err => {
       loading.dismiss();
       console.warn(err);
+    });
+  }
+
+  showVideo(url) {
+    this.videoPlayer.play(url).then(() => {
+      console.log('video completed');
+    }).catch(err => {
+      console.log(err);
     });
   }
 
