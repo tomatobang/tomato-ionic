@@ -8,7 +8,7 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button shape="round" color="primary" (click)="submit()">提交</ion-button>
+      <ion-button shape="round" color="primary" (click)="addFootprint()">提交</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -18,11 +18,28 @@
     <ion-textarea rows="1" autoSizeTextarea class="footprint-note-input" placeholder="发生了什么..." [(ngModel)]="notes">
     </ion-textarea>
     <div class="media-area">
-      <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
       <ion-icon name="camera" (click)="addPictures()"></ion-icon>
+      <ion-icon name="videocam" (click)="addVideo()"></ion-icon>
+      <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
     </div>
+
+    <div class="picture-list">
+      <ng-container *ngFor="let item of picturesSafeUrl">
+        <img [src]="item" />
+      </ng-container>
+    </div>
+
+    <div class="video-list">
+      <div *ngFor="let item of videosObjs; let i = index">
+        <ion-icon name="videocam"></ion-icon>
+        <!-- <ion-icon name="close" (click)="deleteVideo(item,i)"></ion-icon> -->
+        <img (click)="showVideo(item.videoUrl)" onError="this.src='./assets/tomato-grey.png';"
+          src="{{ item.safeUrl }}" />
+      </div>
+    </div>
+
     <div class="voice-list">
-      <ng-container *ngFor="let item of voicesToPlay">
+      <ng-container *ngFor="let item of voicesObjs">
         <div class="play-block">
           <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
             播放( {{ item.voiceDuration }} ")
@@ -30,11 +47,7 @@
         </div>
       </ng-container>
     </div>
-    <div class="picture-list">
-      <ng-container *ngFor="let item of pictures">
-        <img [src]="item" />
-      </ng-container>
-    </div>
+
     <div class="tag-area">
       <div class="tag-header" (click)="openTagChooser()">标签
         <span class="choosed-tag" *ngFor="let item of tag">{{ item }} &nbsp;</span>

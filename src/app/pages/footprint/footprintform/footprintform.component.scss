@@ -9,6 +9,50 @@ ion-item {
     }
 }
 
+.picture-list {
+    img {
+        display: inline-block;
+        width: 100px;
+    }
+
+    .picture-item {
+        position: relative;
+        width: 100px;
+        margin-right: 3px;
+        display: inline-block;
+
+        ion-icon {
+            color: #f97271;
+            opacity: .8;
+            font-size: 32px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    }
+}
+
+.video-list {
+    >div {
+        position: relative;
+        display: inline-block;
+
+        img {
+
+            margin-right: 3px;
+            width: 100px;
+        }
+
+        ion-icon {
+            color: #f97271;
+            opacity: .8;
+            font-size: 36px;
+            position: absolute;
+            top: 30px;
+            left: 32px;
+        }
+    }
+}
 
 .footprint-note-input {
     font-size: 18px;
@@ -110,15 +154,6 @@ ion-icon.star {
         color: #888;
         margin: 5px;
         font-size: 27px;
-    }
-}
-
-
-.picture-list {
-    img {
-        display: inline-block;
-        margin-right: 3px;
-        width: 80px;
     }
 }
 

@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
+import { Observable, concat } from 'rxjs';
+import { VideoPlayer } from '@ionic-native/video-player/ngx';
+
 import { OnlineFootprintService } from '@services/data.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineTagService } from '@services/data/tag/tag.service';
 import { FootPrintService } from '../footprint.service';
+import { Helper } from '@services/utils/helper';
 declare var window;
 
 @Component({
@@ -17,9 +21,15 @@ export class FootprintformComponent implements OnInit {
   create_at;
   notes = '';
   tag = ['补录'];
-  voices = [];
-  voicesToPlay = [];
-  pictures = [];
+
+  picturesSafeUrl = [];
+  pictureObjs = [];
+  videosObjs = [];
+  voicesObjs = [];
+  voicesQiniuUrl = [];
+  picturesQiniuUrl = [];
+  videosQiniuUrl = [];
+
   mode = [
     { index: 1, selected: true },
     { index: 2, selected: true },
@@ -38,7 +48,10 @@ export class FootprintformComponent implements OnInit {
     private tagservice: OnlineTagService,
     private modalCtrl: ModalController,
     private baidu: BaiduLocationService,
-    private footprintService: FootPrintService
+    private footprintService: FootPrintService,
+    private loading: LoadingController,
+    private helper: Helper,
+    private videoPlayer: VideoPlayer
   ) { }
 
   ngOnInit() {
@@ -74,7 +87,57 @@ export class FootprintformComponent implements OnInit {
     });
   }
 
-  async submit() {
+  /**
+ * 添加足迹
+ */
+  async addFootprint() {
+    if (this.location) {
+      const loading = await this.createLoading('努力上传中...');
+      let arr: Observable<any>[] = [];
+      for (let index = 0; index < this.pictureObjs.length; index++) {
+        const element = this.pictureObjs[index];
+        arr.push(this.footprintService.uploadPictures(element, loading, this.pictureObjs.length, index + 1));
+      }
+
+      for (let index = 0; index < this.videosObjs.length; index++) {
+        const element = this.videosObjs[index];
+        arr.push(this.footprintService.uploadVideos(element, loading, this.videosObjs.length, index + 1));
+      }
+
+      for (let index = 0; index < this.voicesObjs.length; index++) {
+        const element = this.voicesObjs[index];
+        arr.push(this.footprintService.uploadVoices(element, loading, this.voicesObjs.length, index + 1));
+      }
+
+      concat(...arr).subscribe(ret => {
+        if (ret && ret.type) {
+          switch (ret.type) {
+            case 'picture':
+              this.picturesQiniuUrl.push(ret.value);
+              break;
+            case 'video':
+              this.videosQiniuUrl.push(ret.value);
+              break;
+            case 'voice':
+              this.voicesQiniuUrl.push(ret.value);
+              break;
+            default:
+              break;
+          }
+        }
+
+      }, err => {
+        console.log(err);
+        if (loading) {
+          loading.dismiss();
+        }
+      }, () => {
+        this.createRecord(loading);
+      });
+    }
+  }
+
+  createRecord(loading) {
     if (this.location) {
       this.onlinefootprintService.createFootprint({
         position: this.location,
@@ -82,18 +145,25 @@ export class FootprintformComponent implements OnInit {
         tag: this.tag.join(','),
         mode: this.modeIndex + '',
         create_at: new Date(this.create_at).toISOString(),
-        voices: this.voices,
-        pictures: this.pictures
+        voices: this.voicesQiniuUrl,
+        pictures: this.picturesQiniuUrl,
+        videos: this.videosQiniuUrl
       }).subscribe(ret => {
-        this.notes = '';
+        loading.dismiss();
         ret.mode = new Array(parseInt(ret.mode, 10));
+        this.notes = '';
+        this.voicesQiniuUrl = [];
+        this.voicesObjs = [];
+        this.pictureObjs = [];
+        this.picturesSafeUrl = [];
+        this.picturesQiniuUrl = [];
+        this.videosQiniuUrl = [];
+        this.videosObjs = [];
         this.clearTags();
         this.selectMode(3);
-        this.voices = [];
-        this.voicesToPlay = [];
-        this.pictures = [];
         this.modalCtrl.dismiss(ret);
       }, () => {
+        loading.dismiss();
       });
     }
   }
@@ -144,19 +214,50 @@ export class FootprintformComponent implements OnInit {
   }
 
   /**
- * 添加图片
- */
+  * 添加图片
+  */
   addPictures() {
-    this.footprintService.addPictures().subscribe(async ret => {
-      if (ret && ret.data) {
-        this.pictures.push(ret.value);
-      } else if (ret && !ret.data) {
-
+    this.footprintService.addPictures().subscribe(LOCAL_FILE_URI => {
+      if (LOCAL_FILE_URI) {
+        this.picturesSafeUrl.push(this.helper.dealWithLocalUrl(LOCAL_FILE_URI));
+        this.pictureObjs.push(LOCAL_FILE_URI);
       }
     }, err => {
       console.warn(err);
     });
   }
+
+  /**
+ * 录制视频
+ */
+  async addVideo() {
+    let loading;
+    loading = await this.createLoading('视频制作中');
+    this.footprintService.addVideo().subscribe(ret => {
+      if (ret) {
+        let { videoUrl, thumbImg } = ret;
+        console.log(ret);
+        if (thumbImg) {
+          this.videosObjs.push({
+            safeUrl: this.helper.dealWithLocalUrl('file://' + thumbImg),
+            thumbnailRawUrl: thumbImg,
+            videoUrl: 'file://' + videoUrl
+          });
+        }
+        loading.dismiss();
+      } else if (ret && !ret.data) {
+        const downloadProgress = window.parseInt(
+          ret.value * 100,
+          10
+        );
+        loading.message = `<div>已完成${downloadProgress}%</div>`;
+      }
+    }, err => {
+      loading.dismiss();
+      console.warn(err);
+    });
+  }
+
 
   playLocalVoice(mediaSrc) {
     this.footprintService.playLocalVoice(mediaSrc);
@@ -168,20 +269,33 @@ export class FootprintformComponent implements OnInit {
       const mediaSrc = ret.data.mediaSrc;
       const voiceDuration = ret.data.voiceDuration;
 
-      this.voicesToPlay.push({
+      this.voicesObjs.push({
         uploadMediaFilepath: uploadMediaFilepath,
         mediaSrc: mediaSrc,
         voiceDuration: voiceDuration
       });
-
-      let fileName = uploadMediaFilepath.substr(
-        uploadMediaFilepath.lastIndexOf('/') + 1
-      );
-      fileName = 'footprint_voice_' + fileName;
-      this.voices.push(fileName);
-      this.footprintService.qiniuFileUpload(uploadMediaFilepath, fileName).then(() => {
-
-      });
     }
+  }
+
+  /**
+     * 播放本地视频
+     * @param url 
+     */
+  showVideo(url) {
+    this.videoPlayer.play(url).then(() => {
+      console.log('video completed');
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  async createLoading(msg?) {
+    const loading = await this.loading.create({
+      spinner: 'bubbles',
+      message: msg ? msg : 'process...',
+      translucent: true,
+    });
+    await loading.present();
+    return loading;
   }
 }

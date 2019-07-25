@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 import { Observable, concat } from 'rxjs';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 
-import { GlobalService } from '@services/global.service';
 import { BaiduLocationService } from '@services/baidulocation.service';
 import { OnlineFootprintService } from '@services/data.service';
 import { EmitService } from '@services/emit.service';

@@ -28,16 +28,6 @@
       <ion-icon name="mic" appVoiceRecoderDirective (finishRecord)="addVoices($event)"></ion-icon>
     </div>
 
-    <div class="voice-list">
-      <ng-container *ngFor="let item of voicesObjs">
-        <div class="play-block">
-          <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
-            播放( {{ item.voiceDuration }} ")
-          </ion-button>
-        </div>
-      </ng-container>
-    </div>
-
     <div class="picture-list">
       <ng-container *ngFor="let item of picturesSafeUrl; let i = index">
         <div class="picture-item">
@@ -53,6 +43,16 @@
         <img (click)="showVideo(item.videoUrl)" onError="this.src='./assets/tomato-grey.png';"
           src="{{ item.safeUrl }}" />
       </div>
+    </div>
+
+    <div class="voice-list">
+      <ng-container *ngFor="let item of voicesObjs">
+        <div class="play-block">
+          <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
+            播放( {{ item.voiceDuration }} ")
+          </ion-button>
+        </div>
+      </ng-container>
     </div>
 
     <div class="tag-area">
