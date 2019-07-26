@@ -38,19 +38,20 @@
     </div>
     <div class="video-list">
       <div *ngFor="let item of videosObjs; let i = index">
-        <ion-icon name="videocam"></ion-icon>
-        <!-- <ion-icon name="close" (click)="deleteVideo(item,i)"></ion-icon> -->
+        <ion-icon class="video-videocam" name="videocam"></ion-icon>
+        <ion-icon class="video-delete" name="close" (click)="deleteVideo(item,i)"></ion-icon>
         <img (click)="showVideo(item.videoUrl)" onError="this.src='./assets/tomato-grey.png';"
           src="{{ item.safeUrl }}" />
       </div>
     </div>
 
     <div class="voice-list">
-      <ng-container *ngFor="let item of voicesObjs">
+      <ng-container *ngFor="let item of voicesObjs; let i = index">
         <div class="play-block">
           <ion-button shape="round" color="primary" (click)="playLocalVoice(item.mediaSrc)">
             播放( {{ item.voiceDuration }} ")
           </ion-button>
+          <ion-icon name="close" (click)="deleteVoice(item,i)"></ion-icon>
         </div>
       </ng-container>
     </div>

@@ -295,6 +295,10 @@ export class FootprintPage implements OnInit, OnDestroy {
     }
   }
 
+  deleteVoice(item, i) {
+    this.voicesObjs.splice(i, 1);
+  }
+
   playLocalVoice(mediaSrc) {
     this.footprintService.playLocalVoice(mediaSrc);
   }

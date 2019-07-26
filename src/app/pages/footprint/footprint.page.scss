@@ -93,13 +93,22 @@
             width: 100px;
         }
 
-        ion-icon {
+        .video-videocam {
             color: #f97271;
             opacity: .8;
             font-size: 36px;
             position: absolute;
             top: 30px;
             left: 32px;
+        }
+
+        .video-delete {
+            color: #f97271;
+            opacity: .8;
+            font-size: 32px;
+            position: absolute;
+            top: 5px;
+            right: 5px;
         }
     }
 }

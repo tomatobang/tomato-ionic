@@ -258,6 +258,9 @@ export class FootprintformComponent implements OnInit {
     });
   }
 
+  deleteVideo(item, i) {
+    this.videosObjs.splice(i, 1);
+  }
 
   playLocalVoice(mediaSrc) {
     this.footprintService.playLocalVoice(mediaSrc);
@@ -275,6 +278,10 @@ export class FootprintformComponent implements OnInit {
         voiceDuration: voiceDuration
       });
     }
+  }
+
+  deleteVoice(item, i) {
+    this.voicesObjs.splice(i, 1);
   }
 
   /**
