@@ -4,8 +4,6 @@ import { OnlineTaskService } from '@services/data.service';
 import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { GlobalService } from '@services/global.service';
 import { Helper } from '@services/utils/helper';
-import { baseUrl } from '../../../config';
-import { QiniuUploadService } from '@services/qiniu.upload.service';
 
 @Component({
   selector: 'cmp-task',
@@ -13,10 +11,6 @@ import { QiniuUploadService } from '@services/qiniu.upload.service';
   styleUrls: ['./task.scss']
 })
 export class TaskPage implements OnInit {
-  uploadMediaFilepath;
-  mediaSrc;
-  voiceUploadProgress;
-  isUploading = false;
 
   showDismissButton = true;
   page_title = '任务管理';
@@ -33,12 +27,6 @@ export class TaskPage implements OnInit {
     num: 1,
   };
 
-  voicepostParams: any;
-
-  voiceUploadUrl = {
-    url: baseUrl + 'upload/voicefile',
-  };
-
   constructor(
     public taskservice: OnlineTaskService,
     public modalCtrl: ModalController,
@@ -46,13 +34,10 @@ export class TaskPage implements OnInit {
     public globalservice: GlobalService,
     public platform: Platform,
     public helper: Helper,
-    private qiniu: QiniuUploadService,
   ) {
-    this.voicepostParams = {};
   }
 
   ngOnInit() {
-    this.mediaSrc = null;
     this.taskservice.getTasks().subscribe(
       data => {
         const dataArr = data;
@@ -71,97 +56,12 @@ export class TaskPage implements OnInit {
     );
   }
 
-  playLocalVoice() {
-    if (this.mediaSrc) {
-      this.voiceService.play(this.mediaSrc).then(() => {
-      });
-    }
-  }
-
-  playVoiceRecord(task) {
-    if (task.voiceUrl) {
-      const filename = this.helper.getFileName(task.voiceUrl);
-      task.inDownloading = true;
-      task.progress = '0%';
-      const remotepath = this.globalservice.qiniuDomain + filename;
-      this.voiceService
-        .downloadVoiceFile_observable(filename, remotepath)
-        .subscribe(
-          data => {
-            if (data.data) {
-              task.inDownloading = false;
-              task.isplaying = true;
-              this.voiceService.play(data.value).then(() => {
-                task.isplaying = false;
-              });
-            } else {
-              if (data.value) {
-                // 显示进度
-                task.progress = data.value + '%';
-                console.log('下载进度', data.value);
-              }
-            }
-          },
-          err => {
-            task.inDownloading = false;
-            task.isplaying = false;
-          }
-        );
-    } else {
-      alert('此任务无音频记录！');
-    }
-  }
-
-  stopPlayVoiceRecord() {
-    this.voiceService.stop_local_voice();
-  }
-
   addNewTaskLink() {
     this.openNewTaskForm = true;
     this.page_title = '添加新任务';
     this.showDismissButton = false;
-    this.voicepostParams = {
-      userid: 'userid',
-      taskid: 'taskid',
-    };
   }
 
-  addVoices(ret) {
-    if (ret && ret.data) {
-      this.uploadMediaFilepath = ret.data.uploadMediaFilepath;
-      this.mediaSrc = ret.data.mediaSrc;
-    }
-  }
-
-  uploadVoiceFile() {
-    return new Promise((resolve, reject) => {
-      this.isUploading = true;
-      const fileName = this.uploadMediaFilepath.substr(
-        this.uploadMediaFilepath.lastIndexOf('/') + 1
-      );
-      this.qiniu.initQiniu().subscribe(data => {
-        if (data) {
-          this.qiniu
-            .uploadLocFile(
-              this.uploadMediaFilepath,
-              this.voicepostParams.userid +
-              '_' +
-              this.voicepostParams.taskid +
-              '_' +
-              fileName
-            )
-            .subscribe(ret => {
-              if (ret.data) {
-                this.isUploading = false;
-                resolve(fileName);
-              } else {
-                this.voiceUploadProgress = ret.value;
-              }
-            });
-        }
-      });
-    });
-  }
 
   addTask(isActive: any) {
     let task: any;
@@ -173,63 +73,21 @@ export class TaskPage implements OnInit {
       const data: any = response;
       if (data && data.status === 'fail') {
       } else {
-        // 链接示例: voiceUrl:"/uploadfile/voices/" + (this.voicepostParams.userid+"_"+this.voicepostParams.taskid+"_"+filename);
-        this.voicepostParams = {
-          taskid: data._id,
-          userid: data.userid,
-        };
         task._id = data._id;
-        // 上传音屏文件
-        setTimeout(() => {
-          this.uploadVoiceFile().then(
-            filename => {
-              const tt = this.allTasks.unfinished;
-              task.voiceUrl =
-                this.voicepostParams.userid +
-                '_' +
-                this.voicepostParams.taskid +
-                '_' +
-                filename;
-              // 更新 voice url
-              this.taskservice
-                .updateVoiceUrl({
-                  taskid: this.voicepostParams.taskid,
-                  relateUrl: task.voiceUrl,
-                })
-                .subscribe(ret => {
-                  console.log('更新 task url', ret);
-                });
-              this.allTasks.unfinished = [task].concat(tt);
-              this.allTasks.unfinished.slice();
-              this.newTask = {
-                title: '',
-                target: '',
-                description: '',
-                num: 1,
-              };
-              this.openNewTaskForm = false;
-              this.showDismissButton = true;
-              this.page_title = '任务管理';
-            },
-            err => {
-              console.error(err);
-              const tt = this.allTasks.unfinished;
-              task.voiceUrl = '';
-              this.allTasks.unfinished = [task].concat(tt);
-              this.allTasks.unfinished.slice();
-              this.newTask = {
-                title: '',
-                target: '',
-                description: '',
-                num: 1,
-              };
-              this.openNewTaskForm = false;
-              this.showDismissButton = true;
-              this.page_title = '任务管理';
-            }
-          );
-        }, 100);
+        const tt = this.allTasks.unfinished;
+        this.allTasks.unfinished = [task].concat(tt);
+        this.allTasks.unfinished.slice();
+        this.newTask = {
+          title: '',
+          target: '',
+          description: '',
+          num: 1,
+        };
+        this.openNewTaskForm = false;
+        this.showDismissButton = true;
+        this.page_title = '任务管理';
       }
+
     });
   }
 

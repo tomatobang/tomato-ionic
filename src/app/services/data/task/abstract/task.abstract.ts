@@ -17,9 +17,4 @@ export abstract class TaskService extends RebirthHttp {
   abstract updateTask(taskUrl: string, task: Task): Observable<any>;
 
   abstract deleteTask(taskUrl: string): Observable<any>;
-
-  abstract updateVoiceUrl(data: {
-    taskid: string;
-    relateUrl: string;
-  }): Observable<any>;
 }

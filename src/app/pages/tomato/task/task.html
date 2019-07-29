@@ -5,10 +5,12 @@
         </ion-title>
         <ion-buttons slot="start" *ngIf="showDismissButton">
             <ion-button (click)="dismiss()" style="width:32px">
-                <svg width="32px" enable-background="new 0 0 128 128" version="1.1" viewBox="0 0 128 128" xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <svg width="32px" enable-background="new 0 0 128 128" version="1.1" viewBox="0 0 128 128"
+                    xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g>
-                        <polygon fill="#373737" points="123.5429688,11.59375 116.4765625,4.5185547 64.0019531,56.9306641 11.5595703,4.4882813     4.4882813,11.5595703 56.9272461,63.9970703 4.4570313,116.4052734 11.5244141,123.4814453 63.9985352,71.0683594     116.4423828,123.5117188 123.5126953,116.4414063 71.0732422,64.0019531   "></polygon>
+                        <polygon fill="#373737"
+                            points="123.5429688,11.59375 116.4765625,4.5185547 64.0019531,56.9306641 11.5595703,4.4882813     4.4882813,11.5595703 56.9272461,63.9970703 4.4570313,116.4052734 11.5244141,123.4814453 63.9985352,71.0683594     116.4423828,123.5117188 123.5126953,116.4414063 71.0732422,64.0019531   ">
+                        </polygon>
                     </g>
                 </svg>
             </ion-button>
@@ -64,19 +66,9 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>描述/备注</ion-label>
-                <ion-textarea class="task-note-ion-textarea" autoSizeTextarea type="text" [(ngModel)]="newTask.description"></ion-textarea>
+                <ion-textarea class="task-note-ion-textarea" autoSizeTextarea type="text"
+                    [(ngModel)]="newTask.description"></ion-textarea>
             </ion-item>
-
-            <ion-item *ngIf="this.mediaSrc">
-                <div class="play-block">
-                    <ion-button shape="round" color="primary" (click)="playLocalVoice()">
-                        播放
-                    </ion-button>
-                </div>
-            </ion-item>
-            <div style="text-align:center;padding-left:15px;padding-top:15px">
-                <ion-button color="primary" appVoiceRecoderDirective (finishRecord)="addVoices($event)">添加语音记录</ion-button>
-            </div>
         </ion-list>
 
 
@@ -95,14 +87,6 @@
                             <span *ngIf="task.description">({{ task.description }})</span>
                         </div>
                     </h2>
-
-                    <ion-avatar slot="end" *ngIf="task.voiceUrl">
-                        <img src="./assets/voice/voice.png" *ngIf="!task.isplaying&&!task.inDownloading" class="play-icon"
-                            (click)="playVoiceRecord(task)">
-                        <img src="./assets/voice/voice_play_me.gif" *ngIf="task.isplaying" class="play-icon" (click)="stopPlayVoiceRecord(task)">
-                        <div *ngIf="!task.isplaying&&task.inDownloading" class="downloading">{{ task.progress }}</div>
-                        <div *ngIf="!task.isplaying&&task.inDownloading" [ngStyle]="{'width':task.progress}" class="downloading-bg"></div>
-                    </ion-avatar>
                 </ion-item>
                 <ion-item-options side="end">
                     <ion-item-option color="primary" (click)="startTask(task)">

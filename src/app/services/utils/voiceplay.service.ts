@@ -26,7 +26,7 @@ export class VoicePlayService {
     private helper: Helper,
     private transfer: FileTransfer,
     private file: File
-  ) {}
+  ) { }
 
   /**
    * 下载音频接口
@@ -151,17 +151,14 @@ export class VoicePlayService {
       this.mediaRec = this.media.create(voiFile);
 
       this.mediaRec.onSuccess.subscribe(() => {
-        // 播放完成
         resolve(true);
         console.log('play():Audio Success');
       });
       this.mediaRec.onError.subscribe(error => {
-        // 播放失败
         reject(error);
         console.log('play():Audio Error: ', error);
       });
 
-      // 开始播放录音
       this.mediaRec.play();
     });
   }

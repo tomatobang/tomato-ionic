@@ -54,11 +54,6 @@ export class OnlineTaskService extends TaskService {
   deleteTask(@Path('id') taskUrl: string): Observable<any> {
     return null;
   }
-
-  @POST(baseUrl + 'api/task/updateVoiceUrl')
-  updateVoiceUrl(@Body data: { taskid: string; relateUrl: string }): Observable<any> {
-    return null;
-  }
 }
 
 export const TASK_SERVICE_PROVIDERS: Array<any> = [
