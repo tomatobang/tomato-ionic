@@ -67,7 +67,6 @@ export class TaskPage implements OnInit {
     let task: any;
     task = this.newTask;
     task.isActive = true;
-    task.voiceUrl = '';
     // 创建任务
     this.taskservice.createTask(task).subscribe((response: any) => {
       const data: any = response;

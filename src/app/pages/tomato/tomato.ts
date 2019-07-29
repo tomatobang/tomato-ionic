@@ -151,26 +151,6 @@ export class TomatoPage implements OnInit {
     );
   }
 
-  playVoiceRecord(tomato) {
-    if (tomato.voiceUrl) {
-      const fileNamePart = this.helper.getFileName(tomato.voiceUrl);
-      this.voiceService
-        .downloadVoiceFile(
-          fileNamePart,
-          this.globalservice.qiniuDomain + fileNamePart
-        )
-        .then(filename => {
-          this.voicePlaySrc = './assets/voice/voice_play_me.gif';
-          this.voiceService.play(filename).then(() => {
-            this.voicePlaySrc = './assets/voice/voice.png';
-          });
-        })
-        .catch(e => { });
-    } else {
-      alert('此番茄钟无音频记录！');
-    }
-  }
-
   setting() {
     this.navCtrl.navigateForward(['tabs/tomato/tomatosetting']);
   }

@@ -6,5 +6,4 @@ export class Task {
   description: string;
   num: string;
   isActive: boolean;
-  voiceUrl: string;
 }

@@ -17,7 +17,6 @@
             </ion-avatar>
             <h2>
                 <span [ngClass]="{'text-breaked':item.succeed==0}">{{ item.title | StringTruncate: 20 }}</span>
-                <img src="./assets/voice/voice.png" *ngIf="item.voiceUrl" class="play-icon" (click)="playVoiceRecord(item)">
             </h2>
             <h3>
                 <span class="tomato-start-end-time">{{ item.startTime | date:'short' }} - {{ item.endTime |

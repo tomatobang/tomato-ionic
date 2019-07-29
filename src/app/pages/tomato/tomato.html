@@ -43,8 +43,8 @@
                 <ion-card *ngIf="historyTomatoes.length > 0">
                     <ion-card-content>
                         <timeline>
-                            <timeline-item [nzColor]="'red'" *ngFor="let tomato of historyTomatoes" class="tomato-today-list"
-                                track="tooling">
+                            <timeline-item [nzColor]="'red'" *ngFor="let tomato of historyTomatoes"
+                                class="tomato-today-list" track="tooling">
                                 <ng-template #custom>
                                     <ion-avatar slot="start">
                                         <img src="assets/tomato.png">
@@ -59,7 +59,6 @@
                                     <span [ngClass]="{'text-breaked':tomato.succeed==0}">
                                         {{ tomato.title | StringTruncate:20 }}
                                     </span>
-                                    <img [src]="voicePlaySrc" *ngIf="tomato.voiceUrl" class="play-icon" (click)="playVoiceRecord(tomato)">
                                 </h3>
                                 <div *ngIf="tomato.breakReason" class="tomato-break-reason">
                                     (中断原因:{{ tomato.breakReason }})
