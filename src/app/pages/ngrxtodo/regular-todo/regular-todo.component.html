@@ -22,10 +22,24 @@
       <ion-item *ngIf="!item.added">
         <ion-label>
           <h3 style="white-space: pre-line">
-            {{ item.title }} <ion-icon name="switch" *ngIf="item.autoAdd" color="primary"></ion-icon>
+            {{ item.title }}
+            <ion-icon name="switch" *ngIf="item.auto_add" color="primary"></ion-icon>
+            <ion-text class="tag tag-1" *ngIf="item.type === 1">
+              重要紧急
+            </ion-text>
+            <ion-text class="tag tag-2" *ngIf="item.type === 2">
+              重要不紧急
+            </ion-text>
+            <ion-text class="tag tag-3" *ngIf="item.type === 3">
+              不重要紧急
+            </ion-text>
+            <ion-text class="tag tag-4" *ngIf="item.type === 4">
+              不重要不紧急
+            </ion-text>
           </h3>
         </ion-label>
-        <ion-icon slot="end" name="settings" (click)="showPopover(item._id,i, item.autoAdd)" color="primary">设置</ion-icon>
+        <ion-icon slot="end" name="settings" (click)="showPopover(item,i)" color="primary">设置
+        </ion-icon>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="addTodo(item,1)" color="danger">重要紧急</ion-item-option>

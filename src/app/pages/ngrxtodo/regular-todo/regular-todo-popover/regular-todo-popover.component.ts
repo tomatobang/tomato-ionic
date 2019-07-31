@@ -9,7 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class RegularTodoPopoverComponent implements OnInit {
   @Input()
   isChecked: false;
-
+  @Input()
+  todoType
+  
   constructor(
     private alertCtrl: AlertController,
     private popover: PopoverController
@@ -19,8 +21,12 @@ export class RegularTodoPopoverComponent implements OnInit {
   ngOnInit() {
   }
 
+  changeTodoType($event) {
+    this.popover.dismiss({
+      todoType: this.todoType
+    });
+  }
   changeAutoAddState($event) {
-    debugger
     this.popover.dismiss({
       isChecked: this.isChecked
     });

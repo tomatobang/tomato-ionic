@@ -6,6 +6,8 @@ import * as TodoActions from './../redux/todo/todo.actions';
 import { OnlineTodoService } from '@services/data.service';
 import { RegularTodoPopoverComponent } from './regular-todo-popover/regular-todo-popover.component';
 
+declare var window;
+
 @Component({
   selector: 'app-regular-todo',
   templateUrl: './regular-todo.component.html',
@@ -35,7 +37,9 @@ export class RegularTodoComponent implements OnInit {
           const element = ret[index];
           this.regularTodos.push({
             _id: element._id,
+            type: element.type,
             title: element.title,
+            auto_add: element.auto_add,
             added: false
           });
         }
@@ -66,7 +70,7 @@ export class RegularTodoComponent implements OnInit {
             this.todoService.createRegularTodo({
               title: title,
               type: 1,
-              autoAdd: false
+              auto_add: false
             }).subscribe(ret => {
               if (ret) {
                 this.regularTodos.push({
@@ -83,23 +87,30 @@ export class RegularTodoComponent implements OnInit {
     await prompt.present();
   }
 
-  async showPopover(id, index, isCheck) {
+  async showPopover(item, index) {
     const popover = await this.popover.create({
       component: RegularTodoPopoverComponent,
       componentProps: {
-        isChecked: isCheck ? true : false,
+        isChecked: item.auto_add ? true : false,
+        todoType: item.type + '',
       },
       cssClass: 'statistic-popover'
     });
     popover.onDidDismiss().then(ret => {
       console.log(ret.data);
       if (ret && ret.data && ret.data.delete) {
-        this.todoService.deleteRegularTodo(id).subscribe(ret => {
+        this.todoService.deleteRegularTodo(item._id).subscribe(ret => {
           this.regularTodos.splice(index, 1);
         });
       }
       if (ret && ret.data && ret.data.isChecked !== undefined) {
-        this.regularTodos[index].autoAdd = ret.data.isChecked;
+        this.regularTodos[index].auto_add = ret.data.isChecked;
+        // TODO:
+      }
+
+      if (ret && ret.data && ret.data.todoType !== undefined) {
+        this.regularTodos[index].type = window.parseInt(ret.data.todoType, 10);
+        // TODO:
       }
 
     })
