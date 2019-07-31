@@ -1,0 +1,9 @@
+<ion-list>
+  <ion-item>
+    <ion-label>自动添加</ion-label>
+    <ion-toggle [(ngModel)]="isChecked" (ionChange)="changeAutoAddState()"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label (click)="deleteRegularTodo()">删除</ion-label>
+  </ion-item>
+</ion-list>

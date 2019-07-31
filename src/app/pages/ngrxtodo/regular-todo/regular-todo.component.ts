@@ -1,9 +1,10 @@
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, PopoverController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../redux/ngrxtodo.reducer';
 import * as TodoActions from './../redux/todo/todo.actions';
 import { OnlineTodoService } from '@services/data.service';
+import { RegularTodoPopoverComponent } from './regular-todo-popover/regular-todo-popover.component';
 
 @Component({
   selector: 'app-regular-todo',
@@ -16,6 +17,7 @@ export class RegularTodoComponent implements OnInit {
 
   constructor(
     private modal: ModalController,
+    private popover: PopoverController,
     private alertCtrl: AlertController,
     private store: Store<AppState>,
     private todoService: OnlineTodoService) {
@@ -63,7 +65,8 @@ export class RegularTodoComponent implements OnInit {
             const title = data.title;
             this.todoService.createRegularTodo({
               title: title,
-              type: 1
+              type: 1,
+              autoAdd: false
             }).subscribe(ret => {
               if (ret) {
                 this.regularTodos.push({
@@ -80,29 +83,27 @@ export class RegularTodoComponent implements OnInit {
     await prompt.present();
   }
 
-  async deleteRegularTodo(id, index) {
-    const alert = await this.alertCtrl.create({
-      header: '提示',
-      message: '确认<strong>删除</strong>? ',
-      buttons: [
-        {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => { }
-        }, {
-          text: '确定',
-          handler: () => {
-            this.todoService.deleteRegularTodo(id).subscribe(ret => {
-              this.regularTodos.splice(index, 1);
-            });
-          }
-        }
-      ]
+  async showPopover(id, index, isCheck) {
+    const popover = await this.popover.create({
+      component: RegularTodoPopoverComponent,
+      componentProps: {
+        isChecked: isCheck ? true : false,
+      },
+      cssClass: 'statistic-popover'
     });
+    popover.onDidDismiss().then(ret => {
+      console.log(ret.data);
+      if (ret && ret.data && ret.data.delete) {
+        this.todoService.deleteRegularTodo(id).subscribe(ret => {
+          this.regularTodos.splice(index, 1);
+        });
+      }
+      if (ret && ret.data && ret.data.isChecked !== undefined) {
+        this.regularTodos[index].autoAdd = ret.data.isChecked;
+      }
 
-    await alert.present();
-
+    })
+    await popover.present();
   }
 
   addTodo(item, type) {

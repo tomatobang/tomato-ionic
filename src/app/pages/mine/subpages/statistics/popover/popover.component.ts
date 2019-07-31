@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
 import { OnlineBillService, OnlineFootprintService, OnlineTodoService } from '@services/data.service';
 import { BillformComponent } from '../../../../bill/billform/billform.component';
 import { ModalController } from '@ionic/angular';
@@ -24,7 +23,6 @@ export class PopoverComponent implements OnInit {
   todolist;
 
   constructor(
-    private popover: PopoverController,
     private modalCtrl: ModalController,
     private billService: OnlineBillService,
     private footprintService: OnlineFootprintService,

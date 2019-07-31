@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform, ModalController } from '@ionic/angular';
 import { OnlineTaskService } from '@services/data.service';
-import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { GlobalService } from '@services/global.service';
 import { Helper } from '@services/utils/helper';
 
@@ -30,7 +29,6 @@ export class TaskPage implements OnInit {
   constructor(
     public taskservice: OnlineTaskService,
     public modalCtrl: ModalController,
-    public voiceService: VoicePlayService,
     public globalservice: GlobalService,
     public platform: Platform,
     public helper: Helper,

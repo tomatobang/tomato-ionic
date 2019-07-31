@@ -8,7 +8,6 @@ import { GlobalService } from '@services/global.service';
 import { TaskPage } from './task/task';
 import { EmitService } from '@services/emit.service';
 import { OnlineTomatoService } from '@services/data.service';
-import { VoicePlayService } from '@services/utils/voiceplay.service';
 import { TomatoIOService } from '@services/utils/socket.io.service';
 import { Helper } from '@services/utils/helper';
 
@@ -37,7 +36,6 @@ export class TomatoPage implements OnInit {
     public globalservice: GlobalService,
     public tomatoIO: TomatoIOService,
     public tomatoservice: OnlineTomatoService,
-    public voiceService: VoicePlayService,
     private emitService: EmitService,
     private helper: Helper,
     private navCtrl: NavController,

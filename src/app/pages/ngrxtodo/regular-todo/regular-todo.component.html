@@ -22,10 +22,10 @@
       <ion-item *ngIf="!item.added">
         <ion-label>
           <h3 style="white-space: pre-line">
-            {{ item.title }}
+            {{ item.title }} <ion-icon name="switch" *ngIf="item.autoAdd" color="primary"></ion-icon>
           </h3>
         </ion-label>
-        <ion-icon slot="end" name="remove-circle" (click)="deleteRegularTodo(item._id,i)" color="primary">删除</ion-icon>
+        <ion-icon slot="end" name="settings" (click)="showPopover(item._id,i, item.autoAdd)" color="primary">设置</ion-icon>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="addTodo(item,1)" color="danger">重要紧急</ion-item-option>

@@ -7,4 +7,5 @@ export class TodoRegular {
     notes?: string;
     create_at?: string;
     finish_at?: string;
+    autoAdd?: boolean
 }
