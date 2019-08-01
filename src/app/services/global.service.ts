@@ -25,6 +25,7 @@ export class GlobalService {
   private _isAlwaysLight;
   private _isAllowEditPicture;
   private _languageType;
+  private _todoAutoAddTime: Date;
 
   constructor(public events: Events) { }
 
@@ -153,6 +154,25 @@ export class GlobalService {
         return true;
       } else {
         return false;
+      }
+    }
+  }
+
+  set todoAutoAddTime(value: Date) {
+    this._todoAutoAddTime = value;
+    localStorage.setItem('todoAutoAddTime', value.toLocaleDateString());
+  }
+
+  get todoAutoAddTime() {
+    if (this._todoAutoAddTime) {
+      return this._todoAutoAddTime;
+    } else {
+      const todoAutoAddTime = localStorage.getItem('todoAutoAddTime');
+      if (todoAutoAddTime) {
+        this._todoAutoAddTime = new Date(todoAutoAddTime);
+        return this._todoAutoAddTime;
+      } else {
+        return null;
       }
     }
   }

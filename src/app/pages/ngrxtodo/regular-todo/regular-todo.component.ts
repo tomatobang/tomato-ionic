@@ -1,5 +1,5 @@
 import { ModalController, PopoverController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../redux/ngrxtodo.reducer';
 import * as TodoActions from './../redux/todo/todo.actions';
@@ -15,6 +15,9 @@ declare var window;
   styleUrls: ['./regular-todo.component.scss'],
 })
 export class RegularTodoComponent implements OnInit {
+
+  @Input()
+  todolist;
 
   regularTodos: any[] = [];
 
@@ -32,17 +35,31 @@ export class RegularTodoComponent implements OnInit {
   getRegularTodo() {
     this.todoService.getRegularTodo().subscribe(ret => {
       if (ret) {
+        let ret_clone = [];
+        ret_clone = ret;
         this.regularTodos = [];
-        for (let index = 0; index < ret.length; index++) {
-          const element = ret[index];
-          this.regularTodos.push({
-            _id: element._id,
-            type: element.type,
-            title: element.title,
-            auto_add: element.auto_add,
-            added: false
-          });
+        for (let index = 0; index < ret_clone.length; index++) {
+          const element = ret_clone[index];
+          for (let j = 0; j < this.todolist.length; j++) {
+            const todo = this.todolist[j];
+            if (element.title === todo.title) {
+              element.shouldRemove = true;
+            }
+          }
         }
+
+        ret_clone.map(val => {
+          if(!val.shouldRemove){
+            this.regularTodos.push({
+              _id: val._id,
+              type: val.type,
+              title: val.title,
+              auto_add: val.auto_add,
+              added: false
+            });
+          }
+         
+        })
       }
     });
   }
