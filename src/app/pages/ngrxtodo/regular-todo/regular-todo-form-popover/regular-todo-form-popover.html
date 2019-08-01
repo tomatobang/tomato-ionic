@@ -1,0 +1,25 @@
+<ion-list>
+  <ion-item>
+    <ion-label position="stacked">标题</ion-label>
+    <ion-input [(ngModel)]="title"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">类别</ion-label>
+    <ion-select interface="popover" placeholder="类别" [(ngModel)]="todoType">
+      <ion-select-option value="1">重要紧急</ion-select-option>
+      <ion-select-option value="2">重要不紧急</ion-select-option>
+      <ion-select-option value="3">不重要紧急</ion-select-option>
+      <ion-select-option value="4">不重要不紧急</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>自动添加</ion-label>
+    <ion-toggle [(ngModel)]="autoAdd"></ion-toggle>
+  </ion-item>
+
+</ion-list>
+<ion-button expand="block"  class="submit" (click)="submit()">确认</ion-button>
+
+<div class="tips">
+  {{ tips }}
+</div>

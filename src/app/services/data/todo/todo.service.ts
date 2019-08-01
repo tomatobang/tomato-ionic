@@ -64,6 +64,11 @@ export class OnlineTodoService extends TodoService {
     return null;
   }
 
+  @POST(baseUrl + 'api/todoregular/:id')
+  updateRegularTodo(@Path('id') id: string, @Body todo: TodoRegular): Observable<any> {
+    return null;
+  }
+
   @DELETE(baseUrl + 'api/todo/:id')
   deleteTodo(@Path('id') id: string): Observable<any> {
     return null;

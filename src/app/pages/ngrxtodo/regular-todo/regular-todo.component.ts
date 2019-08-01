@@ -1,10 +1,11 @@
-import { ModalController, AlertController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../redux/ngrxtodo.reducer';
 import * as TodoActions from './../redux/todo/todo.actions';
 import { OnlineTodoService } from '@services/data.service';
 import { RegularTodoPopoverComponent } from './regular-todo-popover/regular-todo-popover.component';
+import { RegularTodoFormPopoverComponent } from './regular-todo-form-popover/regular-todo-form-popover';
 
 declare var window;
 
@@ -20,7 +21,6 @@ export class RegularTodoComponent implements OnInit {
   constructor(
     private modal: ModalController,
     private popover: PopoverController,
-    private alertCtrl: AlertController,
     private store: Store<AppState>,
     private todoService: OnlineTodoService) {
   }
@@ -48,43 +48,32 @@ export class RegularTodoComponent implements OnInit {
   }
 
   async createRegularTodo(ev: any) {
-    const prompt = await this.alertCtrl.create({
-      header: '输入TODO名称',
-      inputs: [
-        {
-          name: 'title',
-          placeholder: '输入...',
-        },
-      ],
-      buttons: [
-        {
-          text: '取消',
-          handler: () => {
-            console.log('Cancel clicked');
-          },
-        },
-        {
-          text: '提交',
-          handler: data => {
-            const title = data.title;
-            this.todoService.createRegularTodo({
-              title: title,
-              type: 1,
-              auto_add: false
-            }).subscribe(ret => {
-              if (ret) {
-                this.regularTodos.push({
-                  _id: ret._id,
-                  title: ret.title,
-                  added: false
-                });
-              }
-            });
-          },
-        },
-      ],
+
+    const popover = await this.popover.create({
+      component: RegularTodoFormPopoverComponent,
+      componentProps: {
+      },
+      cssClass: 'statistic-popover'
     });
-    await prompt.present();
+    popover.onDidDismiss().then(ret => {
+      console.log(ret.data);
+      if (ret && ret.data) {
+        this.todoService.createRegularTodo({
+          title: ret.data.title,
+          type: ret.data.type,
+          auto_add: ret.data.auto_add
+        }).subscribe(ret => {
+          if (ret) {
+            this.regularTodos.push({
+              _id: ret._id,
+              title: ret.title,
+              added: false
+            });
+          }
+        });
+      }
+    })
+    await popover.present();
   }
 
   async showPopover(item, index) {
@@ -98,29 +87,35 @@ export class RegularTodoComponent implements OnInit {
     });
     popover.onDidDismiss().then(ret => {
       console.log(ret.data);
-      if (ret && ret.data && ret.data.delete) {
-        this.todoService.deleteRegularTodo(item._id).subscribe(ret => {
-          this.regularTodos.splice(index, 1);
-        });
+      if (ret && ret.data) {
+        if (ret.data.delete) {
+          this.todoService.deleteRegularTodo(item._id).subscribe(ret => {
+            this.regularTodos.splice(index, 1);
+          });
+          return;
+        }
+        if (ret.data.isChecked !== undefined && item.auto_add !== ret.data.isChecked) {
+          item.auto_add = ret.data.isChecked;
+          this.todoService.updateRegularTodo(item._id, item).subscribe(ret => {
+            console.log(ret);
+          });
+        }
+        const todoType = window.parseInt(ret.data.todoType, 10);
+        if (ret.data.todoType !== undefined && item.type !== todoType) {
+          item.type = todoType;
+          this.todoService.updateRegularTodo(item._id, item).subscribe(ret => {
+            console.log(ret);
+          });
+        }
       }
-      if (ret && ret.data && ret.data.isChecked !== undefined) {
-        this.regularTodos[index].auto_add = ret.data.isChecked;
-        // TODO:
-      }
-
-      if (ret && ret.data && ret.data.todoType !== undefined) {
-        this.regularTodos[index].type = window.parseInt(ret.data.todoType, 10);
-        // TODO:
-      }
-
     })
     await popover.present();
   }
 
-  addTodo(item, type) {
+  addTodo(item) {
     const title: string = item.title;
     item.added = true;
-    const action = new TodoActions.AddTodoAction(title.trim(), type);
+    const action = new TodoActions.AddTodoAction(title.trim(), item.type);
     this.store.dispatch(action);
   }
 

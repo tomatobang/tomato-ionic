@@ -18,35 +18,34 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of regularTodos; let i = index">
+    <ng-container *ngFor="let item of regularTodos; let i = index">
       <ion-item *ngIf="!item.added">
         <ion-label>
           <h3 style="white-space: pre-line">
             {{ item.title }}
-            <ion-icon name="switch" *ngIf="item.auto_add" color="primary"></ion-icon>
-            <ion-text class="tag tag-1" *ngIf="item.type === 1">
-              重要紧急
-            </ion-text>
-            <ion-text class="tag tag-2" *ngIf="item.type === 2">
-              重要不紧急
-            </ion-text>
-            <ion-text class="tag tag-3" *ngIf="item.type === 3">
-              不重要紧急
-            </ion-text>
-            <ion-text class="tag tag-4" *ngIf="item.type === 4">
-              不重要不紧急
-            </ion-text>
+            <div>
+              <ion-text class="tag-autoadd" *ngIf="item.auto_add">
+                自动添加
+              </ion-text>
+              <ion-text class="tag tag-1" *ngIf="item.type === 1">
+                重要紧急
+              </ion-text>
+              <ion-text class="tag tag-2" *ngIf="item.type === 2">
+                重要不紧急
+              </ion-text>
+              <ion-text class="tag tag-3" *ngIf="item.type === 3">
+                紧急不重要
+              </ion-text>
+              <ion-text class="tag tag-4" *ngIf="item.type === 4">
+                不紧急不重要
+              </ion-text>
+            </div>
           </h3>
         </ion-label>
-        <ion-icon slot="end" name="settings" (click)="showPopover(item,i)" color="primary">设置
+        <ion-button slot="end" color="success" (click)="addTodo(item)">添加</ion-button>
+        <ion-icon slot="end" name="create" (click)="showPopover(item,i)" color="primary">设置
         </ion-icon>
       </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option (click)="addTodo(item,1)" color="danger">重要紧急</ion-item-option>
-        <ion-item-option (click)="addTodo(item,2)" color="warning">重要不紧急</ion-item-option>
-        <ion-item-option (click)="addTodo(item,3)" color="dark">不重要紧急</ion-item-option>
-        <ion-item-option (click)="addTodo(item,4)" color="light">不重要不紧急</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
+    </ng-container>
   </ion-list>
 </ion-content>

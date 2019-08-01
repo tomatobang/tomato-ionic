@@ -14,6 +14,7 @@ import { NewTodoComponent } from './new-todo/new-todo.component';
 import { TodoEffects } from './redux/todo/todo.effect';
 import { RegularTodoComponent } from './regular-todo/regular-todo.component';
 import { RegularTodoPopoverComponent } from './regular-todo/regular-todo-popover/regular-todo-popover.component';
+import { RegularTodoFormPopoverComponent } from './regular-todo/regular-todo-form-popover/regular-todo-form-popover';
 
 import { SharedModule } from './../../shared/shared.module';
 
@@ -43,6 +44,7 @@ const routes: Routes = [
     NewTodoComponent,
     RegularTodoComponent,
     RegularTodoPopoverComponent,
+    RegularTodoFormPopoverComponent,
   ],
   imports: [
     SharedModule,
@@ -54,7 +56,7 @@ const routes: Routes = [
       maxAge: 15, //  Retains last 15 states
     }),
   ],
-  entryComponents: [RegularTodoComponent, RegularTodoPopoverComponent],
+  entryComponents: [RegularTodoComponent, RegularTodoPopoverComponent, RegularTodoFormPopoverComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NgrxTodoPageModule { }
