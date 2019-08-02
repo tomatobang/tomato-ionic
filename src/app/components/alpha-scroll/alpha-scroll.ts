@@ -79,13 +79,11 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 	}
 
 	ngOnChanges() {
-		// 先对传入的listData排序 避免结果顺序乱掉
 		const sortedListData: Array<any> = this.orderBy.transform(_.orderBy(this.listData, x => x.initial), [this.key]);
 		const groupItems: any = _.groupBy(sortedListData, item => {
 			const letter: any = _.get(item, this.key);
 			return letter.toUpperCase().charAt(0);
 		});
-		// 根据头部模板是否为null 添加字符
 		if (this.headerTemplate !== null || this.headerTemplate !== undefined) {
 			groupItems['↑'] = [];
 		}
@@ -118,22 +116,21 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 		setTimeout(() => {
 			const min = this.elementRef.nativeElement.offsetHeight - this.listalpha.el.offsetHeight;
 			this.alloyTouch = new AlloyTouch({
-				touch: this.mainWrapper.nativeElement, // 反馈触摸的dom
-				vertical: true, // 不必需，默认是true代表监听竖直方向touch
+				touch: this.mainWrapper.nativeElement, // 反馈触摸的 dom
+				vertical: true, // 不必需，默认是 true 代表监听竖直方向 touch
 				target: this.listalpha.el, // 运动的对象
 				property: 'translateY',  // 被运动的属性
 				min: min,
-				max: 0, // 不必需,滚动属性的最大值
-				sensitivity: 1, // 不必需,触摸区域的灵敏度，默认值为1，可以为负数
-				factor: 1, // 不必需,表示触摸位移与被运动属性映射关系，默认值是1
-				step: 45, // 用于校正到step的整数倍
+				max: 0, // 不必需, 滚动属性的最大值
+				sensitivity: 1, // 不必需, 触摸区域的灵敏度，默认值为1，可以为负数
+				factor: 1, // 不必需, 表示触摸位移与被运动属性映射关系，默认值是 1
+				step: 45, // 用于校正到 step 的整数倍
 				bindSelf: false,
 				maxSpeed: 2, // 不必需，触摸反馈的最大速度限制
 				initialValue: 0
 			});
 			const chooseEle = (evt) => {
 				const closestEle: any = evt.type === 'touchend' ? document.elementFromPoint(evt.changedTouches[0].pageX, evt.changedTouches[0].pageY) : document.elementFromPoint(evt.targetTouches[0].pageX, evt.targetTouches[0].pageY);
-				// // console.log(closestEle);
 				if (closestEle && ['LI', 'A'].indexOf(closestEle.tagName) > -1) {
 					const letter = closestEle.innerText;
 					this.letterIndicatorEle.innerText = letter;
@@ -146,17 +143,17 @@ export class AlphaScroll implements OnInit, OnChanges, OnDestroy {
 				}
 			};
 			this.sidebarTouch = new AlloyTouch({
-				touch: this.sidebar.nativeElement, // 反馈触摸的dom
-				vertical: true, // 不必需，默认是true代表监听竖直方向touch
-				target: this.sidebar.nativeElement, // 运动的对象
-				property: 'translateY',  // 被运动的属性
+				touch: this.sidebar.nativeElement,
+				vertical: true,
+				target: this.sidebar.nativeElement,
+				property: 'translateY',
 				min: 0,
-				max: 0, // 不必需,滚动属性的最大值
-				sensitivity: 1, // 不必需,触摸区域的灵敏度，默认值为1，可以为负数
-				factor: 1, // 不必需,表示触摸位移与被运动属性映射关系，默认值是1
-				step: 45, // 用于校正到step的整数倍
+				max: 0,
+				sensitivity: 1,
+				factor: 1,
+				step: 45,
 				bindSelf: false,
-				maxSpeed: 2, // 不必需，触摸反馈的最大速度限制
+				maxSpeed: 2,
 				initialValue: 0,
 				touchStart: () => {
 					this.alloyTouch.stop();
