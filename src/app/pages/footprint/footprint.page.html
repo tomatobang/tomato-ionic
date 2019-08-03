@@ -134,7 +134,7 @@
               </div>
               <div class="video-list" *ngIf="item.videos">
                 <div *ngFor="let item of item.videos">
-                  <ion-icon name="videocam"></ion-icon>
+                  <ion-icon class="video-videocam" name="videocam"></ion-icon>
                   <img appShowVideoDirective [videoUrl]="item" onError="this.src='./assets/tomato-grey.png';"
                     src="{{ item + '_thumbnail' }}" />
                 </div>
