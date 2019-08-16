@@ -129,7 +129,9 @@
               </div>
               <div class="picture-list">
                 <ng-container *ngFor="let pic of item.pictures">
-                  <img [src]="pic" [picClicked]="pic" appShowBigImgDirective [pictures]="item.pictures" />
+                  <div class="picture-item">
+                    <img [src]="pic" [picClicked]="pic" appShowBigImgDirective [pictures]="item.pictures" />
+                  </div>
                 </ng-container>
               </div>
               <div class="video-list" *ngIf="item.videos">

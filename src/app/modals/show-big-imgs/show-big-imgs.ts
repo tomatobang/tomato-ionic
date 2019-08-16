@@ -19,7 +19,9 @@ export class ShowBigImgsModal implements OnInit {
   }
 
   ngOnInit() {
-    if (this.pictures) {}
+    if (this.pictures && this.pictures.length > 0) {
+      this.pictures = this.pictures[0];
+    }
   }
 
   dismiss() {

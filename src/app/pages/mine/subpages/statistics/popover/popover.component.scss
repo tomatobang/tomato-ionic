@@ -100,6 +100,18 @@ li.completed label {
         margin-right: 3px;
         width: 80px;
     }
+
+    img {
+        display: inline-block;
+        width: 100px;
+    }
+
+    .picture-item {
+        position: relative;
+        width: 100px;
+        margin-right: 3px;
+        display: inline-block;
+    }
 }
 
 .video-list {

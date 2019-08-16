@@ -23,12 +23,12 @@ export class MessagePage implements OnInit {
   messageList = [];
 
   constructor(
-    public userFriendService: UserFriendService,
-    public globalservice: GlobalService,
-    public chatIO: ChatIOService,
-    public info: InfoService,
-    public cache: CacheService,
-    public navCtrl: NavController,
+    private userFriendService: UserFriendService,
+    private globalservice: GlobalService,
+    private chatIO: ChatIOService,
+    private info: InfoService,
+    private cache: CacheService,
+    private navCtrl: NavController,
     private emitService: EmitService,
   ) {
     this.userid = globalservice.userinfo._id;
