@@ -125,7 +125,7 @@
           <ion-item>
             <div>
               <div class="text-small list-title">
-                <span>{{ item.notes }}</span>
+                <div [innerHTML]="item.notes | safeHtml"></div>
               </div>
               <div class="picture-list">
                 <ng-container *ngFor="let pic of item.pictures">
