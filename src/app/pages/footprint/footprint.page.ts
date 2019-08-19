@@ -22,7 +22,6 @@ declare var window;
 })
 export class FootprintPage implements OnInit, OnDestroy {
 
-  location = '加载中...';
   createAt = '2012-12-12 10:00';
   notes = '';
   tag = [];
@@ -47,6 +46,8 @@ export class FootprintPage implements OnInit, OnDestroy {
     { index: 5, selected: false },
   ];
 
+  isLocating = false;
+  location = '加载中...';
   locationList = [];
 
   taglist = [];
@@ -122,6 +123,7 @@ export class FootprintPage implements OnInit, OnDestroy {
   }
 
   locating(event?) {
+    this.isLocating = true;
     this.baidu.getCurrentLocation().then(val => {
       if (val && val.time) {
         this.createAt = this.dateFtt('hh:mm:ss', new Date(val.time));
@@ -130,22 +132,34 @@ export class FootprintPage implements OnInit, OnDestroy {
           this.locationList = val.pois;
         }
         if (event) {
+          this.isLocating = false;
           event.target.complete();
         }
       } else {
         this.createAt = this.dateFtt('hh:mm:ss', new Date());
         this.location = '网络问题，定位失败!';
         if (event) {
+          this.isLocating = false;
           event.target.complete();
         }
       }
     }).catch(err => {
+      this.isLocating = false;
       this.location = '定位失败!';
       if (event) {
         event.target.complete();
       }
       console.warn(err);
     });
+
+    // 修复未开启定位权限时导致的无法触发失败: 5s 后强制关闭
+    setTimeout(() => {
+      if (event && this.isLocating) {
+        event.target.complete();
+        this.isLocating = false;
+      }
+    }, 5000);
+
   }
 
   async loadTags() {
