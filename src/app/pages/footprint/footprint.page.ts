@@ -97,7 +97,6 @@ export class FootprintPage implements OnInit, OnDestroy {
   /**
  * 今日足迹
  */
-  alink;
   async listFootprint() {
     const loading = await this.createLoading();
     this.onlineFootprintService.getFootprints().subscribe(ret => {
@@ -109,12 +108,14 @@ export class FootprintPage implements OnInit, OnDestroy {
         });
         this.footprintlist.map(val => {
           val.mode = new Array(parseInt(val.mode, 10));
-          let reg = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
-          this.alink = reg.exec(val.notes)[1].trim().toLowerCase();
-          val.notes = val.notes.replace(reg, function ($1) {
-            return "<a href='" + $1.toLowerCase() + "' target='_blank'>" + $1.toLowerCase() + "</a>";
-          });
-          // debugger;
+          if (val.notes) {
+            let reg = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+            if (reg.exec(val.notes)) {
+              val.notes = val.notes.replace(reg, function ($1) {
+                return "<a href='" + $1.toLowerCase() + "' target='_blank'>" + $1.toLowerCase() + "</a>";
+              });
+            }
+          }
         });
       }
     }, () => {
