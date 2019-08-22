@@ -56,6 +56,7 @@ export class TodoListComponent implements OnInit {
   private readTodosState() {
     this.store.pipe(select(getVisibleTodos)).subscribe(todos => {
       this.todos = todos.sort((a, b) => a.type - b.type);
+      this.todos = todos.sort((a, b) => (b.completed?0:1) - (a.completed?0:1));
     });
   }
 

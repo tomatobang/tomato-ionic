@@ -17,6 +17,7 @@ export class AutosizeDirective {
     if (val === '' && this.textArea) {
       if (val === '') {
         this.renderer.setStyle(this.textArea, 'min-height', '45px');
+        this.renderer.setStyle(this.textArea, 'height', '45px');
       }
       setTimeout(() => {
         this.adjust(this.textArea);
