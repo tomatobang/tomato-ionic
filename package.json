@@ -78,7 +78,7 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "alloytouch": "^0.2.5",
     "alloytouch-transformjs": "^0.1.0",
-    "code-push": "^2.0.6",
+    "code-push": "^2.0.7",
     "com-sarriaroman-photoviewer": "^1.2.2",
     "cordova-android": "7.1.4",
     "cordova-plugin-android-permissions": "^1.0.0",
