@@ -81,6 +81,14 @@ export class PopoverComponent implements OnInit {
     await modal.present();
   }
 
+  deleteBillRecord(item, index) {
+    this.billService.deleteBill(item._id).subscribe(ret => {
+      if (ret) {
+        this.loadBillList();
+      }
+    });
+  }
+
   /**
    * 加载足迹
    */
