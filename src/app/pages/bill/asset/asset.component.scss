@@ -1,10 +1,11 @@
 ion-list {
-    h3{
+    h3 {
         color: #888;
     }
+
     .amount {
         line-height: 40px;
-        font-size: 32px;
+        font-size: 27px;
         vertical-align: center;
         color: #ff8208;
         font-family: 'RobotoLight';
@@ -22,13 +23,17 @@ ion-list {
     margin-bottom: 15px;
     color: #ff8208;
     font-size: 36px !important;
-    font-family: 'RobotoRegular' !important;
+    font-family: 'RobotoLight' !important;
+}
+
+ion-list-header {
+    background: #eee;
 }
 
 ion-card {
     text-align: center;
 }
 
-.rmb-sign {
-    font-size: 12px;
+.bill-link {
+    color: #eee;
 }

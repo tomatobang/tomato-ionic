@@ -22,7 +22,7 @@
   <ion-list>
     <ion-list-header>
       <ion-label>总资产
-        <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalAmount | NumberFix:2 }}
+        <ion-note slot="end" class="total-amount">{{ totalAmount | currency:'CNY':true:'1.2' }}
         </ion-note>
       </ion-label>
     </ion-list-header>
@@ -32,12 +32,12 @@
           <ion-text>
             <h3>{{ item.name }}</h3>
           </ion-text>
-          <p class="amount"><span class="rmb-sign">¥</span>{{ item.amount | NumberFix:2 }}</p>
+          <p class="amount">{{ item.amount | currency:'CNY':true:'1.2' }}</p>
           <ion-text color="secondary" *ngIf="item.notes">
             <p>{{ item.notes }}</p>
           </ion-text>
         </ion-label>
-        <ion-button size="small" (click)="showAssetBills(item)" slot="end">资产账单</ion-button>
+        <ion-button class="bill-link" size="small" (click)="showAssetBills(item)" slot="end">资产账单</ion-button>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option (click)="edit(item)">编辑</ion-item-option>

@@ -15,8 +15,7 @@
       <ion-label>
         <p>
           <ion-text class="list-amount">
-            <span class="rmb-sign" [ngClass]="{'amount-grey':item.tag==='资产互转'}">¥</span>
-            <span [ngClass]="{'amount-grey':item.tag==='资产互转'}">{{ item.amount }} </span>
+            <span [ngClass]="{'amount-grey':item.tag==='资产互转'}">{{ item.amount | currency:'CNY':true:'1.2'}} </span>
             <ion-text class="bill-note text-small" *ngIf="item.asset_balance ">
               余额: {{ item.asset_balance | NumberFix:2 }}
             </ion-text>

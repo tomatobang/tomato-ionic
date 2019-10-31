@@ -24,20 +24,19 @@
     <ion-list *ngIf="selectedType.value==='bill'">
         <ion-list-header>
             <ion-label>
-                <p *ngIf="totalCost"> 总支出
-                    <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ totalCost |
-                        NumberFix:2}}
+                <p *ngIf="totalCost"> 支
+                    <ion-note slot="end" class="total-amount">{{ totalCost | currency:'CNY':true:'1.2'}}
                     </ion-note><span class="rmb-sign">元</span>
                 </p>
-                <p *ngIf="totalIncome"> 总收入
-                    <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{
-                        totalIncome | NumberFix:2}}
+                <p *ngIf="totalIncome"> 收
+                    <ion-note slot="end" class="total-amount">{{
+                        totalIncome | currency:'CNY':true:'1.2'}}
                     </ion-note><span class="rmb-sign">元</span>
                 </p>
             </ion-label>
             <ion-label *ngIf="totalIncome">
-                <span class="rmb-sign">合计</span>
-                <ion-note slot="end" class="total-amount"><span class="rmb-sign">¥</span>{{ total | NumberFix:2}}
+                <span class="rmb-sign">合</span>
+                <ion-note slot="end" class="total-amount">{{ total | currency:'CNY':true:'1.2'}}
                 </ion-note><span class="rmb-sign">元</span>
             </ion-label>
         </ion-list-header>
