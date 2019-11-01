@@ -122,7 +122,7 @@
     <ion-card-content>
       <ion-list>
         <ion-item-sliding *ngFor="let item of footprintlist; let i = index;">
-          <ion-item>
+          <ion-item class="footprint-item">
             <div>
               <div class="text-small list-title">
                 <div [innerHTML]="item.notes | safeHtml"></div>

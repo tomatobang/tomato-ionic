@@ -68,6 +68,8 @@
     .picture-item {
         position: relative;
         width: 100px;
+        min-height: 35px;
+        background: #eee;
         margin-right: 3px;
         display: inline-block;
 
@@ -268,4 +270,28 @@ ion-icon.star {
     color: #fff !important;
     padding: 2px 4px;
     background: #f97271;
+}
+
+
+ion-item-sliding {
+    position: relative;
+
+    .footprint-item {
+        border-left: dashed 1px #f97271;
+        margin-left: 5px;
+        margin-bottom: 20px;
+    }
+
+    &:before {
+        content: '';
+        z-index: 999;
+        position: absolute;
+        left: 0px;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #f97271;
+    }
+
 }
