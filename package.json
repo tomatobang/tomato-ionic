@@ -18,7 +18,9 @@
     "hp_android_prod": "code-push release-cordova tomatobang android --deploymentName Production",
     "hp_ios": "code-push release-cordova tomatobang ios",
     "hp_ios_prod": "code-push release-cordova tomatobang ios -d Production -v",
-    "electron": "cordova build cordova-electron --release"
+    "electron": "cordova build cordova-electron --release",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -126,7 +128,8 @@
     "rxjs": "~6.3.3",
     "todomvc-common": "^1.0.5",
     "videogular2": "^6.4.0",
-    "zone.js": "~0.8.29"
+    "zone.js": "~0.8.29",
+    "snyk": "^1.230.5"
   },
   "devDependencies": {
     "electron": "^4.2.6",
@@ -217,5 +220,6 @@
     "platforms": [
       "android"
     ]
-  }
+  },
+  "snyk": true
 }
