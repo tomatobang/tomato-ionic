@@ -8,6 +8,11 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
+
+      <ion-button shape="round" color="primary" (click)="clearFormData()">
+        <span>重置</span>
+      </ion-button>
+
       <ion-button shape="round" color="primary" (click)="submit()">
         <span *ngIf="!isSubmiting">提交</span>
         <ion-spinner name="circles" *ngIf="isSubmiting"></ion-spinner>

@@ -58,21 +58,32 @@ export class BillformComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.edit) {
-      this.newBill = {
-        _id: this.item._id,
-        date: new Date(this.item.create_at).toISOString(),
-        amount: this.item.amount,
-        asset: this.item.asset._id,
-        tag: this.item.tag.split(','),
-        note: this.item.note,
-        type: this.item.type
-      };
+    let initItem;
+    if (this.edit && this.item) {
       this.title = '编辑账单';
+      initItem = this.item;
     } else {
       this.title = '新增账单';
-      this.newBill.date = new Date().toISOString();
-      this.assetExchange.date = new Date().toISOString();
+
+      try {
+        const latestCreatedBill = localStorage.getItem('latestCreatedBill');
+        if(latestCreatedBill && latestCreatedBill != ''){
+          initItem = JSON.parse(latestCreatedBill);
+        }
+      } catch (error) {
+        localStorage.removeItem('latestCreatedBill');
+      }
+    }
+    if(initItem){
+      this.newBill = {
+        _id: initItem._id,
+        date: new Date(initItem.create_at).toISOString(),
+        amount:initItem.amount,
+        asset: initItem.asset._id,
+        tag: initItem.tag.split(','),
+        note: initItem.note,
+        type: initItem.type
+      };
     }
 
     this.initAssetSelect();
@@ -147,14 +158,6 @@ export class BillformComponent implements OnInit {
     }
   }
 
-  sleep(second) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(' enough sleep~');
-      }, second);
-    });
-  }
-
   async submitAssetExchange() {
     if (!this.assetExchange.amount) {
       const toast = await this.toastCtrl.create({
@@ -162,7 +165,7 @@ export class BillformComponent implements OnInit {
         duration: 2500
       });
       await toast.present();
-      return;
+      return; 
     }
 
     if (!this.assetExchange.fromAsset || !this.assetExchange.toAsset) {
@@ -265,8 +268,8 @@ export class BillformComponent implements OnInit {
           _id: ret.asset,
           name: this.findAssetName(ret.asset)
         };
+        localStorage.setItem('latestCreatedBill', JSON.stringify(ret));
         this.modalCtrl.dismiss(ret);
-        this.resetFormData();
       }
     }, () => {
       this.isSubmiting = false;
@@ -320,6 +323,11 @@ export class BillformComponent implements OnInit {
     }
     this.tag = [];
     this.clearSelectedTag();
+  }
+
+  clearFormData(){
+    this.resetFormData();
+    localStorage.removeItem('latestCreatedBill');
   }
 
   clearSelectedTag() {
