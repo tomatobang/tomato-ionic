@@ -1,5 +1,6 @@
 import { ToastController, ModalController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
+import { GlobalService } from '@services/global.service';
 import { OnlineAssetService } from '@services/data/asset/asset.service';
 import { OnlineBillService } from '@services/data/bill/bill.service';
 import { OnlineTagService } from '@services/data/tag/tag.service';
@@ -49,6 +50,7 @@ export class BillformComponent implements OnInit {
   dateStr;
 
   constructor(
+    private globalservice: GlobalService,
     private modalCtrl: ModalController,
     private assetService: OnlineAssetService,
     private tagService: OnlineTagService,
@@ -64,21 +66,23 @@ export class BillformComponent implements OnInit {
       initItem = this.item;
     } else {
       this.title = '新增账单';
+      if (this.globalservice.isAllowRememberLastbill) {
+        try {
+          const latestCreatedBill = localStorage.getItem('latestCreatedBill');
+          if (latestCreatedBill && latestCreatedBill != '') {
+            initItem = JSON.parse(latestCreatedBill);
+          }
 
-      try {
-        const latestCreatedBill = localStorage.getItem('latestCreatedBill');
-        if(latestCreatedBill && latestCreatedBill != ''){
-          initItem = JSON.parse(latestCreatedBill);
+        } catch (error) {
+          localStorage.removeItem('latestCreatedBill');
         }
-      } catch (error) {
-        localStorage.removeItem('latestCreatedBill');
       }
     }
-    if(initItem){
+    if (initItem) {
       this.newBill = {
         _id: initItem._id,
         date: new Date(initItem.create_at).toISOString(),
-        amount:initItem.amount,
+        amount: initItem.amount,
         asset: initItem.asset._id,
         tag: initItem.tag.split(','),
         note: initItem.note,
@@ -165,7 +169,7 @@ export class BillformComponent implements OnInit {
         duration: 2500
       });
       await toast.present();
-      return; 
+      return;
     }
 
     if (!this.assetExchange.fromAsset || !this.assetExchange.toAsset) {
@@ -325,7 +329,7 @@ export class BillformComponent implements OnInit {
     this.clearSelectedTag();
   }
 
-  clearFormData(){
+  clearFormData() {
     this.resetFormData();
     localStorage.removeItem('latestCreatedBill');
   }

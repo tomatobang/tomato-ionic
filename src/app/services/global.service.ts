@@ -24,6 +24,7 @@ export class GlobalService {
   private _resttime = 0;
   private _isAlwaysLight;
   private _isAllowEditPicture;
+  private _isAllowRememberLastbill;
   private _languageType;
   private _todoAutoAddTime: Date;
 
@@ -238,6 +239,30 @@ export class GlobalService {
     localStorage.setItem('isAllowEditPicture', str);
   }
 
+  get isAllowRememberLastbill() {
+    if (this._isAllowRememberLastbill) {
+      return this._isAllowRememberLastbill;
+    } else {
+      const isAllowRememberLastbill = localStorage.getItem('isAllowRememberLastbill');
+      if (isAllowRememberLastbill === 'false') {
+        this._isAllowRememberLastbill = false;
+      } else {
+        this._isAllowRememberLastbill = true;
+      }
+      return this._isAllowRememberLastbill;
+    }
+  }
+
+  set isAllowRememberLastbill(value: boolean) {
+    this._isAllowRememberLastbill = value;
+    let str = '';
+    if (value) {
+      str = 'true';
+    } else {
+      str = 'false';
+    }
+    localStorage.setItem('isAllowRememberLastbill', str);
+  }
 
   get languageType() {
     if (this._languageType) {

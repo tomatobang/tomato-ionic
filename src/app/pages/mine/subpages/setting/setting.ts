@@ -12,7 +12,8 @@ import { Storage } from '@ionic/Storage';
 export class SettingPage implements OnInit {
   settingModel = {
     isAlwaysLight: false,
-    isAllowEditPicture: true
+    isAllowEditPicture: true,
+    isAllowRememberLastbill: true
   };
 
   constructor(
@@ -24,6 +25,7 @@ export class SettingPage implements OnInit {
   ngOnInit() {
     this.settingModel.isAlwaysLight = this.globalservice.isAlwaysLight;
     this.settingModel.isAllowEditPicture = this.globalservice.isAllowEditPicture;
+    this.settingModel.isAllowRememberLastbill = this.globalservice.isAllowRememberLastbill;
   }
 
   /**
@@ -52,13 +54,24 @@ export class SettingPage implements OnInit {
   }
 
   /**
- * 设置足迹照片是否允许编辑
- */
+   * 设置足迹照片是否允许编辑
+   */
   allowEditPicture() {
     if (this.settingModel.isAllowEditPicture) {
       this.globalservice.isAllowEditPicture = true;
     } else {
       this.globalservice.isAllowEditPicture = false;
+    }
+  }
+
+  /**
+   * 设置是否允许填充上次账单至表单
+   */
+  allowRememberLastbill() {
+    if (this.settingModel.isAllowRememberLastbill) {
+      this.globalservice.isAllowRememberLastbill = true;
+    } else {
+      this.globalservice.isAllowRememberLastbill = false;
     }
   }
 
