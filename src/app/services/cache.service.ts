@@ -23,6 +23,7 @@ export class CacheService {
    */
   clearCache() {
     this.storage.clear();
+    localStorage.removeItem('latestCreatedBill');
     this.friendlist = null;
   }
 
