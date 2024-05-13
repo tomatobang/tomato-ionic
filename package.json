@@ -42,7 +42,7 @@
     "@angular/http": "^7.2.2",
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
-    "@angular/pwa": "^0.8.7",
+    "@angular/pwa": "^0.800.0",
     "@angular/router": "^7.2.2",
     "@angular/service-worker": "~6.1.1",
     "@ionic-native/android-permissions": "^5.9.0",
