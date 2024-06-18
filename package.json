@@ -122,7 +122,7 @@
     "jpush-phonegap-plugin": "^3.6.4",
     "moment": "^2.24.0",
     "ngx-echarts": "^4.0.0",
-    "ngx-socket-io": "^2.1.1",
+    "ngx-socket-io": "^3.3.0",
     "raven-js": "^3.27.0",
     "rebirth-http": "^6.0.2",
     "rxjs": "~6.3.3",
